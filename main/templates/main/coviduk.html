@@ -1,0 +1,84 @@
+{% extends "main/base_boot4_main.html" %}
+{% block content %}
+    {% load static %}
+    {% static "main/" as static_base %}
+    <div class="container" style="font-family:'Courier New';">
+        <div class="row">
+            <div class="col-lg-8" style="background-color:transparent;">
+                <a href="{{ coviduk_link }}" target="_blank" style="text-decoration: none">
+                    <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">{{ app_desc }}</p>
+
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ app_goal }}</code>
+                        <p class="card-text">{{ app_goal_txt }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ app_tech }}</code>
+                        <p class="card-text">{{ app_tech_txt }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
+                        <p class="card-text">{{ data_source_txt }}<a
+                                href="{{ data_source_link }}" target="_blank">{{ data_source_txt2 }}</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-1" style=" background-color:transparent;">
+
+            </div>
+
+            <div class="col-lg-3" style=" background-color:transparent;">
+                <div class="row mt-4 mb-5">
+                    <a class="btn btn-outline-dark btn-block text-lowercase " href="{{ coviduk_link }}" target="_blank">
+                        {{ app_btn_txt }}
+                    </a>
+                </div>
+                <br>
+                <div class="row mt-5">
+                    <a href="{{ coviduk_link }}" target="_blank" title="go to the world page"
+                       style="background-color:transparent;color:#000000;text-decoration:none">
+                        <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
+                             alt="world_image" style="background-color:transparent;">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--
+        <script>
+            $(document).ready(function () {
+                console.log("document is ready");
+
+                $(".card").hover(
+                    function () {
+                        $(this).addClass('shadow-lg').css('cursor', 'pointer');
+                    }, function () {
+                        $(this).removeClass('shadow-lg');
+                    }
+                );
+            });
+        </script>
+
+
+        -->
+{% endblock %}
+

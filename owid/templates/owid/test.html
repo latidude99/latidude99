@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+{% if countries %}
+    <ul>
+    {% for c in countries %}
+        <li>{{ c.location }}</li>
+            <ul>
+                <li>{{ c.continent }}</li>
+                <li>{{ c.population }}</li>
+                <li>{{ c.population_density }}</li>
+                <li>{{ c.median_age }}</li>
+                <li>{{ c.aged_65_older }}</li>
+                <li>{{ c.aged_70_older }}</li>
+                <li>{{ c.gdp_per_capita }}</li>
+                <li>{{ c.cardiovasc_death_rate }}</li>
+                <li>{{ c.diabetes_prevalence }}</li>
+                <li>{{ c.handwashing_facilities }}</li>
+                <li>{{ c.hospital_beds_per_thousand }}</li>
+                <li>{{ c.life_expectancy }}</li>
+                <li>{{ c.human_development_index }}</li>
+            </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No countries listed.</p>
+{% endif %}
+
+</body>
+</html>

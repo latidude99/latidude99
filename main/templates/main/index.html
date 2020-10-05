@@ -1,0 +1,46 @@
+{% extends "main/base_boot4_main.html" %}
+{% block content %}
+    {% load static %}
+    {% static "main/" as static_base %}
+    <div class="container-flex" style="font-family:'Courier New';">
+        <div class="row">
+            <div class="col-lg-12" style="background-color:transparent;">
+
+                <div class="card py-4">
+                    <div class="card-body">
+                        <a href="{% url 'main:index' %}" style="text-decoration: none">
+                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj1 }}</h3>
+                        </a>
+                        <p class="card-text">{{ a }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card py-4">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ app_goal }}</code>
+                        <p class="card-text">{{ app_goal_txt }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card py-4">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ app_tech }}</code>
+                        <p class="card-text">{{ app_tech_txt }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card py-4">
+                    <div class="card-body">
+                        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
+                        <p class="card-text">{{ data_source_txt }}<a href="{{ data_source_link }}" target="_blank">{{ data_source_txt2 }}</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+

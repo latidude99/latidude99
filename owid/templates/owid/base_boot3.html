@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.js"
+            integrity="sha512-xQokr7XOzq2ogYezmdoq13t2xcYBoKM0aZJjF91NvQX2D114fVe5yghALtQ25S+iADg4Cqzyj0P7MluW2TrgHw=="
+            crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+    <meta charset="UTF-8">
+    <style>
+        .panel, .panel-group .panel-heading + .panel-collapse > .panel-body {
+            border: none;
+            box-shadow: none;
+        }
+
+        .panel-default > .panel-heading {
+            background-color: #3333cc;
+            color: white;
+        }
+
+        .panel-title {
+            display: inline;
+            vertical-align: center;
+            width: 100%;
+        }
+
+
+    </style>
+    <title>COVID</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <ul class="nav navbar-nav">
+            <a class="navbar-brand active" href="{% url 'index' %}" >pc.latidude99.com</a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">java projects<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">enquiry system</a></li>
+                    <li><a href="#">contact book</a></li>
+                    <li><a href="#">link cutter</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">python projects<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">covid19 united kingdom</a></li>
+                    <li><a href="#">covid19 poland</a></li>
+                    <li><a href="#">covid19 world</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">other<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">cartography</a></li>
+                    <li><a href="#">travel</a></li>
+                    <li><a href="#">other</a></li>
+                </ul>
+            </li>
+            <li><a href="#">contact</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+{% extends "owid/base_boot4_owid.html" %}
+{% block content %}
+    {% load static %}
+    {% static "owid/" as static_base %}
+    {% load humanize %}
+    <div class="container-flex">
+        <div class="row ml-5">
+            <div class="col-lg-9">
+                <div class="media  p-2" style="background-color:transparent;">
+                    <div class="media-body mr-3">
+                        <h1 class="display-4">{{ location }}</h1>
+                        <h4 class="text-secondary ml-1"><small>
+                            {% if country.location ==  'World' %}
+                                {{ milky_way }}
+                            {% endif %}
+                            {% if country.location !=  'World' %}
+                                {{ country.continent }}
+                            {% endif %}
+                        </small></h4>
+                    </div>
+                    <div class="ml-5 mt-3 mr-5">
+                        <img src="{{ static_base }}{{ flag }}" alt="flag"
+                             style="height:52px">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="mt-3" style="max-width:70%;">
+                    <form action="{% url 'owid:country' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mt-2">
+                            <label for="country">{{ btn_country }}</label>
+                        </div>
+                        <select class="form-control" id="country" name="location"
+                                style="background-color:transparent;">
+                            {% for loc in locations %}
+                                {% if loc == location %}
+                                    <option selected="{{ loc }}"
+                                            style="background-color:seashell;color:brown">{{ loc }}</option>
+                                {% endif %}
+                                {% if loc != location %}
+                                    <option style="background-color:seashell;color:brown">{{ loc }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <br>
+                    </form>
+                </div>
+            </div>
+
+            <hr/>
+        </div>
+        <div class="row ml-5">
+            <div class="col-lg-9" style="background-color:transparent;">
+                <div class="d-flex flex-column mt-2 ml-2">
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ population }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.population|floatformat:"0"|intcomma }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ population_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ population_density }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.population_density }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ population_density_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ median_age }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.median_age }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ median_age_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ aged_65_older }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.aged_65_older }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ aged_65_older_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ aged_70_older }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.aged_70_older }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ aged_70_older_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ gdp_per_capita }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.gdp_per_capita }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ gdp_per_capita_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ cardiovasc_death_rate }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.cardiovasc_death_rate }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ cardiovasc_death_rate_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ diabetes_prevalence }}:</h6>
+                        <div class="py-0 px-3 bg-ltransparentight text-primary">{{ country.diabetes_prevalence }}</div>
+                        <div class="py-0 px-3 bg-litransparentght flex-grow-1 text-secondary  font-weight-lighter">{{ diabetes_prevalence_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ handwashing_facilities }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.handwashing_facilities }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary font-weight-lighter">{{ handwashing_facilities_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ hospital_beds_per_thousand }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.hospital_beds_per_thousand }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ hospital_beds_per_thousand_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ life_expectancy }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.life_expectancy }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ life_expectancy_desc }}</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6 class="py-0 px-3 bg-transparent text-bold">{{ human_development_index }}:</h6>
+                        <div class="py-0 px-3 bg-transparent text-primary">{{ country.human_development_index }}</div>
+                        <div class="py-0 px-3 bg-transparent flex-grow-1 text-secondary  font-weight-lighter">{{ human_development_index_desc }}</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3" style="background-color:transparent;">
+
+                <h4 class="text-secondary pull-left mb-4"><small>{{ side_txt1 }}</small></h4>
+                <br>
+                <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <input type="submit" class="btn btn-danger" style="min-width:70%;" value="{{ new_cases }}"
+                               onclick="$('#loading1').show();">
+                        <div class="input-group-append ml-3">
+                            <span id="loading1" class="spinner-border text-danger ml-2 mt-1"
+                                  style="display:none;"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <input type="submit" class="btn btn-danger" style="min-width:70%;" value="{{ total_cases }}"
+                               onclick="$('#loading1').show();">
+                        <div class="input-group-append ml-3">
+                            <span id="loading1" class="spinner-border text-danger ml-2 mt-1"
+                                  style="display:none;"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <input type="submit" class="btn btn-dark" style="min-width:70%;" value="{{ new_deaths }}"
+                               onclick="$('#loading1').show();">
+                        <div class="input-group-append ml-3">
+                            <span id="loading1" class="spinner-border text-danger ml-2 mt-1"
+                                  style="display:none;"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <input type="submit" class="btn btn-dark" style="min-width:70%;" value="{{ total_deaths }}"
+                               onclick="$('#loading1').show();">
+                        <div class="input-group-append ml-3">
+                            <span id="loading1" class="spinner-border text-danger ml-2 mt-1"
+                                  style="display:none;"></span>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="ml-4 mt-5">
+        <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-dark btn-sm">
+            <span class="fas fa-chevron-left"></span>
+            &nbsp; back to country selection
+        </a>
+    </div>
+
+    <script>
+        $(function () {
+            $('#country').change(function () {
+                this.form.submit();
+            });
+        });
+    </script>
+
+{% endblock %}
+

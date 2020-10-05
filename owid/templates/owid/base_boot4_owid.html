@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+{% static "main/" as static_base %}
+
+<html lang="en">
+<head>
+    <title>Piotr</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        div.sticky-footer {
+            position: -webkit-sticky;
+            position: sticky;
+            bottom: 230;
+            background-color: beige;
+            padding: 0px;
+            font-size: 20px;
+        }
+
+        body {
+            background-image: url('{{ static_base }}{{ background_pattern2 }}');
+        }
+
+        body .card .card-body .card-text {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.16);
+        }
+
+        .flex-fixed-width-item {
+            flex: 0 0 100px;
+        }
+    </style>
+
+</head>
+<body class="d-flex flex-column">
+
+
+<div class="container-fluid" style="margin-top:30px;">
+
+    {% block content %}{% endblock %}
+
+</div>
+<!--
+<div class="sticky-footer">
+    I will stick to the screen when you reach my scroll position
+</div>
+-->
+<footer class="footer bg-dark">
+    <div class="container-fluid">
+        <small class="ml-5">{{ footer_info }}</small>
+        <small class="pull-right mr-5">Copyright &copy; {{ latidude99 }}</small>
+        <img class="pull-right" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+    </div>
+</footer>
+
+</body>
+</html>

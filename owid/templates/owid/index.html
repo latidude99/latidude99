@@ -1,0 +1,42 @@
+{% extends "owid/base_boot4_owid.html" %}
+{% block content %}
+    {% load static %}
+    <div class="container">
+
+        <div class="card">
+            <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3>{{ covid_title }}</h3>
+                    <p class="card-text">{{ covid_subtitle }}</p>
+                </div>
+                <div class="col">.col</div>
+                <div class="col">
+                    <a href="{% url 'owid:covid' %}" class="btn btn-outline-dark btn-block h-100 stretched-link my-auto"
+                                    style="width:100%;height:100%; text-align: center">{{ covid_btn_txt }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <br>
+
+    <br>
+    <br>
+
+
+    <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+    </div>
+
+    <div id="loading" style="display:none;">
+        <p>Fetching data...</p>
+        <img src="{% static 'owid/gifs/loading3.gif' %}" style="width:400px;height:300px;" alt=""/>
+    </div>
+
+    </div>
+
+{% endblock %}
