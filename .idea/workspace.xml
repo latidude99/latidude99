@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e870b1a4-8bdb-4450-a98a-843f63e74d25" name="Default Changelist" comment="" />
+    <list default="true" id="e870b1a4-8bdb-4450-a98a-843f63e74d25" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/static/main/images/piotr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/static/main/images/piotr1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/owid/static/owid/images/coronavirus1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/service_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/service_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/base_boot4_main.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/base_boot4_main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/text.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/text.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/templates/owid/base_boot4_owid.html" beforeDir="false" afterPath="$PROJECT_DIR$/owid/templates/owid/base_boot4_owid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/templates/owid/covid.html" beforeDir="false" afterPath="$PROJECT_DIR$/owid/templates/owid/covid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/templates/owid/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/owid/templates/owid/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/text_owid.py" beforeDir="false" afterPath="$PROJECT_DIR$/owid/text_owid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/owid/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/owid/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/owid/views.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,12 +35,17 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1huotE48A8d86ELRKAMffISctRN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/main/templates/main" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/owid/static/owid/images" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
@@ -35,11 +56,11 @@
       <recent name="D:\_____PYTHON\_projects\latidude99\main" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\_____PYTHON\_projects\latidude99\owid\static\owid\images" />
+      <recent name="D:\_____PYTHON\_projects\latidude99\main\static\main\images" />
       <recent name="D:\_____PYTHON\_projects\latidude99\main\templates\main" />
       <recent name="D:\_____PYTHON\_projects\latidude99\tmp" />
-      <recent name="D:\_____PYTHON\_projects\latidude99\main\static\main\images" />
       <recent name="D:\_____PYTHON\_projects\latidude99\owid" />
-      <recent name="D:\_____PYTHON\_projects\latidude99\owid\static\owid\flags_small" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -147,12 +168,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1600870550214</updated>
-      <workItem from="1600870668810" duration="183075000" />
+      <workItem from="1600870668810" duration="188412000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/latidude99$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1600886954300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/owid" />

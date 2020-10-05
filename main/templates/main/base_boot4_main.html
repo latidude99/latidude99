@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% static "owid/" as static_base %}
+{% static "main/" as static_base %}
 <html lang="en">
 <head>
     <title>Piotr</title>
@@ -11,7 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+          crossorigin="anonymous"/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
 
     <style>
@@ -99,11 +102,16 @@
     <!-- Vertical navbar -->
     <div class="vertical-nav bg-black" id="sidebar"
          style="font-family:'Courier New';background-color: black !important;letter-spacing: 2px;">
-        <div class="py-5 px-3 mb-1">
+
+        <div class="mt-2">
+            <img class="rounded mx-auto d-block img-fluid" src="{{ static_base }}{{ image_piotr }}"
+                 alt="piotr" style="background-color:transparent; max-width:60%; height: auto;">
+        </div>
+        <div class="py-3 px-3 mb-1">
             <div class="media-body text-lowercase text-center ">
                 <h3 class="mb-2" style="color:yellow;">{{ intro1 }}</h3>
-                <p class="mb-0 mt-3" style="color:yellow;">{{ intro2 }}</p>
-                <p class="mb-0 mt-3" style="color:yellow;">{{ intro3 }}</p>
+                <p class="mb-0 mt-3" style="color:yellow;"><small>{{ intro2 }}</small></p>
+                <p class="mb-0 mt-3" style="color:yellow;"><small>{{ intro3 }}</small></p>
 
             </div>
         </div>
@@ -111,10 +119,12 @@
         <p class="text-white text-uppercase px-3 small py-1 mb-2">
             <a href="{% url 'main:index' %}" id="project-list">{{ home }}</a>
         </p>
-
+        <!--
         <code><a href="{% url 'main:index' %}" id="project-list">
             <pre class="mb-3 mt-3 font-weight-light text-center" style="color:white;">{{ intro4 }}</pre></a>
         </code>
+        -->
+
         <span class="text-white text-uppercase px-3 small py-4 mb-0">{{ nav_java_proj }}</span>
 
         <ul class="nav flex-column mb-0">
@@ -136,12 +146,12 @@
                     {{ nav_java_proj3 }}
                 </a>
             </li>
-            <li class="nav-item small" id="project-list" >
-                <a href="{% url 'main:soon' %}" class="text-white-50"  id="project-list">
+            <li class="nav-item small" id="project-list">
+                <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj4 }}
                     <div class="text-right mr-2">{{ nav_java_proj4a }}
-                </div>
+                    </div>
                 </a>
 
             </li>

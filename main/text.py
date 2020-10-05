@@ -3,6 +3,8 @@ LATIDUDE99 = 'latidude99.com'
 BACKGROUND_PATTERN1 = 'https://subtlepatterns.com/patterns/kindajean.png'
 BACKGROUND_PATTERN2 = 'images/paper_fibers1.png'
 
+IMAGE_PIOTR = 'images/piotr1.png'
+
 MAIN_INDEX_INTRO1 = 'Piotr Czapik'
 MAIN_INDEX_INTRO2 = 'London, United Kingdom'
 MAIN_INDEX_INTRO3 = 'Aspiring Software Developer'
@@ -12,12 +14,9 @@ MAIN_INDEX_INTRO6 = ''
 HOME = 'Home'
 
 
-
-
-
-
-
-
+JAVA = 'Java'
+PYTHON = 'Python'
+ANDROID = 'Android'
 
 DATE_LABELS_FMT = '%d %b %Y'
 

@@ -8,7 +8,7 @@
                 <h1 class="display-4">{{ title }}</h1>
                 <h4><small>{{ subtitle }}</small></h4>
                 <pre><span>{{ data_supply }}</span><span><abbr title="Our World In Data">OWID</abbr></span></pre>
-                <a href="{% url 'owid:charts_bar_newcases_world' %}" title="go to the world page"
+                <a href="{% url 'owid:world' %}" title="go to the world page"
                    style="background-color:#000001;color:#ffffff;text-decoration:none">
                     <img class="mx-auto d-block img-fluid p-5" src="{{ static_base }}{{ image_globe }}"
                          alt="world_image"
@@ -16,8 +16,8 @@
                 </a>
             </div>
             <div class="col-lg-1 py-3">
-
             </div>
+
             <div class="col-lg-7">
                 <div class="card">
                     <div class="card-header">
@@ -25,7 +25,7 @@
                             <div class="col-lg-8">
                                 {{ country_card_title }}</div>
                             <div class="col-lg-4">
-                                <div id="loading" class="spinner-grow spinner-grow-sm text-warning mt-1 pull-right"
+                                <div id="loading2" class="spinner-grow spinner-grow-sm text-danger mt-1 pull-right"
                                      style="display:none;"></div>
                             </div>
                         </div>
@@ -53,6 +53,49 @@
 
                                         <div class="input-group-append">
                                             <input type="submit" class="btn btn-outline-dark" value="{{ btn_country }}"
+                                                   onclick="$('#loading2').show();">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                Comparison between selected countries</div>
+                            <div class="col-lg-4">
+                                <div id="loading" class="spinner-grow spinner-grow-sm text-danger mt-1 pull-right"
+                                     style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
+
+                                <form action="" method="post">
+                                    {% csrf_token %}
+
+                                    <div class="input-group">
+                                        <div class="mr-3 mt-2">
+                                            <label for="locations">Select up to 5 countries</label>
+                                        </div>
+                                        <select class="form-control" id="sel1" name="location"
+                                                style=" background-color:transparent;">
+                                            {% for location in locations %}
+                                                <option style="background-color:ivory;color:brown">{{ location }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <br>
+                                        <div class="input-group-append">
+                                            <input type="submit" class="btn btn-outline-dark" value="coming soon..."
                                                    onclick="$('#loading').show();">
                                         </div>
                                     </div>
@@ -63,11 +106,10 @@
                     </div>
 
                 </div>
-            </div>
 
 
-            <div class="col-lg-8">
             </div>
+
 
         </div>
     </div>

@@ -10,7 +10,7 @@ import owid.service_covid as service_covid
 
 
 def tests(request):
-    return render(request, 'owid/tests.html', {})
+    return render(request, 'owid/test.html', {})
 
 
 def index(request):
@@ -18,6 +18,7 @@ def index(request):
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
                'latidude99': 'latidude99.com',
+               'image_coronavirus': IMAGE_CORONAVIRUS,
                'covid_title': OWID_COVID_TITLE.title,
                'covid_subtitle': OWID_COVID_SUBTITLE,
                'covid_btn_txt': OWID_COVID_BTN_TXT,
@@ -32,6 +33,12 @@ def covid(request):
 
 def country(request):
     location = request.POST['location']
+    context = service_covid.get_country_data(location)
+    return render(request, 'owid/country.html', context)
+
+
+def world(request):
+    location = 'World'
     context = service_covid.get_country_data(location)
     return render(request, 'owid/country.html', context)
 

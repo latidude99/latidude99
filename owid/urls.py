@@ -6,6 +6,7 @@ urlpatterns = [
     path('tests', views.tests, name='tests'),
     path('covid', views.covid, name='covid'),
     path('covid/country', views.country, name='country'),
+    path('covid/world', views.world, name='world'),
     path('covid/country/barcharts/newcases/', views.charts_bar_newcases_country,
          name='charts_bar_newcases_country'),
     path('covid/country/barcharts/totalcases/', views.charts_bar_totalcases_country,
