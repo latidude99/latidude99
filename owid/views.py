@@ -7,6 +7,7 @@ from datetime import *
 from owid.text_owid import *
 from owid.service import *
 import owid.service_covid as service_covid
+import owid.service_owid as service_owid
 
 
 def tests(request):
@@ -14,15 +15,7 @@ def tests(request):
 
 
 def index(request):
-    context = {'footer_info': FOOTER_INFO,
-               'background_pattern1': BACKGROUND_PATTERN1,
-               'background_pattern2': BACKGROUND_PATTERN2,
-               'latidude99': 'latidude99.com',
-               'image_coronavirus': IMAGE_CORONAVIRUS,
-               'covid_title': OWID_COVID_TITLE.title,
-               'covid_subtitle': OWID_COVID_SUBTITLE,
-               'covid_btn_txt': OWID_COVID_BTN_TXT,
-               }
+    context = service_owid.get_index_context()
     return render(request, 'owid/index.html', context)
 
 

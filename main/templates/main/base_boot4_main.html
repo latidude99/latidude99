@@ -32,7 +32,17 @@
         }
 
         .card {
-            box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.16);
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+            padding: 0px 0px 15px 0px;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
         }
 
         .vertical-nav {
@@ -92,6 +102,14 @@
             color: yellow !important;
         }
 
+        hr {
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+            height: 2px;
+            background-color: ivory;
+            border: none;
+        }
+
     </style>
 
 </head>
@@ -103,9 +121,9 @@
     <div class="vertical-nav bg-black" id="sidebar"
          style="font-family:'Courier New';background-color: black !important;letter-spacing: 2px;">
 
-        <div class="mt-2">
+        <div class="mt-3">
             <img class="rounded mx-auto d-block img-fluid" src="{{ static_base }}{{ image_piotr }}"
-                 alt="piotr" style="background-color:transparent; max-width:60%; height: auto;">
+                 alt="piotr" style="background-color:transparent; max-width:55%; height: auto;">
         </div>
         <div class="py-3 px-3 mb-1">
             <div class="media-body text-lowercase text-center ">
@@ -150,7 +168,7 @@
                 <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj4 }}
-                    <div class="text-right mr-2">{{ nav_java_proj4a }}
+                    <div class="text-right mr-4">{{ nav_java_proj4a }}
                     </div>
                 </a>
 

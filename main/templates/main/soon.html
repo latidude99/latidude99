@@ -2,9 +2,17 @@
 {% block content %}
     {% load static %}
     {% static "main/" as static_base %}
-    <div class="container">
+
+    <div class="container-flex" style="font-family:'Courier New';">
+        <div class="mb-3">
+            <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+                <span class="fas fa-chevron-left"></span>
+                home
+            </a>
+        </div>
         <div class="row">
             <div class="col-lg-8" style="background-color:transparent;">
+
                 <a href="" style="text-decoration: none">
                     <h3 class="text-justify">{{ title }}</h3></a>
                 <br>
@@ -32,7 +40,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h6>{{ data_source }}</h6>
-                        <p class="card-text">{{ data_source_txt }}<a href="{{ data_source_link }}">{{ data_source_txt2 }}</a></p>
+                        <p class="card-text">{{ data_source_txt }}<a
+                                href="{{ data_source_link }}">{{ data_source_txt2 }}</a></p>
                     </div>
                 </div>
 
@@ -58,7 +67,12 @@
                 </div>
             </div>
         </div>
-
+        <div class="mt-3">
+            <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+                <span class="fas fa-chevron-left"></span>
+                home
+            </a>
+        </div>
 
     </div>
 

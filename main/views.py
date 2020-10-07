@@ -6,7 +6,7 @@ import main.service_main as serv
 
 
 def index(request):
-    context = serv.get_main_index_ctx()
+    context = serv.get_index_ctx()
     return render(request, 'main/index.html', context)
 
 def soon(request):

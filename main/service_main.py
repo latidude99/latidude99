@@ -1,7 +1,7 @@
 from main.text import *
 
 
-def get_main_index_ctx():
+def get_main_ctx():
     ctx = {'footer_info': FOOTER_INFO,
            'background_pattern1': BACKGROUND_PATTERN1,
            'background_pattern2': BACKGROUND_PATTERN2,
@@ -37,6 +37,81 @@ def get_main_index_ctx():
     return ctx
 
 
+def get_index_ctx():
+    context = {'title_soon_proj': 'coming soon',
+               'title_python_proj_1': TITLE_PYTHON_PROJ_1,
+               'desc_python_proj_1': DESC_PYTHON_PROJ_1,
+               'github_python_proj_1': GITHUB_PYTHON_PROJ_1,
+               'image_python_proj_1': IMAGE_PYTHON_PROJ_1,
+               'title_python_proj_2': TITLE_PYTHON_PROJ_2,
+               'desc_python_proj_2': DESC_PYTHON_PROJ_2,
+               'github_python_proj_2': GITHUB_PYTHON_PROJ_2,
+               'image_python_proj_2': IMAGE_PYTHON_PROJ_2,
+               'title_java_proj_1': TITLE_JAVA_PROJ_1,
+               'desc_java_proj_1': DESC_JAVA_PROJ_1,
+               'image_java_proj_1': IMAGE_JAVA_PROJ_1,
+               'link_java_proj_1': LINK_JAVA_PROJ_1,
+               'github_java_proj_1': GITHUB_JAVA_PROJ_1,
+               'title_java_proj_2': TITLE_JAVA_PROJ_2,
+               'desc_java_proj_2': DESC_JAVA_PROJ_2,
+               'image_java_proj_2': IMAGE_JAVA_PROJ_2,
+               'link_java_proj_2': LINK_JAVA_PROJ_2,
+               'github_java_proj_2': GITHUB_JAVA_PROJ_2,
+               'title_java_proj_3': TITLE_JAVA_PROJ_3,
+               'desc_java_proj_3': DESC_JAVA_PROJ_3,
+               'image_java_proj_3a': IMAGE_JAVA_PROJ_3a,
+               'image_java_proj_3b': IMAGE_JAVA_PROJ_3b,
+               'link_java_proj_3': LINK_JAVA_PROJ_3,
+               'github_java_proj_3': GITHUB_JAVA_PROJ_3,
+               'title_java_proj_4': TITLE_JAVA_PROJ_4,
+               'desc_java_proj_4': DESC_JAVA_PROJ_4,
+               'image_java_proj_4a': IMAGE_JAVA_PROJ_4a,
+               'image_java_proj_4b': IMAGE_JAVA_PROJ_4b,
+               'link_java_proj_4': LINK_JAVA_PROJ_4,
+               'github_java_proj_4': GITHUB_JAVA_PROJ_4,
+               'title_java_proj_5': TITLE_JAVA_PROJ_5,
+               'desc_java_proj_5': DESC_JAVA_PROJ_5,
+               'image_java_proj_5a': IMAGE_JAVA_PROJ_5a,
+               'image_java_proj_5b': IMAGE_JAVA_PROJ_5b,
+               'image_java_proj_5c': IMAGE_JAVA_PROJ_5c,
+               'link_java_proj_5': LINK_JAVA_PROJ_5,
+               'github_java_proj_5': GITHUB_JAVA_PROJ_5,
+               'title_java_proj_6': TITLE_JAVA_PROJ_6,
+               'desc_java_proj_6': DESC_JAVA_PROJ_6,
+               'image_java_proj_6a': IMAGE_JAVA_PROJ_6a,
+               'image_java_proj_6b': IMAGE_JAVA_PROJ_6b,
+               'link_java_proj_6': LINK_JAVA_PROJ_6,
+               'github_java_proj_6': GITHUB_JAVA_PROJ_6,
+               'title_android_proj_1': TITLE_ANDROID_PROJ_1,
+               'desc_android_proj_1': DESC_ANDROID_PROJ_1,
+               'image_android_proj_1a': IMAGE_ANDROID_PROJ_1a,
+               'image_android_proj_1b': IMAGE_ANDROID_PROJ_1b,
+               'link_android_proj_1': LINK_ANDROID_PROJ_1,
+               'github_android_proj_1': GITHUB_ANDROID_PROJ_1,
+               'java8': JAVA8,
+               'javafx': JAVAFX,
+               'javascript': JAVASCRIPT,
+               'python3': PYTHON3,
+               'django3': DJANGO3,
+               'flask': FLASK,
+               'mysql5': MYSQL5,
+               'nitrodb': NITRODB,
+               'bootstrap3': BOOTSTRAP3,
+               'bootstrap4': BOOTSTRAP4,
+               'spring4': SPRING4,
+               'spring5': SPRING5,
+               'springboot15': SPRINGBOOT15,
+               'springboot2': SPRINGBOOT2,
+               'hibernate': HIBERNATE,
+               'apachelucene': APACHELUCENE,
+               'thymeleaf3': THYMELEAF3,
+               'chartsjs': CHARTJS,
+               'jcoord': JCOORD,
+               }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
+
 def get_main_soon_ctx():
     context = {
         'app_btn_txt': OWID_APP_BTN_TXT,
@@ -55,18 +130,23 @@ def get_main_soon_ctx():
         'data_source_txt2': SOON_DATA_SOURCE_TXT2,
         'data_source_link': SOON_DATA_SOURCE_LINK,
     }
-    ctx = {**get_main_index_ctx(), **context}
+    ctx = {**get_main_ctx(), **context}
     return ctx
 
 
 def get_main_owid_ctx():
     context = {
+        'code': CODE,
+        'github_link': GITHUB_PYTHON_PROJ_2,
+        'app_link': OWID_LINK,
         'app_btn_txt': OWID_APP_BTN_TXT,
         'image': IMAGE_GLOBE,
         'title': OWID_TITLE,
         'subtitile': OWID_SUBTITLE,
         'subtitle2': OWID_SUBTITLE2,
         'data_supply': OWID_DATA_SUPPLY,
+        'in_short': IN_SHORT,
+        'in_depth': IN_DEPTH,
         'app_desc': OWID_APP_DESC,
         'app_goal': OWID_APP_GOAL,
         'app_goal_txt': OWID_APP_GOAL_TXT,
@@ -76,13 +156,16 @@ def get_main_owid_ctx():
         'data_source_txt': OWID_DATA_SOURCE_TXT,
         'data_source_txt2': OWID_DATA_SOURCE_TXT2,
         'data_source_link': OWID_DATA_SOURCE_LINK,
+
     }
-    ctx = {**get_main_index_ctx(), **context}
+    ctx = {**get_main_ctx(), **context}
     return ctx
 
 
 def get_main_coviduk_ctx():
     context = {
+        'code': CODE,
+        'github_link': GITHUB_PYTHON_PROJ_1,
         'coviduk_link': COVIDUK_LINK,
         'app_btn_txt': OWID_APP_BTN_TXT,
         'image': IMAGE_UK,
@@ -90,6 +173,8 @@ def get_main_coviduk_ctx():
         'subtitile': COVID_SUBTITLE,
         'subtitle2': COVID_SUBTITLE2,
         'data_supply': COVID_DATA_SUPPLY,
+        'in_short': IN_SHORT,
+        'in_depth': IN_DEPTH,
         'app_desc': COVID_APP_DESC,
         'app_goal': COVID_APP_GOAL,
         'app_goal_txt': COVID_APP_GOAL_TXT,
@@ -101,5 +186,5 @@ def get_main_coviduk_ctx():
         'data_source_link': COVID_DATA_SOURCE_LINK,
     }
 
-    ctx = {**get_main_index_ctx(), **context}
+    ctx = {**get_main_ctx(), **context}
     return ctx

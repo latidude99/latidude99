@@ -2,7 +2,7 @@
 **/tmp/
 **/data/
 secrets.py
-
+.idea/
 
 ### Django ###
 *.log

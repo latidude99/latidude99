@@ -6,82 +6,347 @@
         <div class="row">
             <div class="col-lg-12" style="background-color:transparent;">
 
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:owid' %}" style="text-decoration: none">
-                        <h3 class="text-justify text-lowercase font-weight-bold"><small>{{ nav_python_proj2 }}</small></h3>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:owid' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_python_proj_2 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_python_proj_2 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-python ml-4 fa-3x mt-3"></i>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ python3 }}</small></li>
+                                        <li><small>{{ django3 }}</small></li>
+                                        <li><small>{{ chartsjs }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul>
+                                        <li><small>{{ bootstrap4 }}</small></li>
+                                        <li><small>{{ mysql5 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_python_proj_2 }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
                         </a>
-                        <p class="card-text text-lowercase">{{ python }}</p>
                     </div>
                 </div>
                 <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj1 }}</h3>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_python_proj_1 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_python_proj_1 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-python ml-4 fa-3x mt-3"></i>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul class="mt-3">
+                                        <li><small class="font-weight-bolder">{{ python3 }}</small></li>
+                                        <li><small>{{ flask }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul class="mt-3">
+                                        <li><small>{{ bootstrap4 }}</small></li>
+                                        <li><small>{{ chartsjs }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_python_proj_1 }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
                         </a>
-                        <p class="card-text text-lowercase">{{ java }}</p>
                     </div>
                 </div>
                 <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj2 }}</h3>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_1 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_1 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ springboot2 }}</small></li>
+                                        <li><small>{{ hibernate }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small>{{ mysql5 }}</small></li>
+                                        <li><small>{{ apachelucene }}</small></li>
+                                        <li><small>{{ thymeleaf3 }}</small></li>
+                                        <li><small>{{ bootstrap4 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_java_proj_1 }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
                         </a>
-                        <p class="card-text">{{ a }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj3 }}</h3>
-                        </a>
-                        <p class="card-text">{{ a }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj4 }}</h3>
-                        </a>
-                        <p class="card-text">{{ a }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj5 }}</h3>
-                        </a>
-                        <p class="card-text">{{ a }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_java_proj6 }}</h3>
-                        </a>
-                        <p class="card-text">{{ a }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card py-0">
-                    <div class="card-body">
-                        <a href="{% url 'main:index' %}" style="text-decoration: none">
-                        <h3 class="text-justify font-weight-bold text-lowercase font-weight-bold">{{ nav_android_proj1 }}</h3>
-                        </a>
-                        <p class="card-text">{{ a }}</p>
                     </div>
                 </div>
                 <br>
 
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
 
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_2 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_2 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ springboot15 }}</small></li>
+                                        <li><small>{{ hibernate }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small>{{ mysql5 }}</small></li>
+                                        <li><small>{{ thymeleaf3 }}</small></li>
+                                        <li><small>{{ bootstrap3 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_java_proj_2 }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-5">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_3 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_3 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ javafx }}</small></li>
+                                        <li><small>{{ nitrodb }}</small></li>
+                                        <li><small>{{ javascript }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_java_proj_3b }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                    <img class="rounded mx-auto d-block img-fluid"
+                                         src="{{ static_base }}{{ image_java_proj_3a }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-5">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_4 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_4 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul class="mt-3">
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ javafx }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_java_proj_4b }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                    <img class="rounded mx-auto d-block img-fluid"
+                                         src="{{ static_base }}{{ image_java_proj_4a }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-5">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_5 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_5 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul class="mt-3">
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ javafx }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_java_proj_5c }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:90px; width: auto;">
+                                    <img class="rounded mx-auto d-block img-fluid mt-4"
+                                         src="{{ static_base }}{{ image_java_proj_5a }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:25px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-3">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_java_proj_6 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_java_proj_6 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-java ml-4 fa-3x mt-4"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ java8 }}</small></li>
+                                        <li><small>{{ springboot2 }}</small></li>
+                                        <li><small>{{ hibernate }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul>
+                                        <li><small>{{ mysql5 }}</small></li>
+                                        <li><small>{{ thymeleaf3 }}</small></li>
+                                        <li><small>{{ bootstrap4 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img class="rounded mx-auto d-block img-fluid float-right mt-2"
+                                         src="{{ static_base }}{{ image_java_proj_6b }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:80px; width: auto;">
+                                    <img class="rounded mx-auto d-block img-fluid mt-2"
+                                         src="{{ static_base }}{{ image_java_proj_6a }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:65px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:soon' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_android_proj_1 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_android_proj_1 }}</p>
+                                </div>
+                                <div class="col-lg-2">
+                                    <i class="fab fa-android ml-4 fa-3x mt-4 float-right"></i>
+                                </div>
+                                <div class="col-lg-2">
+                                    <ul class="mt-4">
+                                        <li><small class="font-weight-bolder">{{ android }}</small></li>
+                                        <li><small>{{ java8 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_android_proj_1b }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:90px; width: auto;">
+                                    <img class="rounded mx-auto d-block img-fluid"
+                                         src="{{ static_base }}{{ image_android_proj_1a }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
             </div>
-
         </div>
     </div>
 
