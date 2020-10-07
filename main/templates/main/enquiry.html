@@ -11,12 +11,12 @@
                 </a>
                 <div class="row mt-4">
                     <div class="col-lg-7" style="background-color:transparent;">
-                        <a href="{{ coviduk_link }}" target="_blank" style="text-decoration: none; color: inherit;">
+                        <a href="{{ app_link }}" target="_blank" style="text-decoration: none; color: inherit;">
                             <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
                     </div>
                     <div class="col-lg-5">
                         <a class="btn btn-outline-dark btn-block text-lowercase float-right"
-                           href="{{ coviduk_link }}"
+                           href="{% url 'owid:index' %}"
                            target="_blank">
                             {{ app_btn_txt }}
                         </a>
@@ -27,7 +27,7 @@
 
             <div class="col-lg-2">
                 <div class="float-center" style=" background-color:transparent;">
-                    <a href="{{ coviduk_link }}" target="_blank" title="go to the app page"
+                    <a href="{% url 'owid:index' %}" target="_blank" title="go to the app page"
                        style="background-color:transparent;color:#000000;text-decoration:none">
                         <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
                              alt="world_image" style="max-height: 110px;background-color:transparent;">
@@ -51,11 +51,6 @@
         <hr>
         <p class="py-1 px-4 mb-3"><a href="{{ github_link }}"
                                      target="_blank"><code>{{ github_link }}</code></a></p>
-
-        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
-        <hr>
-        <p class="py-1 px-4 mb-3">{{ data_source_txt }}<a href="{{ data_source_link }}"
-                                                          target="_blank"><code>{{ data_source_txt2 }}</code></a></p>
 
         <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
         <hr>

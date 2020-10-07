@@ -37,7 +37,7 @@
         </div>
         <code class="text-lowercase font-weight-bold">{{ in_short }}</code>
         <hr>
-        <p class="py-1 px-4 mb-3">{{ app_desc }}</p>
+        <p class="py-1 px-4 mb-3">{{ in_short_txt }}</p>
 
         <code class="text-lowercase font-weight-bold">{{ app_goal }}</code>
         <hr>
@@ -56,9 +56,13 @@
         <hr>
         <p class="py-1 px-4 mb-3">{{ data_source_txt }}<a href="{{ data_source_link }}"
                                                           target="_blank"><code>{{ data_source_txt2 }}</code></a></p>
+
+        <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ in_depth_txt }}</p>
     </div>
 
-    <div class="col-lg-12 mt-4 mb-3">
+    <div class="col-lg-12 mt-4 mb-3" style="font-family:'Courier New';">
         <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
             <span class="fas fa-chevron-left"></span>
             home

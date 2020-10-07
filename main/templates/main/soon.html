@@ -2,78 +2,72 @@
 {% block content %}
     {% load static %}
     {% static "main/" as static_base %}
-
-    <div class="container-flex" style="font-family:'Courier New';">
-        <div class="mb-3">
-            <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
-                <span class="fas fa-chevron-left"></span>
-                home
-            </a>
-        </div>
+    <div class="container" style="font-family:'Courier New';">
         <div class="row">
-            <div class="col-lg-8" style="background-color:transparent;">
-
-                <a href="" style="text-decoration: none">
-                    <h3 class="text-justify">{{ title }}</h3></a>
-                <br>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">{{ app_desc }}</p>
-
+            <div class=" col-lg-10 mb-3">
+                <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+                    <span class="fas fa-chevron-left"></span>
+                    home
+                </a>
+                <div class="row mt-4">
+                    <div class="col-lg-7" style="background-color:transparent;">
+                        <a href="{{ coviduk_link }}" target="_blank" style="text-decoration: none; color: inherit;">
+                            <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
                     </div>
-                </div>
-                <br>
-                <div class="card">
-                    <div class="card-body">
-                        <h6>{{ app_goal }}</h6>
-                        <p class="card-text">{{ app_goal_txt }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card">
-                    <div class="card-body">
-                        <h6>{{ app_tech }}</h6>
-                        <p class="card-text">{{ app_tech_txt }}</p>
-                    </div>
-                </div>
-                <br>
-                <div class="card">
-                    <div class="card-body">
-                        <h6>{{ data_source }}</h6>
-                        <p class="card-text">{{ data_source_txt }}<a
-                                href="{{ data_source_link }}">{{ data_source_txt2 }}</a></p>
+                    <div class="col-lg-5">
+                        <a class="btn btn-outline-dark btn-block text-lowercase float-right"
+                           href="{{ coviduk_link }}"
+                           target="_blank">
+                            {{ app_btn_txt }}
+                        </a>
                     </div>
                 </div>
 
             </div>
 
-            <div class="col-lg-1" style=" background-color:transparent;">
-
-            </div>
-
-            <div class="col-lg-3" style=" background-color:transparent;">
-                <div class="row mt-4 mb-5">
-                    <a class="btn btn-outline-dark btn-block" href="">
-                        {{ app_btn_txt }}
-                    </a>
-                </div>
-                <br>
-                <div class="row mt-5">
-                    <a href="" title=""
+            <div class="col-lg-2">
+                <div class="float-center" style=" background-color:transparent;">
+                    <a href="{{ coviduk_link }}" target="_blank" title="go to the app page"
                        style="background-color:transparent;color:#000000;text-decoration:none">
                         <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
-                             alt="image" style="background-color:transparent;">
+                             alt="image" style="max-height: 110px;background-color:transparent;">
                     </a>
                 </div>
             </div>
         </div>
-        <div class="mt-3">
-            <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
-                <span class="fas fa-chevron-left"></span>
-                home
-            </a>
-        </div>
+        <code class="text-lowercase font-weight-bold">{{ in_short }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ in_short_txt }}</p>
 
+        <code class="text-lowercase font-weight-bold">{{ app_goal }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ app_goal_txt }}</p>
+
+        <code class="text-lowercase font-weight-bold">{{ app_tech }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ app_tech_txt }}</p>
+
+        <code class="text-lowercase font-weight-bold">{{ code }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3"><a href="{{ github_link }}"
+                                     target="_blank"><code>{{ github_link }}</code></a></p>
+
+        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ data_source_txt }}<a href="{{ data_source_link }}"
+                                                          target="_blank"><code>{{ data_source_txt2 }}</code></a></p>
+
+        <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ in_depth_txt }}</p>
+    </div>
+
+
+    <div class="col-lg-12 mt-4 mb-3" style="font-family:'Courier New';">
+        <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+            <span class="fas fa-chevron-left"></span>
+            home
+        </a>
     </div>
 
 {% endblock %}

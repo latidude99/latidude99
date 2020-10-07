@@ -114,13 +114,19 @@ def get_index_ctx():
 
 def get_main_soon_ctx():
     context = {
+        'code': CODE,
+        'github_link': GITHUB_SOON,
+        'coviduk_link': COVIDUK_LINK,
         'app_btn_txt': OWID_APP_BTN_TXT,
         'image': IMAGE_SOON,
         'title': SOON_TITLE,
         'subtitile': SOON_SUBTITLE,
         'subtitle2': SOON_SUBTITLE2,
         'data_supply': SOON_DATA_SUPPLY,
-        'app_desc': SOON_APP_DESC,
+        'in_short': IN_SHORT,
+        'in_depth': IN_DEPTH,
+        'in_short_txt': SOON_APP_DESC,
+        'in_depth_txt': SOON_APP_DESC_DETAILED,
         'app_goal': SOON_APP_GOAL,
         'app_goal_txt': SOON_APP_GOAL_TXT,
         'app_tech': SOON_TECH,
@@ -130,6 +136,36 @@ def get_main_soon_ctx():
         'data_source_txt2': SOON_DATA_SOURCE_TXT2,
         'data_source_link': SOON_DATA_SOURCE_LINK,
     }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
+
+
+def get_main_coviduk_ctx():
+    context = {
+        'code': CODE,
+        'github_link': GITHUB_PYTHON_PROJ_1,
+        'coviduk_link': COVIDUK_LINK,
+        'app_btn_txt': OWID_APP_BTN_TXT,
+        'image': IMAGE_UK,
+        'title': COVID_TITLE,
+        'subtitile': COVID_SUBTITLE,
+        'subtitle2': COVID_SUBTITLE2,
+        'data_supply': COVID_DATA_SUPPLY,
+        'in_short': IN_SHORT,
+        'in_depth': IN_DEPTH,
+        'in_short_txt': COVID_APP_DESC,
+        'in_depth_txt': COVID_APP_DESC_DETAILED,
+        'app_goal': COVID_APP_GOAL,
+        'app_goal_txt': COVID_APP_GOAL_TXT,
+        'app_tech': COVID_TECH,
+        'app_tech_txt': COVID_TECH_TXT,
+        'data_source': COVID_DATA_SOURCE,
+        'data_source_txt': COVID_DATA_SOURCE_TXT,
+        'data_source_txt2': COVID_DATA_SOURCE_TXT2,
+        'data_source_link': COVID_DATA_SOURCE_LINK,
+    }
+
     ctx = {**get_main_ctx(), **context}
     return ctx
 
@@ -147,7 +183,8 @@ def get_main_owid_ctx():
         'data_supply': OWID_DATA_SUPPLY,
         'in_short': IN_SHORT,
         'in_depth': IN_DEPTH,
-        'app_desc': OWID_APP_DESC,
+        'in_short_txt': OWID_APP_DESC,
+        'in_depth_txt': OWID_APP_DESC_DETAILED,
         'app_goal': OWID_APP_GOAL,
         'app_goal_txt': OWID_APP_GOAL_TXT,
         'app_tech': OWID_TECH,
@@ -162,29 +199,23 @@ def get_main_owid_ctx():
     return ctx
 
 
-def get_main_coviduk_ctx():
+def get_main_enquiry_ctx():
     context = {
         'code': CODE,
-        'github_link': GITHUB_PYTHON_PROJ_1,
-        'coviduk_link': COVIDUK_LINK,
-        'app_btn_txt': OWID_APP_BTN_TXT,
-        'image': IMAGE_UK,
-        'title': COVID_TITLE,
-        'subtitile': COVID_SUBTITLE,
-        'subtitle2': COVID_SUBTITLE2,
-        'data_supply': COVID_DATA_SUPPLY,
+        'github_link': GITHUB_JAVA_PROJ_1,
+        'app_link': ENQUIRY_LINK,
+        'app_btn_txt': ENQUIRY_APP_BTN_TXT,
+        'image': IMAGE_ENQUIRY_1,
+        'title': ENQUIRY_TITLE,
         'in_short': IN_SHORT,
         'in_depth': IN_DEPTH,
-        'app_desc': COVID_APP_DESC,
-        'app_goal': COVID_APP_GOAL,
-        'app_goal_txt': COVID_APP_GOAL_TXT,
-        'app_tech': COVID_TECH,
-        'app_tech_txt': COVID_TECH_TXT,
-        'data_source': COVID_DATA_SOURCE,
-        'data_source_txt': COVID_DATA_SOURCE_TXT,
-        'data_source_txt2': COVID_DATA_SOURCE_TXT2,
-        'data_source_link': COVID_DATA_SOURCE_LINK,
-    }
+        'in_short_txt': ENQUIRY_APP_DESC,
+        'in_depth_txt': ENQUIRY_APP_DESC_DETAILED,
+        'app_goal': ENQUIRY_APP_GOAL,
+        'app_goal_txt': ENQUIRY_APP_GOAL_TXT,
+        'app_tech': ENQUIRY_TECH,
+        'app_tech_txt': ENQUIRY_TECH_TXT,
 
+    }
     ctx = {**get_main_ctx(), **context}
     return ctx
