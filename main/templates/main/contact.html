@@ -1,0 +1,74 @@
+{% extends "main/base_boot4_main.html" %}
+{% block content %}
+    {% load static %}
+    {% static "main/" as static_base %}
+    <div class="container-flex text-lowercase" style="font-family:'Courier New';">
+        <h5 class="font-weight-bolder">{{ contact_txt_1 }} <span class="font-weight-bolder text-info mb-5">{{ contact_txt_2 }}</span class></h5>
+        <h6 class="mt-4 mb-3">{{ contact_txt_3 }}</h6>
+        <div class="col-lg-8">
+            <form action="{% url 'main:contact' %}" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="username">{{ contact_txt_4 }}</label>
+                    <input type="text" class="form-control" id="username"
+                           placeholder="Enter your name" name="username" required>
+                    <div class="valid-feedback">{{ error_1 }}</div>
+                    <div class="invalid-feedback">{{ error_2 }}</div>
+                </div>
+                 <div class="form-group">
+                    <label for="email">{{ contact_txt_5 }}</label>
+                    <input type="email" class="form-control" id="email"
+                           placeholder="Enter your email address" name="email" required>
+                    <div class="valid-feedback">{{ error_1 }}</div>
+                    <div class="invalid-feedback">{{ error_2 }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">{{ contact_txt_6 }}</label>
+                    <input type="text" class="form-control" id="subject"
+                           placeholder="Enter subject" name="subject" required>
+                    <div class="valid-feedback">{{ error_1 }}</div>
+                    <div class="invalid-feedback">{{ error_2 }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="message">{{ contact_txt_7 }}</label>
+                    <textarea type="text" class="form-control" id="message" rows="5"
+                              placeholder="Write something..." name="message" required></textarea>
+                    <div class="valid-feedback">{{ error_1 }}</div>
+                    <div class="invalid-feedback">{{ error_2 }}</div>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember" required>
+                        {{ contact_txt_9 }}
+                        <div class="valid-feedback">{{ error_1 }}.</div>
+                        <div class="invalid-feedback">{{ error_3 }}</div>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-outline-dark btn-block">{{ contact_txt_8 }}</button>
+            </form>
+        </div>
+    <div class="col-lg-4"></div>
+    </div>
+
+    <script>
+        // Disable form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Get the forms we want to add validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+{% endblock %}
+

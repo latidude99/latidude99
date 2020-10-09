@@ -47,37 +47,38 @@ def get_base_ctx():
 
 def get_main_ctx():
     context = {'footer_info': FOOTER_INFO,
-           'background_pattern1': BACKGROUND_PATTERN1,
-           'background_pattern2': BACKGROUND_PATTERN2,
-           'latidude99': 'latidude99.com',
-           'image_piotr': IMAGE_PIOTR,
-           'intro1': MAIN_INDEX_INTRO1,
-           'intro2': MAIN_INDEX_INTRO2,
-           'intro3': MAIN_INDEX_INTRO3,
-           'intro4': MAIN_INDEX_INTRO4,
-           'home': HOME,
-           'nav_java_proj': JAVA_PROJECTS,
-           'nav_java_proj_type1': JAVA_PROJ_TYPE_1,
-           'nav_java_proj_type2': JAVA_PROJ_TYPE_2,
-           'nav_java_proj1': JAVA_PROJ_1,
-           'nav_java_proj2': JAVA_PROJ_2,
-           'nav_java_proj3': JAVA_PROJ_3,
-           'nav_java_proj4': JAVA_PROJ_4,
-           'nav_java_proj4a': JAVA_PROJ_4a,
-           'nav_java_proj5': JAVA_PROJ_5,
-           'nav_java_proj6': JAVA_PROJ_6,
-           'nav_java_proj7': JAVA_PROJ_7,
-           'nav_python_proj': PYTHON_PROJECTS,
-           'nav_python_proj_type1': PYTHON_PROJ_TYPE_1,
-           'nav_python_proj_type2': PYTHON_PROJ_TYPE_2,
-           'nav_python_proj1': PYTHON_PROJ_1,
-           'nav_python_proj2': PYTHON_PROJ_2,
-           'nav_android_proj': ANDROID_PROJECTS,
-           'nav_android_proj1': ANDROID_PROJ_1,
-           'java': JAVA,
-           'python': PYTHON,
-           'android': ANDROID,
-           }
+               'background_pattern1': BACKGROUND_PATTERN1,
+               'background_pattern2': BACKGROUND_PATTERN2,
+               'latidude99': 'latidude99.com',
+               'image_piotr': IMAGE_PIOTR,
+               'intro1': MAIN_INDEX_INTRO1,
+               'intro2': MAIN_INDEX_INTRO2,
+               'intro3': MAIN_INDEX_INTRO3,
+               'intro4': MAIN_INDEX_INTRO4,
+               'home': HOME,
+               'nav_java_proj': JAVA_PROJECTS,
+               'nav_java_proj_type1': JAVA_PROJ_TYPE_1,
+               'nav_java_proj_type2': JAVA_PROJ_TYPE_2,
+               'nav_java_proj1': JAVA_PROJ_1,
+               'nav_java_proj2': JAVA_PROJ_2,
+               'nav_java_proj3': JAVA_PROJ_3,
+               'nav_java_proj4': JAVA_PROJ_4,
+               'nav_java_proj4a': JAVA_PROJ_4a,
+               'nav_java_proj5': JAVA_PROJ_5,
+               'nav_java_proj6': JAVA_PROJ_6,
+               'nav_java_proj7': JAVA_PROJ_7,
+               'nav_python_proj': PYTHON_PROJECTS,
+               'nav_python_proj_type1': PYTHON_PROJ_TYPE_1,
+               'nav_python_proj_type2': PYTHON_PROJ_TYPE_2,
+               'nav_python_proj1': PYTHON_PROJ_1,
+               'nav_python_proj2': PYTHON_PROJ_2,
+               'nav_android_proj': ANDROID_PROJECTS,
+               'nav_android_proj1': ANDROID_PROJ_1,
+               'contact': CONTACT_TXT,
+               'java': JAVA,
+               'python': PYTHON,
+               'android': ANDROID,
+               }
     ctx = {**get_base_ctx(), **context}
     return ctx
 
@@ -133,6 +134,28 @@ def get_index_ctx():
                'image_android_proj_1b': IMAGE_ANDROID_PROJ_1b,
                'link_android_proj_1': LINK_ANDROID_PROJ_1,
                'github_android_proj_1': GITHUB_ANDROID_PROJ_1,
+               }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
+
+def get_contact_ctx():
+    context = {'contact_txt_1': CONTACT_TXT_1,
+               'contact_txt_2': CONTACT_TXT_2,
+               'contact_txt_3': CONTACT_TXT_3,
+               'contact_txt_4': CONTACT_TXT_4,
+               'contact_txt_5': CONTACT_TXT_5,
+               'contact_txt_6': CONTACT_TXT_6,
+               'contact_txt_7': CONTACT_TXT_7,
+               'contact_txt_8': CONTACT_TXT_8,
+               'contact_txt_9': CONTACT_TXT_9,
+               'contact_txt_10': CONTACT_TXT_10,
+               'contact_txt_11': CONTACT_TXT_11,
+               'contact_txt_12': CONTACT_TXT_11,
+               'error_1': ERROR_1,
+               'error_2': ERROR_2,
+               'error_3': ERROR_3,
+               'error_4': ERROR_4,
                }
     ctx = {**get_main_ctx(), **context}
     return ctx
@@ -198,7 +221,10 @@ def get_main_owid_ctx():
 def get_main_enquiry_ctx():
     context = {
         'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link_': GITHUB_JAVA_PROJ_1a,
         'app_link': ENQUIRY_LINK,
+        'github_link2': GITHUB_LINK_DETAIL,
+        'github_link2_desc': GITHUB_LINK_DETAIL_DESC,
         'app_btn_txt': ENQUIRY_APP_BTN_TXT,
         'image': IMAGE_ENQUIRY,
         'title': ENQUIRY_TITLE,
@@ -208,6 +234,7 @@ def get_main_enquiry_ctx():
         'in_depth_txt2': ENQUIRY_IN_DEPTH2,
         'in_depth_txt3': ENQUIRY_IN_DEPTH3,
         'in_depth_txt4': ENQUIRY_IN_DEPTH4,
+        'in_depth_txt5': ENQUIRY_IN_DEPTH5,
         'image0': IMAGE_ENQUIRY_0,
         'image1': IMAGE_ENQUIRY_1,
         'image2': IMAGE_ENQUIRY_2,
@@ -238,7 +265,6 @@ def get_main_contacts_ctx():
         'image4': IMAGE_CONTACTS_1,
         'image5': IMAGE_CONTACTS_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
@@ -263,11 +289,9 @@ def get_main_links_ctx():
         'image4': IMAGE_LINKS_1,
         'image5': IMAGE_LINKS_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
-
 
 
 def get_main_maptools_ctx():
@@ -289,12 +313,9 @@ def get_main_maptools_ctx():
         'image4': IMAGE_MAPTOOLS_1,
         'image5': IMAGE_MAPTOOLS_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
-
-
 
 
 def get_main_sncreader_ctx():
@@ -316,13 +337,9 @@ def get_main_sncreader_ctx():
         'image4': IMAGE_SNCREADER_1,
         'image5': IMAGE_SNCREADER_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
-
-
-
 
 
 def get_main_folderbackup_ctx():
@@ -344,12 +361,9 @@ def get_main_folderbackup_ctx():
         'image4': IMAGE_FOLDERBACKUP_1,
         'image5': IMAGE_FOLDERBACKUP_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
-
-
 
 
 def get_main_maptoolsapp_ctx():
@@ -373,11 +387,6 @@ def get_main_maptoolsapp_ctx():
         'image4': IMAGE_MAPTOOLSAPP_1,
         'image5': IMAGE_MAPTOOLSAPP_1,
 
-
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
-
-
-
-

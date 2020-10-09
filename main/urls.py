@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('contact', views.contact, name='contact'),
     path('soon', views.soon, name='soon'),
     path('covid', views.coviduk, name='coviduk'),
     path('owid', views.owid, name='owid'),
@@ -13,6 +14,5 @@ urlpatterns = [
     path('maptoolsapp', views.maptoolsapp, name='maptoolsapp'),
     path('sncreader', views.sncreader, name='sncreader'),
     path('folderbackup', views.folderbackup, name='folderbackup'),
-#    path('enquiry', views.enquiry, name='enquiry'),
 
 ]

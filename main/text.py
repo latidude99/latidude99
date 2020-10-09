@@ -17,6 +17,7 @@ MAIN_INDEX_INTRO4 = 'some of my projects'
 MAIN_INDEX_INTRO5 = ''
 MAIN_INDEX_INTRO6 = ''
 HOME = 'Home'
+CONTACT_TXT = 'Contact'
 
 # ----------------------- BASE ---------------------------
 IN_SHORT = 'in short'
@@ -98,6 +99,7 @@ TITLE_JAVA_PROJ_1 = 'Enquiry System'
 DESC_JAVA_PROJ_1 = 'A customer service enquiry system for small map and travel bookshops'
 LINK_JAVA_PROJ_1 = 'http://enquiry.latidude99.com/'
 GITHUB_JAVA_PROJ_1 = 'https://github.com/latidude99/enquiries'
+GITHUB_JAVA_PROJ_1a = 'https://github.com/latidude99/enquiries-restful'
 
 IMAGE_JAVA_PROJ_2 = 'images/contacts.png'
 TITLE_JAVA_PROJ_2 = 'Contact List'
@@ -141,6 +143,23 @@ TITLE_ANDROID_PROJ_1 = 'Map Tools App'
 DESC_ANDROID_PROJ_1 = 'An android app useful for reading maps'
 LINK_ANDROID_PROJ_1 = ''
 GITHUB_ANDROID_PROJ_1 = 'https://github.com/latidude99/map-tools-app'
+
+CONTACT_TXT_1 = 'Drop me an email at '
+CONTACT_TXT_2 = 'latidude99@gmail.com'
+CONTACT_TXT_3 = 'or write a few lines here:'
+CONTACT_TXT_4 = 'Name'
+CONTACT_TXT_5 = 'Email address'
+CONTACT_TXT_6 = 'Subject'
+CONTACT_TXT_7 = 'Message'
+CONTACT_TXT_8 = 'Submit'
+CONTACT_TXT_9 = 'I agree to disagree '
+CONTACT_TXT_10 = ''
+CONTACT_TXT_11= ''
+CONTACT_TXT_12 = ''
+ERROR_1 = 'OK'
+ERROR_2 = 'Please fill out this field.'
+ERROR_3 = 'Check this checkbox to continue'
+ERROR_4 = ''
 
 # ----------------------- COVIDUK ---------------------------
 COVIDUK_LINK = 'http://py.latidude99.com'
@@ -208,23 +227,28 @@ IMAGE_OWID_4 = 'images/owid4.png'
 
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'
+GITHUB_LINK_DETAIL = 'https://github.com/latidude99/enquiries/blob/master/README.md'
+GITHUB_LINK_DETAIL_DESC = 'GitHub, Enquiry System'
 ENQUIRY_TITLE = 'enquiry system'
 ENQUIRY_APP_BTN_TXT = 'go to the app'
 IMAGE_ENQUIRY = 'images/enquiry.png'
 ENQUIRY_IN_SHORT = 'A customer service enquiry system for small map and travel bookshops'
-ENQUIRY_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, a little bit of Javascript (Google Maps API)'
+ENQUIRY_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, ' \
+               'a little bit of Javascript (Google Maps API), JSON (for the RESTful version)'
 ENQUIRY_IN_DEPTH1 = 'The main goal of the app is to allow customers submit enquiries and enable ' \
                     'customer service to deal and keep track of them.'
 
-ENQUIRY_IN_DEPTH2 = 'On the customer side there are options to attach files and draw polygons ' \
-                    'on Google Maps making it much simpler to describe the exact area of interest.'
+ENQUIRY_IN_DEPTH2 = 'On the customer side, apart of the usual, there are options to attach files ' \
+                    'and draw Google Maps polygons ' \
+                    'making it much simpler to describe the exact area of interest.'
 ENQUIRY_IN_DEPTH3 = 'On the other end the customer service users see all the enquiry details ' \
-                    'including the Google Maps polygon allowing them to pinpoint exactly ' \
+                    'including a Google Maps polygon allowing them to precisely pinpoint ' \
                     'the geographical area of interest.'
 ENQUIRY_IN_DEPTH4 = 'Having an option to show it on a map instead of describing it in ' \
-                    'an email or on the phone saves everybody a bit of time and is more precise. ' \
+                    'an email or over the phone saves everybody a fair bit of time and is more precise. ' \
                     'This is crucial in a travel map shop where everything is about customer destinations. ' \
                     'Standard enquiry forms do not include any graphic options.'
+ENQUIRY_IN_DEPTH5 = 'More information available at '
 IMAGE_ENQUIRY_0 = 'images/enquiry0.png'
 IMAGE_ENQUIRY_1 = 'images/enquiry1.png'
 IMAGE_ENQUIRY_2 = 'images/enquiry2.png'
@@ -260,7 +284,8 @@ LINKS_TITLE = 'LINKS system'
 LINKS_APP_BTN_TXT = 'Open the app in a new tab'
 IMAGE_LINKS = 'images/LINKS.png'
 LINKS_IN_SHORT = 'A customer service LINKS system for small map and travel bookshops'
-LINKS_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, a little bit of Javascript (Google Maps API)'
+LINKS_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, ' \
+             'a little bit of Javascript (Google Maps API)'
 LINKS_IN_DEPTH1 = ''
 LINKS_IN_DEPTH2 = ''
 LINKS_IN_DEPTH3 = ''

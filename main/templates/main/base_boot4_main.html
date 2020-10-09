@@ -41,8 +41,8 @@
             <a href="{% url 'main:index' %}" title="home" style="text-decoration:none">
                 <div class="media-body text-lowercase text-center ">
                     <h3 class="mb-2" style="color:yellow;">{{ intro1 }}</h3>
-                    <p class="mb-0 mt-3" style="color:yellow;"><small>{{ intro2 }}</small></p>
-                    <p class="mb-0 mt-3" style="color:yellow;"><small>{{ intro3 }}</small></p>
+                    <p class="mb-0 mt-2" style="color:yellow;"><small>{{ intro2 }}</small></p>
+                    <p class="mb-0 mt-2" style="color:yellow;"><small>{{ intro3 }}</small></p>
                 </div>
             </a>
         </div>
@@ -135,15 +135,19 @@
                     {{ nav_android_proj1 }}
                 </a>
             </li>
-
         </ul>
+
+        <p class="text-white text-uppercase px-3 small py-1 mt-2 mb-2">
+            <a href="{% url 'main:contact' %}" id="project-list">{{ contact }}</a>
+        </p>
+
     </div>
     <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="hits">
 </div>
 <!-- End vertical navbar -->
 
 <!-- Page content holder -->
-<div class="page-content p-5 bg-transparent" id="content">
+<div class="page-content px-5 py-2 bg-transparent" id="content">
     <!-- content -->
     {% block content %}{% endblock %}
 </div>

@@ -9,6 +9,9 @@ def soon(request):
     context = serv.get_main_ctx()
     return render(request, 'main/soon.html', context)
 
+def contact(request):
+    context = serv.get_contact_ctx()
+    return render(request, 'main/contact.html', context)
 
 def index(request):
     context = serv.get_index_ctx()
