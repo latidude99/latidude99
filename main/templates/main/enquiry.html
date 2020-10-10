@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-lg-4">
                         <a class="btn btn-outline-dark btn-block text-lowercase float-right"
-                           href="{% url 'owid:index' %}"
+                           href="{{ app_link }}"
                            target="_blank">
                             {{ app_btn_txt }}
                             <span class="fas fa-external-link-alt  text-info float-right mr-2 mt-1"></span>
@@ -26,12 +26,12 @@
 
             </div>
 
-            <div class="col-lg-2">
+            <div class="col-lg-2 mt-4">
                 <div class="float-center" style=" background-color:transparent;">
-                    <a href="{% url 'owid:index' %}" target="_blank" title="go to the app page"
+                    <a href="{{ app_link }}" target="_blank" title="go to the app page"
                        style="background-color:transparent;color:#000000;text-decoration:none">
                         <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
-                             alt="world_image" style="max-height: 90px;background-color:transparent;">
+                             alt="image" style="max-height: 80px;background-color:transparent;">
                     </a>
                 </div>
             </div>
@@ -47,12 +47,21 @@
         <code class="text-lowercase font-weight-bold">{{ code }}</code>
         <hr>
         <div class="d-flex flex-column">
-        <div class=" px-4 mt-2">
-            <a href="{{ github_link }}" target="_blank"><code>{{ github_link }}</code></a>
-        </div>
-        <div class=" px-4 mb-3">
-            <a href="{{ github_link_ }}" target="_blank"><code>{{ github_link_ }}</code></a>
-        </div>
+            <div class=" px-4 mt-2">
+                <a href="{{ github_link }}" target="_blank">
+                    <code>
+                        {{ github_link }}
+                        <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span>
+                    </code>
+                </a>
+            </div>
+            <div class=" px-4 mb-3">
+                <a href="{{ github_link_ }}" target="_blank">
+                    <code>
+                        {{ github_link_ }}
+                        <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span>
+                    </code></a>
+            </div>
         </div>
 
         <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
@@ -63,7 +72,8 @@
             <p>{{ in_depth_txt3 }}</p>
             <p>{{ in_depth_txt4 }}</p>
             <p>{{ in_depth_txt5 }}<a href="{{ github_link2 }}"
-                                     target="_blank"><code>{{ github_link2_desc }}</code></a></p></p>
+                                     target="_blank"><code>{{ github_link2_desc }}
+             <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p></p>
         </div>
         <code class="text-lowercase font-weight-bold">{{ images }}</code>
         <hr>

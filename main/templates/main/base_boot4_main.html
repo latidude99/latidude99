@@ -60,25 +60,25 @@
 
         <ul class="nav flex-column mb-0">
             <li class="nav-item small">
-                <a href="{% url 'main:enquiry' %}" class="text-white-50" id="project-list">
+                <a href="{% url 'main:enquiry' %}" class="text-white" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj1 }}
                 </a>
             </li>
             <li class="nav-item small">
-                <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
+                <a href="{% url 'main:contacts' %}" class="text-white" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj2 }}
                 </a>
             </li>
             <li class="nav-item small">
-                <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
+                <a href="{% url 'main:links' %}" class="text-white" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj3 }}
                 </a>
             </li>
             <li class="nav-item small" id="project-list">
-                <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
+                <a href="{% url 'main:sncreader' %}" class="text-white" id="project-list">
                     <i class="fab fa-java ml-4  text-white fa-1x"></i>
                     {{ nav_java_proj4 }}
                     <div class="text-right mr-4">{{ nav_java_proj4a }}
@@ -142,12 +142,12 @@
         </p>
 
     </div>
-    <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="hits">
+    <!--<img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="hits">-->
 </div>
 <!-- End vertical navbar -->
 
 <!-- Page content holder -->
-<div class="page-content px-5 py-2 bg-transparent" id="content">
+<div class="page-content px-5 py-3 bg-transparent" id="content">
     <!-- content -->
     {% block content %}{% endblock %}
 </div>

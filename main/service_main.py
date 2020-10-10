@@ -87,53 +87,44 @@ def get_index_ctx():
     context = {'title_soon_proj': 'coming soon',
                'title_python_proj_1': TITLE_PYTHON_PROJ_1,
                'desc_python_proj_1': DESC_PYTHON_PROJ_1,
-               'github_python_proj_1': GITHUB_PYTHON_PROJ_1,
                'image_python_proj_1': IMAGE_PYTHON_PROJ_1,
                'title_python_proj_2': TITLE_PYTHON_PROJ_2,
                'desc_python_proj_2': DESC_PYTHON_PROJ_2,
-               'github_python_proj_2': GITHUB_PYTHON_PROJ_2,
                'image_python_proj_2': IMAGE_PYTHON_PROJ_2,
                'title_java_proj_1': TITLE_JAVA_PROJ_1,
                'desc_java_proj_1': DESC_JAVA_PROJ_1,
                'image_java_proj_1': IMAGE_JAVA_PROJ_1,
                'link_java_proj_1': LINK_JAVA_PROJ_1,
-               'github_java_proj_1': GITHUB_JAVA_PROJ_1,
                'title_java_proj_2': TITLE_JAVA_PROJ_2,
                'desc_java_proj_2': DESC_JAVA_PROJ_2,
                'image_java_proj_2': IMAGE_JAVA_PROJ_2,
                'link_java_proj_2': LINK_JAVA_PROJ_2,
-               'github_java_proj_2': GITHUB_JAVA_PROJ_2,
                'title_java_proj_3': TITLE_JAVA_PROJ_3,
                'desc_java_proj_3': DESC_JAVA_PROJ_3,
                'image_java_proj_3a': IMAGE_JAVA_PROJ_3a,
                'image_java_proj_3b': IMAGE_JAVA_PROJ_3b,
                'link_java_proj_3': LINK_JAVA_PROJ_3,
-               'github_java_proj_3': GITHUB_JAVA_PROJ_3,
                'title_java_proj_4': TITLE_JAVA_PROJ_4,
                'desc_java_proj_4': DESC_JAVA_PROJ_4,
                'image_java_proj_4a': IMAGE_JAVA_PROJ_4a,
                'image_java_proj_4b': IMAGE_JAVA_PROJ_4b,
                'link_java_proj_4': LINK_JAVA_PROJ_4,
-               'github_java_proj_4': GITHUB_JAVA_PROJ_4,
                'title_java_proj_5': TITLE_JAVA_PROJ_5,
                'desc_java_proj_5': DESC_JAVA_PROJ_5,
                'image_java_proj_5a': IMAGE_JAVA_PROJ_5a,
                'image_java_proj_5b': IMAGE_JAVA_PROJ_5b,
                'image_java_proj_5c': IMAGE_JAVA_PROJ_5c,
                'link_java_proj_5': LINK_JAVA_PROJ_5,
-               'github_java_proj_5': GITHUB_JAVA_PROJ_5,
                'title_java_proj_6': TITLE_JAVA_PROJ_6,
                'desc_java_proj_6': DESC_JAVA_PROJ_6,
                'image_java_proj_6a': IMAGE_JAVA_PROJ_6a,
                'image_java_proj_6b': IMAGE_JAVA_PROJ_6b,
                'link_java_proj_6': LINK_JAVA_PROJ_6,
-               'github_java_proj_6': GITHUB_JAVA_PROJ_6,
                'title_android_proj_1': TITLE_ANDROID_PROJ_1,
                'desc_android_proj_1': DESC_ANDROID_PROJ_1,
                'image_android_proj_1a': IMAGE_ANDROID_PROJ_1a,
                'image_android_proj_1b': IMAGE_ANDROID_PROJ_1b,
                'link_android_proj_1': LINK_ANDROID_PROJ_1,
-               'github_android_proj_1': GITHUB_ANDROID_PROJ_1,
                }
     ctx = {**get_main_ctx(), **context}
     return ctx
@@ -220,11 +211,11 @@ def get_main_owid_ctx():
 
 def get_main_enquiry_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
-        'github_link_': GITHUB_JAVA_PROJ_1a,
+        'github_link': GITHUB_ENQUIRY,
+        'github_link_': GITHUB_ENQUIRY_REST,
         'app_link': ENQUIRY_LINK,
-        'github_link2': GITHUB_LINK_DETAIL,
-        'github_link2_desc': GITHUB_LINK_DETAIL_DESC,
+        'github_link2': GITHUB_ENQUIRY_LINK_DETAIL,
+        'github_link2_desc': GITHUB_ENQUIRY_LINK_DETAIL_DESC,
         'app_btn_txt': ENQUIRY_APP_BTN_TXT,
         'image': IMAGE_ENQUIRY,
         'title': ENQUIRY_TITLE,
@@ -248,7 +239,9 @@ def get_main_enquiry_ctx():
 
 def get_main_contacts_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_CONTACTS,
+        'github_link2': GITHUB_CONTACTS_LINK_DETAIL,
+        'github_link2_desc': GITHUB_CONTACTS_LINK_DETAIL_DESC,
         'app_link': CONTACTS_LINK,
         'app_btn_txt': CONTACTS_APP_BTN_TXT,
         'image': IMAGE_CONTACTS,
@@ -259,11 +252,29 @@ def get_main_contacts_ctx():
         'in_depth_txt2': CONTACTS_IN_DEPTH2,
         'in_depth_txt3': CONTACTS_IN_DEPTH3,
         'in_depth_txt4': CONTACTS_IN_DEPTH4,
+        'in_depth_txt5': CONTACTS_IN_DEPTH5,
+        'in_depth_txt6': CONTACTS_IN_DEPTH6,
+        'in_depth_txt7': CONTACTS_IN_DEPTH7,
+        'in_depth_txt8': CONTACTS_IN_DEPTH8,
+        'in_depth_txt9': CONTACTS_IN_DEPTH9,
+        'in_depth_txt10': CONTACTS_IN_DEPTH10,
+        'in_depth_txt11': CONTACTS_IN_DEPTH11,
+        'in_depth_txt12': CONTACTS_IN_DEPTH12,
+        'in_depth_txt13': CONTACTS_IN_DEPTH13,
+        'in_depth_txt14': CONTACTS_IN_DEPTH14,
+        'in_depth_txt15': CONTACTS_IN_DEPTH15,
+        'in_depth_txt16': CONTACTS_IN_DEPTH16,
+        'in_depth_txt17': CONTACTS_IN_DEPTH17,
+        'in_depth_txt18': CONTACTS_IN_DEPTH18,
         'image1': IMAGE_CONTACTS_1,
-        'image2': IMAGE_CONTACTS_1,
-        'image3': IMAGE_CONTACTS_1,
-        'image4': IMAGE_CONTACTS_1,
-        'image5': IMAGE_CONTACTS_1,
+        'image2': IMAGE_CONTACTS_2,
+        'image3': IMAGE_CONTACTS_3,
+        'image4': IMAGE_CONTACTS_4,
+        'image4a': IMAGE_CONTACTS_4a,
+        'image5': IMAGE_CONTACTS_5,
+        'image6': IMAGE_CONTACTS_6,
+        'image7': IMAGE_CONTACTS_7,
+        'image8': IMAGE_CONTACTS_8,
 
     }
     ctx = {**get_main_ctx(), **context}
@@ -272,8 +283,10 @@ def get_main_contacts_ctx():
 
 def get_main_links_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_LINKS,
         'app_link': LINKS_LINK,
+        'github_link2': GITHUB_LINKS_LINK_DETAIL,
+        'github_link2_desc': GITHUB_LINKS_LINK_DETAIL_DESC,
         'app_btn_txt': LINKS_APP_BTN_TXT,
         'image': IMAGE_LINKS,
         'title': LINKS_TITLE,
@@ -284,10 +297,9 @@ def get_main_links_ctx():
         'in_depth_txt3': LINKS_IN_DEPTH3,
         'in_depth_txt4': LINKS_IN_DEPTH4,
         'image1': IMAGE_LINKS_1,
-        'image2': IMAGE_LINKS_1,
-        'image3': IMAGE_LINKS_1,
-        'image4': IMAGE_LINKS_1,
-        'image5': IMAGE_LINKS_1,
+        'image2': IMAGE_LINKS_2,
+        'image3': IMAGE_LINKS_3,
+        'image4': IMAGE_LINKS_4,
 
     }
     ctx = {**get_main_ctx(), **context}
@@ -296,7 +308,9 @@ def get_main_links_ctx():
 
 def get_main_maptools_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_MAPTOOLS,
+        'github_link2': GITHUB_MAPTOOLS_LINK_DETAIL,
+        'github_link2_desc': GITHUB_MAPTOOLS_LINK_DETAIL_DESC,
         'app_link': MAPTOOLS_LINK,
         'app_btn_txt': MAPTOOLS_APP_BTN_TXT,
         'image': IMAGE_MAPTOOLS,
@@ -320,8 +334,10 @@ def get_main_maptools_ctx():
 
 def get_main_sncreader_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_SNCREADER,
         'app_link': SNCREADER_LINK,
+        'github_link2': GITHUB_SNCREADER_LINK_DETAIL,
+        'github_link2_desc': GITHUB_SNCREADER_LINK_DETAIL_DESC,
         'app_btn_txt': SNCREADER_APP_BTN_TXT,
         'image': IMAGE_SNCREADER,
         'title': SNCREADER_TITLE,
@@ -331,11 +347,20 @@ def get_main_sncreader_ctx():
         'in_depth_txt2': SNCREADER_IN_DEPTH2,
         'in_depth_txt3': SNCREADER_IN_DEPTH3,
         'in_depth_txt4': SNCREADER_IN_DEPTH4,
+        'in_depth_txt5': SNCREADER_IN_DEPTH4,
+        'in_depth_txt6': SNCREADER_IN_DEPTH4,
+        'in_depth_txt7': SNCREADER_IN_DEPTH4,
+        'in_depth_txt8': SNCREADER_IN_DEPTH4,
+        'in_depth_txt9': SNCREADER_IN_DEPTH4,
+        'in_depth_txt10': SNCREADER_IN_DEPTH4,
+        'in_depth_txt11': SNCREADER_IN_DEPTH4,
+        'in_depth_txt12': SNCREADER_IN_DEPTH4,
         'image1': IMAGE_SNCREADER_1,
-        'image2': IMAGE_SNCREADER_1,
-        'image3': IMAGE_SNCREADER_1,
-        'image4': IMAGE_SNCREADER_1,
-        'image5': IMAGE_SNCREADER_1,
+        'image2': IMAGE_SNCREADER_2,
+        'image3': IMAGE_SNCREADER_3,
+        'image4': IMAGE_SNCREADER_4,
+        'image5': IMAGE_SNCREADER_5,
+        'image6': IMAGE_SNCREADER_6,
 
     }
     ctx = {**get_main_ctx(), **context}
@@ -344,8 +369,10 @@ def get_main_sncreader_ctx():
 
 def get_main_folderbackup_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_FOLDERBACKUP,
         'app_link': FOLDERBACKUP_LINK,
+        'github_link2': GITHUB_FOLDERBACKUP_LINK_DETAIL,
+        'github_link2_desc': GITHUB_FOLDERBACKUP_LINK_DETAIL_DESC,
         'app_btn_txt': FOLDERBACKUP_APP_BTN_TXT,
         'image': IMAGE_FOLDERBACKUP,
         'title': FOLDERBACKUP_TITLE,
@@ -368,8 +395,10 @@ def get_main_folderbackup_ctx():
 
 def get_main_maptoolsapp_ctx():
     context = {
-        'github_link': GITHUB_JAVA_PROJ_1,
+        'github_link': GITHUB_MAPTOOLSAPP,
         'app_link': MAPTOOLSAPP_LINK,
+        'github_link2': GITHUB_MAPTOOLSAPP_LINK_DETAIL,
+        'github_link2_desc': GITHUB_MAPTOOLSAPP_LINK_DETAIL_DESC,
         'app_btn_txt': MAPTOOLSAPP_APP_BTN_TXT,
         'image': IMAGE_MAPTOOLSAPP,
         'title': MAPTOOLSAPP_TITLE,
