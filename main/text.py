@@ -70,7 +70,7 @@ JAVA_PROJ_1 = 'enquiry system'
 JAVA_PROJ_2 = 'contact list'
 JAVA_PROJ_3 = 'link cutter'
 JAVA_PROJ_4 = 'admiralty charts info'
-JAVA_PROJ_4a = 'and coverage reader'
+JAVA_PROJ_4a = 'reader'
 JAVA_PROJ_5 = 'map reading tools'
 JAVA_PROJ_6 = 'folder backup utility'
 JAVA_PROJ_7 = 'subtitles converter'
@@ -357,18 +357,35 @@ SNCREADER_LINK = ''
 GITHUB_SNCREADER = 'https://github.com/latidude99/snc-xml-reader-fx-db'
 GITHUB_SNCREADER_LINK_DETAIL = 'https://github.com/latidude99/snc-xml-reader-fx-db/blob/master/README.md'
 GITHUB_SNCREADER_LINK_DETAIL_DESC = 'GitHub, README.md'
-SNCREADER_TITLE = 'SNC Reader'
+SNCREADER_TITLE = 'admiralty charts info reader'
 SNCREADER_APP_BTN_TXT = 'download the app'
 IMAGE_SNCREADER = 'images/sncreader.png'
-SNCREADER_IN_SHORT = 'A customer service SNCREADER system for small map and travel bookshops'
+SNCREADER_IN_SHORT = 'A desktop application serving detailed information on Standard Admiralty Charts ' \
+                     'and showing their coverage on Google Maps.'
 SNCREADER_TECH = 'Java 8, JavaFX, NitroDB, Javascript (Google Maps API)'
-SNCREADER_IN_DEPTH1 = ''
-SNCREADER_IN_DEPTH2 = ''
-SNCREADER_IN_DEPTH3 = ''
-SNCREADER_IN_DEPTH4 = ''
-SNCREADER_IN_DEPTH5 = ''
-SNCREADER_IN_DEPTH6 = ''
-SNCREADER_IN_DEPTH7 = ''
+SNCREADER_IN_DEPTH1 = 'Every week the United Kingdom Hydrographic Office issues a digital catalogue ' \
+                      'for their Standard Paper Charts in XML format. It\'s not the most pleasant thing ' \
+                      'in the world to use it in its raw form. ' \
+                      'Hence the idea to make searching ' \
+                      'for charts information a bit more user friendly. It has been achieved by creating a simple GUI ' \
+                      'where searching is easy and information are displayed in a clear and succinct way. '
+SNCREADER_IN_DEPTH2 = 'The application makes it possible to search for ' \
+                      'the exact match of a single chart or a range of charts.'
+SNCREADER_IN_DEPTH3 = 'It also allows searching for charts nearby the given chart number ' \
+                      'with larger or smaller scales. The distance limit is set for maximum ' \
+                      'of 300 km between the charts\' centres.'
+SNCREADER_IN_DEPTH4 = 'The information on the searched charts is displayed in a text window. ' \
+                      'There is an option to display search results in a separate window, ' \
+                      'showing charts coverage as polygons on top of Google Maps. Clicking on the map ' \
+                      'within a chart area brings up basic chart info in a tooltip'
+SNCREADER_IN_DEPTH5 = 'Every time charts coverage is displayed an HTML file is generated and ' \
+                      'saved in the user folder. The file name contains ' \
+                      'of all the chart numbers that have been found during the last search ' \
+                      '(if the name is longer than 240 characters, first and last chart numbers are used instead)'
+SNCREADER_IN_DEPTH6 = 'The generated HTML files are full, stand alone HTML pages ' \
+                      'with Javascript and Google Maps API KEY included ' \
+                      '(can be opened in any major internet browser, although the IE and Edge have not been tested). '
+SNCREADER_IN_DEPTH7 = 'More information available at '
 SNCREADER_IN_DEPTH8 = ''
 SNCREADER_IN_DEPTH9 = ''
 SNCREADER_IN_DEPTH10 = ''

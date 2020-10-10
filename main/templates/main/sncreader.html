@@ -11,7 +11,7 @@
                 </a>
                 <div class="row mt-4">
                     <div class="col-lg-8" style="background-color:transparent;">
-                        <a href="{{ app_link }}" target="_blank" style="text-decoration: none; color: inherit;">
+                        <a href="{{ app_link }}" style="text-decoration: none; color: inherit;cursor: none;">
                             <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
                     </div>
                     <div class="col-lg-4">
@@ -28,8 +28,8 @@
 
             <div class="col-lg-2">
                 <div class="float-center mt-4" style=" background-color:transparent;">
-                    <a href="{{ app_link }}" target="_blank" title="go to the app page"
-                       style="background-color:transparent;color:#000000;text-decoration:none">
+                    <a href="{{ app_link }}" title=""
+                       style="background-color:transparent;color:#000000;text-decoration:none;cursor: none;">
                         <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
                              alt="world_image" style="max-height: 80px;background-color:transparent;">
                     </a>
@@ -63,32 +63,12 @@
             <p>{{ in_depth_txt1 }}</p>
             <p>{{ in_depth_txt2 }}</p>
             <p>{{ in_depth_txt3 }}</p>
-            <ul style="list-style-type: none;">
-                <li></li>
-                <ul>
-                    <li>{{ in_depth_txt3 }}</li>
-                    <li>{{ in_depth_txt4 }}</li>
-                    <li>{{ in_depth_txt5 }}</li>
-                    <li>{{ in_depth_txt6 }}</li>
-                    <ul>
-                        <li>{{ in_depth_txt7 }}</li>
-                        <li>{{ in_depth_txt8 }}</li>
-                    </ul>
-                    <li>{{ in_depth_txt9 }}</li>
-                    <ul>
-                        <li>{{ in_depth_txt10 }}</li>
-                        <li>{{ in_depth_txt11 }}</li>
-                        <li>{{ in_depth_txt12 }}</li>
-                        <li>{{ in_depth_txt13 }}</li>
-                        <li>{{ in_depth_txt14 }}</li>
-                        <li>{{ in_depth_txt15 }}</li>
-                    </ul>
-                </ul>
-            </ul>
-            <p>{{ in_depth_txt17 }}</p>
-            <p>{{ in_depth_txt18 }}<a href="{{ github_link2 }}"
-                                     target="_blank"><code>{{ github_link2_desc }}
-             <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p></p>
+            <p>{{ in_depth_txt4 }}</p>
+            <p>{{ in_depth_txt5 }}</p>
+            <p>{{ in_depth_txt6 }}</p>
+            <p>{{ in_depth_txt7 }}<a href="{{ github_link2 }}"
+                                      target="_blank"><code>{{ github_link2_desc }}
+                <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p></p>
         </div>
         <code class="text-lowercase font-weight-bold">{{ images }}</code>
         <hr>
