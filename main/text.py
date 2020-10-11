@@ -34,7 +34,7 @@ LOGO = 'images/soon.png'
 APP_DESC = 'Description'
 APP_GOAL = 'What it is'
 APP_GOAL_TXT = ''
-TECH = 'Technologies used'
+TECH = 'technologies'
 TECH_TXT = ''
 APP_DESC_DETAILED = ''
 DATA_SOURCE = 'Data source'
@@ -135,7 +135,6 @@ TITLE_ANDROID_PROJ_1 = 'Map Tools App'
 DESC_ANDROID_PROJ_1 = 'An android app useful for reading maps'
 LINK_ANDROID_PROJ_1 = ''
 
-
 CONTACT_TXT_1 = 'drop me an email at '
 CONTACT_TXT_2 = 'latidude99@gmail.com'
 CONTACT_TXT_3 = 'or write a few lines here:'
@@ -146,7 +145,7 @@ CONTACT_TXT_7 = 'message'
 CONTACT_TXT_8 = 'submit'
 CONTACT_TXT_9 = 'I agree to disagree '
 CONTACT_TXT_10 = ''
-CONTACT_TXT_11= ''
+CONTACT_TXT_11 = ''
 CONTACT_TXT_12 = ''
 ERROR_1 = 'OK'
 ERROR_2 = 'please fill out this field'
@@ -216,7 +215,6 @@ IMAGE_OWID_2 = 'images/owid2.png'
 IMAGE_OWID_3 = 'images/owid3.png'
 IMAGE_OWID_4 = 'images/owid4.png'
 
-
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'
 GITHUB_ENQUIRY = 'https://github.com/latidude99/enquiries'
@@ -249,8 +247,6 @@ IMAGE_ENQUIRY_2 = 'images/enquiry2.png'
 IMAGE_ENQUIRY_3 = 'images/enquiry3.png'
 IMAGE_ENQUIRY_4 = 'images/enquiry4.png'
 IMAGE_ENQUIRY_5 = 'images/enquiry5.png'
-
-
 
 # ----------------------- CONTACTS ---------------------------
 CONTACTS_LINK = 'http://contacts.latidude99.com/'
@@ -301,8 +297,6 @@ IMAGE_CONTACTS_6 = 'images/contacts6.jpg'
 IMAGE_CONTACTS_7 = 'images/contacts7.jpg'
 IMAGE_CONTACTS_8 = 'images/contacts8.jpg'
 
-
-
 # ----------------------- LINKS ---------------------------
 LINKS_LINK = 'http://links.latidude99.com/'
 GITHUB_LINKS = 'https://github.com/latidude99/link-cutter'
@@ -324,33 +318,6 @@ IMAGE_LINKS_1 = 'images/links1.jpg'
 IMAGE_LINKS_2 = 'images/links2.jpg'
 IMAGE_LINKS_3 = 'images/links3.jpg'
 IMAGE_LINKS_4 = 'images/links4.jpg'
-
-
-
-
-# ----------------------- MAPTOOLS ---------------------------
-MAPTOOLS_LINK = 'http://MAPTOOLS.latidude99.com/'
-GITHUB_MAPTOOLS = 'https://github.com/latidude99/map-calculator-fx'
-GITHUB_MAPTOOLS_LINK_DETAIL = 'https://github.com/latidude99/map-calculator-fx/blob/master/README.md'
-GITHUB_MAPTOOLS_LINK_DETAIL_DESC = 'GitHub, README.md'
-MAPTOOLS_TITLE = 'MAPTOOLS system'
-MAPTOOLS_APP_BTN_TXT = 'Open the app in a new tab'
-IMAGE_MAPTOOLS = 'images/MAPTOOLS.png'
-MAPTOOLS_IN_SHORT = 'A customer service MAPTOOLS system for small map and travel bookshops'
-MAPTOOLS_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, a little bit of Javascript (Google Maps API)'
-MAPTOOLS_IN_DEPTH1 = ''
-MAPTOOLS_IN_DEPTH2 = ''
-MAPTOOLS_IN_DEPTH3 = ''
-MAPTOOLS_IN_DEPTH4 = ''
-IMAGE_MAPTOOLS_1 = 'images/MAPTOOLS1.png'
-IMAGE_MAPTOOLS_2 = 'images/MAPTOOLS2.png'
-IMAGE_MAPTOOLS_3 = 'images/MAPTOOLS3.png'
-IMAGE_MAPTOOLS_4 = 'images/MAPTOOLS4.png'
-IMAGE_MAPTOOLS_5 = 'images/MAPTOOLS5.png'
-IMAGE_MAPTOOLS_6 = 'images/MAPTOOLS6.png'
-
-
-
 
 # ----------------------- SNCREADER ---------------------------
 SNCREADER_LINK = ''
@@ -398,7 +365,51 @@ IMAGE_SNCREADER_4 = 'images/sncreader4.png'
 IMAGE_SNCREADER_5 = 'images/sncreader5.png'
 IMAGE_SNCREADER_6 = 'images/sncreader6.png'
 
-
+# ----------------------- MAPTOOLS ---------------------------
+MAPTOOLS_LINK = ''
+GITHUB_MAPTOOLS = 'https://github.com/latidude99/map-calculator-fx'
+GITHUB_MAPTOOLS_LINK_DETAIL = 'https://github.com/latidude99/map-calculator-fx/blob/master/README.md'
+GITHUB_MAPTOOLS_LINK_DETAIL_DESC = 'GitHub, README.md'
+MAPTOOLS_TITLE = 'map calculator'
+MAPTOOLS_APP_BTN_TXT = 'download the app'
+IMAGE_MAPTOOLS = 'images/maptools.png'
+IMAGE_MAPTOOLS_LOGO = 'images/maptools_logo.png'
+MAPTOOLS_IN_SHORT = 'A set of helper tools for map reading'
+MAPTOOLS_TECH = 'Java 8, JavaFX, JCoord library'
+MAPTOOLS_IN_DEPTH1 = 'A desktop application consisting of 4 tabs, each dedicated ' \
+                     'to conduct a different set of calculations.'
+MAPTOOLS_IN_DEPTH2 = 'TAB A - Scale Converter'
+MAPTOOLS_IN_DEPTH3 = 'converts map scales expressed in one of the 5 ways into the remaining 4 ' \
+                     '(fractional, inches to the mile, miles to an inch, cm to a km and kilometres to a cm)'
+MAPTOOLS_IN_DEPTH4 = 'TAB B - Disctance Calculator'
+MAPTOOLS_IN_DEPTH5 = 'there are 3 main elements when dealing with maps and distances: ' \
+                     'map measurement, ground distance and the map scale'
+MAPTOOLS_IN_DEPTH6 = 'knowing two of them the applications calculates the third one ' \
+                     '(e.g. given a map measurement and the scale the ground distance is calculated, ' \
+                     'given a map measurement and the distance on the ground the scale is calculated etc.) '
+MAPTOOLS_IN_DEPTH7 = 'each of these elements can be entered in any of the allowed metric or imperial units'
+MAPTOOLS_IN_DEPTH8 = 'TAB C - Coordinates Converter'
+MAPTOOLS_IN_DEPTH9 = 'converts Ordnance Survey grid references to Longitude and Latitude'
+MAPTOOLS_IN_DEPTH10 = 'allows to calculate the distance between two points with known coordinates (OS or Lat Long)'
+MAPTOOLS_IN_DEPTH11 = 'calculates the azimuth and bearing values between two given points'
+MAPTOOLS_IN_DEPTH12 = 'converts distance between metric and imperial units ' \
+                      '(statue miles, nautical miles, kilometres, metres and feet) '
+MAPTOOLS_IN_DEPTH13 = 'TAB D - Area & Perimeter Calculator'
+MAPTOOLS_IN_DEPTH14 = 'given coordinates of at least three points calculates ' \
+                      'the area and perimeter of a closed polygon'
+MAPTOOLS_IN_DEPTH15 = 'allows for a manual input or loading points from a text file with manual editing afterwards '
+MAPTOOLS_IN_DEPTH16 = 'checks if the entered polygon is not self-intersecting - this is not allowed'
+MAPTOOLS_IN_DEPTH17 = 'results are given in both metric and imperial units'
+MAPTOOLS_IN_DEPTH18 = 'allows to submit any of the polygon vertexes as left/right points for calculations ' \
+                      'available in Coordinates Converter (TAB C)'
+MAPTOOLS_IN_DEPTH19 = 'More information available at '
+IMAGE_MAPTOOLS_1 = 'images/maptools1_.jpg'
+IMAGE_MAPTOOLS_2 = 'images/maptools2_.png'
+IMAGE_MAPTOOLS_3 = 'images/maptools3_.jpg'
+IMAGE_MAPTOOLS_4 = 'images/maptools4_.png'
+IMAGE_MAPTOOLS_5 = 'images/maptools5_.jpg'
+IMAGE_MAPTOOLS_6 = 'images/maptools6_.png'
+IMAGE_MAPTOOLS_7 = 'images/maptools7_.jpg'
 
 # ----------------------- FOLDERBACKUP ---------------------------
 FOLDERBACKUP_LINK = ''
@@ -406,25 +417,41 @@ GITHUB_FOLDERBACKUP_FX = 'https://github.com/latidude99/folder-backup-util-fx'
 GITHUB_FOLDERBACKUP_CMD = 'https://github.com/latidude99/folder-backup-tool-cmd'
 GITHUB_FOLDERBACKUP_FX_LINK_DETAIL = 'https://github.com/latidude99/folder-backup-util-fx/blob/master/README.md'
 GITHUB_FOLDERBACKUP_CMD_LINK_DETAIL = 'https://github.com/latidude99/folder-backup-tool-cmd/blob/master/README.md'
-GITHUB_FOLDERBACKUP_FX_LINK_DETAIL_DESC = 'GitHub, JavaFX version README.md'
+GITHUB_FOLDERBACKUP_FX_LINK_DETAIL_DESC = 'GitHub, README.md (JavaFX version)'
 GITHUB_FOLDERBACKUP_CMD_LINK_DETAIL_DESC = 'GitHub, CMD version README.md'
-FOLDERBACKUP_TITLE = 'FOLDERBACKUP system'
-FOLDERBACKUP_APP_BTN_TXT = 'Open the app in a new tab'
-IMAGE_FOLDERBACKUP = 'images/FOLDERBACKUP.png'
-FOLDERBACKUP_IN_SHORT = 'A customer service FOLDERBACKUP system for small map and travel bookshops'
-FOLDERBACKUP_TECH = 'Java 8, Spring Boot 2, MySQL 5.7, Apache Lucene, Thymeleaf 3, Bootstrap 4, a little bit of Javascript (Google Maps API)'
-FOLDERBACKUP_IN_DEPTH1 = ''
-FOLDERBACKUP_IN_DEPTH2 = ''
-FOLDERBACKUP_IN_DEPTH3 = ''
-FOLDERBACKUP_IN_DEPTH4 = ''
-IMAGE_FOLDERBACKUP_1 = 'images/FOLDERBACKUP1.png'
-IMAGE_FOLDERBACKUP_2 = 'images/FOLDERBACKUP2.png'
-IMAGE_FOLDERBACKUP_3 = 'images/FOLDERBACKUP3.png'
-IMAGE_FOLDERBACKUP_4 = 'images/FOLDERBACKUP4.png'
-IMAGE_FOLDERBACKUP_5 = 'images/FOLDERBACKUP5.png'
-IMAGE_FOLDERBACKUP_6 = 'images/FOLDERBACKUP6.png'
-
-
+FOLDERBACKUP_TITLE = 'folder backup utility'
+FOLDERBACKUP_APP_BTN_TXT = 'download the app'
+IMAGE_FOLDERBACKUP = 'images/folderbackup.png'
+FOLDERBACKUP_IN_SHORT = 'A command line and JavaFX compressing utilities.'
+FOLDERBACKUP_TECH = 'Java 8, JavaFX'
+FOLDERBACKUP_IN_DEPTH1 = 'FolderBackupUtilFX packs the content of the folder it is executed from ' \
+                         '(files, folders and subfolders) into a compressed ZIP file. '
+FOLDERBACKUP_IN_DEPTH2 = 'Files and folders can be excluded by being listed in ' \
+                         'the FolderBackupUtilFX.config file. This file, if exists,  ' \
+                         'is read when the application starts. The .config file ' \
+                         'explains how to use it.'
+FOLDERBACKUP_IN_DEPTH3 = 'The content of the result ZIP file includes ' \
+                         '.log and .config files ' \
+                         'unless excluded explicitly in the FolderBackupUtilFX.config file. '
+FOLDERBACKUP_IN_DEPTH4 = 'By default the ZIP file name is composed of: ' \
+                             'folder name + _backup_ + date and time + .zip ' \
+                             '(eg. FolderBeingBackedUp_backup_2019-07-01 10.51.zip) ' \
+                             'unless configured otherwise in the .config file.'
+FOLDERBACKUP_IN_DEPTH5 = 'The .log file with the config options info and a list of all the archived files ' \
+                         'is created under the same name as the main archive but with the .log extension.'
+FOLDERBACKUP_IN_DEPTH6 = 'Default location of the created archive is ' \
+                         'in the folder the application is started from.'
+FOLDERBACKUP_IN_DEPTH7 = 'The application allows to specify locations the archive ' \
+                         'is moved/copied after being created.'
+FOLDERBACKUP_IN_DEPTH8 = 'The command line version has slightly different options available ' \
+                         'but it starts quicker (obviously).'
+FOLDERBACKUP_IN_DEPTH9 = 'A bit more information can be found here '
+IMAGE_FOLDERBACKUP_1 = 'images/folderbackup_fx1.jpg'
+IMAGE_FOLDERBACKUP_2 = 'images/folderbackup_fx2.jpg'
+IMAGE_FOLDERBACKUP_3 = 'images/folderbackup_fx3.jpg'
+IMAGE_FOLDERBACKUP_4 = 'images/folderbackup_fx4.jpg'
+IMAGE_FOLDERBACKUP_5 = 'images/folderbackup_fx5.jpg'
+IMAGE_FOLDERBACKUP_6 = 'images/folderbackup_fx6.jpg'
 
 # ----------------------- MAPTOOLSAPP ---------------------------
 MAPTOOLSAPP_LINK = ''
@@ -446,6 +473,3 @@ IMAGE_MAPTOOLSAPP_3 = 'images/MAPTOOLSAPP3.png'
 IMAGE_MAPTOOLSAPP_4 = 'images/MAPTOOLSAPP4.png'
 IMAGE_MAPTOOLSAPP_5 = 'images/MAPTOOLSAPP5.png'
 IMAGE_MAPTOOLSAPP_6 = 'images/MAPTOOLSAPP6.png'
-
-
-

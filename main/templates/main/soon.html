@@ -29,8 +29,8 @@
                 <div class="float-center" style=" background-color:transparent;">
                     <a href="{{ coviduk_link }}" target="_blank" title="go to the app page"
                        style="background-color:transparent;color:#000000;text-decoration:none">
-                        <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
-                             alt="image" style="max-height: 110px;background-color:transparent;">
+                        <img class="mx-auto d-block img-fluid py-1 mt-5" src="{{ static_base }}{{ image }}"
+                             alt="image" style="max-height:50px;background-color:transparent;">
                     </a>
                 </div>
             </div>
@@ -38,10 +38,6 @@
         <code class="text-lowercase font-weight-bold">{{ in_short }}</code>
         <hr>
         <p class="py-1 px-4 mb-3">{{ in_short_txt }}</p>
-
-        <code class="text-lowercase font-weight-bold">{{ app_goal }}</code>
-        <hr>
-        <p class="py-1 px-4 mb-3">{{ app_goal_txt }}</p>
 
         <code class="text-lowercase font-weight-bold">{{ app_tech }}</code>
         <hr>
@@ -51,11 +47,6 @@
         <hr>
         <p class="py-1 px-4 mb-3"><a href="{{ github_link }}"
                                      target="_blank"><code>{{ github_link }}</code></a></p>
-
-        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
-        <hr>
-        <p class="py-1 px-4 mb-3">{{ data_source_txt }}<a href="{{ data_source_link }}"
-                                                          target="_blank"><code>{{ data_source_txt2 }}</code></a></p>
 
         <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
         <hr>

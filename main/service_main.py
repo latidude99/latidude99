@@ -306,32 +306,6 @@ def get_main_links_ctx():
     return ctx
 
 
-def get_main_maptools_ctx():
-    context = {
-        'github_link': GITHUB_MAPTOOLS,
-        'github_link2': GITHUB_MAPTOOLS_LINK_DETAIL,
-        'github_link2_desc': GITHUB_MAPTOOLS_LINK_DETAIL_DESC,
-        'app_link': MAPTOOLS_LINK,
-        'app_btn_txt': MAPTOOLS_APP_BTN_TXT,
-        'image': IMAGE_MAPTOOLS,
-        'title': MAPTOOLS_TITLE,
-        'in_short_txt': MAPTOOLS_IN_SHORT,
-        'app_tech_txt': MAPTOOLS_TECH,
-        'in_depth_txt1': MAPTOOLS_IN_DEPTH1,
-        'in_depth_txt2': MAPTOOLS_IN_DEPTH2,
-        'in_depth_txt3': MAPTOOLS_IN_DEPTH3,
-        'in_depth_txt4': MAPTOOLS_IN_DEPTH4,
-        'image1': IMAGE_MAPTOOLS_1,
-        'image2': IMAGE_MAPTOOLS_1,
-        'image3': IMAGE_MAPTOOLS_1,
-        'image4': IMAGE_MAPTOOLS_1,
-        'image5': IMAGE_MAPTOOLS_1,
-
-    }
-    ctx = {**get_main_ctx(), **context}
-    return ctx
-
-
 def get_main_sncreader_ctx():
     context = {
         'github_link': GITHUB_SNCREADER,
@@ -367,6 +341,49 @@ def get_main_sncreader_ctx():
     return ctx
 
 
+def get_main_maptools_ctx():
+    context = {
+        'github_link': GITHUB_MAPTOOLS,
+        'github_link2': GITHUB_MAPTOOLS_LINK_DETAIL,
+        'github_link2_desc': GITHUB_MAPTOOLS_LINK_DETAIL_DESC,
+        'app_link': MAPTOOLS_LINK,
+        'app_btn_txt': MAPTOOLS_APP_BTN_TXT,
+        'image': IMAGE_MAPTOOLS_LOGO,
+        'title': MAPTOOLS_TITLE,
+        'in_short_txt': MAPTOOLS_IN_SHORT,
+        'app_tech_txt': MAPTOOLS_TECH,
+        'in_depth_txt1': MAPTOOLS_IN_DEPTH1,
+        'in_depth_txt2': MAPTOOLS_IN_DEPTH2,
+        'in_depth_txt3': MAPTOOLS_IN_DEPTH3,
+        'in_depth_txt4': MAPTOOLS_IN_DEPTH4,
+        'in_depth_txt5': MAPTOOLS_IN_DEPTH5,
+        'in_depth_txt6': MAPTOOLS_IN_DEPTH6,
+        'in_depth_txt7': MAPTOOLS_IN_DEPTH7,
+        'in_depth_txt8': MAPTOOLS_IN_DEPTH8,
+        'in_depth_txt9': MAPTOOLS_IN_DEPTH9,
+        'in_depth_txt10': MAPTOOLS_IN_DEPTH10,
+        'in_depth_txt11': MAPTOOLS_IN_DEPTH11,
+        'in_depth_txt12': MAPTOOLS_IN_DEPTH12,
+        'in_depth_txt13': MAPTOOLS_IN_DEPTH13,
+        'in_depth_txt14': MAPTOOLS_IN_DEPTH14,
+        'in_depth_txt15': MAPTOOLS_IN_DEPTH15,
+        'in_depth_txt16': MAPTOOLS_IN_DEPTH16,
+        'in_depth_txt17': MAPTOOLS_IN_DEPTH17,
+        'in_depth_txt18': MAPTOOLS_IN_DEPTH18,
+        'in_depth_txt19': MAPTOOLS_IN_DEPTH19,
+        'image1': IMAGE_MAPTOOLS_1,
+        'image2': IMAGE_MAPTOOLS_2,
+        'image3': IMAGE_MAPTOOLS_3,
+        'image4': IMAGE_MAPTOOLS_4,
+        'image5': IMAGE_MAPTOOLS_5,
+        'image6': IMAGE_MAPTOOLS_6,
+        'image7': IMAGE_MAPTOOLS_7,
+
+    }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
+
 def get_main_folderbackup_ctx():
     context = {
         'github_link_fx': GITHUB_FOLDERBACKUP_FX,
@@ -385,11 +402,16 @@ def get_main_folderbackup_ctx():
         'in_depth_txt2': FOLDERBACKUP_IN_DEPTH2,
         'in_depth_txt3': FOLDERBACKUP_IN_DEPTH3,
         'in_depth_txt4': FOLDERBACKUP_IN_DEPTH4,
+        'in_depth_txt5': FOLDERBACKUP_IN_DEPTH5,
+        'in_depth_txt6': FOLDERBACKUP_IN_DEPTH6,
+        'in_depth_txt7': FOLDERBACKUP_IN_DEPTH7,
+        'in_depth_txt8': FOLDERBACKUP_IN_DEPTH8,
+        'in_depth_txt9': FOLDERBACKUP_IN_DEPTH9,
         'image1': IMAGE_FOLDERBACKUP_1,
-        'image2': IMAGE_FOLDERBACKUP_1,
-        'image3': IMAGE_FOLDERBACKUP_1,
-        'image4': IMAGE_FOLDERBACKUP_1,
-        'image5': IMAGE_FOLDERBACKUP_1,
+        'image2': IMAGE_FOLDERBACKUP_2,
+        'image3': IMAGE_FOLDERBACKUP_3,
+        'image4': IMAGE_FOLDERBACKUP_4,
+        'image5': IMAGE_FOLDERBACKUP_5,
 
     }
     ctx = {**get_main_ctx(), **context}

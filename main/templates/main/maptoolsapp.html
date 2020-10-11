@@ -10,16 +10,15 @@
                     home
                 </a>
                 <div class="row mt-4">
-                    <div class="col-lg-7" style="background-color:transparent;">
-                        <a href="{{ app_link }}" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="col-lg-8" style="background-color:transparent;">
+                        <a href="{{ app_link }}" style="text-decoration: none; color: inherit;cursor: none;">
                             <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
                     </div>
-                    <div class="col-lg-5">
-                        <a class="btn btn-outline-dark btn-block text-lowercase float-right"
-                           href="{% url 'owid:index' %}"
-                           target="_blank">
-                            {{ app_btn_txt }}
-                            <span class="fas fa-external-link-alt  text-info float-right mr-2 mt-1"></span>
+                    <div class="col-lg-4">
+                        <a class="btn btn-outline-dark btn-block disabled text-lowercase float-right"
+                           href="{{ app_link }}">
+                            <strike style="color:grey;">{{ app_btn_txt }}</strike>
+                            <span class="fas fa-download  text-info float-right mr-2 mt-1"></span>
                         </a>
                     </div>
                 </div>
@@ -27,11 +26,11 @@
             </div>
 
             <div class="col-lg-2">
-                <div class="float-center" style=" background-color:transparent;">
-                    <a href="{% url 'owid:index' %}" target="_blank" title="go to the app page"
+                <div class="float-center mt-4" style=" background-color:transparent;">
+                    <a href="{{ app_link }}" title=""
                        style="background-color:transparent;color:#000000;text-decoration:none">
                         <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
-                             alt="world_image" style="max-height: 110px;background-color:transparent;">
+                             alt="image" style="max-height: 80px;background-color:transparent;cursor: none;">
                     </a>
                 </div>
             </div>
@@ -46,25 +45,76 @@
 
         <code class="text-lowercase font-weight-bold">{{ code }}</code>
         <hr>
-        <p class="py-1 px-4 mb-3"><a href="{{ github_link }}"
-                                     target="_blank"><code>{{ github_link }}</code></a></p>
-        
+        <div class="d-flex flex-column">
+            <div class=" px-4 mt-2 mb-3">
+                <a href="{{ github_link }}" target="_blank">
+                    <code>
+                        {{ github_link }}
+                        <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span>
+                    </code>
+                </a>
+            </div>
+        </div>
+
         <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
         <hr>
         <div class="py-1 px-4 mb-3">
             <p>{{ in_depth_txt1 }}</p>
             <p>{{ in_depth_txt2 }}</p>
-            <p>{{ in_depth_txt3 }}</p>
+            <ul style="list-style-type: none;">
+                <ul>
+                    <li>{{ in_depth_txt3 }}</li>
+                </ul>
+            </ul>
             <p>{{ in_depth_txt4 }}</p>
+            <ul style="list-style-type: none;">
+                <ul>
+                    <li>{{ in_depth_txt5 }}</li>
+                    <li>{{ in_depth_txt6 }}</li>
+                    <li>{{ in_depth_txt7 }}</li>
+                </ul>
+            </ul>
+            <p>{{ in_depth_txt8 }}</p>
+            <ul style="list-style-type: none;">
+                <ul>
+                    <li>{{ in_depth_txt9 }}</li>
+                    <li>{{ in_depth_txt10 }}</li>
+                    <li>{{ in_depth_txt11 }}</li>
+                    <li>{{ in_depth_txt12 }}</li>
+                </ul>
+            </ul>
+            <p>{{ in_depth_txt13 }}</p>
+            <ul style="list-style-type: none;">
+                <ul>
+                    <li>{{ in_depth_txt14 }}</li>
+                    <li>{{ in_depth_txt15 }}</li>
+                    <li>{{ in_depth_txt16 }}</li>
+                    <li>{{ in_depth_txt17 }}</li>
+                    <li>{{ in_depth_txt18 }}</li>
+                </ul>
+            </ul>
+            <p>{{ in_depth_txt19 }}<a href="{{ github_link2 }}"
+                                      target="_blank"><code>{{ github_link2_desc }}
+                <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p></p>
         </div>
         <code class="text-lowercase font-weight-bold">{{ images }}</code>
         <hr>
         <br>
-        <div class="py-1 px-4 mb-3">
-            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image1 }}" alt="image1">
-            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image2 }}" alt="image1">
-            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image3 }}" alt="image1">
-            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image4 }}" alt="image1">
+        <div class="col-lg-12 py-1 px-4 mb-3">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image1 }}" alt="image1">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image2 }}" alt="image2">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image3 }}" alt="image3">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image4 }}" alt="image4">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image5 }}" alt="image5">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image6 }}" alt="image6">
+            <img class="mx-auto d-block img-fluid w-100 mb-3 img-thumbnail"
+                 src="{{ static_base }}{{ image7 }}" alt="image7">
         </div>
     </div>
 
