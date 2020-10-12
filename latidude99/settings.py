@@ -79,6 +79,19 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
+    'main': {
+        'ENGINE': 'mysql_server_has_gone_away',
+        # 'ENGINE': 'django.db.backends.mysql',
+        'CONN_MAX_AGE': 3600,
+        'NAME': 'main',
+        'USER': 'main',
+        'PASSWORD': 'main10ma',
+        'HOST': '46.183.12.180',  # 34sp.com
+        'PORT': '',
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        }
+    },
     'owid': {
         'ENGINE': 'mysql_server_has_gone_away',
         # 'ENGINE': 'django.db.backends.mysql',

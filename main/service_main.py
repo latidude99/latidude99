@@ -1,5 +1,29 @@
 from main.text import *
+from main.send_email import *
 
+
+def send_main_contact_message(msg):
+    if msg.important:
+        important = 'Yes'
+    else:
+        important = 'No'
+    if msg.read:
+        read = 'Yes'
+    else:
+        read = 'No'
+    subject = 'New message from main contact page (' + msg.email + ')'
+    body = \
+        '<strong>NAME: ' + msg.name + '</strong>' + \
+        '<strong>EMAIL: ' + msg.email + '</strong>' + \
+        '<p>SUBJECT: ' + msg.subject + '</p>' + \
+        '<p>MESSAGE: \n' + msg.message + '</p>' + \
+        '<p>IMPORTANT: ' + str(msg.important) + '</p>' + \
+        '<p>READ: ' + str(msg.read) + '</p>' + \
+        '<p>-------------------------------------------------</p>' + \
+        '<kbd>IP: ' + msg.ip + '</kbd>' + \
+        '<kbd>DATE: ' + str(msg.date) + '</kbd>'
+    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, subject, body)
+    return 'sent'
 
 def get_base_ctx():
     context = {
@@ -150,6 +174,20 @@ def get_contact_ctx():
                }
     ctx = {**get_main_ctx(), **context}
     return ctx
+
+
+def get_contact_after_ctx():
+    context = {
+        'message_ok1': MESSAGE_OK1,
+        'message_ok2': MESSAGE_OK2,
+        'message_error1': MESSAGE_ERROR1,
+        'message_txt1': MESSAGE_TXT1,
+        'message_txt2': MESSAGE_TXT2,
+        'message_txt3': MESSAGE_TXT3,
+    }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
 
 
 def get_main_coviduk_ctx():

@@ -19,6 +19,13 @@ MAIN_INDEX_INTRO6 = ''
 HOME = 'Home'
 CONTACT_TXT = 'Contact'
 
+MESSAGE_OK1 = 'Thanks for the message!'
+MESSAGE_OK2 = 'will respond when time allows'
+MESSAGE_ERROR1 = 'Oops, something went wrong... please try again in a moment.'
+MESSAGE_TXT1 = 'back to index page'
+MESSAGE_TXT2 = 'write another message'
+MESSAGE_TXT3 = ''
+
 # ----------------------- BASE ---------------------------
 IN_SHORT = 'in short'
 IN_DEPTH = 'in depth'

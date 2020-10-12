@@ -6,11 +6,12 @@
         <h5 class="font-weight-bolder">{{ contact_txt_1 }} <span class="font-weight-bolder text-info mb-5">{{ contact_txt_2 }}</span class></h5>
         <h6 class="mt-4 mb-3">{{ contact_txt_3 }}</h6>
         <div class="col-lg-8">
-            <form action="{% url 'main:contact' %}" class="needs-validation" novalidate>
+            <form action="{% url 'main:contact' %}"  method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
                 <div class="form-group">
-                    <label for="username">{{ contact_txt_4 }}</label>
-                    <input type="text" class="form-control" id="username"
-                           placeholder="enter your name" name="username" required>
+                    <label for="name">{{ contact_txt_4 }}</label>
+                    <input type="text" class="form-control" id="name"
+                           placeholder="enter your name" name="name" required>
                     <div class="valid-feedback">{{ error_1 }}</div>
                     <div class="invalid-feedback">{{ error_2 }}</div>
                 </div>
@@ -43,7 +44,8 @@
                         <div class="invalid-feedback">{{ error_3 }}</div>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-outline-dark btn-block">{{ contact_txt_8 }}</button>
+                <button type="submit" class="btn btn-outline-dark btn-block"
+                 onclick="$('#6').LoadingOverlay('show', {background:'lightgray'})">{{ contact_txt_8 }}</button>
             </form>
         </div>
     <div class="col-lg-4"></div>
