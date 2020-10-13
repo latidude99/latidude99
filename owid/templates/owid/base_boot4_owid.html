@@ -17,27 +17,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
     <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: black;
-            color: white;
-            text-align: center;
-        }
-
-        div.sticky-footer {
-            position: -webkit-sticky;
-            position: sticky;
-            bottom: 230;
-            background-color: beige;
-            padding: 0px;
-            font-size: 20px;
-        }
-
         body {
-            background-image: url('{{ static_base }}{{ background_pattern2 }}');
+            background-color: floralwhite;
+            background-image: url('{{ static_base }}{{ background_pattern3 }}');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: luminosity;
+
         }
 
         body .card .card-body .card-text {
@@ -67,13 +54,7 @@
     I will stick to the screen when you reach my scroll position
 </div>
 -->
-<footer class="footer bg-dark">
-    <div class="container-fluid">
-        <small class="ml-5">{{ footer_info }}</small>
-        <small class="pull-right mr-5">Copyright &copy; {{ latidude99 }}</small>
-        <img class="pull-right" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
-    </div>
-</footer>
+
 
 </body>
 </html>

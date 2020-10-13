@@ -1,56 +1,100 @@
 {% extends "owid/base_boot4_owid.html" %}
 {% block content %}
     {% load static %}
-    <div class="container">
-
-        <div class="card">
-            <div class="card-body bg-danger text-white">
+    <div class="container-flexible">
+        <div class="card" style="opacity:80%;">
+            <div class="card-body bg-light text-dark py-5">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3>{{ covid_title }}</h3>
+                        <h3 class="display-4">{{ covid_title }}</h3>
                         <p class="card-text">{{ covid_subtitle }}</p>
                     </div>
                     <div class="col">
                         <div class="mt-2">
-                            <img class="rounded mx-auto d-block img-fluid" src="{{ static_base }}{{ image_coronavirus }}"
-                                 alt="covid" style="background-color:transparent; max-width:60%; height: auto;">
+                            <img class="rounded mx-auto d-block img-fluid"
+                                 src="{{ static_base }}{{ image_coronavirus }}"
+                                 alt="covid"
+                                 style="background-color:transparent; max-height:150px; width: auto;">
                         </div>
                     </div>
                     <div class="col">
-                        <a href="{% url 'owid:covid' %}" class="btn btn-dark btn-block h-100 stretched-link my-auto"
-                           style="width:100%;height:100%; text-align: center">{{ covid_btn_txt }}
+                        <a href="{% url 'owid:covid' %}"
+                           class="btn btn-outline-warning btn-block h-100 stretched-link my-auto text-dark"
+                           style=" padding: 10% 0; ; text-align: center">
+                            <h1><small>{{ covid_btn_txt }}</small></h1>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="" style=" background-color:transparent;">
-            <div class="row mt-5">
-                <a href="{% url 'owid:index' %}" target="_blank" title="go to the world page"
-                   style="background-color:transparent;color:#000000;text-decoration:none">
-                    <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
-                         alt="world_image" style="background-color:transparent;">
-                </a>
+        <br><br>
+        <div class="card" style="opacity:80%;">
+            <div class="card-body bg-light text-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="display-4"></h3>
+                        <p class="card-text">coming soon...</p>
+                    </div>
+                    <div class="col">
+                        <div class="mt-2">
+                            <img class="rounded mx-auto d-block img-fluid"
+                                 src=""
+                                 alt=""
+                                 style="background-color:transparent; max-height:120px; width: auto;">
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="card" style="opacity:80%;">
+            <div class="card-body bg-light text-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="display-4"></h3>
+                        <p class="card-text">coming soon...</p>
+                    </div>
+                    <div class="col">
+                        <div class="mt-2">
+                            <img class="rounded mx-auto d-block img-fluid"
+                                 src=""
+                                 alt=""
+                                 style="background-color:transparent; max-height:120px; width: auto;">
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="card" style="opacity:80%;">
+            <div class="card-body bg-light text-dark py-5">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="display-4"></h3>
+                        <p class="card-text">coming soon...</p>
+                    </div>
+                    <div class="col">
+                        <div class="mt-2">
+                            <img class="rounded mx-auto d-block img-fluid"
+                                 src=""
+                                 alt=""
+                                 style="background-color:transparent; max-height:120px; width: auto;">
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
             </div>
         </div>
 
-        <br>
-        <br>
-
-        <br>
-
-        <br>
-        <br>
-
-
-        <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
     </div>
 
-    <div id="loading" style="display:none;">
-        <p>Fetching data...</p>
-        <img src="{% static 'owid/gifs/loading3.gif' %}" style="width:400px;height:300px;" alt=""/>
-    </div>
-
-    </div>
 
 {% endblock %}

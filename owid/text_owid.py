@@ -2,6 +2,10 @@ LATIDUDE99 = 'latidude99.com'
 
 BACKGROUND_PATTERN1 = 'https://subtlepatterns.com/patterns/kindajean.png'
 BACKGROUND_PATTERN2 = 'images/paper_fibers1.png'
+BACKGROUND_PATTERN3 = 'images/globe_main.png'
+BACKGROUND_PATTERN4 = 'images/'
+BACKGROUND_PATTERN5 = 'images/'
+BACKGROUND_PATTERN6 = 'images/'
 
 COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data_03.10.2020.json'
 
