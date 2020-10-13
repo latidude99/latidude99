@@ -3,32 +3,32 @@
     {% load static %}
     {% static "main/" as static_base %}
     <div class="container-flex text-lowercase mt-3" style="font-family:'Courier New';">
-
-        <div class="text-center align-middle mt-5" style="coursor:none;">
-            <div class="display-4">
-                <small><code>{{ message_ok1 }}</code></small>
+        <div class="center-screen">
+            <div class="text-center align-middle" style="coursor:none;">
+                <div class="display-4">
+                    <small><code>{{ message_ok1 }}</code></small>
+                </div>
+                <br>
+                <p><code>{{ message_ok2 }}</code></p>
             </div>
             <br>
-            <p><code>{{ message_ok2 }}</code></p>
-        </div>
-        <br>
-        <div class="text-center align-middle mt-5">
-            <h4><a href="{% url 'main:contact' %}"
-                   style="text-decoration: none;">
-                {{ message_txt2 }}
-            </a>
-            </h4>
-        </div>
-        <br>
-        <div class="text-center align-middle mt-5">
-            <h4>
-                <a href="{% url 'main:index' %}"
-                   style="text-decoration: none;">
-                    {{ message_txt1 }}
+            <div class="text-center align-middle mt-5">
+                <h4><a href="{% url 'main:contact' %}"
+                       style="text-decoration: none;">
+                    {{ message_txt2 }}
                 </a>
-            </h4>
+                </h4>
+            </div>
+            <br>
+            <div class="text-center align-middle mt-5">
+                <h4>
+                    <a href="{% url 'main:index' %}"
+                       style="text-decoration: none;">
+                        {{ message_txt1 }}
+                    </a>
+                </h4>
+            </div>
         </div>
-
     </div>
 
 {% endblock %}

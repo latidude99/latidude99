@@ -3,6 +3,8 @@
 **/data/
 secrets.py
 .idea/
+settings.py
+/static/
 
 ### Django ###
 *.log
