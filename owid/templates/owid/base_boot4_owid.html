@@ -38,6 +38,27 @@
         .flex-fixed-width-item {
             flex: 0 0 100px;
         }
+
+        .textshadow-blue {
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+            transition: all 200ms ease-out;
+        }
+
+        .textshadow-blue:hover{
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px lightblue;
+        }
+
+        .bordershadow-blue {
+            border: 1px solid #dd;
+            border-radius: 3px;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+            transition: all 200ms ease-out;
+        }
+
+        .bordershadow-blue:hover {
+            box-shadow: 0 0 10px rgba(35, 173, 278, 1);
+        }
+
     </style>
 
 </head>

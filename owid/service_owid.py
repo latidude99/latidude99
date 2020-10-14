@@ -10,7 +10,7 @@ from owid.repository_owid import *
 
 
 def get_index_context():
-    context = {'footer_info': FOOTER_INFO,
+    context = {'owid_title': OWID_TITLE,
                'image': IMAGE_GLOBE,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,

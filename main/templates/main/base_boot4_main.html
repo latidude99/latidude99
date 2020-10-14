@@ -28,6 +28,44 @@
         });
     </script>
 
+    <style>
+        #border-navitem-bottom {
+            border-bottom: 1px solid #666666;
+        }
+
+        #border-navitem-left {
+            border-left: 1px solid red;
+        }
+
+        .java-num:after {
+            content: '6';
+            color: white;
+            float: right;
+            margin-left: 5px;
+        }
+        .pyth-num:after {
+            content: '2';
+            color: white;
+            float: right;
+            margin-left: 5px;
+        }
+        .andro-num:after {
+            content: '1';
+            color: white;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2232";
+            color: white;
+        }
+
+        .active, .accordion:hover {
+            border-bottom: 1px solid gray !important;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -42,7 +80,7 @@
                  alt="piotr" style="background-color:transparent; max-width:55%; height: auto;">
         </a>
     </div>
-    <div class="py-3 px-3 mb-4">
+    <div class="py-3 px-3 mb-5">
         <a href="{% url 'main:index' %}" title="home" style="text-decoration:none">
             <div class="media-body text-lowercase text-center ">
                 <h3 class="mb-2" style="color:yellow;">{{ intro1 }}</h3>
@@ -51,99 +89,124 @@
             </div>
         </a>
     </div>
-    <p class="text-white text-uppercase px-3 small py-1 mb-4">
-        <a href="{% url 'main:index' %}" id="project-list">{{ home }}</a>
-    </p>
+    <div class="py-3">
+        <a href="{% url 'main:index' %}" id="project-list">
+            <p id="border-navitem-bottom" class="text-white text-uppercase  px-1 small py-1 ml-4 mr-4 mb-5">
+                {{ home }}
+            </p>
+        </a>
+    </div>
     <!--
         <code><a href="{% url 'main:index' %}" id="project-list">
             <pre class="mb-3 mt-3 font-weight-light text-center" style="color:white;">{{ intro4 }}</pre></a>
         </code>
         -->
+    <div id="acc">
+        <div class="panel list-group">
 
-    <span class="text-white text-uppercase px-3 small py-4 mb-0">{{ nav_java_proj }}</span>
+            <a href="#java" data-toggle="collapse" class="list-group-item"
+               style="background: transparent; text-decoration: none;">
+                <p id="border-navitem-bottom"
+                   class="java-num accordion text-white text-uppercase py-1 px-1 ml-1 small mb-0">{{ nav_java_proj }}</p>
+            </a>
+            <div class="collapse" id="java" data-parent="#acc">
+                <ul class="nav flex-column mt-2 mb-2">
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:enquiry' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj1 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:contacts' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj2 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:links' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj3 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1" id="project-list">
+                        <a href="{% url 'main:sncreader' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj4 }}
+                            <div class="text-right mr-4">{{ nav_java_proj4a }}
+                            </div>
+                        </a>
 
-    <ul class="nav flex-column  mt-2 mb-2">
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:enquiry' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj1 }}
-            </a>
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:contacts' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj2 }}
-            </a>
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:links' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj3 }}
-            </a>
-        </li>
-        <li class="nav-item small mb-1" id="project-list">
-            <a href="{% url 'main:sncreader' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj4 }}
-                <div class="text-right mr-4">{{ nav_java_proj4a }}
-                </div>
-            </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:maptools' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj5 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:folderbackup' %}" class="text-white" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj6 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
+                            <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_java_proj7 }}
+                        </a>
+                    </li>
 
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:maptools' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj5 }}
+                </ul>
+            </div>
+            <br>
+            <a href="#python" data-toggle="collapse" class="list-group-item"
+               style="background: transparent; text-decoration: none;">
+                <p id="border-navitem-bottom"
+                   class="pyth-num accordion text-white text-uppercase px-1 small py-1 ml-1 mb-0">{{ nav_python_proj }}</p>
             </a>
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:folderbackup' %}" class="text-white" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj6 }}
+            <div class="collapse" id="python" data-parent="#acc">
+                <ul class="nav flex-column  mt-2 mb-2">
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:coviduk' %}" id="project-list">
+                            <i class="fab fa-python ml-4  text-white-50 fa-1x"></i>
+                            {{ nav_python_proj1 }}
+                        </a>
+                    </li>
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:owid' %}" id="project-list">
+                            <i class="fab fa-python ml-4 text-white-50 fa-1x"></i>
+                            {{ nav_python_proj2 }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <a href="#android" data-toggle="collapse" class="list-group-item"
+               style="background: transparent; text-decoration: none;">
+                <p id="border-navitem-bottom"
+                   class="andro-num     accordion text-white text-uppercase px-1 small py-1 ml-1 mb-3">{{ nav_android_proj }}</p>
             </a>
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:soon' %}" class="text-white-50" id="project-list">
-                <i class="fab fa-java ml-4  text-white-50 fa-1x"></i>
-                {{ nav_java_proj7 }}
-            </a>
-        </li>
+            <div class="collapse" id="android" data-parent="#acc">
+                <ul class="nav flex-column mt-2 mb-2">
+                    <li class="nav-item small mb-1">
+                        <a href="{% url 'main:maptoolsapp' %}" class="text-white" id="project-list">
+                            <i class="fab fa-android ml-4 fa-1x text-white-50"></i>
+                            {{ nav_android_proj1 }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    </ul>
-    <br>
-    <span class="text-white text-uppercase px-3 small py-4 mb-0">{{ nav_python_proj }}</span>
-
-    <ul class="nav flex-column  mt-2 mb-2">
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:coviduk' %}" id="project-list">
-                <i class="fab fa-python ml-4  text-white-50 fa-1x"></i>
-                {{ nav_python_proj1 }}
-            </a>
-        </li>
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:owid' %}" id="project-list">
-                <i class="fab fa-python ml-4 text-white-50 fa-1x"></i>
-                {{ nav_python_proj2 }}
-            </a>
-        </li>
-
-    </ul>
-
-    <br>
-    <span class="text-white text-uppercase px-3 small py-4 mb-0">{{ nav_android_proj }}</span>
-
-    <ul class="nav flex-column mt-2 mb-2">
-        <li class="nav-item small mb-1">
-            <a href="{% url 'main:maptoolsapp' %}" class="text-white" id="project-list">
-                <i class="fab fa-android ml-4 fa-1x text-white-50"></i>
-                {{ nav_android_proj1 }}
-            </a>
-        </li>
-    </ul>
-
-    <p class="text-white text-uppercase px-3 small py-1 mt-4 mb-2">
-        <a href="{% url 'main:contact' %}" id="project-list">{{ contact }}</a>
-    </p>
+    <div>
+        <a href="{% url 'main:contact' %}" id="project-list">
+            <p id="border-navitem-bottom" class="text-white text-uppercase  px-1 small py-1 ml-4 mr-4 mt-4 mb-4">
+                {{ contact }}
+            </p>
+        </a>
+    </div>
 </div>
 
 <!-- End vertical navbar -->

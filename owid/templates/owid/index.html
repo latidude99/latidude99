@@ -1,94 +1,86 @@
 {% extends "owid/base_boot4_owid.html" %}
 {% block content %}
     {% load static %}
+
+    <div class="jumbotron text-center text-primary"
+         style="background:transparent; margin-bottom:0;">
+        <h1 class="display-5 textshadow-blue"
+            style="color: white; font-family: Arial, Helvetica, sans-serif;  font-size: 6vw;">
+            {{ owid_title }}</h1>
+    </div>
     <div class="container-flexible">
-        <div class="card" style="opacity:80%;">
-            <div class="card-body bg-light text-dark py-5">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="display-4">{{ covid_title }}</h3>
-                        <p class="card-text">{{ covid_subtitle }}</p>
-                    </div>
-                    <div class="col">
-                        <div class="mt-2">
-                            <img class="rounded mx-auto d-block img-fluid"
-                                 src="{{ static_base }}{{ image_coronavirus }}"
-                                 alt="covid"
-                                 style="background-color:transparent; max-height:150px; width: auto;">
+        <div class="bordershadow-blue">
+            <div class="card" style="opacity:80%;">
+                <div class="card-body bg-light text-dark py-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="display-4">{{ covid_title }}</h3>
+                            <p class="card-text">{{ covid_subtitle }}</p>
                         </div>
-                    </div>
-                    <div class="col">
-                        <a href="{% url 'owid:covid' %}"
-                           class="btn btn-outline-warning btn-block h-100 stretched-link my-auto text-dark"
-                           style=" padding: 10% 0; ; text-align: center">
-                            <h1><small>{{ covid_btn_txt }}</small></h1>
-                        </a>
+                        <div class="col">
+                            <div class="mt-2">
+                                <img class="rounded mx-auto d-block img-fluid"
+                                     src="{{ static_base }}{{ image_coronavirus }}"
+                                     alt="covid"
+                                     style="background-color:transparent; max-height:150px; width: auto;">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'owid:covid' %}"
+                               class="btn btn-outline-warning btn-block h-100 stretched-link my-auto text-dark"
+                               style=" padding: 10% 0; ; text-align: center;
+                           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 10px 30px 0 rgba(0, 0, 0, 0.19);">
+                                <h1><small>{{ covid_btn_txt }}</small></h1>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <br><br>
-        <div class="card" style="opacity:80%;">
-            <div class="card-body bg-light text-dark py-5">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="display-4"></h3>
-                        <p class="card-text">coming soon...</p>
-                    </div>
-                    <div class="col">
-                        <div class="mt-2">
-                            <img class="rounded mx-auto d-block img-fluid"
-                                 src=""
-                                 alt=""
-                                 style="background-color:transparent; max-height:120px; width: auto;">
+        <div class="bordershadow-blue">
+            <div class="card" style="opacity:80%;">
+                <div class="card-body bg-light text-dark py-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="display-4"></h3>
+                            <p class="card-text">coming soon...</p>
                         </div>
-                    </div>
-                    <div class="col">
+                        <div class="col">
+                            <div class="mt-2">
+                                <img class="rounded mx-auto d-block img-fluid"
+                                     src=""
+                                     alt=""
+                                     style="background-color:transparent; max-height:120px; width: auto;">
+                            </div>
+                        </div>
+                        <div class="col">
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <br><br>
-        <div class="card" style="opacity:80%;">
-            <div class="card-body bg-light text-dark py-5">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="display-4"></h3>
-                        <p class="card-text">coming soon...</p>
-                    </div>
-                    <div class="col">
-                        <div class="mt-2">
-                            <img class="rounded mx-auto d-block img-fluid"
-                                 src=""
-                                 alt=""
-                                 style="background-color:transparent; max-height:120px; width: auto;">
+        <div class="bordershadow-blue">
+            <div class="card" style="opacity:80%;">
+                <div class="card-body bg-light text-dark py-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="display-4"></h3>
+                            <p class="card-text">coming soon...</p>
                         </div>
-                    </div>
-                    <div class="col">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br>
-        <div class="card" style="opacity:80%;">
-            <div class="card-body bg-light text-dark py-5">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="display-4"></h3>
-                        <p class="card-text">coming soon...</p>
-                    </div>
-                    <div class="col">
-                        <div class="mt-2">
-                            <img class="rounded mx-auto d-block img-fluid"
-                                 src=""
-                                 alt=""
-                                 style="background-color:transparent; max-height:120px; width: auto;">
+                        <div class="col">
+                            <div class="mt-2">
+                                <img class="rounded mx-auto d-block img-fluid"
+                                     src=""
+                                     alt=""
+                                     style="background-color:transparent; max-height:120px; width: auto;">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
+                        <div class="col">
 
+                        </div>
                     </div>
                 </div>
             </div>
