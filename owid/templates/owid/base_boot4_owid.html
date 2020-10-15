@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head>
-    <title>Piotr</title>
+    <title>tWiN</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
         body {
             background-color: floralwhite;
             background-image: url('{{ static_base }}{{ background_pattern3 }}');
-            background-repeat: no-repeat;
+            background-repeat: repeat;
             background-attachment: fixed;
             background-position: center;
             background-blend-mode: luminosity;
@@ -44,12 +44,12 @@
             transition: all 200ms ease-out;
         }
 
-        .textshadow-blue:hover{
+        .textshadow-blue:hover {
             text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px lightblue;
         }
 
         .bordershadow-blue {
-            border: 1px solid #dd;
+            border: 1px solid gray;
             border-radius: 3px;
             box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
             transition: all 200ms ease-out;
@@ -57,6 +57,16 @@
 
         .bordershadow-blue:hover {
             box-shadow: 0 0 10px rgba(35, 173, 278, 1);
+        }
+
+        #form-input,
+        #form-button {
+            line-height: 50px;
+            font-size: 16px;
+        }
+
+        #form-input {
+            height: 50px;
         }
 
     </style>

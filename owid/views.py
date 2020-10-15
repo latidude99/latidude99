@@ -25,7 +25,10 @@ def covid(request):
 
 
 def country(request):
-    location = request.POST['location']
+    if request.method == "POST":
+        location = request.POST['location']
+    else:
+        location = 'World'
     context = service_covid.get_country_data(location)
     return render(request, 'owid/country.html', context)
 

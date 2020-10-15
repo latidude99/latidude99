@@ -2,7 +2,7 @@
 {% block content %}
     {% load static %}
     {% static "main/" as static_base %}
-    <div class="container text-lowercase" style="font-family:'Courier New'; max-width: 80%">
+    <div class="container text-lowercase" style="font-family:'Courier New';">
         <div class="center-screen">
             <h5 class="font-weight-bolder">{{ contact_txt_1 }}
                 <span class="text-info mb-5">
@@ -10,7 +10,8 @@
                 </span>
             </h5>
             <h5 class="mt-5 mb-5">{{ contact_txt_3 }}</h5>
-            <div class="col-lg-12">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
                 <form action="{% url 'main:contact' %}" method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
                     <div class="form-group">
@@ -44,7 +45,7 @@
                     <div class="form-group form-check float-left">
                         <input class="form-check-input" type="checkbox" name="remember" required>
                         <span class="">
-                            I{{ contact_txt_9 }}
+                            {{ contact_txt_9 }}
                         </span>
                         <div class="valid-feedback">{{ error_1 }}.</div>
                         <div class="invalid-feedback">{{ error_3 }}</div>
@@ -54,6 +55,7 @@
                             onclick="$('#6').LoadingOverlay('show', {background:'lightgray'})">{{ contact_txt_8 }}</button>
                 </form>
             </div>
+            <div class="col-lg-1"></div>
         </div>
     </div>
     <script>

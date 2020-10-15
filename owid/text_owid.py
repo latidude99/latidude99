@@ -2,8 +2,8 @@ LATIDUDE99 = 'latidude99.com'
 
 BACKGROUND_PATTERN1 = 'https://subtlepatterns.com/patterns/kindajean.png'
 BACKGROUND_PATTERN2 = 'images/paper_fibers1.png'
-BACKGROUND_PATTERN3 = 'images/globe_main.png'
-BACKGROUND_PATTERN4 = 'images/'
+BACKGROUND_PATTERN3 = 'images/darkness.png'
+BACKGROUND_PATTERN4 = 'images/darkness_red.png'
 BACKGROUND_PATTERN5 = 'images/'
 BACKGROUND_PATTERN6 = 'images/'
 
@@ -26,7 +26,7 @@ IMAGE_GLOBE = 'images/globe500px.png'
 OWID_COVID_TITLE = 'covid-19'
 OWID_COVID_SUBTITLE = 'coronavirus disease in charts'
 OWID_COVID_BTN_TXT = 'go to covid19'
-IMAGE_CORONAVIRUS = 'images/coronavirus1.png'
+IMAGE_CORONAVIRUS = 'images/coronavirus2.png'
 
 MILKY_WAY = 'The Milky Way'
 
@@ -58,6 +58,19 @@ HANDWASHING_FACILITIES = 'handwashing facilities'
 HOSPITAL_BEDS_PER_THOUSAND = 'hospital beds per thousand'
 LIFE_EXPECTANCY = 'life expectancy'
 HUMAN_DEVELOPMENT_INDEX = 'human development index'
+
+NO_DATA = 'no data'
+MILLIONS = 'millions'
+YEARS = 'years'
+PPL = 'people'
+KM = 'per km'
+SQ = '2'
+PER_100_000 = 'per 100,000 ppl'
+PER_1000 = 'per 1000 ppl'
+PERCENT = '%'
+DOLLARS = '$ '
+
+
 
 
 POPULATION_DESC = 'population in 2020'
