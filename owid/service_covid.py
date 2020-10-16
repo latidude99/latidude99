@@ -119,9 +119,8 @@ def get_country_data(location):
 def get_newcases_all(location):
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location)
-    print(coviddata.values())
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
-    values = [x.new_cases for x in coviddata]
+    values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
                'labels': labels,
@@ -145,7 +144,7 @@ def get_totalcases_all(location):
     coviddata = find_country_coviddata_all(location)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.total_cases for x in coviddata]
+    values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
@@ -170,7 +169,7 @@ def get_newdeaths_all(location):
     coviddata = find_country_coviddata_all(location)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.new_deaths for x in coviddata]
+    values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
@@ -195,7 +194,7 @@ def get_totaldeaths_all(location):
     coviddata = find_country_coviddata_all(location)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.total_deaths for x in coviddata]
+    values = [x.total_deaths if x.total_deaths >= 0 else 0for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
