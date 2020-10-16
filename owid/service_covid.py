@@ -24,6 +24,8 @@ def get_data_for_location(location):
     country = find_country(location)
     return country
 
+#def get_covid_context_base():
+
 
 def get_covid_selection_data():
     locations = get_location_list()
@@ -134,8 +136,8 @@ def get_newcases_all(location):
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
                }
-    print('service get_newcases_all()')
-    return context
+    ctx = {**get_covid_selection_data(), **context}
+    return ctx
 
 
 def get_totalcases_all(location):
@@ -159,7 +161,8 @@ def get_totalcases_all(location):
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
                }
-    return context
+    ctx = {**get_covid_selection_data(), **context}
+    return ctx
 
 
 def get_newdeaths_all(location):
@@ -183,7 +186,8 @@ def get_newdeaths_all(location):
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
                }
-    return context
+    ctx = {**get_covid_selection_data(), **context}
+    return ctx
 
 
 def get_totaldeaths_all(location):
@@ -207,7 +211,8 @@ def get_totaldeaths_all(location):
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
                }
-    return context
+    ctx = {**get_covid_selection_data(), **context}
+    return ctx
 
 
 # --------- old -------------
