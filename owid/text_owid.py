@@ -16,6 +16,7 @@ COVID_DATE_LABELS_FMT = '%d %b %Y'
 
 FOOTER_INFO = 'This website has been created with Django and Bootstrap 4 frameworks.'
 
+STYLE_OWID ='css/owid_covid.css'
 
 OWID_TITLE = 'The World In Numbers'
 OWID_SUBTITLE = 'statistics on different aspect of life '
@@ -60,14 +61,14 @@ LIFE_EXPECTANCY = 'life expectancy'
 HUMAN_DEVELOPMENT_INDEX = 'human development index'
 
 NO_DATA = 'no data'
-MILLIONS = 'millions'
-YEARS = 'years'
-PPL = 'people'
-KM = 'per km'
+MILLIONS = ' millions'
+YEARS = ' years'
+PPL = ' people'
+KM = ' per km'
 SQ = '2'
-PER_100_000 = 'per 100,000 ppl'
-PER_1000 = 'per 1000 ppl'
-PERCENT = '%'
+PER_100_000 = ' per 100,000 people'
+PER_1000 = ' per 1000 people'
+PERCENT = ' %'
 DOLLARS = '$ '
 
 

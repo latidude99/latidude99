@@ -3,9 +3,10 @@
     {% load static %}
     {% static "owid/" as static_base %}
     {% load humanize %}
-    <div class="container-flex">
-
-        <div class="sticky-top pt-4" style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
+    <div class="container-flex container-wrapper scroll-hidden">
+        <!-- width: 100% !important;background-image: url('{{ static_base }}{{ background_pattern4 }}');-->
+        <div class="sticky-top pt-4"
+             style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
             <div class="row ml-5">
                 <div class="col-lg-9">
                     <div class="media  p-2" style="background-color:transparent;">
@@ -50,7 +51,8 @@
                     </div>
                 </div>
             </div>
-            <hr/>
+            <hr>
+
         </div>
         <div class="row ml-5">
             <div class="col-lg-9" style="background-color:transparent; color: aqua;">
@@ -58,7 +60,7 @@
                     <div class="table-wrapper scroll-hidden">
                         <div class="table-responsive table-borderless table-dark table-hover"
                              style="background: transparent;  color: aqua">
-                            <table class="table" style="background: transparent;  color: aqua">
+                            <table class="table" style="background: transparent;  color: aqua;">
 
                                 <thead>
                                 <tr>
@@ -70,12 +72,12 @@
                                 <tbody>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ population }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.population ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
                                             {{ country.population|floatformat:"0"|intcomma }}
-                                            <small style="opacity:70%;"> {{ ppl }}</small>
+                                            <small class="ml-2" style="opacity:70%;"></small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -83,12 +85,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ population_density }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.population_density ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.population_density }}
-                                            <small style="opacity:70%;">{{ ppl }} {{ km }}<sup>{{ sq }}</sup></small>
+                                            {{ country.population_density|floatformat:"1" }}
+                                            <small class="ml-2" style="opacity:70%;">{{ ppl }} {{ km }}<sup>{{ sq }}</sup></small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -96,12 +98,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ median_age }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.median_age ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.median_age }}
-                                            <small style="opacity:70%;"> {{ years }}</small>
+                                            {{ country.median_age|floatformat:"1" }}
+                                            <small class="ml-2" style="opacity:70%;"> {{ years }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -109,12 +111,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ aged_65_older }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.aged_65_older ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.aged_65_older }}
-                                            <small style="opacity:70%;"> {{ years }}</small>
+                                            {{ country.aged_65_older|floatformat:"1" }}
+                                            <small class="ml-1" style="opacity:70%;"> {{ percent }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -122,12 +124,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ aged_70_older }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.aged_70_older ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.aged_70_older }}
-                                            <small style="opacity:70%;"> {{ years }}</small>
+                                            {{ country.aged_70_older|floatformat:"1" }}
+                                            <small class="ml-1" style="opacity:70%;"> {{ percent }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -135,12 +137,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ gdp_per_capita }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.gdp_per_capita ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            <small style="opacity:70%;"> {{ dollars }}</small>
-                                            {{ country.gdp_per_capita }}
+                                            <span class="mr-1" style="opacity:70%;"> {{ dollars }}</span>
+                                            {{ country.gdp_per_capita|floatformat:"0"|intcomma }}
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -148,12 +150,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ cardiovasc_death_rate }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.cardiovasc_death_rate ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.cardiovasc_death_rate }}
-                                            <small style="opacity:70%;"> {{ per_100_000 }}</small>
+                                            {{ country.cardiovasc_death_rate|floatformat:"0" }}
+                                            <small class="ml-2" style="opacity:70%;"> {{ per_100_000 }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="g-transparent text-light font-weight-lighter small">
@@ -161,12 +163,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ diabetes_prevalence }}:</td>
-                                    <td class="bg-ltransparentight">
+                                    <td class="bg-ltransparentight" style="font-family: 'Lucida Console';">
                                         {% if country.diabetes_prevalence ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.diabetes_prevalence }}
-                                            <small style="opacity:70%;"> {{ percent }}</small>
+                                            {{ country.diabetes_prevalence|floatformat:"1" }}
+                                            <small class="ml-1" style="opacity:70%;"> {{ percent }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="px-3 bg-litransparentght text-light font-weight-lighter small">
@@ -174,12 +176,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ handwashing_facilities }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.handwashing_facilities ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.handwashing_facilities }}
-                                            <small style="opacity:70%;"> {{ percent }}</small>
+                                            {{ country.handwashing_facilities|floatformat:"1" }}
+                                            <small class="ml-1" style="opacity:70%;"> {{ percent }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -187,12 +189,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ hospital_beds_per_thousand }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.hospital_beds_per_thousand ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.hospital_beds_per_thousand }}
-                                            <small style="opacity:70%;"> {{ per_1000 }}</small>
+                                            {{ country.hospital_beds_per_thousand|floatformat:"1" }}
+                                            <small class="ml-2" style="opacity:70%;"> {{ per_1000 }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -200,12 +202,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ life_expectancy }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.life_expectancy ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
-                                            {{ country.life_expectancy }}
-                                            <small style="opacity:70%;"> {{ years }}</small>
+                                            {{ country.life_expectancy|floatformat:"1" }}
+                                            <small class="ml-2" style="opacity:70%;"> {{ years }}</small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -213,12 +215,12 @@
                                 </tr>
                                 <tr>
                                     <td class="bg-transparent text-white font-weight-lighter">{{ human_development_index }}:</td>
-                                    <td class="bg-transparent">
+                                    <td class="bg-transparent" style="font-family: 'Lucida Console';">
                                         {% if country.human_development_index ==  -1 %}
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
                                             {{ country.human_development_index }}
-                                            <small style="opacity:70%;"></small>
+                                            <small class="ml-1" style="opacity:70%;"></small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -233,7 +235,7 @@
             </div>
             <div class="col-lg-3" style="background-color:transparent;">
 
-                <h4 class="text-secondary pull-left mb-4"><small>{{ side_txt1 }}</small></h4>
+                <h4 class="text-secondary pull-left mt-4 mb-4"><small>{{ side_txt1 }}</small></h4>
                 <br>
                 <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
                     {% csrf_token %}
@@ -241,7 +243,7 @@
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
                         <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                value="{{ new_cases }}"
-                               onclick="$('#loading1').show();">
+                               onclick="$('#loading1').show().delay(10000).hide(0);">
                         <div class="input-group-append ml-3">
                             <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -255,7 +257,7 @@
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
                         <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                value="{{ total_cases }}"
-                               onclick="$('#loading2').show();">
+                               onclick="$('#loading2').show().delay(10000).hide(0);">
                         <div class="input-group-append ml-3">
                             <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -269,9 +271,9 @@
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
                         <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                value="{{ new_deaths }}"
-                               onclick="$('#loading3').show();">
+                               onclick="$('#loading3').show().delay(10000).hide(0);">
                         <div class="input-group-append ml-3">
-                            <span id="loading2" class="spinner-grow spinner-grow-sm  text-outline-danger ml-2 mt-2"
+                            <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
                         </div>
                     </div>
@@ -283,7 +285,7 @@
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
                         <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                value="{{ total_deaths }}"
-                               onclick="$('#loading4').show();">
+                               onclick="$('#loading4').show().delay(10000).hide(0);">
                         <div class="input-group-append ml-3">
                             <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -294,15 +296,15 @@
             </div>
         </div>
 
+        <div class="ml-4 mt-5 mb-5">
+            <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
+                <span class="fas fa-chevron-left"></span>
+                &nbsp; back to country selection
+            </a>
+        </div>
+
     </div>
 
-
-    <div class="ml-4 mt-5 mb-5">
-        <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
-            <span class="fas fa-chevron-left"></span>
-            &nbsp; back to country selection
-        </a>
-    </div>
 
     <script>
         $(function () {

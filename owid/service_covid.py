@@ -28,6 +28,7 @@ def get_data_for_location(location):
 def get_covid_selection_data():
     locations = get_location_list()
     context = {'footer_info': FOOTER_INFO,
+               'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
                'background_pattern3': BACKGROUND_PATTERN3,
@@ -53,6 +54,7 @@ def get_country_data(location):
     country = find_country(location)
     data = find_country_coviddata_all(location)
     context = {'footer_info': FOOTER_INFO,
+               'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
                'background_pattern3': BACKGROUND_PATTERN3,
