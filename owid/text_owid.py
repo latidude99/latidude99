@@ -4,7 +4,7 @@ BACKGROUND_PATTERN1 = 'https://subtlepatterns.com/patterns/kindajean.png'
 BACKGROUND_PATTERN2 = 'images/paper_fibers1.png'
 BACKGROUND_PATTERN3 = 'images/darkness.png'
 BACKGROUND_PATTERN4 = 'images/darkness_red.png'
-BACKGROUND_PATTERN5 = 'images/'
+BACKGROUND_PATTERN5 = 'images/darkness_black.png'
 BACKGROUND_PATTERN6 = 'images/'
 
 COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data_03.10.2020.json'

@@ -1,4 +1,9 @@
-{% load static %}
+{
+%
+load
+static
+%
+}
 
 body {
     background-color: floralwhite;
@@ -53,6 +58,17 @@ hr {
     box-shadow: 0 0 10px rgba(35, 173, 278, 1);
 }
 
+.bordershadow-white {
+    border: 0 solid gray;
+    border-radius: 6px;
+    box-shadow: 0 0 0 0px rgba(35, 173, 278, 0.1);
+    transition: all 200ms ease-out;
+}
+
+.bordershadow-white:hover {
+    box-shadow: 0 0 10px rgba(200, 200, 200, 1);
+}
+
 #form-input,
 #form-button {
     line-height: 50px;
@@ -84,4 +100,62 @@ hr {
     max-height: 100vh;
     overflow: auto;
     display: inline-block;
+}
+
+.bootstrap-select .btn {
+    background-color: black !important;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s;
+    color: white;
+    font-weight: 200;
+    font-size: 16px;
+    margin-bottom: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: calc(1.5em + .75rem + 4px) !important;
+}
+
+
+
+.bootstrap-select .dropdown-menu {
+    margin: 15px 0 0;
+    navbutton_background_color: black;
+    background-clip: padding-box;
+    background-color: black;
+    color: beige;
+}
+
+.bootstrap-select .dropdown-menu .show {
+    background-color: black !important;
+}
+
+
+.bs-searchbox .form-control {
+    background-color: black;
+    color: lightgray;
+}
+
+.bootstrap-select.form-control {
+    background-color: black !important;
+}
+
+select::-ms-expand {
+    /* for IE 11 */
+    display: none;
+
+}
+
+.input .form-control {
+     background-color: black;
+}
+
+.dropdown .bootstrap-select .show-tick .form-control {
+    background-color: black;
 }

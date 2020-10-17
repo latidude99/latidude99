@@ -25,7 +25,8 @@
                             <div class="col-lg-8">
                                 {{ country_card_title }}</div>
                             <div class="col-lg-4">
-                                <div id="loading1" class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                                <div id="loading1"
+                                     class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
                                      style="display:none;"></div>
                             </div>
                         </div>
@@ -51,7 +52,8 @@
                                         </select>
 
                                         <div class="input-group-append">
-                                            <input type="submit" class="btn btn-outline-warning" value="{{ btn_country }}"
+                                            <input type="submit" class="btn btn-outline-warning"
+                                                   value="{{ btn_country }}"
                                                    onclick="$('#loading1').show();">
                                         </div>
                                     </div>
@@ -60,16 +62,66 @@
 
                         </div>
                     </div>
-
                 </div>
+
 
                 <div class="card py-2 mt-5" style="background: transparent;color:beige;border-left: 2px solid orange">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-lg-8">
-                                Comparison between selected countries</div>
+                                Comparison between selected countries
+                            </div>
                             <div class="col-lg-4">
-                                <div id="loading2" class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                                <div id="loading2"
+                                     class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                                     style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+
+                                    <div class="input-group">
+                                        <div class="mr-3 mt-2">
+                                            <label for="locations">Select up to 5 countries</label>
+                                        </div>
+
+                                        <select class="selectpicker form-control"
+                                                multiple data-live-search="true"
+                                                data-max-options="5"
+                                                multiple title="Select up to 5 countries..."
+                                                multiple data-selected-text-format="value"
+
+
+                                                id="sel1" name="location">
+                                            {% for location in locations %}
+                                                <option style="background-color:black;color:beige">{{ location }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <br>
+                                        <div class="input-group-append">
+                                            <input type="submit" class="btn btn-outline-warning" value="coming soon..."
+                                                   onclick="$('#loading2').show();">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card py-2 mt-5" style="background: transparent;color:beige;border-left: 2px solid orange">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                Coming soon...
+                            </div>
+                            <div class="col-lg-4">
+                                <div id="loading2"
+                                     class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
                                      style="display:none;"></div>
                             </div>
                         </div>
@@ -84,7 +136,7 @@
 
                                     <div class="input-group">
                                         <div class="mr-3 mt-2">
-                                            <label for="locations">Select up to 5 countries</label>
+                                            <label for="locations">Select </label>
                                         </div>
                                         <select class="form-control" id="sel1" name="location"
                                                 style="height: calc(1.5em + .75rem + 4px); background-color:transparent; color:beige;">
@@ -103,16 +155,17 @@
 
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
 
 
         </div>
-    </div>
 
+
+    </div>
+    <script>
+        $('select').selectpicker();
+    </script>
 
 
 
