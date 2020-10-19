@@ -96,11 +96,18 @@ hr {
     display: inline-block;
 }
 
+.table-wrapper2 {
+    max-height: 100vh;
+    overflow: auto;
+    display: inline-block;
+}
+
 .container-wrapper {
     max-height: 100vh;
     overflow: auto;
     display: inline-block;
 }
+
 
 .bootstrap-select .btn {
     background-color: black !important;
@@ -112,7 +119,7 @@ hr {
     transition-duration: 0.15s, 0.15s;
     transition-timing-function: ease-in-out, ease-in-out;
     transition-delay: 0s, 0s;
-    color: white;
+    color: white !important;
     font-weight: 200;
     font-size: 16px;
     margin-bottom: 0px;
@@ -123,6 +130,12 @@ hr {
 }
 
 
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: beige !important;
+    background-color: #333333 !important;
+}
+
 
 .bootstrap-select .dropdown-menu {
     margin: 15px 0 0;
@@ -131,6 +144,7 @@ hr {
     background-color: black;
     color: beige;
 }
+
 
 .bootstrap-select .dropdown-menu .show {
     background-color: black !important;
@@ -153,9 +167,11 @@ select::-ms-expand {
 }
 
 .input .form-control {
-     background-color: black;
+    background-color: black;
 }
 
 .dropdown .bootstrap-select .show-tick .form-control {
     background-color: black;
 }
+
+

@@ -33,6 +33,17 @@ def country(request):
     return render(request, 'owid/country.html', context)
 
 
+def countries(request):
+    locations = []
+    if request.method == "POST":
+        locations = request.POST.getlist('locations')
+    else:
+        locations.append('World')
+    print(locations)
+    context = service_covid.get_countries_data(locations)
+    return render(request, 'owid/countries.html', context)
+
+
 def world(request):
     location = 'World'
     context = service_covid.get_country_data(location)
@@ -45,6 +56,18 @@ def charts_bar_newcases_world(request):
     return render(request, 'owid/charts_covid_bar.html', context)
 
 
+# ------------ multiple locations ------------
+def charts_newcases_country_group(request):
+    locations_str = request.POST['location']
+    print(locations_str)
+    locations_list = eval(locations_str)
+    print(locations_list)
+    context = service_covid.get_newcases_all_group(locations_list)
+    return render(request, 'owid/charts_covid_line_group.html', context)
+
+
+
+# ------------ single location ---------------
 def charts_bar_newcases_country(request):
     location = request.POST['location']
     locations = service_covid.get_location_list()

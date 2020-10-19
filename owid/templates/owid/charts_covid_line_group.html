@@ -1,5 +1,6 @@
 {% extends "owid/base_boot4_covid.html" %}
 {% block content %}
+    {% load index %}
     {% load static %}
     {% static "owid/" as static_base %}
 
@@ -27,7 +28,7 @@
             <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                <button type="submit" class="btn btn-danger btn-sm mr-2">
                     {{ new_cases }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -35,7 +36,7 @@
             <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                <button type="submit" class="btn btn-danger btn-sm mr-2">
                     {{ total_cases }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -43,7 +44,7 @@
             <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                <button type="submit" class="btn btn-dark btn-sm mr-2">
                     {{ new_deaths }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -51,7 +52,7 @@
             <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                <button type="submit" class="btn btn-dark btn-sm mr-2">
                     {{ total_deaths }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -68,26 +69,32 @@
                 <script>
                     var ctx = document.getElementById('chart').getContext('2d');
                     var chart_uk_new_cases = new Chart(ctx, {
-                        type: 'bar',
+                        type: 'line',
                         data: {
                             labels: [
-                                {% for item in labels %}
+                                {% for item in countries.0.labels %}
                                     "{{ item }}",
                                 {% endfor %}
                             ],
-                            datasets: [{
-                                label: "{{ dataset_label }}",
-                                data: [
-                                    {% for item in values %}
-                                        "{{ item }}",
-                                    {% endfor %}
-                                ],
-                                backgroundColor: "{{ back_colour }}",
-                                borderColor: "{{ border_colour }}",
-                                borderWidth: 1,
-                                barPercentage: 0.9,
-                                barThickness: 'flex',
-                            }]
+                            datasets: [
+                                {% for c in countries %}
+                                    {
+                                    data: [
+                                        {% for item in c.values %}
+                                            "{{ item }}",
+                                        {% endfor %}
+                                    ],
+                                    label: "{{ c.label }}",
+                                    backgroundColor: "{{ back_colours|index:forloop.counter0  }}",
+                                    borderColor: "{{ border_colours|index:forloop.counter0 }}",
+                                    borderWidth: 2,
+                                    pointBorderWidth: 0,
+                                    pointRadius: 1,
+                                    pointHoverRadius: 10,
+                                    fill: false
+                                    },
+                                {% endfor %}
+                            ]
                         },
                         options: {
                             scales: {
