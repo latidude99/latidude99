@@ -44,12 +44,18 @@ NEW_CASES_TXT = 'new cases'
 TOTAL_CASES_TXT = 'total cases'
 NEW_DEATHS_TXT = 'new deaths'
 TOTAL_DEATHS_TXT = 'total deaths'
+
+NEW_CASES_TXT100 = 'per 100,000'
+TOTAL_CASES_TXT100 = 'per 100,000'
+NEW_DEATHS_TXT100 = 'per 100,000'
+TOTAL_DEATHS_TXT100 = 'per 100,000'
+
 BTN_CHARTS_TXT = 'see charts'
 
 
 
 CONTINENT ='continent'
-COUNTRY_NAME = 'country name'
+COUNTRY_NAME = 'country'
 POPULATION = 'population'
 POPULATION_DENSITY = 'population density'
 MEDIAN_AGE = 'median age'
@@ -96,6 +102,12 @@ HUMAN_DEVELOPMENT_INDEX_DESC = 'summary measure of average achievement in key di
 
 CHARTS_BACKTOCOUNTRY_BTN = 'back to country page'
 
+TITLE_CHARTS_NEWCASES = 'COVID-19 new cases'
+TITLE_CHARTS_TOTALCASES = 'COVID-19 total cases'
+TITLE_CHARTS_NEWDEATHS = 'COVID-19 new deaths'
+TITLE_CHARTS_TOTALDEATHS = 'COVID-19 total deaths'
+
+
 CHARTS_COVID_CASES_BAR_COLOR_BACK = 'rgba(255, 255, 130, 0.7)'
 CHARTS_COVID_CASES_BAR_COLOR_BORD = 'rgba(255, 255, 130, 0.7)'
 CHARTS_COVID_DEATHS_BAR_COLOR_BACK = 'rgba(255, 51, 51, 0.7)'
@@ -105,3 +117,8 @@ CHARTS_LABEL_NEWCASES = ' new cases'
 CHARTS_LABEL_TOTALCASES = ' total cases'
 CHARTS_LABEL_NEWDEATHS = ' new deaths'
 CHARTS_LABEL_TOTALDEATHS = ' total deaths'
+
+CHARTS_LABEL_NEWCASES100 = ' new cases per 100,000 people'
+CHARTS_LABEL_TOTALCASES100 = ' total cases per 100,000 people'
+CHARTS_LABEL_NEWDEATHS100 = ' new deaths per 100,000 people'
+CHARTS_LABEL_TOTALDEATHS100 = ' total deaths per 100,000 people'

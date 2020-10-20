@@ -6,7 +6,7 @@
     {% load humanize %}
     <div class="container-flex">
         <!-- width: 100% !important;background-image: url('{{ static_base }}{{ background_pattern5 }}');-->
-        <div class="sticky-top pt-4 pb-4"
+        <div class="sticky-top pt-4 pb-2"
              style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
             <div class="row ml-5">
                 <div class="col-lg-5">
@@ -47,11 +47,11 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="" style="background-color:transparent;">
-                        <h4 class="text-white pull-left px-4 mt-5"><small>{{ side_txt1 }}</small></h4>
+                        <h4 class="text-white px-1 mt-5 pull-right"><small>{{ side_txt1 }}</small></h4>
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col d-flex justify-content-center">
                             <form action="{% url 'owid:charts_newcases_country_group' %}" method="post">
                                 {% csrf_token %}
@@ -68,11 +68,11 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                            <form action="{% url 'owid:charts_totalcases_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
+                                           value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                            value="{{ total_cases }}"
                                            onclick="$('#loading2').show().delay(10000).hide(0);">
@@ -83,11 +83,11 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                            <form action="{% url 'owid:charts_newdeaths_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
+                                           value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ new_deaths }}"
                                            onclick="$('#loading3').show().delay(10000).hide(0);">
@@ -98,11 +98,11 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                            <form action="{% url 'owid:charts_totaldeaths_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
+                                           value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ total_deaths }}"
                                            onclick="$('#loading4').show().delay(10000).hide(0);">
@@ -116,13 +116,13 @@
                     </div>
                     <div class="row">
                         <div class="col d-flex justify-content-center">
-                            <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                            <form action="{% url 'owid:charts_newcases100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-2">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                                           value="{{ new_cases }}"
+                                           value="{{ countries_names }}">
+                                    <input disabled type="submit" class="btn btn-outline-warning disabled" style="min-width:70%;"
+                                           value="{{ new_cases100 }}"
                                            onclick="$('#loading1').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
@@ -131,13 +131,13 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                            <form action="{% url 'owid:charts_totalcases100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                                           value="{{ total_cases }}"
+                                           value="{{ countries_names }}">
+                                    <input disabled type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                           value="{{ total_cases100 }}"
                                            onclick="$('#loading2').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
@@ -146,13 +146,13 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                            <form action="{% url 'owid:charts_newdeaths100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                                           value="{{ new_deaths }}"
+                                           value="{{ countries_names }}">
+                                    <input disabled type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                           value="{{ new_deaths100 }}"
                                            onclick="$('#loading3').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
@@ -161,13 +161,13 @@
                                 </div>
                             </form>
 
-                            <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                            <form action="{% url 'owid:charts_totaldeaths100_country_group' %}" method="post">
                                 {% csrf_token %}
-                                <div class="input-group mb-3">
+                                <div class="input-group mb-2">
                                     <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                                           value="{{ total_deaths }}"
+                                           value="{{ countries_names }}">
+                                    <input disabled type="submit" class="btn btn-outline-danger disabled" style="min-width:70%;"
+                                           value="{{ total_deaths100 }}"
                                            onclick="$('#loading4').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
@@ -178,69 +178,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
-                                {% csrf_token %}
-                                <div class="input-group">
-                                    <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                                           value="{{ new_cases }}"
-                                           onclick="$('#loading1').show().delay(10000).hide(0);">
-                                    <div class="input-group-append ml-3">
-                            <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
-                                  style="display:none;opacity:50%"></span>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
-                                {% csrf_token %}
-                                <div class="input-group">
-                                    <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                                           value="{{ total_cases }}"
-                                           onclick="$('#loading2').show().delay(10000).hide(0);">
-                                    <div class="input-group-append ml-3">
-                            <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
-                                  style="display:none;opacity:50%"></span>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
-                                {% csrf_token %}
-                                <div class="input-group">
-                                    <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                                           value="{{ new_deaths }}"
-                                           onclick="$('#loading3').show().delay(10000).hide(0);">
-                                    <div class="input-group-append ml-3">
-                            <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
-                                  style="display:none;opacity:50%"></span>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
-                                {% csrf_token %}
-                                <div class="input-group">
-                                    <input type="hidden" class="form-control" name="location"
-                                           value="{{ location }}">
-                                    <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                                           value="{{ total_deaths }}"
-                                           onclick="$('#loading4').show().delay(10000).hide(0);">
-                                    <div class="input-group-append ml-3">
-                            <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
-                                  style="display:none;opacity:50%"></span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -265,8 +202,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td class=""
-                                    style="font-family: 'Lucida Console';">
+                                <td class="">
                                     <div class="ml-2">
                                         <img src="{{ static_base }}{{ flags.0 }}" alt="flag"
                                              style="height:52px; opacity:0%;">
@@ -274,7 +210,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white">{{ country_name }}:</td>
+                                <td class="bg-transparent text-white font-weight-lighter" style="height: 100px;font-family:'Lucida Console';">
+                                    <h4>{{ country_name }}:</h4></td>
                             </tr>
                             <tr>
                                 <td class="bg-transparent text-white font-weight-lighter">
@@ -310,7 +247,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white font-weight-lighter">{{ cardiovasc_death_rate }}:
+                                <td class="bg-transparent text-white font-weight-lighter" style="height:70px;">{{ cardiovasc_death_rate }}:
                                     <small class="ml-2" style="opacity:70%;"> {{ per_100_000 }}</small>
                                 </td>
                             </tr>
@@ -325,7 +262,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white font-weight-lighter">{{ hospital_beds_per_thousand }}:
+                                <td class="bg-transparent text-white font-weight-lighter" style="height:70px;">{{ hospital_beds_per_thousand }}:
                                     <small class="ml-2" style="opacity:70%;"> {{ per_1000 }}</small>
                                 </td>
                             </tr>
@@ -349,7 +286,7 @@
                 <div class="row">
                     {% for country in countries %}
                         <div class="col" style="background-color:transparent; color: aqua;">
-                            <div class="d-flex flex-column mt-1 ml-2">
+                            <div class="d-flex flex-column mt-1">
                                 <div class="table-responsive table-borderless table-dark"
                                      style="background: transparent;  color: aqua">
                                     <table class="table" style="background: transparent;  color: aqua;">
@@ -372,7 +309,7 @@
                                         </tr>
                                         <tr>
                                             <td class="bg-transparent text-white"
-                                                style="font-family: 'Lucida Console';">
+                                                style="font-family: 'Lucida Console';height: 100px">
                                                 {{ country.location }}
                                             </td>
                                         </tr>
@@ -432,7 +369,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="bg-transparent" style="font-family: 'Lucida Console';">
+                                            <td class="bg-transparent" style="font-family: 'Lucida Console';height:70px;">
                                                 {% if country.cardiovasc_death_rate ==  -1 %}
                                                     <small style="opacity:70%;"> {{ no_data }}</small>
                                                 {% else %}
@@ -459,7 +396,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="bg-transparent" style="font-family: 'Lucida Console';">
+                                            <td class="bg-transparent" style="font-family: 'Lucida Console';height:70px;">
                                                 {% if country.hospital_beds_per_thousand ==  -1 %}
                                                     <small style="opacity:70%;"> {{ no_data }}</small>
                                                 {% else %}
@@ -512,7 +449,6 @@
     </div>
 
 
-    </div>
 
 
     <script>

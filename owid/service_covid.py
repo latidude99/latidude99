@@ -26,9 +26,6 @@ def get_data_for_location(location):
     return country
 
 
-# def get_covid_context_base():
-
-
 def get_covid_selection_data():
     locations = get_location_list()
     context = {'footer_info': FOOTER_INFO,
@@ -115,7 +112,11 @@ def get_country_data(location):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
-               'btn_charts': BTN_CHARTS_TXT
+               'btn_charts': BTN_CHARTS_TXT,
+               'new_cases100': NEW_CASES_TXT,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     return context
 
@@ -194,7 +195,11 @@ def get_countries_data(countries_selected):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
-               'btn_charts': BTN_CHARTS_TXT
+               'btn_charts': BTN_CHARTS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     return context
 
@@ -202,40 +207,208 @@ def get_countries_data(countries_selected):
 # ---------- multiple locations -----------------------
 
 
-def get_newcases_all_group(countries_selected):
+def get_charts_base_context():
     back_colours = ['white', 'yellow', 'red', 'blue', 'green']
     border_colours = ['white', 'yellow', 'red', 'blue', 'green']
+    ctx = {'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
+           'dataset_label': CHARTS_LABEL_NEWCASES,
+           'back_colours': back_colours,
+           'border_colours': border_colours,
+           'new_cases': NEW_CASES_TXT,
+           'total_cases': TOTAL_CASES_TXT,
+           'new_deaths': NEW_DEATHS_TXT,
+           'total_deaths': TOTAL_DEATHS_TXT,
+           'new_cases100': NEW_CASES_TXT100,
+           'total_cases100': TOTAL_CASES_TXT100,
+           'new_deaths100': NEW_DEATHS_TXT100,
+           'total_deaths100': TOTAL_DEATHS_TXT100,
+           }
+    return ctx
+
+
+def get_newcases_all_group(countries_selected):
     flags = []
     countries = []
+    countries_names = []
     for c in countries_selected:
+        countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
         country = find_country(c)
         data = find_country_coviddata_all(c)
         values = [x.new_cases if x.new_cases >= 0 else 0 for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
-        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values[62:], labels[62:])
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
         countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_NEWCASES,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
 
 
-    context = {
-        'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
-        'dataset_label': CHARTS_LABEL_NEWCASES,
-        'back_colours': back_colours,
-        'border_colours': border_colours,
-        'title': 'COVID19, new cases in ' + countries_selected[0][0].capitalize() + countries_selected[0][1:],
-        'flags': flags,
-        'countries': countries,
-        'new_cases': NEW_CASES_TXT,
-        'total_cases': TOTAL_CASES_TXT,
-        'new_deaths': NEW_DEATHS_TXT,
-        'total_deaths': TOTAL_DEATHS_TXT,
-    }
-    ctx = {**get_covid_selection_data(), **context}
+def get_totalcases_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.total_cases if x.total_cases >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_TOTALCASES,
+               'flags': flags,
+               'countries': countries,
+               'countries_names': countries_names,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+def get_newdeaths_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_NEWDEATHS,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+def get_totaldeaths_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_TOTALDEATHS,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+# ---------- multiple locations 100 -----------------------
+
+def get_newcases100_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.new_cases if x.new_cases >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_NEWCASES,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+def get_totalcases100_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.total_cases if x.total_cases >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_TOTALCASES,
+               'flags': flags,
+               'countries': countries,
+               'countries_names': countries_names,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+def get_newdeaths100_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_NEWDEATHS,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
+    return ctx
+
+
+def get_totaldeaths100_all_group(countries_selected):
+    flags = []
+    countries = []
+    countries_names = []
+    for c in countries_selected:
+        countries_names.append(c)
+        flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
+        flags.append(flag)
+        country = find_country(c)
+        data = find_country_coviddata_all(c)
+        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in data]
+        labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
+        owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
+        countries.append(owid_country_dto)
+    context = {'title': TITLE_CHARTS_TOTALDEATHS,
+               'flags': flags,
+               'countries': countries,
+               }
+    ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
 
 
 # ---------- single location --------------------------
+
+
 def get_newcases_all(location):
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location)
@@ -333,8 +506,9 @@ def get_totaldeaths_all(location):
     ctx = {**get_covid_selection_data(), **context}
     return ctx
 
+    # --------- old -------------
 
-# --------- old -------------
+
 def get_pl_newcases_all():
     pl_coviddata = find_country_coviddata_all('Poland')
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in pl_coviddata]

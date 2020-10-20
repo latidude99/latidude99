@@ -4,67 +4,105 @@
     {% load static %}
     {% static "owid/" as static_base %}
 
-    <div class="container-fluid" style="margin-top:50px;">
-        <div class="btn-group">
-            <div class="mr-2">
-                <form action="{% url 'owid:country' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                    <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
-                        <span class="fas fa-chevron-left"></span>
-                        &nbsp; {{ back_btn }}
-                    </button>
-                </form>
+    <div class="container-fluid" style="margin-top:30px;">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="btn-group">
+                    <div class="mr-2">
+                        <form action="{% url 'owid:country' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                            <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
+                                <span class="fas fa-chevron-left"></span>
+                                &nbsp; {{ back_btn }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-            <div class="text-white ml-5 mr-5 mb-5" style="font-size: 18pt;text-align: center;">
-                {{ title }}
+            <div class="col-lg-4">
+                <div class="text-white ml-5 mr-5 mb-2" style="font-size: 18pt;text-align: center;">
+                    {{ title }}
+                </div>
             </div>
-            <div class="bordershadow-white mr-5" style="text-align: left;">
-                <img src="{{ static_base }}{{ flag }}" alt="flag" style="width:50px; border:1px;">
+            <div class="col-lg-6">
+                <div class="btn-group btn-group-sm pull-right mr-2 mb-2">
+                    <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names}}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ new_cases }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ total_cases }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ new_deaths }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ total_deaths }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="btn-group btn-group-sm pull-right mr-2 mb-3">
+                    <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button disabled type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ new_cases100 }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button disabled type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ total_cases100 }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button disabled type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ new_deaths100 }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
+                        <button disabled type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ total_deaths }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="btn-group btn-group-sm pull-right mr-2">
-            <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-danger btn-sm mr-2">
-                    {{ new_cases }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-danger btn-sm mr-2">
-                    {{ total_cases }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-dark btn-sm mr-2">
-                    {{ new_deaths }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-dark btn-sm mr-2">
-                    {{ total_deaths }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-
-        </div>
-
-
         <div class="#row" style="background-color:transparent;">
 
 
-            <div style="text-align: center;">
+            <div style="text-align: left;">
                 <canvas id="chart" width="1000" height="400"></canvas>
                 <script>
                     var ctx = document.getElementById('chart').getContext('2d');
@@ -79,19 +117,19 @@
                             datasets: [
                                 {% for c in countries %}
                                     {
-                                    data: [
-                                        {% for item in c.values %}
-                                            "{{ item }}",
-                                        {% endfor %}
-                                    ],
-                                    label: "{{ c.label }}",
-                                    backgroundColor: "{{ back_colours|index:forloop.counter0  }}",
-                                    borderColor: "{{ border_colours|index:forloop.counter0 }}",
-                                    borderWidth: 2,
-                                    pointBorderWidth: 0,
-                                    pointRadius: 1,
-                                    pointHoverRadius: 10,
-                                    fill: false
+                                        data: [
+                                            {% for item in c.values %}
+                                                "{{ item }}",
+                                            {% endfor %}
+                                        ],
+                                        label: "{{ c.label }}",
+                                        backgroundColor: "{{ back_colours|index:forloop.counter0  }}",
+                                        borderColor: "{{ border_colours|index:forloop.counter0 }}",
+                                        borderWidth: 2,
+                                        pointBorderWidth: 0,
+                                        pointRadius: 1,
+                                        pointHoverRadius: 10,
+                                        fill: false
                                     },
                                 {% endfor %}
                             ]
@@ -120,7 +158,7 @@
 
                             },
                             legend: {
-                                display: false,
+                                display: true,
                                 labels: {
                                     fontColor: 'rgb(255, 255, 255)'
                                 }
@@ -138,8 +176,6 @@
         <div class="#row">
             <br><br>
             <p class="text-secondary small">data provided by: ourworldindata.org</p>
-            <br>
-            <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="hits">
         </div>
     </div>
 
