@@ -11,7 +11,7 @@
                     <div class="mr-2">
                         <form action="{% url 'owid:countries' %}" method="post">
                             {% csrf_token %}
-                            <input type="hidden" class="form-control" name="countries_names"
+                            <input type="hidden" class="form-control" name="location"
                                    value="{{ countries_names }}">
                             <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
                                 <span class="fas fa-chevron-left"></span>

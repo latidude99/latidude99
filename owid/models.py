@@ -46,3 +46,7 @@ class CovidData(models.Model):
                " " + str(self.new_deaths) + \
                " " + str(self.total_deaths)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['date', 'country'], name="unique_date")
+            ]

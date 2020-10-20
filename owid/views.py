@@ -36,14 +36,15 @@ def country(request):
 def countries(request):
     locations = []
     if request.method == "POST":
-        if len(locations):
-            locations_str = request.POST['countries_names']
+        date_str = request.POST['datefilter']
+        locations = request.POST.getlist('locations')
+        if not len(locations):
+            locations_str = request.POST['location']
             locations = eval(locations_str)
-        else:
-            locations = request.POST.getlist('locations')
     else:
         locations.append('World')
     print('end')
+    print(date_str)
     print(locations)
     context = service_covid.get_countries_data(locations)
     return render(request, 'owid/countries.html', context)

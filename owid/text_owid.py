@@ -7,7 +7,7 @@ BACKGROUND_PATTERN4 = 'images/darkness_red.png'
 BACKGROUND_PATTERN5 = 'images/darkness_black.png'
 BACKGROUND_PATTERN6 = 'images/'
 
-COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data_03.10.2020.json'
+COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data.json'
 
 OWID_COVID_DB_CHECK_COUNTRY = 'United States'
 OWID_COVID_JSON_CHECK_COUNTRY_CODE = 'USA'
