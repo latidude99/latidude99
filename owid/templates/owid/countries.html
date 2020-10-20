@@ -22,7 +22,7 @@
                                         data-live-search="true"
                                         data-min-options="2"
                                         data-max-options="5"
-                                        multiple title="Select up to 5 countries..."
+                                        multiple title="Change the selection"
                                         multiple data-selected-text-format="value"
                                         id="sel2" name="locations">
                                     {% for location in locations %}
@@ -33,7 +33,7 @@
                                 <div class="input-group-append">
                                     <input type="submit" class="btn btn-outline-warning"
                                            value="{{ btn_countries_reselect }}"
-                                           onclick="$('#loading0').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                 </div>
                                 <div class="input-group-append ml-3">
                                     <span id="loading0" class="spinner-grow spinner-grow-sm  text-white ml-2 mt-3"
@@ -46,8 +46,13 @@
 
                 </div>
                 <div class="col-lg-2">
-                    <div class="" style="background-color:transparent;">
-                        <h4 class="text-white px-1 mt-5 pull-right"><small>{{ side_txt1 }}</small></h4>
+                    <div class="ml-2 mt-5">
+                        <div class="" style="background-color:transparent;">
+                            <h4 class="text-white px-1 pull-right"><small>{{ side_txt1 }}</small></h4>
+                        </div>
+                        <div class="">
+                            <span class="loader" id="loading" style="display:none;"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -60,7 +65,7 @@
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                            value="{{ new_cases }}"
-                                           onclick="$('#loading1').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -75,7 +80,7 @@
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                            value="{{ total_cases }}"
-                                           onclick="$('#loading2').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -90,7 +95,7 @@
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ new_deaths }}"
-                                           onclick="$('#loading3').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -105,7 +110,7 @@
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ total_deaths }}"
-                                           onclick="$('#loading4').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -121,9 +126,10 @@
                                 <div class="input-group mb-2">
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-warning disabled" style="min-width:70%;"
+                                    <input disabled type="submit" class="btn btn-outline-warning disabled"
+                                           style="min-width:70%;"
                                            value="{{ new_cases100 }}"
-                                           onclick="$('#loading1').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -138,7 +144,7 @@
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                            value="{{ total_cases100 }}"
-                                           onclick="$('#loading2').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -153,7 +159,7 @@
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ new_deaths100 }}"
-                                           onclick="$('#loading3').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -166,9 +172,10 @@
                                 <div class="input-group mb-2">
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-danger disabled" style="min-width:70%;"
+                                    <input disabled type="submit" class="btn btn-outline-danger disabled"
+                                           style="min-width:70%;"
                                            value="{{ total_deaths100 }}"
-                                           onclick="$('#loading4').show().delay(10000).hide(0);">
+                                           onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
                             <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -210,7 +217,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white font-weight-lighter" style="height: 100px;font-family:'Lucida Console';">
+                                <td class="bg-transparent text-white font-weight-lighter"
+                                    style="height: 100px;font-family:'Lucida Console';">
                                     <h4>{{ country_name }}:</h4></td>
                             </tr>
                             <tr>
@@ -247,7 +255,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white font-weight-lighter" style="height:70px;">{{ cardiovasc_death_rate }}:
+                                <td class="bg-transparent text-white font-weight-lighter"
+                                    style="height:70px;">{{ cardiovasc_death_rate }}:
                                     <small class="ml-2" style="opacity:70%;"> {{ per_100_000 }}</small>
                                 </td>
                             </tr>
@@ -262,7 +271,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-transparent text-white font-weight-lighter" style="height:70px;">{{ hospital_beds_per_thousand }}:
+                                <td class="bg-transparent text-white font-weight-lighter"
+                                    style="height:70px;">{{ hospital_beds_per_thousand }}:
                                     <small class="ml-2" style="opacity:70%;"> {{ per_1000 }}</small>
                                 </td>
                             </tr>
@@ -369,7 +379,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="bg-transparent" style="font-family: 'Lucida Console';height:70px;">
+                                            <td class="bg-transparent"
+                                                style="font-family: 'Lucida Console';height:70px;">
                                                 {% if country.cardiovasc_death_rate ==  -1 %}
                                                     <small style="opacity:70%;"> {{ no_data }}</small>
                                                 {% else %}
@@ -396,7 +407,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="bg-transparent" style="font-family: 'Lucida Console';height:70px;">
+                                            <td class="bg-transparent"
+                                                style="font-family: 'Lucida Console';height:70px;">
                                                 {% if country.hospital_beds_per_thousand ==  -1 %}
                                                     <small style="opacity:70%;"> {{ no_data }}</small>
                                                 {% else %}

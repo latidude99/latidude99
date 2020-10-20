@@ -39,6 +39,7 @@ BTN_COUNTRIES = 'submit selection'
 BTN_COUNTRY_CHANGE = 'change country'
 BTN_COUNTRIES_RESELECT = 'change countries'
 SIDE_TXT_1 = 'available charts:'
+CHARTS_BACKTOSELECTION_BTN = 'back to country selection'
 
 NEW_CASES_TXT = 'new cases'
 TOTAL_CASES_TXT = 'total cases'

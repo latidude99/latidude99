@@ -36,9 +36,14 @@ def country(request):
 def countries(request):
     locations = []
     if request.method == "POST":
-        locations = request.POST.getlist('locations')
+        if len(locations):
+            locations_str = request.POST['countries_names']
+            locations = eval(locations_str)
+        else:
+            locations = request.POST.getlist('locations')
     else:
         locations.append('World')
+    print('end')
     print(locations)
     context = service_covid.get_countries_data(locations)
     return render(request, 'owid/countries.html', context)
@@ -59,6 +64,7 @@ def charts_bar_newcases_world(request):
 # ------------ multiple locations ------------
 def charts_newcases_country_group(request):
     locations_str = request.POST['location']
+    print('location_str: ')
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)

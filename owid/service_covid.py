@@ -164,7 +164,7 @@ def get_countries_data(countries_selected):
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
-               #          'countries_data': countries_data,
+               #  'countries_data': countries_data,
                'continent': CONTINENT,
                'country_name': COUNTRY_NAME,
                'population': POPULATION,
@@ -210,7 +210,7 @@ def get_countries_data(countries_selected):
 def get_charts_base_context():
     back_colours = ['white', 'yellow', 'red', 'blue', 'green']
     border_colours = ['white', 'yellow', 'red', 'blue', 'green']
-    ctx = {'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
+    ctx = {'back_btn_selection': CHARTS_BACKTOSELECTION_BTN,
            'dataset_label': CHARTS_LABEL_NEWCASES,
            'back_colours': back_colours,
            'border_colours': border_colours,
@@ -243,6 +243,7 @@ def get_newcases_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_NEWCASES,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
@@ -288,6 +289,7 @@ def get_newdeaths_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_NEWDEATHS,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
@@ -310,6 +312,7 @@ def get_totaldeaths_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_TOTALDEATHS,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
@@ -334,6 +337,7 @@ def get_newcases100_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_NEWCASES,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
@@ -379,6 +383,7 @@ def get_newdeaths100_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_NEWDEATHS,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx
@@ -401,6 +406,7 @@ def get_totaldeaths100_all_group(countries_selected):
     context = {'title': TITLE_CHARTS_TOTALDEATHS,
                'flags': flags,
                'countries': countries,
+               'countries_names': countries_names,
                }
     ctx = {**get_covid_selection_data(), **get_charts_base_context(), **context}
     return ctx

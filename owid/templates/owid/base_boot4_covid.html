@@ -8,7 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.14/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.14/css/bootstrap-select.css"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -24,13 +25,49 @@
     <link rel="stylesheet" href="{{ static_base }}{{ style_css }}">
     <style>
 
+        .loader {
+            width: 48px;
+            height: 48px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .loader::after,
+        .loader::before {
+            content: '';
+            box-sizing: border-box;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #FFF;
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: animloader 2s linear infinite;
+        }
+
+        .loader::after {
+            animation-delay: 1s;
+        }
+
+        @keyframes animloader {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
 
     </style>
 
 </head>
 <body>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
 </body>
 </html>
