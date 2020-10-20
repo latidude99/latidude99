@@ -10,7 +10,7 @@
              style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
             <div class="row ml-5">
                 <div class="col-lg-5">
-                    <div class="mt-5 mb-3">
+                    <div class="mt-2 mb-3">
                         <form action="{% url 'owid:countries' %}" method="post">
                             {% csrf_token %}
                             <div class="input-group">
@@ -39,6 +39,15 @@
                                     <span id="loading0" class="spinner-grow spinner-grow-sm  text-white ml-2 mt-3"
                                           style="display:none;opacity:50%">
                                     </span>
+                                </div>
+                                <div class="input-group mt-4 ml-3">
+                                    <div class="" style="width:50%;">
+                                        <input id="datesel2" type="text" name="datefilter" value="{{ date_range }}"
+                                               style="width:100%;"/>
+                                    </div>
+                                    <div class="mr-1 ml-4 text-muted">
+                                        <label id="msgdate" for="datefilter">adjust date range</label>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -192,9 +201,9 @@
     </div>
     <hr>
 
-    <div class="table-wrapper2 scroll-hidden">
+    <div class="table-wrapper2 scroll-hidden" style="width:100%">
 
-        <div class="row ml-5">
+        <div class="row ml-5" style="width:100%">
             <div class="col-lg-3" style="background-color:transparent; color: aqua;">
                 <div class="d-flex flex-column ml-2">
 
@@ -468,6 +477,26 @@
             $('#country').change(function () {
                 this.form.submit();
             });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#datesel2').daterangepicker({});
+
+        $(function () {
+
+            $('input[name="datefilter"]').daterangepicker({
+                autoApply: true,
+                startDate: "{{ start_date}}",
+                endDate: "{{ end_date}}",
+                applyButtonClasses: "btn-outline-dark",
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: "YYYY-MM-DD",
+                    separator: "  to  ",
+                }
+            });
+
         });
     </script>
 

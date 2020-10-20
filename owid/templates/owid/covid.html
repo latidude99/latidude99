@@ -138,31 +138,21 @@
     </script>
 
     <script type="text/javascript">
-        $('#datesel2').daterangepicker({
-            "autoApply": true,
-            "startDate": "11/01/2019",
-            "endDate": "12/01/2021",
-            "applyButtonClasses": "btn-danger"
-        }, function (start, end, label) {
-            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-        });
+
+        $('#datesel2').daterangepicker({});
 
         $(function () {
 
             $('input[name="datefilter"]').daterangepicker({
-                autoUpdateInput: false,
+                autoApply: true,
+                startDate: "2019-12-01",
+                endDate: "2022-12-01",
+                applyButtonClasses: "btn-outline-dark",
                 locale: {
                     cancelLabel: 'Clear',
-                    format: 'M/DD hh:mm A'
+                    format: "YYYY-MM-DD",
+                    separator: "  to  ",
                 }
-            });
-
-            $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-            });
-
-            $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
-                $(this).val('');
             });
 
         });

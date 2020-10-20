@@ -46,7 +46,7 @@ def countries(request):
     print('end')
     print(date_str)
     print(locations)
-    context = service_covid.get_countries_data(locations)
+    context = service_covid.get_countries_data(locations, date_str)
     return render(request, 'owid/countries.html', context)
 
 

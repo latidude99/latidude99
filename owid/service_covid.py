@@ -121,7 +121,12 @@ def get_country_data(location):
     return context
 
 
-def get_countries_data(countries_selected):
+def get_countries_data(countries_selected, date_str):
+    date_list = date_str.split('  to  ')
+    if len(date_list) == 1:
+        date_list.append('')
+    elif len(date_list) == 0:
+        date_list = ['', '']
     locations = get_location_list()
     flags = []
     countries = []
@@ -164,6 +169,9 @@ def get_countries_data(countries_selected):
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
+               'date_range': date_str,
+               'start_date': date_list[0],
+               'end_date': date_list[1],
                #  'countries_data': countries_data,
                'continent': CONTINENT,
                'country_name': COUNTRY_NAME,
