@@ -3,9 +3,13 @@ from owid.models import *
 
 
 
-def find_country_coviddata_all(country):
+def find_country_coviddata_all(country, daterange_list):
     country_obj = Country.objects.using('owid').get(location=country)
-    coviddata = country_obj.coviddata_set.filter(date__range=['2020-05-01', '2020-09-30'])
+    if len(daterange_list) == 2:
+        coviddata = country_obj.coviddata_set.filter(date__range=[daterange_list[0], daterange_list[1]])
+        print('repo: --> ' + daterange_list[0] + ', ' + daterange_list[1])
+    else:
+        coviddata = country_obj.coviddata_set.all()
     return coviddata
 
 

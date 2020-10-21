@@ -35,6 +35,7 @@ def country(request):
 
 def countries(request):
     locations = []
+    date_str = ''
     if request.method == "POST":
         date_str = request.POST['datefilter']
         locations = request.POST.getlist('locations')
@@ -43,9 +44,6 @@ def countries(request):
             locations = eval(locations_str)
     else:
         locations.append('World')
-    print('end')
-    print(date_str)
-    print(locations)
     context = service_covid.get_countries_data(locations, date_str)
     return render(request, 'owid/countries.html', context)
 
@@ -65,76 +63,82 @@ def charts_bar_newcases_world(request):
 # ------------ multiple locations ------------
 def charts_newcases_country_group(request):
     locations_str = request.POST['location']
-    print('location_str: ')
-    print(locations_str)
+    daterange_str = request.POST['daterange']
     locations_list = eval(locations_str)
-    print(locations_list)
-    context = service_covid.get_newcases_all_group(locations_list)
+    print(daterange_str)
+    context = service_covid.get_newcases_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_totalcases_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_totalcases_all_group(locations_list)
+    context = service_covid.get_totalcases_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_newdeaths_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_newdeaths_all_group(locations_list)
+    context = service_covid.get_newdeaths_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_totaldeaths_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_totaldeaths_all_group(locations_list)
+    context = service_covid.get_totaldeaths_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
-# ------------ multiple locations ------------
 
+# ------------ multiple locations 100 ------------
 
 def charts_newcases100_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_newcases100_all_group(locations_list)
+    context = service_covid.get_newcases100_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_totalcases100_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_totalcases100_all_group(locations_list)
+    context = service_covid.get_totalcases100_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_newdeaths100_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_newdeaths100_all_group(locations_list)
+    context = service_covid.get_newdeaths100_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 
 def charts_totaldeaths100_country_group(request):
     locations_str = request.POST['location']
+    daterange_str = request.POST['daterange']
     print(locations_str)
     locations_list = eval(locations_str)
     print(locations_list)
-    context = service_covid.get_totaldeaths100_all_group(locations_list)
+    context = service_covid.get_totaldeaths100_all_group(locations_list, daterange_str)
     return render(request, 'owid/charts_covid_line_group.html', context)
 
 

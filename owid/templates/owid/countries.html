@@ -70,6 +70,7 @@
                             <form action="{% url 'owid:charts_newcases_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-2">
+                                    <input id="datenewcases" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
@@ -85,6 +86,7 @@
                             <form action="{% url 'owid:charts_totalcases_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
+                                    <input id="datetotalcases" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
@@ -100,6 +102,7 @@
                             <form action="{% url 'owid:charts_newdeaths_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
+                                    <input id="datenewdeaths" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
@@ -115,6 +118,7 @@
                             <form action="{% url 'owid:charts_totaldeaths_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
+                                    <input id="datetotaldeaths" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
@@ -133,6 +137,7 @@
                             <form action="{% url 'owid:charts_newcases100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-2">
+                                    <input id="datenewcases100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-warning disabled"
@@ -149,6 +154,7 @@
                             <form action="{% url 'owid:charts_totalcases100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
+                                    <input id="datetotalcases100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-warning" style="min-width:70%;"
@@ -164,6 +170,7 @@
                             <form action="{% url 'owid:charts_newdeaths100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
+                                    <input id="datenewdeaths100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-danger" style="min-width:70%;"
@@ -179,6 +186,7 @@
                             <form action="{% url 'owid:charts_totaldeaths100_country_group' %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group mb-2">
+                                    <input id="datetotaldeaths100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
                                     <input disabled type="submit" class="btn btn-outline-danger disabled"
@@ -480,6 +488,22 @@
         });
     </script>
 
+    <script>
+        $(function () {
+            $("#datesel2").change(function () {
+                $("#datenewcases").val($("#datesel2").val());
+                $("#datetotalcases").val($("#datesel2").val());
+                $("#datenewdeaths").val($("#datesel2").val());
+                $("#datetotaldeaths").val($("#datesel2").val());
+                $("#datenewcases100").val($("#datesel2").val());
+                $("#datetotalcases100").val($("#datesel2").val());
+                $("#datenewdeaths100").val($("#datesel2").val());
+                $("#datetotaldeaths100").val($("#datesel2").val());
+            });
+        });
+
+    </script>
+
     <script type="text/javascript">
         $('#datesel2').daterangepicker({});
 
@@ -499,6 +523,8 @@
 
         });
     </script>
+
+
 
 {% endblock %}
 
