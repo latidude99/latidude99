@@ -9,6 +9,9 @@ BACKGROUND_PATTERN6 = 'images/'
 
 COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data.json'
 
+COVID_COVID_DATA_JSON_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.json'
+COVID_COVID_DATA_JSON_FILE = 'owid-covid-data.json'
+
 OWID_COVID_DB_CHECK_COUNTRY = 'United States'
 OWID_COVID_JSON_CHECK_COUNTRY_CODE = 'USA'
 
@@ -107,6 +110,11 @@ TITLE_CHARTS_NEWCASES = 'COVID-19 new cases'
 TITLE_CHARTS_TOTALCASES = 'COVID-19 total cases'
 TITLE_CHARTS_NEWDEATHS = 'COVID-19 new deaths'
 TITLE_CHARTS_TOTALDEATHS = 'COVID-19 total deaths'
+
+TITLE_CHARTS_NEWCASES100= 'COVID-19 new cases per 100,000'
+TITLE_CHARTS_TOTALCASES100 = 'COVID-19 total cases per 100,000'
+TITLE_CHARTS_NEWDEATHS100 = 'COVID-19 new deaths per 100,000'
+TITLE_CHARTS_TOTALDEATHS100 = 'COVID-19 total deaths per 100,000'
 
 
 CHARTS_COVID_CASES_BAR_COLOR_BACK = 'rgba(255, 255, 130, 0.7)'

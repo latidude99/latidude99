@@ -2,7 +2,7 @@
 {% block content %}
     {% load static %}
     {% static "owid/" as static_base %}
-    <div class="container-fluid">
+    <div class="container-fluid" xmlns:text-decoration="http://www.w3.org/1999/xhtml">
         <div class="row my-auto mx-auto">
             <div class="col-lg-4 text-center text-warning">
                 <h1 class="display-3 mt-5 mb-4">{{ title }}</h1>
@@ -14,118 +14,139 @@
                          alt="world_image"
                          style="width:100%">
                 </a>
+                <div class="mt-5 pull-left">
+                    <a href= "{% url 'owid:tasks' %}"
+                       style="background: transparent; color:#444444; text-decoration: none">
+                        cosik ukryte
+                    </a>
+                </div>
             </div>
             <div class="col-lg-1 py-3">
             </div>
 
             <div class="col-lg-7">
-
-                <div class="card py-2 mt-5" style="background: transparent;color:beige;border-left: 2px solid orange">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                {{ country_card_title }}</div>
-                            <div class="col-lg-4">
-                                <div id="loading1"
-                                     class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
-                                     style="display:none;"></div>
+                <div class="text-info mt-3 pt-3">
+                    <marquee behavior="scroll" direction="left"> this is work in progress...</marquee>
+                    <!--<div class="scroll-left"><p> this is work in progress...</p></div>-->
+                </div>
+                <div class="bordershadow-white">
+                    <div class="card py-5 mt-3"
+                         style="background: transparent;color:beige;border-left: 2px solid orange">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h3 class="font-weight-light">{{ country_card_title }}</h3>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div id="loading1"
+                                         class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                                         style="display:none;"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
 
-                                <form action="{% url 'owid:country' %}" method="post">
-                                    {% csrf_token %}
+                                    <form action="{% url 'owid:country' %}" method="post">
+                                        {% csrf_token %}
 
-                                    <div class="input-group">
-                                        <div class="mr-3 mt-2">
-                                            <label for="locations">{{ select_locations }}</label>
+                                        <div class="input-group">
+                                            <div class="mr-3 mt-2">
+                                                <label for="locations">{{ select_locations }}</label>
+                                            </div>
+
+                                            <select class="form-control" id="sel1" name="location"
+                                                    style="height: calc(1.5em + .75rem + 4px); background-color:transparent; color:beige;">
+                                                {% for location in locations %}
+                                                    <option style="background-color:black;color:beige">{{ location }}</option>
+                                                {% endfor %}
+                                            </select>
+
+                                            <div class="input-group-append">
+                                                <input type="submit" class="btn btn-outline-warning"
+                                                       value="{{ btn_countries }}"
+                                                       onclick="$('#loading1').show().delay(10000).hide(0);">
+                                            </div>
                                         </div>
-
-                                        <select class="form-control" id="sel1" name="location"
-                                                style="height: calc(1.5em + .75rem + 4px); background-color:transparent; color:beige;">
-                                            {% for location in locations %}
-                                                <option style="background-color:black;color:beige">{{ location }}</option>
-                                            {% endfor %}
-                                        </select>
-
-                                        <div class="input-group-append">
-                                            <input type="submit" class="btn btn-outline-warning"
-                                                   value="{{ btn_country }}"
-                                                   onclick="$('#loading1').show().delay(10000).hide(0);">
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-
-                <div class="card py-2 mt-5" style="background: transparent;color:beige;border-left: 2px solid orange">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                Comparison between selected countries
-                            </div>
-                            <div class="col-lg-4">
-                                <div id="loading2"
-                                     class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
-                                     style="display:none;"></div>
+                <div class="bordershadow-white">
+                    <div class="card py-5 mt-5"
+                         style="background: transparent;color:beige;border-left: 2px solid orange">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h3 class="font-weight-light">Comparison between selected countries</h3>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div id="loading2"
+                                         class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                                         style="display:none;"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <form action="{% url 'owid:countries' %}" method="post" id="countries">
-                                    {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form action="{% url 'owid:countries' %}" method="post" id="countries">
+                                        {% csrf_token %}
 
-                                    <div class="input-group">
-                                        <div class="mr-3 mt-2">
-                                            <label id="msg" for="locations">Select up to 5 countries</label>
+                                        <div class="input-group mr-3 mt-3 mb-5">
+                                            <div class="mr-4 mt-1">
+                                                <label id="msgdate" for="datefilter">Select date range </label>
+                                            </div>
+                                            <div class="ml-4" style="width:50%; padding-left: 12px;">
+                                                <input id="datesel2" type="text" name="datefilter" value=""
+                                                       class="bg-transparent"
+                                                       style="width:100%; color:white; opacity: 80%;
+                                                           padding-bottom: 7px; padding-top: 5px; padding-left: 12px;
+                                                           border-width: 1px; border-style: solid;
+                                                           border-color: aliceblue; border-radius: 1px;"/>
+                                            </div>
+                                            <div class="ml-5 mt-1">
+                                                <label>(optional)</label>
+                                            </div>
                                         </div>
 
-                                        <select class="selectpicker form-control"
-                                                multiple required
-                                                data-live-search="true"
-                                                data-min-options="2"
-                                                data-max-options="5"
-                                                multiple title="Select up to 5 countries..."
-                                                multiple data-selected-text-format="value"
-                                                id="sel2" name="locations">
-                                            {% for location in locations %}
-                                                <option style="background-color:black;color:beige">{{ location }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <br>
-                                        <div class="input-group-append">
-                                            <input type="submit" class="btn btn-outline-warning"
-                                                   value="{{ btn_countries }}"
-                                                   onclick="if ($('#sel2').is(':empty')) {$('#loading2').show().delay(3000).hide(0);}">
+                                        <div class="input-group">
+                                            <div class="mr-3 mt-2">
+                                                <label id="msg" for="locations">Select up to 5 countries</label>
+                                            </div>
+
+                                            <select class="selectpicker form-control"
+                                                    multiple required
+                                                    data-live-search="true"
+                                                    data-min-options="2"
+                                                    data-max-options="5"
+                                                    multiple title="Select up to 5 countries..."
+                                                    multiple data-selected-text-format="value"
+                                                    id="sel2" name="locations">
+                                                {% for location in locations %}
+                                                    <option style="background-color:black;color:beige">{{ location }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <br>
+                                            <div class="input-group-append">
+                                                <input type="submit" class="btn btn-outline-warning"
+                                                       value="{{ btn_countries }}"
+                                                       onclick="if ($('#sel2').is(':empty')) {$('#loading2').show().delay(3000).hide(0);}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="mr-5 mt-4">
-                                            <label id="msgdate" for="datefilter">Select date range (otherwise as
-                                                displayed)</label>
-                                        </div>
-                                        <div class="mt-4" style="width:50%;">
-                                            <input id="datesel2" type="text" name="datefilter" value=""
-                                                   style="width:100%;"/>
-                                        </div>
-                                    </div>
-                                </form>
+
+                                    </form>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
@@ -144,6 +165,7 @@
         $(function () {
 
             $('input[name="datefilter"]').daterangepicker({
+                drops: "up",
                 autoApply: true,
                 startDate: "2019-12-01",
                 endDate: "2022-12-01",

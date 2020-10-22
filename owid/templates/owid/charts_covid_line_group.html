@@ -77,38 +77,38 @@
                 </div>
 
                 <div class="btn-group btn-group-sm pull-right mr-2 mb-3">
-                    <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                    <form action="{% url 'owid:charts_newcases100_country_group' %}" method="post">
                         {% csrf_token %}
                         <input id="datenewcases100" type="hidden" name="daterange" value="{{ daterange }}" />
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
-                        <button disabled type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                             {{ new_cases100 }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
-                    <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                    <form action="{% url 'owid:charts_totalcases100_country_group' %}" method="post">
                         {% csrf_token %}
                         <input id="datetotalcases100" type="hidden" name="daterange" value="{{ daterange }}" />
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
-                        <button disabled type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                             {{ total_cases100 }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
-                    <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                    <form action="{% url 'owid:charts_newdeaths100_country_group' %}" method="post">
                         {% csrf_token %}
                         <input id="datenewdeaths100" type="hidden" name="daterange" value="{{ daterange }}" />
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
-                        <button disabled type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                             {{ new_deaths100 }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
-                    <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                    <form action="{% url 'owid:charts_totaldeaths100_country_group' %}" method="post">
                         {% csrf_token %}
                         <input id="datetotaldeaths100" type="hidden" name="daterange" value="{{ daterange }}" />
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
-                        <button disabled type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                             {{ total_deaths }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
@@ -136,7 +136,7 @@
                                     {
                                         data: [
                                             {% for item in c.values %}
-                                                "{{ item }}",
+                                                "{{ item|floatformat:"2" }}",
                                             {% endfor %}
                                         ],
                                         label: "{{ c.label }}",

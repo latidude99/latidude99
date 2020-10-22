@@ -42,10 +42,14 @@
                                 </div>
                                 <div class="input-group mt-4 ml-3">
                                     <div class="" style="width:50%;">
-                                        <input id="datesel2" type="text" name="datefilter" value="{{ date_range }}"
-                                               style="width:100%;"/>
+                                        <input id="datesel2" type="text" name="datefilter" value=""
+                                                       class="bg-transparent"
+                                                       style="width:100%; color:white; opacity: 80%;
+                                                           padding-bottom: 7px; padding-top: 5px; padding-left: 12px;
+                                                           border-width: 1px; border-style: solid;
+                                                           border-color: aliceblue; border-radius: 1px;"/>
                                     </div>
-                                    <div class="mr-1 ml-4 text-muted">
+                                    <div class="mr-1 ml-4 mt-1 text-muted">
                                         <label id="msgdate" for="datefilter">adjust date range</label>
                                     </div>
                                 </div>
@@ -140,7 +144,7 @@
                                     <input id="datenewcases100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-warning disabled"
+                                    <input type="submit" class="btn btn-outline-warning"
                                            style="min-width:70%;"
                                            value="{{ new_cases100 }}"
                                            onclick="$('#loading').show().delay(10000).hide(0);">
@@ -157,7 +161,7 @@
                                     <input id="datetotalcases100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                    <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
                                            value="{{ total_cases100 }}"
                                            onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
@@ -173,7 +177,7 @@
                                     <input id="datenewdeaths100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                    <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
                                            value="{{ new_deaths100 }}"
                                            onclick="$('#loading').show().delay(10000).hide(0);">
                                     <div class="input-group-append ml-3">
@@ -189,7 +193,7 @@
                                     <input id="datetotaldeaths100" type="hidden" name="daterange" value="" />
                                     <input type="hidden" class="form-control" name="location"
                                            value="{{ countries_names }}">
-                                    <input disabled type="submit" class="btn btn-outline-danger disabled"
+                                    <input type="submit" class="btn btn-outline-danger"
                                            style="min-width:70%;"
                                            value="{{ total_deaths100 }}"
                                            onclick="$('#loading').show().delay(10000).hide(0);">

@@ -1,13 +1,9 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
-from owid.text_owid import *
-from owid.models import *
-from django.utils import timezone
-from datetime import *
-from owid.text_owid import *
-from owid.service import *
+from django.shortcuts import render
+
+import owid.service as service
 import owid.service_covid as service_covid
 import owid.service_owid as service_owid
+from main.secrets import *
 
 
 def tests(request):
@@ -17,6 +13,28 @@ def tests(request):
 def index(request):
     context = service_owid.get_index_context()
     return render(request, 'owid/index.html', context)
+
+
+def tasks(request):
+    if request.method == "POST":
+        login = request.POST['login']
+        pswd = request.POST['pswd']
+        task = request.POST['task']
+        print(task)
+        if login == COVID_TASKS_LOGIN and pswd == COVID_TASKS_PSWD:
+            if task == 'download_covid_data_json_notify':
+                print('download')
+                service.download_covid_data_json_notify()
+            if task == 'check_status_notify':
+                print('check')
+                service.check_status_notify()
+            if task == 'update_status_notify':
+                print('update')
+                service.update_status_notify()
+        else:
+            print('login or password incorrect')
+    context = service_covid.get_covid_tasks()
+    return render(request, 'owid/covid_tasks.html', context)
 
 
 def covid(request):
@@ -214,11 +232,3 @@ def charts_pl_totaldeaths_bar(request):
     return render(request, 'owid/charts_covid_bar.html', context)
 
 
-def test(request):
-    countries = Country.objects.using('owid')[:30]
-    print(countries)
-    locations = [c.location for c in countries]
-    print(locations)
-    context = {'locations': locations,
-               'countries': countries}
-    return render(request, 'owid/test.html', context)

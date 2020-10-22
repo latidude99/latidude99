@@ -1,0 +1,132 @@
+{% extends "owid/base_boot4_covid.html" %}
+{% block content %}
+    {% load static %}
+    {% static "owid/" as static_base %}
+    <div class="container-fluid">
+        <div class="row my-auto mx-auto">
+            <div class="col-lg-4 text-center text-warning">
+                <h1 class="display-3 mt-5 mb-4">{{ title }}</h1>
+                <h4><small>{{ subtitle }}</small></h4>
+                <pre><span>{{ data_supply }}</span><span><abbr title="Our World In Data">OWID</abbr></span></pre>
+                <a href="{% url 'owid:world' %}" title="go to the world page"
+                   style="background-color:#000001;color:#ffffff;text-decoration:none">
+                    <img class="mx-auto d-block img-fluid p-5" src="{{ static_base }}{{ image_coronavirus }}"
+                         alt="world_image"
+                         style="width:100%">
+                </a>
+            </div>
+            <div class="col-lg-1 py-3">
+            </div>
+
+            <div class="col-lg-7">
+                <div class="text-info mt-3 pt-3">
+                    <marquee behavior="scroll" direction="left"> !!! do NOT use it if you are not authorised !!!
+                    </marquee>
+                </div>
+                <div class="bordershadow-white">
+                    <div class="card py-2 mt-3"
+                         style="background: transparent;color:beige;border-left: 2px solid orange">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h3 class="font-weight-light">Covid-19 data update</h3>
+                                    <h3 class="font-weight-light small text-secondary">(from OWID website, json)</h3>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div id="loading1"
+                                         class="spinner-grow spinner-grow-lg text-warning mt-1 mr-2 pull-right"
+                                         style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
+
+                                    <form action="{% url 'owid:tasks' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="login">Login:</label>
+                                            <input type="text" class="form-control" id="login"
+                                                   placeholder="enter login" name="login">
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="pwd">Password:</label>
+                                            <input type="password" class="form-control" id="pwd"
+                                                   placeholder="enter password" name="pswd">
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="task">Select task:</label>
+                                            <select class="form-control" id="task" name="task">
+                                                <option value="" selected disabled>select task</option>
+                                                <option value="download_covid_data_json_notify">download_covid_data_json_notify</option>
+                                                <option value="check_status_notify">check_status_notify</option>
+                                                <option value="update_status_notify">update_status_notify</option>
+                                                <option disabled>delete a country</option>
+                                                <option disabled>stop the app</option>
+                                            </select>
+                                        </div>
+                                        <br>
+
+                                        <button type="submit" class="btn btn-block btn-outline-danger"
+                                                onclick="$('#loading1').show().delay(10000).hide(0);">
+                                            Submit
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <script>
+        $('select').selectpicker();
+    </script>
+
+    <script type="text/javascript">
+
+        $('#datesel2').daterangepicker({});
+
+        $(function () {
+
+            $('input[name="datefilter"]').daterangepicker({
+                drops: "up",
+                autoApply: true,
+                startDate: "2019-12-01",
+                endDate: "2022-12-01",
+                applyButtonClasses: "btn-outline-dark",
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: "YYYY-MM-DD",
+                    separator: "  to  ",
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        function validateForm() {
+            var e = document.getElementById("sel2");
+            var strUser = e.value;
+            if (e == "") {
+                document.getElementById('loading2').style.display = 'none';
+            }
+        }
+    </script>
+
+
+
+{% endblock %}
+

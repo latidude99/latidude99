@@ -4,7 +4,10 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('tests', views.tests, name='tests'),
+
     path('covid', views.covid, name='covid'),
+    path('covid/tasks', views.tasks, name='tasks'),
+
     path('covid/country', views.country, name='country'),
     path('covid/countries', views.countries, name='countries'),
     path('covid/world', views.world, name='world'),
@@ -18,13 +21,13 @@ urlpatterns = [
     path('covid/countries/charts/totaldeaths/', views.charts_totaldeaths_country_group,
          name='charts_totaldeaths_country_group'),
 
-path('covid/countries/charts/newcases100/', views.charts_newcases100_country_group,
+    path('covid/countries/charts/newcases100/', views.charts_newcases100_country_group,
          name='charts_newcases100_country_group'),
-path('covid/countries/charts/totalcases100/', views.charts_totalcases100_country_group,
+    path('covid/countries/charts/totalcases100/', views.charts_totalcases100_country_group,
          name='charts_totalcases100_country_group'),
-path('covid/countries/charts/newdeaths100/', views.charts_newdeaths100_country_group,
+    path('covid/countries/charts/newdeaths100/', views.charts_newdeaths100_country_group,
          name='charts_newdeaths100_country_group'),
-path('covid/countries/charts/totaldeaths100/', views.charts_totaldeaths100_country_group,
+    path('covid/countries/charts/totaldeaths100/', views.charts_totaldeaths100_country_group,
          name='charts_totaldeaths100_country_group'),
 
     path('covid/country/charts/newcases/', views.charts_bar_newcases_country,

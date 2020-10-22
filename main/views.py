@@ -56,7 +56,7 @@ def coviduk(request):
     return render(request, 'main/coviduk.html', context)
 
 
-def owid(request):
+def mowid(request):
     context = serv.get_main_owid_ctx()
     return render(request, 'main/owid.html', context)
 

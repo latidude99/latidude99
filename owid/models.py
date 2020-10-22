@@ -1,11 +1,8 @@
-import datetime
-
 from django.db import models
-#from django.utils import timezone
 
 
 class Country(models.Model):
-    location = models.CharField(max_length=200)
+    location = models.CharField(max_length=200, unique=True)
     continent = models.CharField(max_length=200)
     population = models.FloatField(default=0)
     population_density = models.FloatField(default=0)
@@ -22,7 +19,6 @@ class Country(models.Model):
 
     def __str__(self):
         return self.location
-
 
 
 class CovidData(models.Model):

@@ -27,7 +27,7 @@
             <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-danger btn-sm mr-2">
+                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                     {{ new_cases }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -35,7 +35,7 @@
             <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-danger btn-sm mr-2">
+                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                     {{ total_cases }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -43,7 +43,7 @@
             <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-dark btn-sm mr-2">
+                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                     {{ new_deaths }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>
@@ -51,7 +51,7 @@
             <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-dark btn-sm mr-2">
+                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                     {{ total_deaths }}&nbsp;
                     <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                 </button>

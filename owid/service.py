@@ -4,9 +4,12 @@ django.setup()
 
 from owid.import_covid import *
 from owid.check_covid_db import *
-from owid.text_owid import *
 from main.send_email import *
 from owid.repository_owid import *
+import shutil
+import urllib
+import urllib.request
+from latidude99.settings import OWID_DATA_FOLDER
 
 
 def update_owid_covid_db():
@@ -18,15 +21,27 @@ def check_owid_covid_db():
     status = check_db_against_json_covid_data(COVID_DATA_FILE_JSON)
     return status
 
+def download_covid_data_json_notify():
+    url = COVID_COVID_DATA_JSON_URL
+    file_path = OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE
+    with urllib.request.urlopen(url) as response, open(file_path, 'wb') as out_file:
+        shutil.copyfileobj(response, out_file)
+    status = 'JSON file downloaded successfully. File location: ' + file_path
+    print(status)
+    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Download json data status', status)
 
 def update_status_notify():
+    print('inside service, update, start')
     status = update_owid_covid_db()
     send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Import json data into OWID DB status', status)
+    print('inside service, update, end')
 
 
 def check_status_notify():
+    print('inside service, check, start')
     status = check_owid_covid_db()
     send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Check OWID DB against json data', status)
+    print('inside service, check, end')
 
 
 def delete_country(country):
@@ -40,7 +55,8 @@ print('inside service')
 #update_status_notify()
 
 #check_status_notify()
-#delete_country('United States')
+
+#delete_country('Solomon Islands')
 
 
 

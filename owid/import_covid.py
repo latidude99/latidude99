@@ -1,14 +1,12 @@
 import json
-import smtplib
-from socket import gaierror
-from datetime import *
+
+import datetime as dt
 
 import pytz
 from json2html import *
 
-from owid.text_owid import *
 from owid.models import *
-from main.secrets import *
+from owid.text_owid import *
 
 
 def read_json_file(filename):
@@ -19,11 +17,11 @@ def read_json_file(filename):
 # not used at the moment
 def isUpdated(data_dict):
     last_json_date = data_dict[OWID_COVID_JSON_CHECK_COUNTRY_CODE]['data'][-1]['date']
-    last_json_date_obj = datetime.datetime.strptime(last_json_date, '%Y-%m-%d').date()
+    last_json_date_obj = dt.datetime.strptime(last_json_date, '%Y-%m-%d').date()
     country_obj = Country.objects.using('owid').get(location=OWID_COVID_DB_CHECK_COUNTRY)
     covid_data_objects = country_obj.coviddata_set.all()
     last_db_date = str(covid_data_objects[len(covid_data_objects) - 1].date)
-    last_db_date_obj = datetime.datetime.strptime(last_db_date[:10], '%Y-%m-%d').date()
+    last_db_date_obj = dt.datetime.strptime(last_db_date[:10], '%Y-%m-%d').date()
     delta = last_json_date_obj - last_db_date_obj
     if delta.days > 0:
         return True
@@ -48,11 +46,11 @@ def get_new_json_covid_data(filename):
         country_obj = Country.objects.using('owid').get(location=OWID_COVID_DB_CHECK_COUNTRY)
         covid_data_objects = country_obj.coviddata_set.all()
         last_db_date = str(covid_data_objects[len(covid_data_objects) - 1].date)
-        last_db_date_obj = datetime.datetime.strptime(last_db_date[:10], '%Y-%m-%d').date()
+        last_db_date_obj = dt.datetime.strptime(last_db_date[:10], '%Y-%m-%d').date()
     else:
-        last_db_date_obj = datetime.datetime.strptime('1950-01-01', '%Y-%m-%d').date()
+        last_db_date_obj = dt.datetime.strptime('1950-01-01', '%Y-%m-%d').date()
     last_json_date = data_dict['USA']['data'][-1]['date']
-    last_json_date_obj = datetime.datetime.strptime(last_json_date, '%Y-%m-%d').date()
+    last_json_date_obj = dt.datetime.strptime(last_json_date, '%Y-%m-%d').date()
     delta = last_json_date_obj - last_db_date_obj
 
     if delta.days < 1:
@@ -60,7 +58,7 @@ def get_new_json_covid_data(filename):
         status['messages'].append('No new data')
     else:
         status['messages'].append('New data present')
-        import_date = datetime.datetime.now(pytz.timezone('Europe/London'))
+        import_date = dt.datetime.now(pytz.timezone('Europe/London'))
         fmt = '%Y-%m-%d %H:%M:%S %Z%z'
         status['update'].append('import date: ' + import_date.strftime(fmt))
         print('New data present. Imported on: ' +  status['update'][0])
@@ -150,7 +148,7 @@ def get_new_json_covid_data(filename):
 
             has_new_data = False
             for v1 in v['data']:
-                data_date_obj = datetime.datetime.strptime(v1['date'], '%Y-%m-%d').date()
+                data_date_obj = dt.datetime.strptime(v1['date'], '%Y-%m-%d').date()
                 delta_country = data_date_obj - last_db_date_obj
                 if delta_country.days > 0:
                     print('adding data for: ' + data_date_obj.strftime('%Y-%m-%d'))

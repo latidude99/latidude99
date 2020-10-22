@@ -1,17 +1,34 @@
 import django
+
 from owid.owid_country_dto import OwidCountryDTO
 
 django.setup()
 
-from owid.import_covid import *
 from owid.text_owid import *
-from main.send_email import *
 from owid.repository_owid import *
+import pytz
 
 urls_pl_bar = {'newcases': 'charts_pl_newcases_bar',
                'totalcases': 'charts_pl_totalcases_bar',
                'newdeaths': 'charts_pl_newdeaths_bar',
                'totaldeaths': 'charts_pl_totaldeaths_bar'}
+
+
+def get_covid_tasks():
+    context = {'style_css': STYLE_OWID,
+               'background_pattern1': BACKGROUND_PATTERN1,
+               'background_pattern2': BACKGROUND_PATTERN2,
+               'background_pattern3': BACKGROUND_PATTERN3,
+               'background_pattern4': BACKGROUND_PATTERN4,
+               'background_pattern5': BACKGROUND_PATTERN5,
+               'latidude99': 'latidude99.com',
+               'title': OWID_COVID_TITLE.title,
+               'subtitle': OWID_COVID_SUBTITLE,
+               'data_supply': OWID_DATA_SUPPLY,
+               'image_globe': IMAGE_GLOBE,
+               'image_coronavirus': IMAGE_CORONAVIRUS,
+               }
+    return context
 
 
 def get_location_list():
@@ -52,10 +69,11 @@ def get_covid_selection_data():
 
 
 def get_country_data(location):
+    daterange_list = []
     locations = get_location_list()
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     country = find_country(location)
-    data = find_country_coviddata_all(location)
+    data = find_country_coviddata_all(location, daterange_list)
     context = {'footer_info': FOOTER_INFO,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
@@ -346,12 +364,13 @@ def get_newcases100_all_group(countries_selected, daterange_str):
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
         country = find_country(c)
+        per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_cases if x.new_cases >= 0 else 0 for x in data]
+        values = [x.new_cases / per100 if x.new_cases >= 0 else 0 for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
         countries.append(owid_country_dto)
-    context = {'title': TITLE_CHARTS_NEWCASES,
+    context = {'title': TITLE_CHARTS_NEWCASES100,
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
@@ -371,12 +390,13 @@ def get_totalcases100_all_group(countries_selected, daterange_str):
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
         country = find_country(c)
+        per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_cases if x.total_cases >= 0 else 0 for x in data]
+        values = [x.total_cases / per100 if x.total_cases >= 0 else 0 for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
         countries.append(owid_country_dto)
-    context = {'title': TITLE_CHARTS_TOTALCASES,
+    context = {'title': TITLE_CHARTS_TOTALCASES100,
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
@@ -396,12 +416,13 @@ def get_newdeaths100_all_group(countries_selected, daterange_str):
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
         country = find_country(c)
+        per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in data]
+        values = [x.new_deaths / per100 if x.new_deaths >= 0 else 0 for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
         countries.append(owid_country_dto)
-    context = {'title': TITLE_CHARTS_NEWDEATHS,
+    context = {'title': TITLE_CHARTS_NEWDEATHS100,
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
@@ -421,12 +442,14 @@ def get_totaldeaths100_all_group(countries_selected, daterange_str):
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
         country = find_country(c)
+        per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in data]
+        values = [x.total_deaths/per100 if x.total_deaths >= 0 else 0 for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         owid_country_dto = OwidCountryDTO(c, c, flag, '0', values, labels)
         countries.append(owid_country_dto)
-    context = {'title': TITLE_CHARTS_TOTALDEATHS,
+        print('country : ' + c + ', dates: ' + str(len(labels)) + ', values: ' + str(len(values)))
+    context = {'title': TITLE_CHARTS_TOTALDEATHS100,
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
@@ -440,8 +463,9 @@ def get_totaldeaths100_all_group(countries_selected, daterange_str):
 
 
 def get_newcases_all(location):
+    daterange_list = []
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
-    coviddata = find_country_coviddata_all(location)
+    coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
     context = {'location': location,
@@ -463,8 +487,9 @@ def get_newcases_all(location):
 
 
 def get_totalcases_all(location):
+    daterange_list = []
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
-    coviddata = find_country_coviddata_all(location)
+    coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
     values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
@@ -488,8 +513,9 @@ def get_totalcases_all(location):
 
 
 def get_newdeaths_all(location):
+    daterange_list = []
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
-    coviddata = find_country_coviddata_all(location)
+    coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
     values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
@@ -513,8 +539,9 @@ def get_newdeaths_all(location):
 
 
 def get_totaldeaths_all(location):
+    daterange_list = []
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
-    coviddata = find_country_coviddata_all(location)
+    coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
     values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata]

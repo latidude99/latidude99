@@ -2,11 +2,7 @@ import django
 
 django.setup()
 
-from owid.import_covid import *
 from owid.text_owid import *
-from main.send_email import *
-from owid.repository_owid import *
-
 
 
 def get_index_context():
@@ -24,11 +20,3 @@ def get_index_context():
                'covid_btn_txt': OWID_COVID_BTN_TXT,
                }
     return context
-
-
-
-
-
-
-
-
