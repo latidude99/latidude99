@@ -27,12 +27,20 @@ OWID_SUBTITLE2 = 'for the whole world as well as individual countries'
 OWID_DATA_SUPPLY = 'Data provided by '
 IMAGE_GLOBE = 'images/globe500px.png'
 
+
 OWID_COVID_TITLE = 'covid-19'
 OWID_COVID_SUBTITLE = 'coronavirus disease in charts'
-OWID_COVID_BTN_TXT = 'go to covid19'
+OWID_COVID_BTN_TXT = 'go to covid-19'
 IMAGE_CORONAVIRUS = 'images/coronavirus2.png'
 
+OWID_CIA_TITLE = 'CIA World Factbook'
+OWID_CIA_SUBTITLE = 'information on 267 world entities'
+OWID_CIA_BTN_TXT = 'go to world factbook'
+IMAGE_CIA = 'images/cia.png'
+
 MILKY_WAY = 'The Milky Way'
+THE_WORLD = 'The World'
+COVID_INFO = 'latest numbers from '
 
 SELECT_LOCATIONS = 'Select a country'
 SELECT_LOCATIONS_SUB = 'type in the first letter to find the county name'

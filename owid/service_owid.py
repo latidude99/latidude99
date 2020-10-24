@@ -1,6 +1,5 @@
-import django
-
-django.setup()
+#import django
+#django.setup()
 
 from owid.text_owid import *
 
@@ -18,5 +17,9 @@ def get_index_context():
                'covid_title': OWID_COVID_TITLE.title,
                'covid_subtitle': OWID_COVID_SUBTITLE,
                'covid_btn_txt': OWID_COVID_BTN_TXT,
+               'image_cia': IMAGE_CIA,
+               'cia_title': OWID_CIA_TITLE.title,
+               'cia_subtitle': OWID_CIA_SUBTITLE,
+               'cia_btn_txt': OWID_CIA_BTN_TXT,
                }
     return context

@@ -1,6 +1,5 @@
-import django
-
-django.setup()
+#import django
+#django.setup()
 
 from owid.import_covid import *
 from owid.check_covid_db import *
@@ -29,6 +28,8 @@ def download_covid_data_json_notify():
     status = 'JSON file downloaded successfully. File location: ' + file_path
     print(status)
     send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Download json data status', status)
+    print('download finished')
+
 
 def update_status_notify():
     print('inside service, update, start')

@@ -16,6 +16,7 @@ def index(request):
 
 
 def tasks(request):
+    ctx = {}
     if request.method == "POST":
         login = request.POST['login']
         pswd = request.POST['pswd']
@@ -25,15 +26,18 @@ def tasks(request):
             if task == 'download_covid_data_json_notify':
                 print('download')
                 service.download_covid_data_json_notify()
+                ctx = {'status': 'download completed'}
             if task == 'check_status_notify':
                 print('check')
                 service.check_status_notify()
+                ctx = {'status': 'check completed'}
             if task == 'update_status_notify':
                 print('update')
                 service.update_status_notify()
+                ctx = {'status': 'update completed'}
         else:
             print('login or password incorrect')
-    context = service_covid.get_covid_tasks()
+    context = {**service_covid.get_covid_tasks(), **ctx}
     return render(request, 'owid/covid_tasks.html', context)
 
 
@@ -162,6 +166,7 @@ def charts_totaldeaths100_country_group(request):
 
 # ------------ single location ---------------
 def charts_bar_newcases_country(request):
+    per100 = request.POST['per100']
     location = request.POST['location']
     locations = service_covid.get_location_list()
     if location not in locations:
@@ -169,11 +174,12 @@ def charts_bar_newcases_country(request):
             'locations': locations,
             'error_message': "You didn't select a country."})
     else:
-        context = service_covid.get_newcases_all(location)
+        context = service_covid.get_newcases_all(location, per100)
         return render(request, 'owid/charts_covid_bar.html', context)
 
 
-def charts_bar_totalcases_country(request):
+def charts_line_totalcases_country(request):
+    per100 = request.POST['per100']
     location = request.POST['location']
     locations = service_covid.get_location_list()
     if location not in locations:
@@ -181,11 +187,12 @@ def charts_bar_totalcases_country(request):
             'locations': locations,
             'error_message': "You didn't select a country."})
     else:
-        context = service_covid.get_totalcases_all(location)
+        context = service_covid.get_totalcases_all(location, per100)
         return render(request, 'owid/charts_covid_line.html', context)
 
 
 def charts_bar_newdeaths_country(request):
+    per100 = request.POST['per100']
     location = request.POST['location']
     locations = service_covid.get_location_list()
     if location not in locations:
@@ -193,11 +200,12 @@ def charts_bar_newdeaths_country(request):
             'locations': locations,
             'error_message': "You didn't select a country."})
     else:
-        context = service_covid.get_newdeaths_all(location)
+        context = service_covid.get_newdeaths_all(location, per100)
         return render(request, 'owid/charts_covid_bar.html', context)
 
 
-def charts_bar_totaldeaths_country(request):
+def charts_line_totaldeaths_country(request):
+    per100 = request.POST['per100']
     location = request.POST['location']
     locations = service_covid.get_location_list()
     if location not in locations:
@@ -205,7 +213,7 @@ def charts_bar_totaldeaths_country(request):
             'locations': locations,
             'error_message': "You didn't select a country."})
     else:
-        context = service_covid.get_totaldeaths_all(location)
+        context = service_covid.get_totaldeaths_all(location, per100)
         return render(request, 'owid/charts_covid_line.html', context)
 
 

@@ -90,7 +90,8 @@
                                             <small style="opacity:70%;"> {{ no_data }}</small>
                                         {% else %}
                                             {{ country.population_density|floatformat:"1" }}
-                                            <small class="ml-2" style="opacity:70%;">{{ ppl }} {{ km }}<sup>{{ sq }}</sup></small>
+                                            <small class="ml-2"
+                                                   style="opacity:70%;">{{ ppl }} {{ km }}<sup>{{ sq }}</sup></small>
                                         {% endif %}
                                     </td>
                                     <td class="bg-transparent text-light font-weight-lighter small">
@@ -240,10 +241,14 @@
                 <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="False">
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                        <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                               value="{{ new_cases }}"
-                               onclick="$('#loading1').show().delay(10000).hide(0);">
+                        <button type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading1').show().delay(10000).hide(0);">
+                            {{ new_cases }}
+                            <span class="fas fa-chart-bar mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
                         <div class="input-group-append ml-3">
                             <span id="loading1" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -251,13 +256,17 @@
                     </div>
                 </form>
 
-                <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
+                <form action="{% url 'owid:charts_line_totalcases_country' %}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="False">
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                        <input type="submit" class="btn btn-outline-warning" style="min-width:70%;"
-                               value="{{ total_cases }}"
-                               onclick="$('#loading2').show().delay(10000).hide(0);">
+                        <button type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading2').show().delay(10000).hide(0);">
+                            {{ total_cases }}
+                            <span class="fas fa-chart-line mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
                         <div class="input-group-append ml-3">
                             <span id="loading2" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -268,10 +277,14 @@
                 <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="False">
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                        <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                               value="{{ new_deaths }}"
-                               onclick="$('#loading3').show().delay(10000).hide(0);">
+                        <button type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading3').show().delay(10000).hide(0);">
+                            {{ new_deaths }}
+                            <span class="fas fa-chart-bar mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
                         <div class="input-group-append ml-3">
                             <span id="loading3" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
@@ -279,15 +292,94 @@
                     </div>
                 </form>
 
-                <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
+                <form action="{% url 'owid:charts_line_totaldeaths_country' %}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="False">
                         <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                        <input type="submit" class="btn btn-outline-danger" style="min-width:70%;"
-                               value="{{ total_deaths }}"
-                               onclick="$('#loading4').show().delay(10000).hide(0);">
+                        <button type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading4').show().delay(10000).hide(0);">
+                            {{ total_deaths }}
+                            <span class="fas fa-chart-line mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
                         <div class="input-group-append ml-3">
                             <span id="loading4" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
+                                  style="display:none;opacity:50%"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <br><br>
+
+                <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading5').show().delay(10000).hide(0);">
+                            {{ new_cases }} {{ new_cases100 }}
+                            <span class="fas fa-chart-bar mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
+                        <div class="input-group-append ml-3">
+                            <span id="loading5" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
+                                  style="display:none;opacity:50%"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_line_totalcases_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading6').show().delay(10000).hide(0);">
+                            {{ total_cases }} {{ total_cases100 }}
+                            <span class="fas fa-chart-line mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
+                        <div class="input-group-append ml-3">
+                            <span id="loading6" class="spinner-grow spinner-grow-sm  text-warning ml-2 mt-2"
+                                  style="display:none;opacity:50%"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading7').show().delay(10000).hide(0);">
+                            {{ new_deaths }} {{ new_deaths100 }}
+                            <span class="fas fa-chart-bar mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
+                        <div class="input-group-append ml-3">
+                            <span id="loading7" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
+                                  style="display:none;opacity:50%"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'owid:charts_line_totaldeaths_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger" style="min-width:70%;"
+                                value=""
+                                onclick="$('#loading8').show().delay(10000).hide(0);">
+                            {{ total_deaths }} {{ total_deaths100 }}
+                            <span class="fas fa-chart-line mt-1  ml-2 mr-2 pull-right"></span>
+                        </button>
+                        <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        <div class="input-group-append ml-3">
+                            <span id="loading8" class="spinner-grow spinner-grow-sm  text-danger ml-2 mt-2"
                                   style="display:none;opacity:50%"></span>
                         </div>
                     </div>

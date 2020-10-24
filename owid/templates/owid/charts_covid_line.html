@@ -4,61 +4,111 @@
     {% static "owid/" as static_base %}
 
     <div class="container-fluid" style="margin-top:50px;">
-        <div class="btn-group">
-            <div class="mr-2">
-                <form action="{% url 'owid:country' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                    <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
-                        <span class="fas fa-chevron-left"></span>
-                        &nbsp; {{ back_btn }}
-                    </button>
-                </form>
+        <div class="row mb-2">
+            <div class="col-lg-2">
+                <div class="btn-group">
+                    <div class="mr-2">
+                        <form action="{% url 'owid:country' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                            <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
+                                <span class="fas fa-chevron-left"></span>
+                                &nbsp; {{ back_btn }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="text-white ml-5 mr-5 mb-5" style="font-size: 18pt;text-align: center;">
-                {{ title }}
+            <div class="col-lg-5">
+                <div class="text-white ml-5 mr-5 mb-2" style="font-size: 18pt;text-align: center;">
+                    {{ title }}
+                </div>
+                <div class="bordershadow-white mr-5" style="text-align: center;">
+                    <img src="{{ static_base }}{{ flag }}" alt="flag" style="width:50px; border:1px;">
+                </div>
             </div>
-            <div class="bordershadow-white mr-5" style="text-align: left;">
-                <img src="{{ static_base }}{{ flag }}" alt="flag" style="width:50px; border:1px;">
+
+            <div class="col-lg-5">
+                <div class="btn-group btn-group-sm pull-right mr-2">
+                    <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="False">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ new_cases }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_line_totalcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="False">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ total_cases }}&nbsp;
+                            <span class="fas fa-chart-line  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="False">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ new_deaths }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_line_totaldeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="False">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ total_deaths }}&nbsp;
+                            <span class="fas fa-chart-line  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="btn-group btn-group-sm pull-right mt-2 mr-2">
+                    <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ new_cases100 }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_line_totalcases_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
+                            {{ total_cases100 }}&nbsp;
+                            <span class="fas fa-chart-line  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ new_deaths100 }}&nbsp;
+                            <span class="fas fa-chart-bar  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                    <form action="{% url 'owid:charts_line_totaldeaths_country' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="per100" value="True">
+                        <input type="hidden" class="form-control" name="location" value="{{ location }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
+                            {{ total_deaths100 }}&nbsp;
+                            <span class="fas fa-chart-line  ml-2 mr-2"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="btn-group btn-group-sm pull-right mr-2">
-            <form action="{% url 'owid:charts_bar_newcases_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
-                    {{ new_cases }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_totalcases_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
-                    {{ total_cases }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_newdeaths_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
-                    {{ new_deaths }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-            <form action="{% url 'owid:charts_bar_totaldeaths_country' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" class="form-control" name="location" value="{{ location }}">
-                <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
-                    {{ total_deaths }}&nbsp;
-                    <span class="fas fa-chart-bar  ml-2 mr-2"></span>
-                </button>
-            </form>
-
-        </div>
-
 
         <div class="#row" style="background-color:transparent;">
 
@@ -123,7 +173,32 @@
                             title: {
                                 display: false,
                                 text: '{{ title }}'
-                            }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                }
+                            },
+                            elements: {
+                                point: {
+                                    radius: 1,
+                                    hoverRadius: 5,
+                                }
+                            },
+                            hover: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            responsive: true,
+                            tooltips: {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                yAlign: 'top',
+                            },
                         }
                     });
                 </script>

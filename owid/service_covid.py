@@ -1,17 +1,30 @@
-import django
+#import django
+#django.setup()
 
 from owid.owid_country_dto import OwidCountryDTO
-
-django.setup()
-
 from owid.text_owid import *
 from owid.repository_owid import *
-import pytz
+from latidude99.settings import OWID_DATA_FOLDER, OWID_LOG_FOLDER
+import datetime as dt
+import sys
+#import pytz
 
 urls_pl_bar = {'newcases': 'charts_pl_newcases_bar',
                'totalcases': 'charts_pl_totalcases_bar',
                'newdeaths': 'charts_pl_newdeaths_bar',
                'totaldeaths': 'charts_pl_totaldeaths_bar'}
+
+
+LOG_FILE = OWID_LOG_FOLDER + 'log_owid_covid.log'
+
+def log_to_file(file_name, message):
+    ORIGINAL_STDOUT = sys.stdout
+    with open(file_name, 'a') as f:
+        sys.stdout = f
+        print(dt.datetime.now())
+        print(message)
+        print('------------------------')
+        sys.stdout = ORIGINAL_STDOUT
 
 
 def get_covid_tasks():
@@ -44,8 +57,14 @@ def get_data_for_location(location):
 
 
 def get_covid_selection_data():
+    daterange_list = []
     locations = get_location_list()
-    context = {'footer_info': FOOTER_INFO,
+    data = find_country_coviddata_all('World', daterange_list)
+    data = data[len(data)-1]
+    print(data.date)
+    date = data.date.strftime("%A, %d %B %Y")
+    print(date)
+    context = {'the_world': THE_WORLD,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
@@ -64,6 +83,13 @@ def get_covid_selection_data():
                'country_card_title': COUNTRY_CARD_TITLE,
                'btn_country': BTN_COUNTRY,
                'btn_countries': BTN_COUNTRIES,
+               'new_cases': NEW_CASES_TXT,
+               'total_cases': TOTAL_CASES_TXT,
+               'new_deaths': NEW_DEATHS_TXT,
+               'total_deaths': TOTAL_DEATHS_TXT,
+               'data': data,
+               'date':date,
+               'info': COVID_INFO,
                }
     return context
 
@@ -131,7 +157,7 @@ def get_country_data(location):
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
                'btn_charts': BTN_CHARTS_TXT,
-               'new_cases100': NEW_CASES_TXT,
+               'new_cases100': NEW_CASES_TXT100,
                'total_cases100': TOTAL_CASES_TXT100,
                'new_deaths100': NEW_DEATHS_TXT100,
                'total_deaths100': TOTAL_DEATHS_TXT100,
@@ -262,9 +288,10 @@ def get_newcases_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-        country = find_country(c)
+#        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_cases if x.new_cases >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -294,9 +321,10 @@ def get_totalcases_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-        country = find_country(c)
+#        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_cases if x.total_cases >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -326,9 +354,10 @@ def get_newdeaths_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-        country = find_country(c)
+#        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -358,9 +387,10 @@ def get_totaldeaths_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-        country = find_country(c)
+#        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -395,7 +425,8 @@ def get_newcases100_all_group(countries_selected, daterange_str):
         country = find_country(c)
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_cases / per100 if x.new_cases >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_cases / per100 if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -428,7 +459,8 @@ def get_totalcases100_all_group(countries_selected, daterange_str):
         country = find_country(c)
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_cases / per100 if x.total_cases >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.total_cases / per100 if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -461,7 +493,8 @@ def get_newdeaths100_all_group(countries_selected, daterange_str):
         country = find_country(c)
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.new_deaths / per100 if x.new_deaths >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.new_deaths / per100 if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -494,7 +527,8 @@ def get_totaldeaths100_all_group(countries_selected, daterange_str):
         country = find_country(c)
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
-        values = [x.total_deaths/per100 if x.total_deaths >= 0 else 0 for x in data]
+        no_data = 'NaN'
+        values = [x.total_deaths / per100 if x.new_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -518,12 +552,17 @@ def get_totaldeaths100_all_group(countries_selected, daterange_str):
 # ---------- single location --------------------------
 
 
-def get_newcases_all(location):
+def get_newcases_all(location, per100switch):
     daterange_list = []
+    country = find_country(location)
+    per100 = country.population / 100000
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
-    values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
+    if per100switch == 'True':
+        values = [x.new_cases / per100 if x.new_cases >= 0 else 0 for x in coviddata]
+    else:
+        values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
                'labels': labels,
@@ -537,18 +576,27 @@ def get_newcases_all(location):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     ctx = {**get_covid_selection_data(), **context}
     return ctx
 
 
-def get_totalcases_all(location):
+def get_totalcases_all(location, per100switch):
     daterange_list = []
+    country = find_country(location)
+    per100 = country.population / 100000
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
+    if per100switch == 'True':
+        values = [x.total_cases / per100 if x.total_cases >= 0 else 0 for x in coviddata]
+    else:
+        values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
@@ -563,18 +611,27 @@ def get_totalcases_all(location):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     ctx = {**get_covid_selection_data(), **context}
     return ctx
 
 
-def get_newdeaths_all(location):
+def get_newdeaths_all(location, per100switch):
     daterange_list = []
+    country = find_country(location)
+    per100 = country.population / 100000
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
+    if per100switch == 'True':
+        values = [x.new_deaths / per100 if x.new_deaths >= 0 else 0 for x in coviddata]
+    else:
+        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
@@ -589,18 +646,27 @@ def get_newdeaths_all(location):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     ctx = {**get_covid_selection_data(), **context}
     return ctx
 
 
-def get_totaldeaths_all(location):
+def get_totaldeaths_all(location, per100switch):
     daterange_list = []
+    country = find_country(location)
+    per100 = country.population / 100000
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     labels = list(dict.fromkeys(labels))
-    values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata]
+    if per100switch == 'True':
+        values = [x.total_deaths / per100 if x.total_deaths >= 0 else 0 for x in coviddata]
+    else:
+        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
@@ -615,9 +681,17 @@ def get_totaldeaths_all(location):
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     ctx = {**get_covid_selection_data(), **context}
     return ctx
+
+
+
+
 
     # --------- old -------------
 

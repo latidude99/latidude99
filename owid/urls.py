@@ -32,12 +32,12 @@ urlpatterns = [
 
     path('covid/country/charts/newcases/', views.charts_bar_newcases_country,
          name='charts_bar_newcases_country'),
-    path('covid/country/charts/totalcases/', views.charts_bar_totalcases_country,
-         name='charts_bar_totalcases_country'),
+    path('covid/country/charts/totalcases/', views.charts_line_totalcases_country,
+         name='charts_line_totalcases_country'),
     path('covid/country/charts/newdeaths/', views.charts_bar_newdeaths_country,
          name='charts_bar_newdeaths_country'),
-    path('covid/country/barcharts/totaldeaths/', views.charts_bar_totaldeaths_country,
-         name='charts_bar_totaldeaths_country'),
+    path('covid/country/barcharts/totaldeaths/', views.charts_line_totaldeaths_country,
+         name='charts_line_totaldeaths_country'),
 
     path('charts_bar_newcases_world/newcases/', views.charts_bar_newcases_world,
          name='charts_bar_newcases_world'),

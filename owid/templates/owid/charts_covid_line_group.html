@@ -11,7 +11,7 @@
                     <div class="mr-2">
                         <form action="{% url 'owid:countries' %}" method="post">
                             {% csrf_token %}
-                            <input id="datenewcases" type="hidden" name="datefilter" value="{{ daterange }}" />
+                            <input id="datenewcases" type="hidden" name="datefilter" value="{{ daterange }}"/>
                             <input type="hidden" class="form-control" name="location"
                                    value="{{ countries_names }}">
                             <button type="submit" class="btn btn-outline-light btn-sm" onclick="$('#loading1').show();">
@@ -35,40 +35,40 @@
                 <div class="btn-group btn-group-sm pull-right mr-2 mb-2">
                     <form action="{% url 'owid:charts_newcases_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datenewcases" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datenewcases" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-warning btn-sm mr-2"
-                        onclick="$('#loading').show().delay(10000).hide(0);">
+                                onclick="$('#loading').show().delay(10000).hide(0);">
                             {{ new_cases }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
                     <form action="{% url 'owid:charts_totalcases_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datetotalcases" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datetotalcases" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-warning btn-sm mr-2"
-                        onclick="$('#loading').show().delay(10000).hide(0);">
+                                onclick="$('#loading').show().delay(10000).hide(0);">
                             {{ total_cases }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
                     <form action="{% url 'owid:charts_newdeaths_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datenewdeaths" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datenewdeaths" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-danger btn-sm mr-2"
-                        onclick="$('#loading').show().delay(10000).hide(0);">
+                                onclick="$('#loading').show().delay(10000).hide(0);">
                             {{ new_deaths }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
                     </form>
                     <form action="{% url 'owid:charts_totaldeaths_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datetotaldeaths" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datetotaldeaths" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-danger btn-sm mr-2"
-                        onclick="$('#loading').show().delay(10000).hide(0);">
+                                onclick="$('#loading').show().delay(10000).hide(0);">
                             {{ total_deaths }}&nbsp;
                             <span class="fas fa-chart-bar  ml-2 mr-2"></span>
                         </button>
@@ -79,7 +79,7 @@
                 <div class="btn-group btn-group-sm pull-right mr-2 mb-3">
                     <form action="{% url 'owid:charts_newcases100_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datenewcases100" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datenewcases100" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                             {{ new_cases100 }}&nbsp;
@@ -88,7 +88,7 @@
                     </form>
                     <form action="{% url 'owid:charts_totalcases100_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datetotalcases100" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datetotalcases100" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-warning btn-sm mr-2">
                             {{ total_cases100 }}&nbsp;
@@ -97,7 +97,7 @@
                     </form>
                     <form action="{% url 'owid:charts_newdeaths100_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datenewdeaths100" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datenewdeaths100" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                             {{ new_deaths100 }}&nbsp;
@@ -106,7 +106,7 @@
                     </form>
                     <form action="{% url 'owid:charts_totaldeaths100_country_group' %}" method="post">
                         {% csrf_token %}
-                        <input id="datetotaldeaths100" type="hidden" name="daterange" value="{{ daterange }}" />
+                        <input id="datetotaldeaths100" type="hidden" name="daterange" value="{{ daterange }}"/>
                         <input type="hidden" class="form-control" name="location" value="{{ countries_names }}">
                         <button type="submit" class="btn btn-outline-danger btn-sm mr-2">
                             {{ total_deaths }}&nbsp;
@@ -125,6 +125,7 @@
                     var ctx = document.getElementById('chart').getContext('2d');
                     var chart_uk_new_cases = new Chart(ctx, {
                         type: 'line',
+                        responsive: true,
                         data: {
                             labels: [
                                 {% for item in countries.0.labels %}
@@ -139,13 +140,15 @@
                                                 "{{ item|floatformat:"2" }}",
                                             {% endfor %}
                                         ],
+                                        spanGaps: true,
                                         label: "{{ c.label }}",
                                         backgroundColor: "{{ back_colours|index:forloop.counter0  }}",
                                         borderColor: "{{ border_colours|index:forloop.counter0 }}",
                                         borderWidth: 2,
+                                        pointStyle: 'circle',
                                         pointBorderWidth: 0,
                                         pointRadius: 1,
-                                        pointHoverRadius: 10,
+                                        pointHoverRadius: 7,
                                         fill: false
                                     },
                                 {% endfor %}
@@ -183,7 +186,32 @@
                             title: {
                                 display: false,
                                 text: '{{ title }}'
-                            }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                }
+                            },
+                            elements: {
+                                point: {
+                                    radius: 1,
+                                    hoverRadius: 5,
+                                }
+                            },
+                            hover: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            responsive: true,
+                            tooltips: {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                yAlign: 'left',
+                            },
                         }
                     });
                 </script>

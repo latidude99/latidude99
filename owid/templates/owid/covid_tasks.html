@@ -62,7 +62,9 @@
                                             <label for="task">Select task:</label>
                                             <select class="form-control" id="task" name="task">
                                                 <option value="" selected disabled>select task</option>
-                                                <option value="download_covid_data_json_notify">download_covid_data_json_notify</option>
+                                                <option value="download_covid_data_json_notify">
+                                                    download_covid_data_json_notify
+                                                </option>
                                                 <option value="check_status_notify">check_status_notify</option>
                                                 <option value="update_status_notify">update_status_notify</option>
                                                 <option disabled>delete a country</option>
@@ -78,6 +80,9 @@
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-white ml-4">
+                            {% if status %}<p>{{ status }}</p>{% endif %}
                         </div>
                     </div>
                 </div>
