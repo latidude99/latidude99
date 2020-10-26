@@ -19,7 +19,10 @@ def send(sender, receiver, subject, text):
     s = smtplib.SMTP_SSL(SMTP_SERVER_GMAIL)
     # s.set_debuglevel(1)
     # do the smtp auth; sends ehlo if it hasn't been sent already
-    s.login(LATITUDE99_LOGIN, LATIDUDE99_PSWD)
+    s.MAIL_SERVER = 'smtp.gmail.com'
+    s.MAIL_PORT = 465
+    s.MAIL_USE_SSL = True
+    s.login(LATITUDE99_LOGIN, 'LATIDUDE99_PSWD_OWID')
     s.sendmail(LATITUDE99_LOGIN, LATITUDE99_LOGIN, msg.as_string())
     s.quit()
     print('status email has been sent')

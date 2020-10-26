@@ -152,7 +152,7 @@ def get_new_json_covid_data(filename):
                 delta_country = data_date_obj - last_db_date_obj
                 if delta_country.days > 0:
                     print('adding data for: ' + db_country.location + ', ' + data_date_obj.strftime('%Y-%m-%d'))
-                    status['update'].append('new data for: ' + v1['date'])
+                    status['update'].append('new data for: '  + db_country.location + ', ' + v1['date'])
 
                     has_new_data = True
                     if 'date' not in v1:

@@ -3,9 +3,14 @@
     {% load static %}
     {% static "owid/" as static_base %}
     {% load humanize %}
+
     <div class="container-fluid" xmlns:text-decoration="http://www.w3.org/1999/xhtml">
         <div class="row my-auto mx-auto">
             <div class="col-lg-4 text-center text-warning">
+                <div class="text-info mt-1 pt-3">
+                    <marquee behavior="scroll" direction="left"> this is work in progress...</marquee>
+                    <!--<div class="scroll-left"><p> this is work in progress...</p></div>-->
+                </div>
                 <h1 class="display-3 mt-5 mb-4">{{ title }}</h1>
                 <h4><small>{{ subtitle }}</small></h4>
                 <pre><span>{{ data_supply }}</span><span><abbr title="Our World In Data">OWID</abbr></span></pre>
@@ -16,41 +21,125 @@
                          style="width:100%">
                 </a>
                 <div class="mt-5 pull-left">
-                    <a href="{% url 'owid:tasks' %}"
+                    <a href="{% url 'owid:tasks_owid' %}"
                        style="background: transparent; color:#444444; text-decoration: none">
                         cosik ukryte
                     </a>
                 </div>
             </div>
-            <div class="col-lg-1 py-3">
-            </div>
 
-            <div class="col-lg-7">
-                <div class="text-info mt-3 pt-3">
-                    <marquee behavior="scroll" direction="left"> this is work in progress...</marquee>
-                    <!--<div class="scroll-left"><p> this is work in progress...</p></div>-->
-                </div>
 
-                <div class="py-2">
-                    <div class="d-flex py-0">
-                        <h1 class=" text-white font-weight-light flex-grow-1">{{ the_world }}</h1>
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-end">
+                    <div class="pt-3 pb-3">
                         <span class="text-white py-4" style="opacity: 40%;">{{ info }}</span>
                         <span class="text-white py-4 px-3" style="opacity: 80%;">{{ date }}</span>
                     </div>
-                    <div class="d-flex justify-content-between py-0">
-                        <p class=" text-info px-2">{{ new_cases }} </p>
-                        <p class=" text-info px-2">{{ total_cases }} </p>
-                        <p class=" text-info px-2">{{ new_deaths }} </p>
-                        <p class=" text-info px-2">{{ total_deaths }} </p>
+                </div>
+                <ul class="nav nav-pills">
+                    <li class="nav-item w-20">
+                        <a class="nav-link active" href="#world" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ the_world }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#europe" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ europe }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item w-10">
+                        <a class="nav-link" href="#asia" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ asia }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#africa" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ africa }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#north_america" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ north_america }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#south_america" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ south_america }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#oceania" data-toggle="tab">
+                            <h4 class=" text-secondary font-weight-light">{{ oceania }}</h4>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in show active" id="world">
+                        <div class="table-responsive-sm">
+                            <table class="table table-sm table-borderless">
+                                <tbody>
+                                <tr class="text-left">
+                                    <th class=" text-info font-weight-lighter px-4 w-25">{{ new_cases }} </th>
+                                    <th class=" text-info font-weight-lighter px-4 w-30">{{ total_cases }} </th>
+                                    <th class=" text-info font-weight-lighter px-4 w-20">{{ new_deaths }} </th>
+                                    <th class=" text-info font-weight-lighter px-4 w-25">{{ total_deaths }} </th>
+                                </tr>
+                                <tr class="text-left" style="font-family: 'Lucida Console';">
+                                    <td class=" w-25">
+                                        <h2 class=" text-warning font-weight-light px-2">{{ data_world.new_cases|floatformat:"0"|intcomma }}</h2>
+                                    </td>
+                                    <td class=" w-30">
+                                        <h2 class=" text-warning px-2">{{ data_world.total_cases|floatformat:"0"|intcomma }}</h2>
+                                    </td>
+                                    <td class=" w-20">
+                                        <h2 class=" text-danger font-weight-light px-2">{{ data_world.new_deaths|floatformat:"0"|intcomma }}</h2>
+                                    </td>
+                                    <td class=" w-25">
+                                        <h2 class=" text-danger px-2">{{ data_world.total_deaths|floatformat:"0"|intcomma }}</h2>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-between py-1" style="font-family: 'Lucida Console';">
-                        <h2 class=" text-warning font-weight-light px-2">{{ data.new_cases|floatformat:"0"|intcomma }}</h2>
-                        <h2 class=" text-warning px-2">{{ data.total_cases|floatformat:"0"|intcomma }}</h2>
-                        <h2 class=" text-danger font-weight-light px-2">{{ data.new_deaths|floatformat:"0"|intcomma }}</h2>
-                        <h2 class=" text-danger px-2">{{ data.total_deaths|floatformat:"0"|intcomma }}</h2>
+                    {% for data in data_rest %}
+                        <div class="tab-pane fade in" id="{{ data.0 }}">
+                            <div class="table-responsive-sm">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>
+                                    <tr class="text-left">
+                                        <th class=" text-info font-weight-lighter px-4 w-25">{{ new_cases }} </th>
+                                        <th class=" text-info font-weight-lighter px-4 w-30">{{ total_cases }} </th>
+                                        <th class=" text-info font-weight-lighter px-4 w-20">{{ new_deaths }} </th>
+                                        <th class=" text-info font-weight-lighter px-4 w-25">{{ total_deaths }} </th>
+                                    </tr>
+                                    <tr class="text-left" style="font-family: 'Lucida Console';">
+                                        <td class=" w-25">
+                                            <h2 class=" text-warning font-weight-light px-2">{{ data.1|floatformat:"0"|intcomma }}</h2>
+                                        </td>
+                                        <td class=" w-30"><h2 class=" text-warning px-2">{{ data.2|floatformat:"0"|intcomma }}</h2>
+                                        </td>
+                                        <td class=" w-20">
+                                            <h2 class=" text-danger font-weight-light px-2">{{ data.3|floatformat:"0"|intcomma }}</h2>
+                                        </td>
+                                        <td class=" w-25"><h2 class=" text-danger px-2">{{ data.4|floatformat:"0"|intcomma }}</h2>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="row px-5">
+                        <a href="" class="btn btn-block btn-sm btn-outline-light" style="opacity:60%;">
+                            {{ see_all_countries }}
+                            <span class="fas fa-external-link-alt  text-info float-right mr-2 mt-1"></span>
+                        </a>
                     </div>
 
                 </div>
+
 
                 <div class="bordershadow-white">
                     <div class="card py-3 mt-3"
@@ -171,9 +260,9 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
+
+    </div>
 
 
     </div>

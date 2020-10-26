@@ -18,7 +18,7 @@ def get_index_context():
                'covid_subtitle': OWID_COVID_SUBTITLE,
                'covid_btn_txt': OWID_COVID_BTN_TXT,
                'image_cia': IMAGE_CIA,
-               'cia_title': OWID_CIA_TITLE.title,
+               'cia_title': OWID_CIA_TITLE,
                'cia_subtitle': OWID_CIA_SUBTITLE,
                'cia_btn_txt': OWID_CIA_BTN_TXT,
                }

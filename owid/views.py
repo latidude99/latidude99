@@ -4,6 +4,7 @@ import owid.service as service
 import owid.service_covid as service_covid
 import owid.service_owid as service_owid
 from main.secrets import *
+import latidude99.tasks as tasks
 
 
 def tests(request):
@@ -15,7 +16,7 @@ def index(request):
     return render(request, 'owid/index.html', context)
 
 
-def tasks(request):
+def tasks_owid(request):
     ctx = {}
     if request.method == "POST":
         login = request.POST['login']
@@ -35,10 +36,14 @@ def tasks(request):
                 print('update')
                 service.update_status_notify()
                 ctx = {'status': 'update completed'}
+            if task == 'start background task: update':
+                print('task update started')
+                tasks.back_task_1(repeat=10, repeat_until=None)
+                ctx = {'status': 'task update started'}
         else:
             print('login or password incorrect')
     context = {**service_covid.get_covid_tasks(), **ctx}
-    return render(request, 'owid/covid_tasks.html', context)
+    return render(request, 'owid/tasks_owid.html', context)
 
 
 def covid(request):

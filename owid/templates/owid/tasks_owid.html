@@ -44,7 +44,7 @@
                                 <div class="col-lg-12">
                                     <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
 
-                                    <form action="{% url 'owid:tasks' %}" method="post">
+                                    <form action="{% url 'owid:tasks_owid' %}" method="post">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="login">Login:</label>
@@ -67,8 +67,8 @@
                                                 </option>
                                                 <option value="check_status_notify">check_status_notify</option>
                                                 <option value="update_status_notify">update_status_notify</option>
-                                                <option disabled>delete a country</option>
-                                                <option disabled>stop the app</option>
+                                                <option value="start background task: update">start background task: update</option>
+                                                <option disabled>----------------</option>
                                             </select>
                                         </div>
                                         <br>

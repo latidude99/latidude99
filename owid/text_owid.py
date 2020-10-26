@@ -7,8 +7,6 @@ BACKGROUND_PATTERN4 = 'images/darkness_red.png'
 BACKGROUND_PATTERN5 = 'images/darkness_black.png'
 BACKGROUND_PATTERN6 = 'images/'
 
-COVID_DATA_FILE_JSON = 'D:\_____PYTHON\_projects\latidude99\owid\data\owid-covid-data.json'
-
 COVID_COVID_DATA_JSON_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.json'
 COVID_COVID_DATA_JSON_FILE = 'owid-covid-data.json'
 
@@ -39,8 +37,17 @@ OWID_CIA_BTN_TXT = 'go to world factbook'
 IMAGE_CIA = 'images/cia.png'
 
 MILKY_WAY = 'The Milky Way'
-THE_WORLD = 'The World'
+
 COVID_INFO = 'latest numbers from '
+THE_WORLD = 'The World'
+EUROPE = 'Europe'
+ASIA = 'Asia'
+AFRICA = 'Africa'
+NORTH_AM = 'North America'
+SOUTH_AM = 'South America'
+OCEANIA = 'Oceania'
+
+SEE_ALL_BTN = 'see the latest numbers for all countries'
 
 SELECT_LOCATIONS = 'Select a country'
 SELECT_LOCATIONS_SUB = 'type in the first letter to find the county name'

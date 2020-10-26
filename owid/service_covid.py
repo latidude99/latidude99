@@ -1,5 +1,5 @@
-#import django
-#django.setup()
+# import django
+# django.setup()
 
 from owid.owid_country_dto import OwidCountryDTO
 from owid.text_owid import *
@@ -7,15 +7,16 @@ from owid.repository_owid import *
 from latidude99.settings import OWID_DATA_FOLDER, OWID_LOG_FOLDER
 import datetime as dt
 import sys
-#import pytz
+
+# import pytz
 
 urls_pl_bar = {'newcases': 'charts_pl_newcases_bar',
                'totalcases': 'charts_pl_totalcases_bar',
                'newdeaths': 'charts_pl_newdeaths_bar',
                'totaldeaths': 'charts_pl_totaldeaths_bar'}
 
-
 LOG_FILE = OWID_LOG_FOLDER + 'log_owid_covid.log'
+
 
 def log_to_file(file_name, message):
     ORIGINAL_STDOUT = sys.stdout
@@ -59,12 +60,24 @@ def get_data_for_location(location):
 def get_covid_selection_data():
     daterange_list = []
     locations = get_location_list()
-    data = find_country_coviddata_all('World', daterange_list)
-    data = data[len(data)-1]
-    print(data.date)
-    date = data.date.strftime("%A, %d %B %Y")
-    print(date)
+    data_world = find_country_coviddata_all('World', daterange_list)
+    data_world = data_world[len(data_world) - 1]
+    date = data_world.date.strftime("%A, %d %B %Y")
+    data_rest = []
+    data_rest.append(find_data_by_continent_and_date('Europe', data_world.date))
+    data_rest.append(find_data_by_continent_and_date('Asia', data_world.date))
+    data_rest.append(find_data_by_continent_and_date('Africa', data_world.date))
+    data_rest.append(find_data_by_continent_and_date('North America', data_world.date))
+    data_rest.append(find_data_by_continent_and_date('South America', data_world.date))
+    data_rest.append(find_data_by_continent_and_date('Oceania', data_world.date))
     context = {'the_world': THE_WORLD,
+               'europe': EUROPE,
+               'asia': ASIA,
+               'africa': AFRICA,
+               'north_america': NORTH_AM,
+               'south_america': SOUTH_AM,
+               'oceania': OCEANIA,
+               'see_all_countries': SEE_ALL_BTN,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
@@ -87,9 +100,10 @@ def get_covid_selection_data():
                'total_cases': TOTAL_CASES_TXT,
                'new_deaths': NEW_DEATHS_TXT,
                'total_deaths': TOTAL_DEATHS_TXT,
-               'data': data,
-               'date':date,
                'info': COVID_INFO,
+               'data_world': data_world,
+               'date': date,
+               'data_rest': data_rest,
                }
     return context
 
@@ -288,7 +302,7 @@ def get_newcases_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-#        country = find_country(c)
+        #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
         values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
@@ -321,7 +335,7 @@ def get_totalcases_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-#        country = find_country(c)
+        #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
         values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
@@ -354,7 +368,7 @@ def get_newdeaths_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-#        country = find_country(c)
+        #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
         values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
@@ -387,7 +401,7 @@ def get_totaldeaths_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-#        country = find_country(c)
+        #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
         values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
@@ -688,10 +702,6 @@ def get_totaldeaths_all(location, per100switch):
                }
     ctx = {**get_covid_selection_data(), **context}
     return ctx
-
-
-
-
 
     # --------- old -------------
 

@@ -276,3 +276,11 @@ select::-ms-expand {
         transform: translateX(-100%);
     }
 }
+
+
+.nav-pills>li>a.active,
+.nav-pills>li>a:hover,
+.nav-pills>li>a:focus {
+  background-color: red !important;
+  color: white !important;
+}
