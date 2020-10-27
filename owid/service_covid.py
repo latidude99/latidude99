@@ -133,6 +133,7 @@ def get_covid_numbers_data():
     context = {'date': date,
                'data': data,
                'style_css': STYLE_OWID,
+               'tablesorter_js': TABLESORTER_JS,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
                'background_pattern3': BACKGROUND_PATTERN3,

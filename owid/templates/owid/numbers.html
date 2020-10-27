@@ -4,123 +4,157 @@
     {% static "owid/" as static_base %}
     {% load humanize %}
     <div class="container-flex container-wrapper3 scroll-hidden">
-        <div class="sticky-top pt-4"
-             style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
-            <div class="row ml-2">
-                <div class="col-lg-3">
-                    <div class="ml-4 mt-1 mb-4">
-                        <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
-                            <span class="fas fa-chevron-left"></span>
-                            &nbsp; back to covid-19 main page
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
-                    style="background: transparent; color: lightgray;">
-                </div>
-                <div class="col-lg-3">
-                    <h4 class="text-white font-weight-light mt-3 float-right">{{ date }}</h4>
-                </div>
-                <div class="col-lg-1">
+    <div class="sticky-top pt-4"
+         style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
+        <div class="row ml-2">
+            <div class="col-lg-3">
+                <div class="ml-4 mt-1 mb-4">
+                    <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
+                        <span class="fas fa-chevron-left"></span>
+                        &nbsp; back to covid-19 main page
+                    </a>
                 </div>
             </div>
-            <script>
-                $(document).ready(function () {
-                    $("#search_country").on("keyup", function () {
-                        var value = $(this).val().toLowerCase();
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
+            <div class="col-lg-5">
+                <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
+                       style="background: transparent; color: lightgray;">
+            </div>
+            <div class="col-lg-3">
+                <h4 class="text-white font-weight-light mt-3 float-right">{{ date }}</h4>
+            </div>
+            <div class="col-lg-1">
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+
+                    var value = 'europe'
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+
+                $("#search_country").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-            </script>
-            <div class="row ml-5 pl-3 mr-5 pr-4">
-                <div class="col-lg-12" style="background-color:transparent; color: aqua;">
-                    <div class="table-responsive-sm table-dark table-hover table-borderless"
-                         style="background: transparent;  color: aqua">
-                        <table class="table" style="background: transparent;  color: white;">
-                            <thead class="p-0">
-                            <tr class="p-0">
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
-                                </td>
-                                <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ country_name }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ population }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_cases }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_cases }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_deaths }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_deaths }}</h5>
-                                </td>
-                                <td class="w-11 align-middle p-0">
-                                    <h6 class="font-weight-light p-0">{{ new_cases }}</h6>
-                                    <p class="small p-0">{{ per_1_million }}</p>
-                                </td>
-                                <td class="w-11 align-middle p-0">
-                                    <h6 class="font-weight-light p-0">{{ new_deaths }}</h6>
-                                    <p class="small p-0">{{ per_1_million }}</p>
-                                </td>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <hr>
+            });
+        </script>
 
-        </div>
         <div class="row ml-5 pl-3 mr-5 pr-4">
             <div class="col-lg-12" style="background-color:transparent; color: aqua;">
-                <div class="table-responsive-sm table-dark table-hover table-country"
+                <div class="table-responsive-sm table-dark table-hover table-borderless"
                      style="background: transparent;  color: aqua">
                     <table class="table" style="background: transparent;  color: white;">
-                        <thead>
-                        <tr>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-12 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
-                            <td class="w-11 align-middle p-0"></td>
+                        <thead class="p-0">
+                        <tr class="p-0">
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
+                            </td>
+                            <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ country_name }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ population }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_cases }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_cases }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_deaths }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_deaths }}</h5>
+                            </td>
+                            <td class="w-11 align-middle p-0">
+                                <h6 class="font-weight-light p-0">{{ new_cases }}</h6>
+                                <p class="small p-0">{{ per_1_million }}</p>
+                            </td>
+                            <td class="w-11 align-middle p-0">
+                                <h6 class="font-weight-light p-0">{{ new_deaths }}</h6>
+                                <p class="small p-0">{{ per_1_million }}</p>
+                            </td>
                         </tr>
                         </thead>
-                        <tbody id="covid_countries">
-                        {% for country in data %}
-                            <tr class="font-weight-light">
-                                <td>{{ country.0 }}</td>
-                                <td>{{ country.1 }}</td>
-                                <td class="text-info" style="font-family: 'Lucida Console';">--</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.2|floatformat:"0"|intcomma }}</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.3|floatformat:"0"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.4|floatformat:"0"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.5|floatformat:"0"|intcomma }}</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.6|floatformat:"0"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.8|floatformat:"0"|intcomma }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
-
-
+        <hr>
     </div>
 
+    <script>
+        $(function () {
+            $("#covid_table").tablesorter({sortList: [[0,0], [3, 1],]});
+        });
+    </script>
+
+    <div class="row ml-5 pl-3 mr-5 pr-4">
+        <div class="col-lg-12" style="background-color:transparent; color: aqua;">
+            <div class="table-responsive-sm table-dark table-hover table-country"
+                 style="background: transparent;  color: aqua">
+                <table id="covid_table" class="table tablesorter" style="background: transparent;  color: white;">
+                    <thead>
+                    <tr>
+                        <th class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span></th>
+                        <th class="w-12 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span></th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="covid_countries">
+                    {% for country in data %}
+                        <tr class="font-weight-light">
+                            <td style="opacity:70%;">{{ country.0 }}</td>
+                            <td>{{ country.1 }}</td>
+                            <td class="text-info" style="font-family: 'Lucida Console';">--</td>
+                            <td class="text-warning"
+                                style="font-family: 'Lucida Console';">{{ country.2|floatformat:"0"|intcomma }}</td>
+                            <td class="text-warning"
+                                style="font-family: 'Lucida Console';">{{ country.3|floatformat:"0"|intcomma }}</td>
+                            <td class="text-danger"
+                                style="font-family: 'Lucida Console';">{{ country.4|floatformat:"0"|intcomma }}</td>
+                            <td class="text-danger"
+                                style="font-family: 'Lucida Console';">{{ country.5|floatformat:"0"|intcomma }}</td>
+                            <td class="text-warning"
+                                style="font-family: 'Lucida Console';">{{ country.6|floatformat:"0"|intcomma }}</td>
+                            <td class="text-danger"
+                                style="font-family: 'Lucida Console';">{{ country.8|floatformat:"0"|intcomma }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock %}
 
