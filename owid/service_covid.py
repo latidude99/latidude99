@@ -6,6 +6,7 @@ from owid.text_owid import *
 from owid.repository_owid import *
 from latidude99.settings import OWID_DATA_FOLDER, OWID_LOG_FOLDER
 import datetime as dt
+import pytz
 import sys
 
 # import pytz
@@ -104,6 +105,61 @@ def get_covid_selection_data():
                'data_world': data_world,
                'date': date,
                'data_rest': data_rest,
+               }
+    return context
+
+
+data_latest_all = ['', []]
+
+def get_covid_numbers_data():
+    daterange_list = []
+    data_world = find_country_coviddata_all('World', daterange_list)
+    data_world = data_world[len(data_world) - 1]
+    date = data_world.date.strftime("%A, %d %B %Y")
+    print(data_latest_all)
+    print('----------------')
+    last_db_date = data_world.date
+    current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
+    delta = current_date - last_db_date
+    print(delta)
+    if data_latest_all[0] != '' and delta.days > 0 and data_latest_all[1]:
+        data = data_latest_all[1]
+        print('if')
+    else:
+        data = find_data_by_country_latest(data_world.date)
+        data_latest_all[0] = data_world.date
+        data_latest_all[1] = data
+        print('else')
+    context = {'date': date,
+               'data': data,
+               'style_css': STYLE_OWID,
+               'background_pattern1': BACKGROUND_PATTERN1,
+               'background_pattern2': BACKGROUND_PATTERN2,
+               'background_pattern3': BACKGROUND_PATTERN3,
+               'background_pattern4': BACKGROUND_PATTERN4,
+               'background_pattern5': BACKGROUND_PATTERN5,
+               'image_coronavirus': IMAGE_CORONAVIRUS,
+               'btn_country': BTN_COUNTRY_CHANGE,
+               'side_txt1': SIDE_TXT_1,
+               'milky_way': MILKY_WAY,
+               'latidude99': 'latidude99.com',
+               'no_data': NO_DATA,
+               'ppl': PPL,
+               'per_1_million': PER_1_MILLION,
+               'per_100_000': PER_100_000,
+               'per_1000': PER_1000,
+               'country_name': COUNTRY_NAME,
+               'continent': CONTINENT,
+               'population': POPULATION,
+               'new_cases': NEW_CASES_TXT,
+               'total_cases': TOTAL_CASES_TXT,
+               'new_deaths': NEW_DEATHS_TXT,
+               'total_deaths': TOTAL_DEATHS_TXT,
+               'btn_charts': BTN_CHARTS_TXT,
+               'new_cases100': NEW_CASES_TXT100,
+               'total_cases100': TOTAL_CASES_TXT100,
+               'new_deaths100': NEW_DEATHS_TXT100,
+               'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     return context
 

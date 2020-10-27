@@ -107,6 +107,11 @@ hr {
     display: inline-block;
 }
 
+.table-wrapper3 {
+    max-height: 100vh;
+    overflow: auto;
+}
+
 .table-wrapper2 {
     max-height: 100vh;
     overflow: auto;
@@ -278,9 +283,4 @@ select::-ms-expand {
 }
 
 
-.nav-pills>li>a.active,
-.nav-pills>li>a:hover,
-.nav-pills>li>a:focus {
-  background-color: red !important;
-  color: white !important;
-}
+

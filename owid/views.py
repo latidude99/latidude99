@@ -51,6 +51,11 @@ def covid(request):
     return render(request, 'owid/covid.html', context)
 
 
+def numbers(request):
+    context = service_covid.get_covid_numbers_data()
+    return render(request, 'owid/numbers.html', context)
+
+
 def country(request):
     if request.method == "POST":
         location = request.POST['location']

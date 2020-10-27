@@ -47,11 +47,15 @@ NORTH_AM = 'North America'
 SOUTH_AM = 'South America'
 OCEANIA = 'Oceania'
 
-SEE_ALL_BTN = 'see the latest numbers for all countries'
+SEE_ALL_BTN = 'Latest numbers for all countries'
+
+COUNTRY = 'Country'
+
+
 
 SELECT_LOCATIONS = 'Select a country'
 SELECT_LOCATIONS_SUB = 'type in the first letter to find the county name'
-COUNTRY_CARD_TITLE = 'Individual country data'
+COUNTRY_CARD_TITLE = 'Single-country charts'
 BTN_COUNTRY = 'go to country page'
 BTN_COUNTRIES = 'submit selection'
 BTN_COUNTRY_CHANGE = 'change country'
@@ -68,6 +72,13 @@ NEW_CASES_TXT100 = 'per 100,000'
 TOTAL_CASES_TXT100 = 'per 100,000'
 NEW_DEATHS_TXT100 = 'per 100,000'
 TOTAL_DEATHS_TXT100 = 'per 100,000'
+
+PER_1_MILLION = 'per 1 million'
+
+NEW_CASES_TXT1000000 = 'per 1 million'
+TOTAL_CASES_TXT1000000 = 'per 100,000'
+NEW_DEATHS_TXT1000000 = 'per 100,000'
+TOTAL_DEATHS_TXT10000000 = 'per 100,000'
 
 BTN_CHARTS_TXT = 'see charts'
 

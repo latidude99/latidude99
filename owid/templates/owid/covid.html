@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <ul class="nav nav-pills">
-                    <li class="nav-item w-20">
+                    <li class="nav-item w-16">
                         <a class="nav-link active" href="#world" data-toggle="tab">
                             <h4 class=" text-secondary font-weight-light">{{ the_world }}</h4>
                         </a>
@@ -47,7 +47,7 @@
                             <h4 class=" text-secondary font-weight-light">{{ europe }}</h4>
                         </a>
                     </li>
-                    <li class="nav-item w-10">
+                    <li class="nav-item">
                         <a class="nav-link" href="#asia" data-toggle="tab">
                             <h4 class=" text-secondary font-weight-light">{{ asia }}</h4>
                         </a>
@@ -79,23 +79,23 @@
                             <table class="table table-sm table-borderless">
                                 <tbody>
                                 <tr class="text-left">
-                                    <th class=" text-info font-weight-lighter px-4 w-25">{{ new_cases }} </th>
-                                    <th class=" text-info font-weight-lighter px-4 w-30">{{ total_cases }} </th>
-                                    <th class=" text-info font-weight-lighter px-4 w-20">{{ new_deaths }} </th>
-                                    <th class=" text-info font-weight-lighter px-4 w-25">{{ total_deaths }} </th>
+                                    <th class=" text-info font-weight-lighter px-3 w-25">{{ new_cases }} </th>
+                                    <th class=" text-info font-weight-lighter px-3 w-30">{{ total_cases }} </th>
+                                    <th class=" text-info font-weight-lighter px-3 w-20">{{ new_deaths }} </th>
+                                    <th class=" text-info font-weight-lighter px-3 w-25">{{ total_deaths }} </th>
                                 </tr>
                                 <tr class="text-left" style="font-family: 'Lucida Console';">
                                     <td class=" w-25">
-                                        <h2 class=" text-warning font-weight-light px-2">{{ data_world.new_cases|floatformat:"0"|intcomma }}</h2>
+                                        <h3 class=" text-warning font-weight-light px-2">{{ data_world.new_cases|floatformat:"0"|intcomma }}</h3>
                                     </td>
                                     <td class=" w-30">
-                                        <h2 class=" text-warning px-2">{{ data_world.total_cases|floatformat:"0"|intcomma }}</h2>
+                                        <h3 class=" text-warning px-2">{{ data_world.total_cases|floatformat:"0"|intcomma }}</h3>
                                     </td>
                                     <td class=" w-20">
-                                        <h2 class=" text-danger font-weight-light px-2">{{ data_world.new_deaths|floatformat:"0"|intcomma }}</h2>
+                                        <h3 class=" text-danger font-weight-light px-2">{{ data_world.new_deaths|floatformat:"0"|intcomma }}</h3>
                                     </td>
                                     <td class=" w-25">
-                                        <h2 class=" text-danger px-2">{{ data_world.total_deaths|floatformat:"0"|intcomma }}</h2>
+                                        <h3 class=" text-danger px-2">{{ data_world.total_deaths|floatformat:"0"|intcomma }}</h3>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -108,21 +108,23 @@
                                 <table class="table table-sm table-borderless">
                                     <tbody>
                                     <tr class="text-left">
-                                        <th class=" text-info font-weight-lighter px-4 w-25">{{ new_cases }} </th>
-                                        <th class=" text-info font-weight-lighter px-4 w-30">{{ total_cases }} </th>
-                                        <th class=" text-info font-weight-lighter px-4 w-20">{{ new_deaths }} </th>
-                                        <th class=" text-info font-weight-lighter px-4 w-25">{{ total_deaths }} </th>
+                                        <th class=" text-info font-weight-lighter px-3 w-25">{{ new_cases }} </th>
+                                        <th class=" text-info font-weight-lighter px-3 w-30">{{ total_cases }} </th>
+                                        <th class=" text-info font-weight-lighter px-3 w-20">{{ new_deaths }} </th>
+                                        <th class=" text-info font-weight-lighter px-3 w-25">{{ total_deaths }} </th>
                                     </tr>
                                     <tr class="text-left" style="font-family: 'Lucida Console';">
                                         <td class=" w-25">
-                                            <h2 class=" text-warning font-weight-light px-2">{{ data.1|floatformat:"0"|intcomma }}</h2>
+                                            <h3 class=" text-warning font-weight-light px-2">{{ data.1|floatformat:"0"|intcomma }}</h3>
                                         </td>
-                                        <td class=" w-30"><h2 class=" text-warning px-2">{{ data.2|floatformat:"0"|intcomma }}</h2>
+                                        <td class=" w-30"><h3
+                                                class=" text-warning px-2">{{ data.2|floatformat:"0"|intcomma }}</h3>
                                         </td>
                                         <td class=" w-20">
-                                            <h2 class=" text-danger font-weight-light px-2">{{ data.3|floatformat:"0"|intcomma }}</h2>
+                                            <h3 class=" text-danger font-weight-light px-2">{{ data.3|floatformat:"0"|intcomma }}</h3>
                                         </td>
-                                        <td class=" w-25"><h2 class=" text-danger px-2">{{ data.4|floatformat:"0"|intcomma }}</h2>
+                                        <td class=" w-25"><h3
+                                                class=" text-danger px-2">{{ data.4|floatformat:"0"|intcomma }}</h3>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -131,23 +133,39 @@
                         </div>
                     {% endfor %}
 
-                    <div class="row px-5">
-                        <a href="" class="btn btn-block btn-sm btn-outline-light" style="opacity:60%;">
-                            {{ see_all_countries }}
-                            <span class="fas fa-external-link-alt  text-info float-right mr-2 mt-1"></span>
-                        </a>
-                    </div>
 
                 </div>
-
-
                 <div class="bordershadow-white">
-                    <div class="card py-3 mt-3"
+                    <div class="card py-2 mt-4"
                          style="background: transparent;color:beige;border-left: 2px solid orange">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <h3 class="font-weight-light">{{ country_card_title }}</h3>
+                                    <h4 class="font-weight-light">
+                                        <a href="{% url 'owid:numbers' %}" class="text-white stretched-link" style="text-decoration: none;"
+                                        onclick="$('#loading0').show().delay(10000).hide(0);">
+                                            {{ see_all_countries }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div id="loading0"
+                                         class="spinner-grow spinner-grow-sm text-warning mt-2 mr-2 pull-right"
+                                         style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="bordershadow-white">
+                    <div class="card py-2 mt-5"
+                         style="background: transparent;color:beige;border-left: 2px solid orange">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h4 class="font-weight-light">{{ country_card_title }}</h4>
                                 </div>
                                 <div class="col-lg-4">
                                     <div id="loading1"
@@ -190,12 +208,12 @@
                 </div>
 
                 <div class="bordershadow-white">
-                    <div class="card py-3 mt-5"
+                    <div class="card py-2 mt-5"
                          style="background: transparent;color:beige;border-left: 2px solid orange">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <h3 class="font-weight-light">Comparison between selected countries</h3>
+                                    <h4 class="font-weight-light">Multiple-country group charts</h4>
                                 </div>
                                 <div class="col-lg-4">
                                     <div id="loading2"
@@ -210,7 +228,7 @@
                                     <form action="{% url 'owid:countries' %}" method="post" id="countries">
                                         {% csrf_token %}
 
-                                        <div class="input-group mr-3 mt-3 mb-5">
+                                        <div class="input-group mr-3 mt-1 mb-5">
                                             <div class="mr-4 mt-1">
                                                 <label id="msgdate" for="datefilter">Select date range </label>
                                             </div>
