@@ -3,6 +3,11 @@
     {% load static %}
     {% static "owid/" as static_base %}
     {% load humanize %}
+    <script>
+        $(window).bind('beforeunload',function(){
+            alert("unload event detected!");
+        });
+    </script>
 
     <div class="container-fluid" xmlns:text-decoration="http://www.w3.org/1999/xhtml">
         <div class="row my-auto mx-auto">
@@ -140,25 +145,25 @@
                          style="background: transparent;color:beige;border-left: 2px solid orange">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-lg-8">
-                                    <h4 class="font-weight-light">
-                                        <a href="{% url 'owid:numbers' %}" class="text-white stretched-link" style="text-decoration: none;"
-                                        onclick="$('#loading0').show().delay(20000).hide(0);">
-                                            {{ see_all_countries }}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div id="loading0"
-                                         class="spinner-grow spinner-grow-sm text-warning mt-2 mr-2 pull-right"
-                                         style="display:none;"></div>
+                                <div class="col-lg-12">
+                                    <div class="d-flex">
+                                        <h4 class="font-weight-light">
+                                            <a href="{% url 'owid:numbers' %}" class="text-white stretched-link"
+                                               style="text-decoration: none;"
+                                               onclick="$('#loader2').show().delay(20000).hide(0);">
+                                                {{ see_all_countries }}
+                                            </a>
+                                        </h4>
+                                        <div class="pl-5 flex-grow-1">
+                                            <span id="loader2" class="loader2" style="display:none;"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-
                 <div class="bordershadow-white">
                     <div class="card py-2 mt-5"
                          style="background: transparent;color:beige;border-left: 2px solid orange">
@@ -177,7 +182,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
+                                    <!--{% if error_message %}<p><strong>{{ error_message }}
+                                            </strong></p>{% endif %}-->
 
                                     <form action="{% url 'owid:country' %}" method="post">
                                         {% csrf_token %}

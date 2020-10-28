@@ -18,6 +18,7 @@ COVID_DATE_LABELS_FMT = '%d %b %Y'
 FOOTER_INFO = 'This website has been created with Django and Bootstrap 4 frameworks.'
 
 STYLE_OWID ='css/owid_covid.css'
+LOADER_CSS = 'css/css-loader.css'
 TABLESORTER_JS = 'js/jquery.tablesorter.min.js'
 
 OWID_TITLE = 'The World In Numbers'

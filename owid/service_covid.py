@@ -31,6 +31,7 @@ def log_to_file(file_name, message):
 
 def get_covid_tasks():
     context = {'style_css': STYLE_OWID,
+               'loader_css': LOADER_CSS,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
                'background_pattern3': BACKGROUND_PATTERN3,
@@ -105,6 +106,7 @@ def get_covid_selection_data():
                'data_world': data_world,
                'date': date,
                'data_rest': data_rest,
+               'loader_css': LOADER_CSS,
                }
     return context
 
@@ -133,6 +135,7 @@ def get_covid_numbers_data():
     context = {'date': date,
                'data': data,
                'style_css': STYLE_OWID,
+               'loader_css': LOADER_CSS,
                'tablesorter_js': TABLESORTER_JS,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
@@ -395,7 +398,7 @@ def get_totalcases_all_group(countries_selected, daterange_str):
         #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
+        values = [x.total_cases if x.total_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -428,7 +431,7 @@ def get_newdeaths_all_group(countries_selected, daterange_str):
         #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
+        values = [x.new_deaths if x.new_deaths > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -461,7 +464,7 @@ def get_totaldeaths_all_group(countries_selected, daterange_str):
         #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
+        values = [x.total_deaths if x.total_deaths > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -531,7 +534,7 @@ def get_totalcases100_all_group(countries_selected, daterange_str):
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.total_cases / per100 if x.new_cases > 0 else no_data for x in data]
+        values = [x.total_cases / per100 if x.total_cases > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -565,7 +568,7 @@ def get_newdeaths100_all_group(countries_selected, daterange_str):
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.new_deaths / per100 if x.new_cases > 0 else no_data for x in data]
+        values = [x.new_deaths / per100 if x.new_deaths > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)
@@ -599,7 +602,7 @@ def get_totaldeaths100_all_group(countries_selected, daterange_str):
         per100 = country.population / 100000
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
-        values = [x.total_deaths / per100 if x.new_cases > 0 else no_data for x in data]
+        values = [x.total_deaths / per100 if x.total_deaths > 0 else no_data for x in data]
         labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in data]
         if len(labels) < min_labels:
             min_labels = len(labels)

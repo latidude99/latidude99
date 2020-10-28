@@ -15,9 +15,10 @@ Includes a 'contact me' page with messages emailed to me and stored in a databas
 
 ## Technologies
 - Python 3.8
-- Djano 3.1
+- Django 3.1
 - MySQL 5.7
 - Bootstrap 4
+- JQuery 3.5.1
 
 
 
@@ -25,20 +26,20 @@ Includes a 'contact me' page with messages emailed to me and stored in a databas
 
 <p align="center">
 <p align="center">
-<img src="images/pc1.png" width=100%></p>
-  <img src="images/pc6.png" width=100%></p>
+<img src="../images/pc1.png" width=100%></p>
+  <img src="../images/pc6.png" width=100%></p>
   <br>
 <p align="center">
-  <img src="images/pc2.png" width=100%></p>
+  <img src="../images/pc2.png" width=100%></p>
   <br>
 <p align="center">
-	<img src="images/pc3.png" width=100%> </p>
+	<img src="../images/pc3.png" width=100%> </p>
   <br>
 <p align="center">
-	<img src="images/pc4.png" width=100%></p>
+	<img src="../images/pc4.png" width=100%></p>
    <br>
  <p align="center">
-	<img src="images/pc5.png" width=100%></p>
+	<img src="../images/pc5.png" width=100%></p>
   
 </p>
 

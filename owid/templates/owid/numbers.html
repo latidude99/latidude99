@@ -3,6 +3,7 @@
     {% load static %}
     {% static "owid/" as static_base %}
     {% load humanize %}
+
     <div class="container-flex container-wrapper3 scroll-hidden">
     <div class="sticky-top pt-4"
          style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
@@ -19,19 +20,20 @@
                 <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
                        style="background: transparent; color: lightgray;">
             </div>
-            <div class="col-lg-3">
-                <h4 class="text-white font-weight-light mt-3 float-right">{{ date }}</h4>
+            <div class="col-lg-4">
+                <h4 class="text-white font-weight-light mt-2 mr-5 float-right">{{ date }}</h4>
             </div>
-            <div class="col-lg-1">
-            </div>
+
         </div>
         <script>
             $(document).ready(function () {
+                var value = 'eu'
+                $("#search_country").val(value);
 
-                    var value = 'europe'
-                    $("#covid_countries tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
+
+                $("#covid_countries tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
 
                 $("#search_country").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
@@ -82,7 +84,7 @@
 
     <script>
         $(function () {
-            $("#covid_table").tablesorter({sortList: [[0,0], [3, 1],]});
+            $("#covid_table").tablesorter({sortList: [[0, 0], [3, 1],]});
         });
     </script>
 
