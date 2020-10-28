@@ -118,8 +118,6 @@ def get_covid_numbers_data():
     data_world = find_country_coviddata_all('World', daterange_list)
     data_world = data_world[len(data_world) - 1]
     date = data_world.date.strftime("%A, %d %B %Y")
-    print(data_latest_all)
-    print('----------------')
     last_db_date = data_world.date
     current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
     delta = current_date - last_db_date
@@ -132,6 +130,7 @@ def get_covid_numbers_data():
         data_latest_all[0] = data_world.date
         data_latest_all[1] = data
         print('else')
+    print(data[15][1].population)
     context = {'date': date,
                'data': data,
                'style_css': STYLE_OWID,

@@ -26,34 +26,33 @@ Phase two: CIA Factbook
 
 # Screenshots
 
-<p align="center">
-<p align="center">
+
 <img src="../images/twin1.png" width=100%></p>
   <img src="../images/twin2.png" width=100%></p>
   <br>
 <p align="center">
   <img src="../images/twin3.png" width=100%></p>
   <br>
-<p align="">
-	<img src="../images/twin4a.png" width=50%> </p>
-	<p align="">
-	<img src="../images/twin4b.png" width=50%> </p>
-	<p align="">
-	<img src="../images/twin4c.png" width=50%> </p>
-	<p align="">
+<p align="center">
+	<img src="../images/twin4a.png" width=100%> </p>
+	<p align="center">
+	<img src="../images/twin4b.png" width=100%> </p>
+	<p align="center">
+	<img src="../images/twin4c.png" width=100%> </p>
+	<p align="center">
 	<img src="../images/twin4d.png" width=50%> </p>
   <br>
 <p align="center">
-	<img src="../images/pc5.png" width=100%></p>
+	<img src="../images/twin5.png" width=100%></p>
    <br>
-   <p align="">
-	<img src="../images/twin6a.png" width=50%> </p>
-	<p align="">
-	<img src="../images/twin6b.png" width=50%> </p>
-	<p align="">
-	<img src="../images/twin6c.png" width=50%> </p>
-	<p align="">
-	<img src="../images/twin6d.png" width=50%> </p>
+   <p align="center">
+	<img src="../images/twin6a.png" width=100%> </p>
+	<p align="center">
+	<img src="../images/twin6b.png" width=100%> </p>
+	<p align="center">
+	<img src="../images/twin6c.png" width=100%> </p>
+	<p align="center">
+	<img src="../images/twin6d.png" width=100%> </p>
  <p align="center">
 	<img src="../images/twin7.png" width=100%></p>
   <br>
