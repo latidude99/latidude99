@@ -25,8 +25,8 @@ Includes a 'contact me' page with messages emailed to me and stored in a databas
 
 <p align="center">
 <p align="center">
-<img src="images/pc6.png" width=100%></p>
-  <img src="images/pc1.png" width=100%></p>
+<img src="images/pc1.png" width=100%></p>
+  <img src="images/pc6.png" width=100%></p>
   <br>
 <p align="center">
   <img src="images/pc2.png" width=100%></p>
