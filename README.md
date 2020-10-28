@@ -24,6 +24,8 @@ Includes a 'contact me' page with messages emailed to me and stored in a databas
 # Screenshots
 
 <p align="center">
+<p align="center">
+<img src="images/pc6.png" width=100%></p>
   <img src="images/pc1.png" width=100%></p>
   <br>
 <p align="center">
@@ -37,8 +39,7 @@ Includes a 'contact me' page with messages emailed to me and stored in a databas
    <br>
  <p align="center">
 	<img src="images/pc5.png" width=100%></p>
-  <p align="center">
-	<img src="images/pc6.png" width=100%></p>
+  
 </p>
 
 # Contact
