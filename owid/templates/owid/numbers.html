@@ -16,21 +16,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-5">
+
+                <div class="col-lg-6">
                     <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
                            style="background: transparent; color: lightgray;">
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <h4 class="text-white font-weight-light mt-2 mr-5 float-right">{{ date }}</h4>
                 </div>
 
             </div>
+
             <script>
                 $(document).ready(function () {
-                    var value = 'eu'
+                    var flag = false;
+                    var value = 'eu';
                     $("#search_country").val(value);
-
-
                     $("#covid_countries tr").filter(function () {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
@@ -40,12 +41,167 @@
                         $("#covid_countries tr").filter(function () {
                             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                         });
+                        if (flag) {
+                            $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                                .delay(50)
+                                .removeClass('text-white').addClass('text-secondary')
+                                .fadeOut("fast").fadeIn("slow");
+                            flag = false;
+                        }
+                    });
+
+                    $("#world")
+                        .on("click", function () {
+                            flag = true;
+                            var value = '';
+                            $("#search_country").val(value);
+                            $("#covid_countries tr").filter(function () {
+                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                            $('#europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                                .removeClass('text-white').addClass('text-secondary')
+                            $('#worldh6')
+                                .removeClass('text-secondary')
+                                .addClass('text-white')
+                                .delay(30).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                        });
+                    $("#europe").on("click", function () {
+                        flag = true;
+                        var value = 'europe';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#europeh6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(30).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                    });
+                    $("#africa").on("click", function () {
+                        flag = true;
+                        var value = 'africa';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #europeh6, #asiah6, #north_americah6, #south_americah6, #oceaniah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#africah6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                    });
+                    $("#asia").on("click", function () {
+                        flag = true;
+                        var value = 'asia';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #europeh6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#asiah6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                    });
+                    $("#north_america").on("click", function () {
+                        flag = true;
+                        var value = 'north america';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #europeh6, #asiah6, #africah6, #south_americah6, #oceaniah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#north_americah6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                    });
+                    $("#south_america").on("click", function () {
+                        flag = true;
+                        var value = 'south america';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #oceaniah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#south_americah6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                    });
+                    $("#oceania").on("click", function () {
+                        flag = true;
+                        var value = 'oceania';
+                        $("#search_country").val(value);
+                        $("#covid_countries tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6')
+                            .removeClass('text-white').addClass('text-secondary')
+                        $('#oceaniah6')
+                            .removeClass('text-secondary')
+                            .addClass('text-white')
+                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
                     });
                 });
             </script>
 
+            <div class="row">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-7">
+                    <ul class="nav  nav-pills">
+                        <li class="w-16">
+                            <a class="nav-link p-0 m-0" href="#" id="world">
+                                <h6 id="worldh6" class=" text-secondary font-weight-light">{{ the_world }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-12">
+                            <a class="nav-link p-0 m-0" href="#" id="europe">
+                                <h6 id="europeh6" class=" text-secondary font-weight-light">{{ europe }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-10">
+                            <a class="nav-link p-0 m-0" href="#" id="asia">
+                                <h6 id="asiah6" class=" text-secondary font-weight-light">{{ asia }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-10">
+                            <a class="nav-link p-0 m-0" href="#" id="africa">
+                                <h6 id="africah6" class=" text-secondary font-weight-light">{{ africa }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-16">
+                            <a class="nav-link p-0 m-0" href="#" id="north_america">
+                                <h6 id="north_americah6"
+                                    class=" text-secondary font-weight-light">{{ north_america }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-16">
+                            <a class="nav-link p-0 m-0" href="#" id="south_america">
+                                <h6 id="south_americah6"
+                                    class=" text-secondary font-weight-light">{{ south_america }}</h6>
+                            </a>
+                        </li>
+                        <li class="w-10">
+                            <a class="nav-link p-0 m-0" href="#" id="oceania">
+                                <h6 id="oceaniah6" class=" text-secondary font-weight-light">{{ oceania }}</h6>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+
             <div class="row ml-5 pl-3 mr-5 pr-4">
-                <div class="col-lg-12" style="background-color:transparent; color: aqua; height: 60px !important;"">
+                <div class="col-lg-12" style="background-color:transparent; color: aqua; height: 60px !important;">
                     <div class="table-responsive-sm table-dark table-hover table-borderless"
                          style="background: transparent;  color: aqua">
                         <table class="table" style="background: transparent;  color: white;">

@@ -57,7 +57,7 @@ def delete_country(country):
 def download_and_update_covid():
     download_covid_data_json_notify()
     time.sleep(10)
-    status = update_status_notify
+    status = update_status_notify()
     return status
 
 

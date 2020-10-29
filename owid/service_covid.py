@@ -133,6 +133,13 @@ def get_covid_numbers_data():
     print(data[15][1].population)
     context = {'date': date,
                'data': data,
+               'the_world': THE_WORLD,
+               'europe': EUROPE,
+               'asia': ASIA,
+               'africa': AFRICA,
+               'north_america': NORTH_AM,
+               'south_america': SOUTH_AM,
+               'oceania': OCEANIA,
                'style_css': STYLE_OWID,
                'loader_css': LOADER_CSS,
                'tablesorter_js': TABLESORTER_JS,

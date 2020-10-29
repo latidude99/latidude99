@@ -24,6 +24,10 @@ def tasks_owid(request):
         task = request.POST['task']
         print(task)
         if login == COVID_TASKS_LOGIN and pswd == COVID_TASKS_PSWD:
+            if task == 'download_and_update_covid':
+                print('download and update')
+                service.download_and_update_covid()
+                ctx = {'status': 'download and update completed'}
             if task == 'download_covid_data_json_notify':
                 print('download')
                 service.download_covid_data_json_notify()
