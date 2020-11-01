@@ -174,6 +174,23 @@ def get_covid_numbers_data():
     return context
 
 
+def get_country_data_as_dict(location):
+    daterange_list = []
+    country_data = find_country_coviddata_all(location, daterange_list)
+    print(country_data)
+    data_dict = [{'name': x.country.location,
+                  'date': x.date.strftime("%a, %d %b %Y"),
+                  'new_cases': x.new_cases,
+                  'total_cases': x.total_cases,
+                  'new_deaths': x.new_deaths,
+                  'total_deaths': x.total_deaths,
+                  'new_tests': x.new_tests,
+                  'total_tests': x.total_tests,
+                  }
+                 for x in country_data]
+    return data_dict
+
+
 def get_country_data(location):
     daterange_list = []
     locations = get_location_list()

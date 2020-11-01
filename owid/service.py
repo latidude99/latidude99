@@ -1,8 +1,9 @@
-#import django
-#django.setup()
+# import django
+# django.setup()
 
 from owid.import_covid import *
 from owid.check_covid_db import *
+from owid.load_covid import *
 from main.send_email import *
 from owid.repository_owid import *
 import shutil
@@ -22,6 +23,7 @@ def check_owid_covid_db():
     status = check_db_against_json_covid_data(OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE)
     return status
 
+
 def download_covid_data_json_notify():
     url = COVID_COVID_DATA_JSON_URL
     file_path = OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE
@@ -29,14 +31,14 @@ def download_covid_data_json_notify():
         shutil.copyfileobj(response, out_file)
     status = 'JSON file downloaded successfully. File location: ' + file_path
     print(status)
-#    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Download json data status', status)
+    #    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Download json data status', status)
     print('download finished')
 
 
 def update_status_notify():
     print('inside service, update, start')
     status = update_owid_covid_db()
- #   send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Import json data into OWID DB status', status)
+    #   send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Import json data into OWID DB status', status)
     print('inside service, update, end')
     return status
 
@@ -44,7 +46,7 @@ def update_status_notify():
 def check_status_notify():
     print('inside service, check, start')
     status = check_owid_covid_db()
-#    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Check OWID DB against json data', status)
+    #    send(LATITUDE99_LOGIN, LATITUDE99_LOGIN, 'Check OWID DB against json data', status)
     print('inside service, check, end')
 
 
@@ -61,22 +63,28 @@ def download_and_update_covid():
     return status
 
 
-
 def task_test():
     print(dt.datetime.now())
     print('test back task')
 
 
+def delete_all_countries():
+    Country.objects.using('owid').all().delete()
+    status = 'all countries deleted'
+    print('all countries deleted')
+    return status
 
 
+print('inside service')
 
-print('inside service')#
+# load_json_covid_data(OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE)
 
-#update_status_notify()
+# update_status_notify()
 
-#check_status_notify()
+# check_status_notify()
 
-#delete_country('Solomon Islands')
+# delete_country('Solomon Islands')
 
+# delete_all_countries()
 
-
+# download_and_update_covid()

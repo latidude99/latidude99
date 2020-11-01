@@ -207,11 +207,13 @@
                         <table class="table" style="background: transparent;  color: white;">
                             <thead class="p-0">
                             <tr class="p-0">
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
+                                <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
                                 </td>
-                                <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ country_name }}</h5>
+                                <td class="w-16 align-middle p-0"><h5
+                                        class="font-weight-light text-center">{{ country_name }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ population }}</h5>
+                                <td class="w-11 align-middle p-0"><h5
+                                        class="font-weight-light ml-2">{{ population }}</h5>
                                 </td>
                                 <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_cases }}</h5>
                                 </td>
@@ -251,13 +253,13 @@
                     <table id="covid_table" class="table tablesorter" style="background: transparent;  color: white;">
                         <thead>
                         <tr>
-                            <th class="w-11 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span></th>
                             <th class="w-12 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span></th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <th class="w-16 align-middle p-0 pl-4 text-center">
+                                <span class="fas fa-sort-up text-muted"></span>
+                                <span class="fas fa-sort-down text-muted"></span></th>
+                            <td class="w-11 align-middle p-0 pl-5">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
@@ -291,21 +293,108 @@
                         {% for country in data %}
                             <tr class="font-weight-light">
                                 <td style="opacity:70%;">{{ country.0 }}</td>
-                                <td>{{ country.1 }}</td>
+                                <td>
+                                    <form id="{{ country.10 }}" method='GET'>
+                                        <input type="hidden" class="form-control" name="country"
+                                               value="{{ country.1 }}">
+                                        <span class="font-weight-light" style="font-size: 18px;"> {{ country.1 }}</span>
+                                        <button type="submit" class="btn btn-sm btn-outline-light pull-right"
+                                                style="border:none !important; opacity: 70%;">
+                                            more...
+                                        </button>
+                                    </form>
+                                    <script>
+                                        $('#{{ country.10 }}').on('submit', function (e) {
+                                            e.preventDefault();
+                                            var country = $(this).find('input').val();
+                                            console.log(country);
+
+                                            $.get('{%  url 'owid:country_json'  %}',
+                                                {'country': country},
+                                                function (response) {
+
+                                                    var data = response.country;
+                                                    var len = data.length;
+                                                    for (var i = len - 1; i >= 0; i--) {
+                                                        var new_cases, total_cases, new_deaths,
+                                                            total_deaths, new_tests, total_tests;
+                                                        var name = data[i].name;
+                                                        var date = data[i].date;
+                                                        if (data[i].new_cases > -1) {
+                                                            new_cases = Number(parseFloat(data[i].new_cases)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            new_cases = 'no data';
+                                                        }
+                                                        if (data[i].total_cases > -1) {
+                                                            total_cases = Number(parseFloat(data[i].total_cases)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            total_cases = 'no data';
+                                                        }
+                                                        if (data[i].new_deaths > -1) {
+                                                            new_deaths = Number(parseFloat(data[i].new_deaths)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            new_deaths = 'no data';
+                                                        }
+                                                        if (data[i].total_deaths > -1) {
+                                                            total_deaths = Number(parseFloat(data[i].total_deaths)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            total_deaths = 'no data';
+                                                        }
+                                                        if (data[i].new_tests > -1) {
+                                                            new_tests = Number(parseFloat(data[i].new_tests)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            new_tests = 'no data';
+                                                        }
+                                                        if (data[i].total_tests > -1) {
+                                                            total_tests = Number(parseFloat(data[i].total_tests)
+                                                                .toFixed(0))
+                                                                .toLocaleString('en', {minimumFractionDigits: 0});
+                                                        } else {
+                                                            total_tests = 'no data';
+                                                        }
+                                                        $('#table_country_detail').find('tbody').append(
+                                                            '<tr><td class="w-25 text-right pr-5 mr-5 text-white" style="opacity: 80%">' + date +
+                                                            '</td><td class="w-11 text-center" style="color: #e9e9af;">' + new_cases + '' +
+                                                            '</td><td class="w-11 text-center" style="color: #e9e9af;">' + total_cases +
+                                                            '</td><td class="w-11 text-center" style="color: #ff6666;">' + new_deaths +
+                                                            '</td><td class="w-11 text-center" style="color: #ff6666;">' + total_deaths +
+                                                            '</td><td class="w-11 text-center" style="color: #38e038;">' + new_tests +
+                                                            '</td><td class="w-11 text-center" style="color: #38e038;">' + total_tests +
+                                                            '</td></tr>')
+                                                        $('#modal_header').text("{{ country.1 }}")
+                                                        $('#modal_header1').text('number of records: ' + len)
+                                                        $('#modal_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}")
+                                                    }
+                                                    $("#btn_modal").trigger("click");
+                                                     $("#country_modal").modal({backdrop: false});
+                                                });
+                                        });
+                                    </script>
+                                </td>
                                 <td class="text-info"
                                     style="font-family: 'Lucida Console';">{{ country.1.population|floatformat:"0"|intcomma }}</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.2|floatformat:"0"|intcomma }}</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.3|floatformat:"0"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.4|floatformat:"0"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.5|floatformat:"0"|intcomma }}</td>
-                                <td class="text-warning"
-                                    style="font-family: 'Lucida Console';">{{ country.6|floatformat:"1"|intcomma }}</td>
-                                <td class="text-danger"
-                                    style="font-family: 'Lucida Console';">{{ country.8|floatformat:"1"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.2|floatformat:"0"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.3|floatformat:"0"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.4|floatformat:"0"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.5|floatformat:"0"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.6|floatformat:"1"|intcomma }}</td>
+                                <td class=""
+                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.8|floatformat:"1"|intcomma }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -315,5 +404,110 @@
         </div>
     </div>
 
+    <div class="row py-5">
+        <div class="col">
+
+        </div>
+
+    </div>
+
+    <button id="btn_modal" type="button" class="btn btn-outline-light"
+            data-toggle="modal" data-target="#country_modal"
+            style="display:none;">
+        Open modal
+    </button>
+
+
+
+    <!-- The Modal -->
+    <div class="modal" id="country_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #0d0d0d;">
+                    <div class="table-responsive-lg" style="width:100% !important;">
+                        <table style="width:100% !important;">
+                            <tr>
+                                <td class="w-30 px-3 mr-auto">
+                                    <h4 id="modal_header" class="modal-title text-white font-weight-light"></h4>
+                                </td>
+                                <td class="w-30">
+                                    <span id="modal_header1" class="modal-title text-secondary font-weight-light"></span>
+                                </td>
+
+                                <td class="w-15 px-2 mt-2">
+                                    <h5 class="modal-title text-info font-weight-light text-right">population: </h5>
+                                </td>
+                                <td class="w-15 px-1 mt-2">
+                                    <h4 id="modal_header2" class="modal-title text-info font-weight-light text-right"
+                                        style="font-family: 'Lucida Console';"></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="px-3 mt-1">
+                        <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="background-color: #0d0d0d;">
+                    <div class="col text-white">
+                        <table id="table_country_detail" class="">
+                            <thead>
+                            <tr>
+                                <td class="w-25 text-center p-0 py-3 pl-4">
+                                    date
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    new cases
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    total cases
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    new deaths
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    total deaths
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    new tests
+                                </th>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                    total tests
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Modal footer
+                <div class="modal-footer" style="background-color: #330000;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                    -->
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
+<!--
+
+                                        $('#{{ country.1 }}').on('submit', function (e) {
+                                            e.preventDefault();
+                                            var country = $(this).find('input').val();
+                                            $.get('{%  url 'owid:country_json'  %}',
+                                                {'country': country},
+                                                function (response) {
+
+                                                    var data = response.country;
+                                                    var len = data.length;
+                                                    $('#headerh5').text(len);
+
+-->

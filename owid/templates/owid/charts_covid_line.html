@@ -160,6 +160,9 @@
                                     ticks: {
                                         beginAtZero: true,
                                         fontColor: "rgba(255, 255, 255, 0.8)",
+                                        userCallback: function (value, index, values) {
+                                            return value.toLocaleString();   // this is all we need
+                                        },
                                     }
                                 }]
 
@@ -198,6 +201,12 @@
                                 mode: 'index',
                                 intersect: false,
                                 yAlign: 'top',
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                        return parseInt(tooltipValue).toLocaleString();
+                                    }
+                                },
                             },
                         }
                     });

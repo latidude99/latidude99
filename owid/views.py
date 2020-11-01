@@ -1,3 +1,5 @@
+from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import render
 
 import owid.service as service
@@ -32,18 +34,18 @@ def tasks_owid(request):
                 print('download')
                 service.download_covid_data_json_notify()
                 ctx = {'status': 'download completed'}
-            if task == 'check_status_notify':
-                print('check')
-                service.check_status_notify()
-                ctx = {'status': 'check completed'}
+            if task == 'delete_all_countries':
+                print('deleted all countries')
+                service.delete_all_countries()
+                ctx = {'status': 'all countries deleted'}
             if task == 'update_status_notify':
                 print('update')
                 service.update_status_notify()
                 ctx = {'status': 'update completed'}
             if task == 'start background task: update':
                 print('task update started')
-                tasks.back_task_1(repeat=10, repeat_until=None)
-                ctx = {'status': 'task update started'}
+                status = tasks.task_download_and_update_covid()
+                ctx = {'status': status}
         else:
             print('login or password incorrect')
     context = {**service_covid.get_covid_tasks(), **ctx}
@@ -58,6 +60,29 @@ def covid(request):
 def numbers(request):
     context = service_covid.get_covid_numbers_data()
     return render(request, 'owid/numbers.html', context)
+
+
+def country_json(request):
+    data = {'country': ''}
+    if request.method == 'GET':
+        country_name = request.GET.get('country').lower()
+        print(country_name)
+        country_name = country_name \
+            .replace('0', ' ') \
+            .replace('1', '\'') \
+            .replace('2', '(') \
+            .replace('3', ')')
+        #    if request.method == "POST":
+        #        print(request)
+        #        country_name = request.POST['country']
+        print(country_name)
+        data_dict = service_covid.get_country_data_as_dict(country_name)
+        if data_dict:
+            # print(data_dict)
+            data['country'] = data_dict
+        else:
+            data['country'] = 'no data for ' + country_name
+    return JsonResponse(data, safe=False)
 
 
 def country(request):
@@ -252,5 +277,3 @@ def charts_pl_newdeaths_bar(request):
 def charts_pl_totaldeaths_bar(request):
     context = service_covid.get_pl_totaldeaths_all()
     return render(request, 'owid/charts_covid_bar.html', context)
-
-

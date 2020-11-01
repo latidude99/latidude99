@@ -58,6 +58,11 @@ def find_data_by_country_latest(date):
             country.append(item.total_cases_per_million)
             country.append(item.new_deaths_per_million)
             country.append(item.total_deaths_per_million)
+            country.append(item.country.location
+                           .replace("\'", '1')
+                           .replace(' ', '0')
+                           .replace('(', '2')
+                           .replace(')', '3'))
             countries.append(country)
     return countries
 

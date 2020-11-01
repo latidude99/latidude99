@@ -28,10 +28,15 @@ class CovidData(models.Model):
     total_cases = models.FloatField(default=0)
     new_deaths = models.FloatField(default=0)
     total_deaths = models.FloatField(default=0)
+    new_cases_smoothed =  models.FloatField(default=0)
+    new_deaths_smoothed = models.FloatField(default=0)
     new_cases_per_million = models.FloatField(default=0)
     total_cases_per_million = models.FloatField(default=0)
     new_deaths_per_million = models.FloatField(default=0)
     total_deaths_per_million = models.FloatField(default=0)
+    new_tests = models.FloatField(default=0)
+    total_tests = models.FloatField(default=0)
+    new_tests_smoothed = models.FloatField(default=0)
     import_date = models.DateTimeField('import date')
 
     def __str__(self):

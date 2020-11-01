@@ -14,6 +14,7 @@ def read_json_file(filename):
         data = json.load(file)
     return data
 
+
 # not used at the moment
 def isUpdated(data_dict):
     last_json_date = data_dict[OWID_COVID_JSON_CHECK_COUNTRY_CODE]['data'][-1]['date']
@@ -61,7 +62,7 @@ def get_new_json_covid_data(filename):
         import_date = dt.datetime.now(pytz.timezone('Europe/London'))
         fmt = '%Y-%m-%d %H:%M:%S %Z%z'
         status['update'].append('import date: ' + import_date.strftime(fmt))
-        print('New data present. Imported on: ' +  status['update'][0])
+        print('New data present. Imported on: ' + status['update'][0])
         countries = Country.objects.using('owid').all()
         countries_name = [x.location for x in countries]
         for k, v in data_dict.items():
@@ -130,20 +131,20 @@ def get_new_json_covid_data(filename):
                 else:
                     human_development_index = v['human_development_index']
                 db_country = Country(
-                                location=location,
-                                continent=continent,
-                                population=population,
-                                population_density=population_density,
-                                median_age=median_age,
-                                aged_65_older=aged_65_older,
-                                aged_70_older=aged_70_older,
-                                gdp_per_capita=gdp_per_capita,
-                                cardiovasc_death_rate=cardiovasc_death_rate,
-                                diabetes_prevalence=diabetes_prevalence,
-                                handwashing_facilities=handwashing_facilities,
-                                hospital_beds_per_thousand=hospital_beds_per_thousand,
-                                life_expectancy=life_expectancy,
-                                human_development_index=human_development_index)
+                    location=location,
+                    continent=continent,
+                    population=population,
+                    population_density=population_density,
+                    median_age=median_age,
+                    aged_65_older=aged_65_older,
+                    aged_70_older=aged_70_older,
+                    gdp_per_capita=gdp_per_capita,
+                    cardiovasc_death_rate=cardiovasc_death_rate,
+                    diabetes_prevalence=diabetes_prevalence,
+                    handwashing_facilities=handwashing_facilities,
+                    hospital_beds_per_thousand=hospital_beds_per_thousand,
+                    life_expectancy=life_expectancy,
+                    human_development_index=human_development_index)
                 db_country.save(using='owid')
 
             has_new_data = False
@@ -152,60 +153,84 @@ def get_new_json_covid_data(filename):
                 delta_country = data_date_obj - last_db_date_obj
                 if delta_country.days > 0:
                     print('adding data for: ' + db_country.location + ', ' + data_date_obj.strftime('%Y-%m-%d'))
-                    status['update'].append('new data for: '  + db_country.location + ', ' + v1['date'])
+                    status['update'].append('new data for: ' + db_country.location + ', ' + v1['date'])
 
                     has_new_data = True
                     if 'date' not in v1:
                         date = -1
                     else:
-                        date=v1['date'] + ' 00:00:00+00:00'
+                        date = v1['date'] + ' 00:00:00+00:00'
                     if 'new_cases' not in v1:
                         new_cases = -1
                     else:
-                        new_cases=v1['new_cases']
+                        new_cases = v1['new_cases']
                     if 'total_cases' not in v1:
                         total_cases = -1
                     else:
-                        total_cases=v1['total_cases']
+                        total_cases = v1['total_cases']
                     if 'new_deaths' not in v1:
                         new_deaths = -1
                     else:
-                        new_deaths=v1['new_deaths']
+                        new_deaths = v1['new_deaths']
                     if 'total_deaths' not in v1:
                         total_deaths = -1
                     else:
-                        total_deaths=v1['total_deaths']
+                        total_deaths = v1['total_deaths']
                     if 'new_cases_per_million' not in v1:
                         new_cases_per_million = -1
                     else:
-                        new_cases_per_million=v1['new_cases_per_million']
+                        new_cases_per_million = v1['new_cases_per_million']
                     if 'total_cases_per_million' not in v1:
                         total_cases_per_million = -1
                     else:
-                        total_cases_per_million=v1['total_cases_per_million']
+                        total_cases_per_million = v1['total_cases_per_million']
                     if 'new_deaths_per_million' not in v1:
                         new_deaths_per_million = -1
                     else:
-                        new_deaths_per_million=v1['new_deaths_per_million']
+                        new_deaths_per_million = v1['new_deaths_per_million']
                     if 'total_deaths_per_million' not in v1:
                         total_deaths_per_million = -1
                     else:
-                        total_deaths_per_million=v1['total_deaths_per_million']
-                    import_date=import_date
+                        total_deaths_per_million = v1['total_deaths_per_million']
+                    if 'new_cases_smoothed' not in v1:
+                        new_cases_smoothed = -1
+                    else:
+                        new_cases_smoothed = v1['new_cases_smoothed']
+                    if 'new_deaths_smoothed' not in v1:
+                        new_deaths_smoothed = -1
+                    else:
+                        new_deaths_smoothed = v1['new_deaths_smoothed']
+                    if 'new_tests' not in v1:
+                        new_tests = -1
+                    else:
+                        new_tests = v1['new_tests']
+                    if 'total_tests' not in v1:
+                        total_tests = -1
+                    else:
+                        total_tests = v1['total_tests']
+                    if 'new_tests_smoothed' not in v1:
+                        new_tests_smoothed = -1
+                    else:
+                        new_tests_smoothed = v1['new_tests_smoothed']
+
+                    import_date = import_date
                     db_country.coviddata_set.create(date=date,
-                                                 new_cases=new_cases,
-                                                 total_cases=total_cases,
-                                                 new_deaths=new_deaths,
-                                                 total_deaths=total_deaths,
-                                                 new_cases_per_million=new_cases_per_million,
-                                                 total_cases_per_million=total_cases_per_million,
-                                                 new_deaths_per_million=new_deaths_per_million,
-                                                 total_deaths_per_million=total_deaths_per_million,
-                                                 import_date=import_date)
+                                                    new_cases=new_cases,
+                                                    total_cases=total_cases,
+                                                    new_deaths=new_deaths,
+                                                    total_deaths=total_deaths,
+                                                    new_cases_per_million=new_cases_per_million,
+                                                    total_cases_per_million=total_cases_per_million,
+                                                    new_deaths_per_million=new_deaths_per_million,
+                                                    total_deaths_per_million=total_deaths_per_million,
+                                                    new_cases_smoothed=new_cases_smoothed,
+                                                    new_deaths_smoothed=new_deaths_smoothed,
+                                                    new_tests=new_tests,
+                                                    total_tests=total_tests,
+                                                    new_tests_smoothed=new_tests_smoothed,
+                                                    import_date=import_date)
 
             if has_new_data:
                 db_country.save(using='owid')
 
-    return json2html.convert(json = json.dumps(status, indent = 4))
-
-
+    return json2html.convert(json=json.dumps(status, indent=4))
