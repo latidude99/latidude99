@@ -291,10 +291,10 @@
                         </thead>
                         <tbody id="covid_countries">
                         {% for country in data %}
-                            <tr class="font-weight-light">
+                            <tr class="font-weight-light" id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
                                 <td style="opacity:70%;">{{ country.0 }}</td>
                                 <td>
-                                    <form id="{{ country.10 }}" method='GET'>
+                                    <form  method='GET'>
                                         <input type="hidden" class="form-control" name="country"
                                                value="{{ country.1 }}">
                                         <span class="font-weight-light" style="font-size: 18px;"> {{ country.1 }}</span>
@@ -304,9 +304,9 @@
                                         </button>
                                     </form>
                                     <script>
-                                        $('#{{ country.10 }}').on('submit', function (e) {
+                                        $('#{{ country.10 }}').on('click', function (e) {
                                             e.preventDefault();
-                                            var country = $(this).find('input').val();
+                                            var country = '{{ country.1 }}'
                                             console.log(country);
 
                                             $.get('{%  url 'owid:country_json'  %}',

@@ -72,7 +72,7 @@ def get_new_json_covid_data(filename):
             if location in countries_name:
                 db_country = Country.objects.using('owid').get(location=location)
             else:
-                status['update'].append('new country: ' + location)
+                status['update'].append('add new country: ' + location)
                 print('adding new country: ' + location)
                 if 'location' not in v:
                     location = '-1'
@@ -150,8 +150,8 @@ def get_new_json_covid_data(filename):
             has_new_data = False
             for v1 in v['data']:
                 data_date_obj = dt.datetime.strptime(v1['date'], '%Y-%m-%d').date()
-                delta_country = data_date_obj - last_db_date_obj
-                if delta_country.days > 0:
+                delta_country = data_date_obj - last_db_date_obj + dt.timedelta(14)
+                if delta_country.days > 0: # data in json are corrected for past records, looks like about 14 days
                     print('adding data for: ' + db_country.location + ', ' + data_date_obj.strftime('%Y-%m-%d'))
                     status['update'].append('new data for: ' + db_country.location + ', ' + v1['date'])
 
@@ -214,6 +214,7 @@ def get_new_json_covid_data(filename):
                         new_tests_smoothed = v1['new_tests_smoothed']
 
                     import_date = import_date
+                    db_country.coviddata_set.filter(date=date).delete()
                     db_country.coviddata_set.create(date=date,
                                                     new_cases=new_cases,
                                                     total_cases=total_cases,
