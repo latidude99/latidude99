@@ -312,7 +312,7 @@
                                             $.get('{%  url 'owid:country_json'  %}',
                                                 {'country': country},
                                                 function (response) {
-
+                                                    $('#table_country_detail tbody > tr').remove();
                                                     var data = response.country;
                                                     var len = data.length;
                                                     for (var i = len - 1; i >= 0; i--) {
@@ -362,21 +362,24 @@
                                                         } else {
                                                             total_tests = 'no data';
                                                         }
+
+                                                        <!-- console.log(date + ', ' + new_cases)-->
+
                                                         $('#table_country_detail').find('tbody').append(
                                                             '<tr><td class="w-25 text-right pr-5 mr-5 text-white" style="opacity: 80%">' + date +
                                                             '</td><td class="w-11 text-center" style="color: #e9e9af;">' + new_cases + '' +
                                                             '</td><td class="w-11 text-center" style="color: #e9e9af;">' + total_cases +
                                                             '</td><td class="w-11 text-center" style="color: #ff6666;">' + new_deaths +
                                                             '</td><td class="w-11 text-center" style="color: #ff6666;">' + total_deaths +
-                                                            '</td><td class="w-11 text-center" style="color: #38e038;">' + new_tests +
-                                                            '</td><td class="w-11 text-center" style="color: #38e038;">' + total_tests +
+                                                            '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + new_tests +
+                                                            '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + total_tests +
                                                             '</td></tr>')
                                                         $('#modal_header').text("{{ country.1 }}")
                                                         $('#modal_header1').text('number of records: ' + len)
                                                         $('#modal_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}")
                                                     }
                                                     $("#btn_modal").trigger("click");
-                                                     $("#country_modal").modal({backdrop: false});
+
                                                 });
                                         });
                                     </script>
@@ -426,7 +429,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header" style="background-color: #0d0d0d;">
                     <div class="table-responsive-lg" style="width:100% !important;">
-                        <table style="width:100% !important;">
+                        <table class="table-borderless" style="width:100% !important;">
                             <tr>
                                 <td class="w-30 px-3 mr-auto">
                                     <h4 id="modal_header" class="modal-title text-white font-weight-light"></h4>
@@ -453,28 +456,29 @@
                 <!-- Modal body -->
                 <div class="modal-body" style="background-color: #0d0d0d;">
                     <div class="col text-white">
-                        <table id="table_country_detail" class="">
-                            <thead>
-                            <tr>
-                                <td class="w-25 text-center p-0 py-3 pl-4">
+                        <table id="table_country_detail" class="table table-dark table-hover"
+                               style="background-color: #0d0d0d;">
+                            <thead style="border: 0px !important;">
+                            <tr style="border: 0px !important;">
+                                <td class="w-25 text-center p-0 py-3 pl-4" style="vertical-align: center !important;border: 0px !important;">
                                     date
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">>
                                     new cases
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total cases
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new deaths
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total deaths
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new tests
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3">
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total tests
                                 </th>
                             </tr>
@@ -499,15 +503,6 @@
 
 <!--
 
-                                        $('#{{ country.1 }}').on('submit', function (e) {
-                                            e.preventDefault();
-                                            var country = $(this).find('input').val();
-                                            $.get('{%  url 'owid:country_json'  %}',
-                                                {'country': country},
-                                                function (response) {
 
-                                                    var data = response.country;
-                                                    var len = data.length;
-                                                    $('#headerh5').text(len);
 
 -->
