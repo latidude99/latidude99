@@ -209,8 +209,15 @@
                             <tr class="p-0">
                                 <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
                                 </td>
-                                <td class="w-16 align-middle p-0"><h5
-                                        class="font-weight-light text-center">{{ country_name }}</h5>
+                                <td class="w-16 align-middle p-0">
+                                    <h5
+                                            class="font-weight-light text-start ml-2">{{ country_name }}
+                                        <div id="loading2"
+                                             class="spinner-grow spinner-grow-sm text-light ml-5"
+                                             style="display:none;">
+
+                                        </div>
+                                    </h5>
                                 </td>
                                 <td class="w-11 align-middle p-0"><h5
                                         class="font-weight-light ml-2">{{ population }}</h5>
@@ -256,7 +263,7 @@
                             <th class="w-12 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span></th>
-                            <th class="w-16 align-middle p-0 pl-4 text-center">
+                            <th class="w-16 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span></th>
                             <td class="w-11 align-middle p-0 pl-5">
@@ -294,17 +301,15 @@
                             <tr class="font-weight-light" id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
                                 <td style="opacity:70%;">{{ country.0 }}</td>
                                 <td>
-                                    <form  method='GET'>
+                                    <form method='GET'>
                                         <input type="hidden" class="form-control" name="country"
                                                value="{{ country.1 }}">
                                         <span class="font-weight-light" style="font-size: 18px;"> {{ country.1 }}</span>
-                                        <button type="submit" class="btn btn-sm btn-outline-light pull-right"
-                                                style="border:none !important; opacity: 70%;">
-                                            more...
-                                        </button>
+
                                     </form>
                                     <script>
                                         $('#{{ country.10 }}').on('click', function (e) {
+                                            $('#loading2').show();
                                             e.preventDefault();
                                             var country = '{{ country.1 }}'
                                             console.log(country);
@@ -379,6 +384,7 @@
                                                         $('#modal_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}")
                                                     }
                                                     $("#btn_modal").trigger("click");
+                                                    $('#loading2').hide(0);
 
                                                 });
                                         });
@@ -435,7 +441,8 @@
                                     <h4 id="modal_header" class="modal-title text-white font-weight-light"></h4>
                                 </td>
                                 <td class="w-30">
-                                    <span id="modal_header1" class="modal-title text-secondary font-weight-light"></span>
+                                    <span id="modal_header1"
+                                          class="modal-title text-secondary font-weight-light"></span>
                                 </td>
 
                                 <td class="w-15 px-2 mt-2">
@@ -460,7 +467,8 @@
                                style="background-color: #0d0d0d;">
                             <thead style="border: 0px !important;">
                             <tr style="border: 0px !important;">
-                                <td class="w-25 text-center p-0 py-3 pl-4" style="vertical-align: center !important;border: 0px !important;">
+                                <td class="w-25 text-center p-0 py-3 pl-4"
+                                    style="vertical-align: center !important;border: 0px !important;">
                                     date
                                 </th>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">>
