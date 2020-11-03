@@ -62,6 +62,20 @@ def numbers(request):
     return render(request, 'owid/numbers.html', context)
 
 
+def numbers_json(request):
+    data = {'country': ''}
+    if request.method == 'GET':
+        country = request.GET.get('country')
+        days = request.GET.get('days')
+        print(country + ', ' + days)
+        data_list = service_covid.get_covid_numbers_data_as_dict(country, days)
+        if data_list:
+            # print(data_dict)
+            data['country'] = list(data_list)
+            print(data)
+    return JsonResponse(data, safe=False)
+
+
 def country_json(request):
     data = {'country': ''}
     if request.method == 'GET':

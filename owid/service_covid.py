@@ -112,6 +112,8 @@ def get_covid_selection_data():
 
 
 data_latest_all = ['', []]
+data_days1_all = ['', []]
+data_days2_all = ['', []]
 
 def get_covid_numbers_data():
     daterange_list = []
@@ -126,7 +128,7 @@ def get_covid_numbers_data():
         data = data_latest_all[1]
         print('if')
     else:
-        data = find_data_by_country_latest(data_world.date)
+        data = find_data_by_country_continent_latest(data_world.date)
         data_latest_all[0] = data_world.date
         data_latest_all[1] = data
         print('else')
@@ -172,6 +174,37 @@ def get_covid_numbers_data():
                'total_deaths100': TOTAL_DEATHS_TXT100,
                }
     return context
+
+
+def get_covid_numbers_data_as_dict(country, days):
+    daterange_list = []
+    data_world = find_country_coviddata_all('World', daterange_list)
+    data_world = data_world[len(data_world) - 1]
+    last_db_date = data_world.date
+    current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
+    delta = current_date - last_db_date
+    print(delta)
+    data = []
+    if days == '1':
+        if data_days1_all[0] != '' and delta.days > 1 and data_days1_all[1]:
+            data = data_days1_all[1]
+            print('if1')
+        else:
+            data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=1))
+            data_days1_all[0] = data_world.date
+            data_days1_all[1] = data
+            print('else1')
+    elif days == '2':
+        if data_days2_all[0] != '' and delta.days > 2 and data_days2_all[1]:
+            data = data_days2_all[1]
+            print('if2')
+        else:
+            data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=1))
+            data_days2_all[0] = data_world.date
+            data_days2_all[1] = data
+            print('else2')
+    return data
+
 
 
 def get_country_data_as_dict(location):

@@ -207,9 +207,9 @@
                         <table class="table" style="background: transparent;  color: white;">
                             <thead class="p-0">
                             <tr class="p-0">
-                                <td class="w-12 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
+                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
                                 </td>
-                                <td class="w-16 align-middle p-0">
+                                <td class="w-12 align-middle p-0">
                                     <h5
                                             class="font-weight-light text-start ml-2">{{ country_name }}
                                         <div id="loading2"
@@ -219,24 +219,27 @@
                                         </div>
                                     </h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5
+                                <td class="w-10 align-middle p-0"><h5
                                         class="font-weight-light ml-2">{{ population }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_cases }}</h5>
+                                <td class="w-10 align-middle p-0 ml-2"><h5 class="font-weight-light">{{ new_cases }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_cases }}</h5>
+                                <td class="w-10 align-middle p-0 ml-2"><h5 class="font-weight-light">{{ total_cases }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ new_deaths }}</h5>
+                                <td class="w-8 align-middle p-0"><h5 class="font-weight-light">{{ new_deaths }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ total_deaths }}</h5>
+                                <td class="w-8 align-middle p-0"><h5 class="font-weight-light">{{ total_deaths }}</h5>
                                 </td>
-                                <td class="w-11 align-middle p-0">
+                                <td class="w-8 align-middle p-0">
                                     <h6 class="font-weight-light p-0">{{ new_cases }}</h6>
                                     <p class="small p-0">{{ per_1_million }}</p>
                                 </td>
-                                <td class="w-11 align-middle p-0">
+                                <td class="w-8 align-middle p-0">
                                     <h6 class="font-weight-light p-0">{{ new_deaths }}</h6>
                                     <p class="small p-0">{{ per_1_million }}</p>
+                                </td>
+                                <td class="w-22 align-middle p-0">
+                                    <h6 class="font-weight-light p-0 ml-3">days ago</h6>
                                 </td>
                             </tr>
                             </thead>
@@ -260,47 +263,50 @@
                     <table id="covid_table" class="table tablesorter" style="background: transparent;  color: white;">
                         <thead>
                         <tr>
+                            <th class="w-11 align-middle p-0 pl-4">
+                                <span class="fas fa-sort-up text-muted"></span>
+                                <span class="fas fa-sort-down text-muted"></span></th>
                             <th class="w-12 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span></th>
-                            <th class="w-16 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span></th>
-                            <td class="w-11 align-middle p-0 pl-5">
+                            <td class="w-10 align-middle p-0 pl-5">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-10 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-10 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-8 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-8 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-8 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
                             </th>
-                            <td class="w-11 align-middle p-0 pl-4">
+                            <td class="w-8 align-middle p-0 pl-4">
                                 <span class="fas fa-sort-up text-muted"></span>
                                 <span class="fas fa-sort-down text-muted"></span>
+                            </th>
+                            <td class="w-22 align-middle p-0 pl-4">
+
                             </th>
                         </tr>
                         </thead>
                         <tbody id="covid_countries">
                         {% for country in data %}
-                            <tr class="font-weight-light" id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
+                            <tr class="font-weight-light">
                                 <td style="opacity:70%;">{{ country.0 }}</td>
-                                <td>
+                                <td id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
                                     <form method='GET'>
                                         <input type="hidden" class="form-control" name="country"
                                                value="{{ country.1 }}">
@@ -392,25 +398,115 @@
                                 </td>
                                 <td class="text-info"
                                     style="font-family: 'Lucida Console';">{{ country.1.population|floatformat:"0"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_newcases"
                                     style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.2|floatformat:"0"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_totalcases"
                                     style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.3|floatformat:"0"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_newdeaths"
                                     style="font-family: 'Lucida Console';color: #ff6666;">{{ country.4|floatformat:"0"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_totaldeaths"
                                     style="font-family: 'Lucida Console';color: #ff6666;">{{ country.5|floatformat:"0"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_newcasesper1m"
                                     style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.6|floatformat:"1"|intcomma }}</td>
-                                <td class=""
+                                <td class="" id="{{ country.10 }}_newdeathsper1m"
                                     style="font-family: 'Lucida Console';color: #ff6666;">{{ country.8|floatformat:"1"|intcomma }}</td>
+                                <td>
+                                    <form id="{{ country.10 }}days_choice">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio0"
+                                                   name="option" value="0">
+                                            <label class="custom-control-label" for="{{ country.10 }}radio0">0</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio1"
+                                                   name="option" value="1">
+                                            <label class="custom-control-label" for="{{ country.10 }}radio1">1</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio2"
+                                                   name="option" value="2">
+                                            <label class="custom-control-label" for="{{ country.10 }}radio2">2</label>
+                                            </label>
+                                        </div>
+                            </form>
+                            </td>
+                            <script>
+                                $('#{{ country.10 }}days_choice').on('click', function (e) {
+                                    e.preventDefault();
+                                    var country = '{{ country.1 }}'
+                                    days = $('input[name=option]:checked', '#{{ country.10 }}days_choice').val();
+                                    console.log(days)
+
+                                    $.get('{%  url 'owid:numbers_json'  %}',
+                                        {'country': country, 'days': '1'},
+                                        function (response) {
+
+                                            var data = response.country;
+                                            var len = data.length;
+                                            console.log(len)
+                                            var new_cases, total_cases, new_deaths,
+                                                total_deaths, new_cases_per_million, new_deaths_per_million;
+                                            if (data[0].new_cases > -1) {
+                                                new_cases = Number(parseFloat(data[0].new_cases)
+                                                    .toFixed(0))
+                                                    .toLocaleString('en', {minimumFractionDigits: 0});
+                                            } else {
+                                                new_cases = 'no data';
+                                            }
+                                            if (data[0].total_cases > -1) {
+                                                total_cases = Number(parseFloat(data[0].total_cases)
+                                                    .toFixed(0))
+                                                    .toLocaleString('en', {minimumFractionDigits: 0});
+                                            } else {
+                                                total_cases = 'no data';
+                                            }
+                                            if (data[0].new_deaths > -1) {
+                                                new_deaths = Number(parseFloat(data[0].new_deaths)
+                                                    .toFixed(0))
+                                                    .toLocaleString('en', {minimumFractionDigits: 0});
+                                            } else {
+                                                new_deaths = 'no data';
+                                            }
+                                            if (data[0].total_deaths > -1) {
+                                                total_deaths = Number(parseFloat(data[0].total_deaths)
+                                                    .toFixed(0))
+                                                    .toLocaleString('en', {minimumFractionDigits: 0});
+                                            } else {
+                                                total_deaths = 'no data';
+                                            }
+                                            if (data[0].new_cases_per_million > -1) {
+                                                new_cases_per_million = Number(parseFloat(data[0].new_cases_per_million)
+                                                    .toFixed(1))
+                                                    .toLocaleString('en', {minimumFractionDigits: 1});
+                                            } else {
+                                                new_cases_per_million = 'no data';
+                                            }
+                                            if (data[0].new_deaths_per_million > -1) {
+                                                new_deaths_per_million = Number(parseFloat(data[0].new_deaths_per_million)
+                                                    .toFixed(1))
+                                                    .toLocaleString('en', {minimumFractionDigits: 1});
+                                            } else {
+                                                new_deaths_per_million = 'no data';
+                                            }
+
+                                            $("#{{ country.10 }}_newcases").text(new_cases);
+                                            $("#{{ country.10 }}_totalcases").text(total_cases);
+                                            $("#{{ country.10 }}_newdeaths").text(new_deaths);
+                                            $("#{{ country.10 }}_totaldeaths").text(total_deaths);
+                                            $("#{{ country.10 }}_newcasesper1m").text(new_cases_per_million);
+                                            $("#{{ country.10 }}_newdeathsper1m").text(new_deaths_per_million);
+
+                                        });
+                                });
+                            </script>
+
                             </tr>
                         {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                </tbody>
+                </table>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="row py-5">
@@ -471,7 +567,7 @@
                                     style="vertical-align: center !important;border: 0px !important;">
                                     date
                                 </th>
-                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">>
+                                <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new cases
                                 </th>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
@@ -498,14 +594,11 @@
                         </table>
                     </div>
                 </div>
-                <!-- Modal footer
-                <div class="modal-footer" style="background-color: #330000;">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                    -->
+
             </div>
         </div>
     </div>
+
 
 {% endblock %}
 
