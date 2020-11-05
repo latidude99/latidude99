@@ -4,505 +4,555 @@
     {% static "owid/" as static_base %}
     {% load humanize %}
 
+    <script>
+        $(document).ready(function () {
+            $('#loader2').hide(0);
+        });
+    </script>
+
     <div class="container-flex container-wrapper3 scroll-hidden">
         <div class="sticky-top pt-4"
              style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
-            <div class="row ml-2">
-                <div class="col-lg-3">
+            <div class="row ml-2 mb-4">
+                <div class="col-lg-2">
                     <div class="ml-4 mt-1 mb-4">
                         <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
                             <span class="fas fa-chevron-left"></span>
-                            &nbsp; back to covid-19 main page
+                            &nbsp; covid-19 home
                         </a>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
                            style="background: transparent; color: lightgray;">
                 </div>
-                <div class="col-lg-3">
-                    <h4 class="text-white font-weight-light mt-2 mr-5 float-right">{{ date }}</h4>
+                <div class="col-lg-6">
+                    <div class="row mt-2 mb-2">
+                        <div class="d-flex justify-content-end" style="width:95%;">
+                            <div class="">
+                                <h5 class="px-4 font-weight-light">
+                                    <a href="{% url 'owid:numbers' %}" class="text-white stretched-link"
+                                       style="text-decoration: none;"
+                                       onclick="$('#loader2').show().delay(20000).hide(0);">
+                                        {{ date2 }}
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="">
+                                <h5 class="px-4 font-weight-light">
+                                    <a href="{% url 'owid:numbers' %}" class="text-white"
+                                       style="text-decoration: none;"
+                                       onclick="$('#loader2').show().delay(20000).hide(0);">
+                                        {{ date1 }}
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="">
+                                <h5 class="px-4 font-weight-light float-right">
+                                    <a href="{% url 'owid:numbers' %}" class="text-white"
+                                       style="text-decoration: none;"
+                                       onclick="$('#loader2').show().delay(20000).hide(0);">
+                                        {{ date0 }}
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mr-5">
+                        <p id="loader2" class="loader2" style="width: 90%; display:;"></p>
+                    </div>
                 </div>
-
             </div>
+        </div>
 
-            <script>
-                $(document).ready(function () {
-                    var flag = false;
-                    var value = 'eu';
-                    $("#search_country").val(value);
+        <script>
+            $(document).ready(function () {
+                var flag = false;
+                var value = 'eu';
+                $("#search_country").val(value);
+                $("#covid_countries tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+
+                $("#search_country").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
                     $("#covid_countries tr").filter(function () {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
+                    if (flag) {
+                        $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                            .delay(50)
+                            .removeClass('text-white').addClass('text-secondary')
+                            .fadeOut("fast").fadeIn("slow");
+                        flag = false;
+                    }
+                });
 
-                    $("#search_country").on("keyup", function () {
-                        var value = $(this).val().toLowerCase();
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        if (flag) {
-                            $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
-                                .delay(50)
-                                .removeClass('text-white').addClass('text-secondary')
-                                .fadeOut("fast").fadeIn("slow");
-                            flag = false;
-                        }
-                    });
-
-                    $("#world")
-                        .on("click", function () {
-                            flag = true;
-                            var value = '';
-                            $("#search_country").val(value);
-                            $("#covid_countries tr").filter(function () {
-                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                            });
-                            $('#europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
-                                .removeClass('text-white').addClass('text-secondary')
-                            $('#worldh6')
-                                .removeClass('text-secondary')
-                                .addClass('text-white')
-                                .delay(30).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
-                        });
-                    $("#europe").on("click", function () {
+                $("#world")
+                    .on("click", function () {
                         flag = true;
-                        var value = 'europe';
+                        var value = '';
                         $("#search_country").val(value);
                         $("#covid_countries tr").filter(function () {
                             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                         });
-                        $('#worldh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                        $('#europeh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
                             .removeClass('text-white').addClass('text-secondary')
-                        $('#europeh6')
+                        $('#worldh6')
                             .removeClass('text-secondary')
                             .addClass('text-white')
                             .delay(30).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
                     });
-                    $("#africa").on("click", function () {
-                        flag = true;
-                        var value = 'africa';
-                        $("#search_country").val(value);
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        $('#worldh6, #europeh6, #asiah6, #north_americah6, #south_americah6, #oceaniah6')
-                            .removeClass('text-white').addClass('text-secondary')
-                        $('#africah6')
-                            .removeClass('text-secondary')
-                            .addClass('text-white')
-                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                $("#europe").on("click", function () {
+                    flag = true;
+                    var value = 'europe';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
-                    $("#asia").on("click", function () {
-                        flag = true;
-                        var value = 'asia';
-                        $("#search_country").val(value);
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        $('#worldh6, #europeh6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
-                            .removeClass('text-white').addClass('text-secondary')
-                        $('#asiah6')
-                            .removeClass('text-secondary')
-                            .addClass('text-white')
-                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
-                    });
-                    $("#north_america").on("click", function () {
-                        flag = true;
-                        var value = 'north america';
-                        $("#search_country").val(value);
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        $('#worldh6, #europeh6, #asiah6, #africah6, #south_americah6, #oceaniah6')
-                            .removeClass('text-white').addClass('text-secondary')
-                        $('#north_americah6')
-                            .removeClass('text-secondary')
-                            .addClass('text-white')
-                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
-                    });
-                    $("#south_america").on("click", function () {
-                        flag = true;
-                        var value = 'south america';
-                        $("#search_country").val(value);
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #oceaniah6')
-                            .removeClass('text-white').addClass('text-secondary')
-                        $('#south_americah6')
-                            .removeClass('text-secondary')
-                            .addClass('text-white')
-                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
-                    });
-                    $("#oceania").on("click", function () {
-                        flag = true;
-                        var value = 'oceania';
-                        $("#search_country").val(value);
-                        $("#covid_countries tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                        $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6')
-                            .removeClass('text-white').addClass('text-secondary')
-                        $('#oceaniah6')
-                            .removeClass('text-secondary')
-                            .addClass('text-white')
-                            .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
-                    });
+                    $('#worldh6, #asiah6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#europeh6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(30).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
                 });
-            </script>
-
-            <div class="row">
-                <div class="col-lg-3">
-                </div>
-                <div class="col-lg-7">
-                    <ul class="nav  nav-pills">
-                        <li class="w-16">
-                            <a class="nav-link p-0 m-0" href="#" id="world">
-                                <h6 id="worldh6" class=" text-secondary font-weight-light">{{ the_world }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-12">
-                            <a class="nav-link p-0 m-0" href="#" id="europe">
-                                <h6 id="europeh6" class=" text-secondary font-weight-light">{{ europe }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-10">
-                            <a class="nav-link p-0 m-0" href="#" id="asia">
-                                <h6 id="asiah6" class=" text-secondary font-weight-light">{{ asia }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-10">
-                            <a class="nav-link p-0 m-0" href="#" id="africa">
-                                <h6 id="africah6" class=" text-secondary font-weight-light">{{ africa }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-16">
-                            <a class="nav-link p-0 m-0" href="#" id="north_america">
-                                <h6 id="north_americah6"
-                                    class=" text-secondary font-weight-light">{{ north_america }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-16">
-                            <a class="nav-link p-0 m-0" href="#" id="south_america">
-                                <h6 id="south_americah6"
-                                    class=" text-secondary font-weight-light">{{ south_america }}</h6>
-                            </a>
-                        </li>
-                        <li class="w-10">
-                            <a class="nav-link p-0 m-0" href="#" id="oceania">
-                                <h6 id="oceaniah6" class=" text-secondary font-weight-light">{{ oceania }}</h6>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-2">
-                </div>
-            </div>
-
-            <div class="row ml-5 pl-3 mr-5 pr-4">
-                <div class="col-lg-12" style="background-color:transparent; color: aqua; height: 60px !important;">
-                    <div class="table-responsive-sm table-dark table-hover table-borderless"
-                         style="background: transparent;  color: aqua">
-                        <table class="table" style="background: transparent;  color: white;">
-                            <thead class="p-0">
-                            <tr class="p-0">
-                                <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
-                                </td>
-                                <td class="w-12 align-middle p-0">
-                                    <h5
-                                            class="font-weight-light text-start ml-2">{{ country_name }}
-                                        <div id="loading2"
-                                             class="spinner-grow spinner-grow-sm text-light ml-5"
-                                             style="display:none;">
-
-                                        </div>
-                                    </h5>
-                                </td>
-                                <td class="w-10 align-middle p-0"><h5
-                                        class="font-weight-light ml-2">{{ population }}</h5>
-                                </td>
-                                <td class="w-10 align-middle p-0 ml-2"><h5 class="font-weight-light">{{ new_cases }}</h5>
-                                </td>
-                                <td class="w-10 align-middle p-0 ml-2"><h5 class="font-weight-light">{{ total_cases }}</h5>
-                                </td>
-                                <td class="w-8 align-middle p-0"><h5 class="font-weight-light">{{ new_deaths }}</h5>
-                                </td>
-                                <td class="w-8 align-middle p-0"><h5 class="font-weight-light">{{ total_deaths }}</h5>
-                                </td>
-                                <td class="w-8 align-middle p-0">
-                                    <h6 class="font-weight-light p-0">{{ new_cases }}</h6>
-                                    <p class="small p-0">{{ per_1_million }}</p>
-                                </td>
-                                <td class="w-8 align-middle p-0">
-                                    <h6 class="font-weight-light p-0">{{ new_deaths }}</h6>
-                                    <p class="small p-0">{{ per_1_million }}</p>
-                                </td>
-                                <td class="w-22 align-middle p-0">
-                                    <h6 class="font-weight-light p-0 ml-3">days ago</h6>
-                                </td>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <hr>
-        </div>
-
-        <script>
-            $(function () {
-                $("#covid_table").tablesorter({sortList: [[0, 0], [3, 1],]});
+                $("#africa").on("click", function () {
+                    flag = true;
+                    var value = 'africa';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    $('#worldh6, #europeh6, #asiah6, #north_americah6, #south_americah6, #oceaniah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#africah6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                });
+                $("#asia").on("click", function () {
+                    flag = true;
+                    var value = 'asia';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    $('#worldh6, #europeh6, #africah6, #north_americah6, #south_americah6, #oceaniah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#asiah6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                });
+                $("#north_america").on("click", function () {
+                    flag = true;
+                    var value = 'north america';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    $('#worldh6, #europeh6, #asiah6, #africah6, #south_americah6, #oceaniah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#north_americah6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                });
+                $("#south_america").on("click", function () {
+                    flag = true;
+                    var value = 'south america';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #oceaniah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#south_americah6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                });
+                $("#oceania").on("click", function () {
+                    flag = true;
+                    var value = 'oceania';
+                    $("#search_country").val(value);
+                    $("#covid_countries tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    $('#worldh6, #europeh6, #asiah6, #africah6, #north_americah6, #south_americah6')
+                        .removeClass('text-white').addClass('text-secondary')
+                    $('#oceaniah6')
+                        .removeClass('text-secondary')
+                        .addClass('text-white')
+                        .delay(50).fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+                });
             });
         </script>
 
-        <div class="row ml-5 pl-3 mr-5 pr-4">
-            <div class="col-lg-12" style="background-color:transparent; color: aqua;">
-                <div class="table-responsive-sm table-dark table-hover table-country"
-                     style="background: transparent;  color: aqua">
-                    <table id="covid_table" class="table tablesorter" style="background: transparent;  color: white;">
-                        <thead>
-                        <tr>
-                            <th class="w-11 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span></th>
-                            <th class="w-12 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span></th>
-                            <td class="w-10 align-middle p-0 pl-5">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-10 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-10 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-8 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-8 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-8 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-8 align-middle p-0 pl-4">
-                                <span class="fas fa-sort-up text-muted"></span>
-                                <span class="fas fa-sort-down text-muted"></span>
-                            </th>
-                            <td class="w-22 align-middle p-0 pl-4">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-7">
+                <ul class="nav  nav-pills">
+                    <li class="w-16">
+                        <a class="nav-link p-0 m-0" href="#" id="world">
+                            <h6 id="worldh6" class=" text-secondary font-weight-light">{{ the_world }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-12">
+                        <a class="nav-link p-0 m-0" href="#" id="europe">
+                            <h6 id="europeh6" class=" text-secondary font-weight-light">{{ europe }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-10">
+                        <a class="nav-link p-0 m-0" href="#" id="asia">
+                            <h6 id="asiah6" class=" text-secondary font-weight-light">{{ asia }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-10">
+                        <a class="nav-link p-0 m-0" href="#" id="africa">
+                            <h6 id="africah6" class=" text-secondary font-weight-light">{{ africa }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-16">
+                        <a class="nav-link p-0 m-0" href="#" id="north_america">
+                            <h6 id="north_americah6"
+                                class=" text-secondary font-weight-light">{{ north_america }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-16">
+                        <a class="nav-link p-0 m-0" href="#" id="south_america">
+                            <h6 id="south_americah6"
+                                class=" text-secondary font-weight-light">{{ south_america }}</h6>
+                        </a>
+                    </li>
+                    <li class="w-10">
+                        <a class="nav-link p-0 m-0" href="#" id="oceania">
+                            <h6 id="oceaniah6" class=" text-secondary font-weight-light">{{ oceania }}</h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
 
-                            </th>
+        <div class="row ml-5 pl-3 mr-5 pr-4">
+            <div class="col-lg-12" style="background-color:transparent; color: aqua; height: 60px !important;">
+                <div class="table-responsive-sm table-dark table-hover table-borderless"
+                     style="background: transparent;  color: aqua">
+                    <table class="table" style="background: transparent;  color: white;">
+                        <thead class="p-0">
+                        <tr class="p-0">
+                            <td class="w-11 align-middle p-0"><h5 class="font-weight-light">{{ continent }}</h5>
+                            </td>
+                            <td class="w-12 align-middle p-0">
+                                <h5
+                                        class="font-weight-light text-start ml-2">{{ country_name }}
+                                    <div id="loading2"
+                                         class="spinner-grow spinner-grow-sm text-light ml-5"
+                                         style="display:none;">
+
+                                    </div>
+                                </h5>
+                            </td>
+                            <td class="w-10 align-middle p-0"><h6
+                                    class="font-weight-light ml-2">{{ population }}</h6>
+                            </td>
+                            <td class="w-10 align-middle p-0 ml-2"><h6
+                                    class="font-weight-light">{{ new_cases }}</h6>
+                            </td>
+                            <td class="w-10 align-middle p-0 ml-2"><h6
+                                    class="font-weight-light">{{ total_cases }}</h6>
+                            </td>
+                            <td class="w-8 align-middle p-0">
+                                <h6 class="font-weight-light">new</h6>
+                                <h6 class="font-weight-light">deaths</h6>
+                            </td>
+                            <td class="w-8 align-middle p-0">
+                                <h6 class="font-weight-light">total</h6>
+                                <h6 class="font-weight-light">deaths</h6>
+                            </td>
+                            <td class="w-8 align-middle p-0">
+                                <h6 class="font-weight-light p-0">{{ new_cases }}</h6>
+                                <p class="small p-0">{{ per_1_million }}</p>
+                            </td>
+                            <td class="w-8 align-middle p-0">
+                                <h6 class="font-weight-light p-0">{{ new_deaths }}</h6>
+                                <p class="small p-0">{{ per_1_million }}</p>
+                            </td>
+                            <td class="w-22 align-middle p-0">
+                                <h6 class="font-weight-light p-0 ml-3">0, 1 or 2 days ago</h6>
+                            </td>
                         </tr>
                         </thead>
-                        <tbody id="covid_countries">
-                        {% for country in data %}
-                            <tr class="font-weight-light">
-                                <td style="opacity:70%;">{{ country.0 }}</td>
-                                <td id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
-                                    <form method='GET'>
-                                        <input type="hidden" class="form-control" name="country"
-                                               value="{{ country.1 }}">
-                                        <span class="font-weight-light" style="font-size: 18px;"> {{ country.1 }}</span>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
 
-                                    </form>
-                                    <script>
-                                        $('#{{ country.10 }}').on('click', function (e) {
-                                            $('#loading2').show();
-                                            e.preventDefault();
-                                            var country = '{{ country.1 }}'
-                                            console.log(country);
+    <script>
+        $(function () {
+            $("#covid_table").tablesorter({sortList: [[0, 0], [3, 1],]});
+        });
+    </script>
 
-                                            $.get('{%  url 'owid:country_json'  %}',
-                                                {'country': country},
-                                                function (response) {
-                                                    $('#table_country_detail tbody > tr').remove();
-                                                    var data = response.country;
-                                                    var len = data.length;
-                                                    for (var i = len - 1; i >= 0; i--) {
-                                                        var new_cases, total_cases, new_deaths,
-                                                            total_deaths, new_tests, total_tests;
-                                                        var name = data[i].name;
-                                                        var date = data[i].date;
-                                                        if (data[i].new_cases > -1) {
-                                                            new_cases = Number(parseFloat(data[i].new_cases)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            new_cases = 'no data';
-                                                        }
-                                                        if (data[i].total_cases > -1) {
-                                                            total_cases = Number(parseFloat(data[i].total_cases)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            total_cases = 'no data';
-                                                        }
-                                                        if (data[i].new_deaths > -1) {
-                                                            new_deaths = Number(parseFloat(data[i].new_deaths)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            new_deaths = 'no data';
-                                                        }
-                                                        if (data[i].total_deaths > -1) {
-                                                            total_deaths = Number(parseFloat(data[i].total_deaths)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            total_deaths = 'no data';
-                                                        }
-                                                        if (data[i].new_tests > -1) {
-                                                            new_tests = Number(parseFloat(data[i].new_tests)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            new_tests = 'no data';
-                                                        }
-                                                        if (data[i].total_tests > -1) {
-                                                            total_tests = Number(parseFloat(data[i].total_tests)
-                                                                .toFixed(0))
-                                                                .toLocaleString('en', {minimumFractionDigits: 0});
-                                                        } else {
-                                                            total_tests = 'no data';
-                                                        }
+    <div class="row ml-5 pl-3 mr-5 pr-4">
+        <div class="col-lg-12" style="background-color:transparent; color: aqua;">
+            <div class="table-responsive-sm table-dark table-hover table-country"
+                 style="background: transparent;  color: aqua">
+                <table id="covid_table" class="table tablesorter" style="background: transparent;  color: white;">
+                    <thead>
+                    <tr>
+                        <th class="w-11 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span></th>
+                        <th class="w-12 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span></th>
+                        <td class="w-10 align-middle p-0 pl-5">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-10 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-10 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-8 align-middle p-0 pl-2">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-8 align-middle p-0 pl-3">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-8 align-middle p-0 pl-4">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-8 align-middle p-0 pl-2">
+                            <span class="fas fa-sort-up text-muted"></span>
+                            <span class="fas fa-sort-down text-muted"></span>
+                        </th>
+                        <td class="w-22 align-middle p-0 pl-4">
 
-                                                        <!-- console.log(date + ', ' + new_cases)-->
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="covid_countries">
+                    {% for country in data %}
+                        <tr class="font-weight-light">
+                            <td style="opacity:70%;">{{ country.0 }}</td>
+                            <td id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
+                                <form method='GET'>
+                                    <input type="hidden" class="form-control" name="country"
+                                           value="{{ country.1 }}">
+                                    <span class="font-weight-light" style="font-size: 18px;"> {{ country.1 }}</span>
 
-                                                        $('#table_country_detail').find('tbody').append(
-                                                            '<tr><td class="w-25 text-right pr-5 mr-5 text-white" style="opacity: 80%">' + date +
-                                                            '</td><td class="w-11 text-center" style="color: #e9e9af;">' + new_cases + '' +
-                                                            '</td><td class="w-11 text-center" style="color: #e9e9af;">' + total_cases +
-                                                            '</td><td class="w-11 text-center" style="color: #ff6666;">' + new_deaths +
-                                                            '</td><td class="w-11 text-center" style="color: #ff6666;">' + total_deaths +
-                                                            '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + new_tests +
-                                                            '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + total_tests +
-                                                            '</td></tr>')
-                                                        $('#modal_header').text("{{ country.1 }}")
-                                                        $('#modal_header1').text('number of records: ' + len)
-                                                        $('#modal_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}")
+                                </form>
+                                <script>
+                                    $('#{{ country.10 }}').on('click', function (e) {
+                                        $('#loading2').show();
+                                        e.preventDefault();
+                                        var country = '{{ country.1 }}'
+                                        console.log(country);
+
+                                        $.get('{%  url 'owid:country_json'  %}',
+                                            {'country': country},
+                                            function (response) {
+                                                $('#table_country_detail tbody > tr').remove();
+                                                var data = response.country;
+                                                var len = data.length;
+                                                for (var i = len - 1; i >= 0; i--) {
+                                                    var new_cases, total_cases, new_deaths,
+                                                        total_deaths, new_tests, total_tests;
+                                                    var name = data[i].name;
+                                                    var date = data[i].date;
+                                                    if (data[i].new_cases > -1) {
+                                                        new_cases = Number(parseFloat(data[i].new_cases)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        new_cases = 'no data';
                                                     }
-                                                    $("#btn_modal").trigger("click");
-                                                    $('#loading2').hide(0);
+                                                    if (data[i].total_cases > -1) {
+                                                        total_cases = Number(parseFloat(data[i].total_cases)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        total_cases = 'no data';
+                                                    }
+                                                    if (data[i].new_deaths > -1) {
+                                                        new_deaths = Number(parseFloat(data[i].new_deaths)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        new_deaths = 'no data';
+                                                    }
+                                                    if (data[i].total_deaths > -1) {
+                                                        total_deaths = Number(parseFloat(data[i].total_deaths)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        total_deaths = 'no data';
+                                                    }
+                                                    if (data[i].new_tests > -1) {
+                                                        new_tests = Number(parseFloat(data[i].new_tests)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        new_tests = 'no data';
+                                                    }
+                                                    if (data[i].total_tests > -1) {
+                                                        total_tests = Number(parseFloat(data[i].total_tests)
+                                                            .toFixed(0))
+                                                            .toLocaleString('en', {minimumFractionDigits: 0});
+                                                    } else {
+                                                        total_tests = 'no data';
+                                                    }
 
-                                                });
-                                        });
-                                    </script>
-                                </td>
-                                <td class="text-info"
-                                    style="font-family: 'Lucida Console';">{{ country.1.population|floatformat:"0"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_newcases"
-                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.2|floatformat:"0"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_totalcases"
-                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.3|floatformat:"0"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_newdeaths"
-                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.4|floatformat:"0"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_totaldeaths"
-                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.5|floatformat:"0"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_newcasesper1m"
-                                    style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.6|floatformat:"1"|intcomma }}</td>
-                                <td class="" id="{{ country.10 }}_newdeathsper1m"
-                                    style="font-family: 'Lucida Console';color: #ff6666;">{{ country.8|floatformat:"1"|intcomma }}</td>
-                                <td>
-                                    <form id="{{ country.10 }}days_choice">
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio0"
-                                                   name="option" value="0">
-                                            <label class="custom-control-label" for="{{ country.10 }}radio0">0</label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio1"
-                                                   name="option" value="1">
-                                            <label class="custom-control-label" for="{{ country.10 }}radio1">1</label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input class="custom-control-input" type="radio" id="{{ country.10 }}radio2"
-                                                   name="option" value="2">
-                                            <label class="custom-control-label" for="{{ country.10 }}radio2">2</label>
-                                            </label>
-                                        </div>
-                            </form>
+                                                    <!-- console.log(date + ', ' + new_cases)-->
+
+                                                    $('#table_country_detail').find('tbody').append(
+                                                        '<tr><td class="w-25 text-right pr-5 mr-5 text-white" style="opacity: 80%">' + date +
+                                                        '</td><td class="w-11 text-center" style="color: #e9e9af;">' + new_cases + '' +
+                                                        '</td><td class="w-11 text-center" style="color: #e9e9af;">' + total_cases +
+                                                        '</td><td class="w-11 text-center" style="color: #ff6666;">' + new_deaths +
+                                                        '</td><td class="w-11 text-center" style="color: #ff6666;">' + total_deaths +
+                                                        '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + new_tests +
+                                                        '</td><td class="w-11 text-center" style="color: white; opacity: 80%;">' + total_tests +
+                                                        '</td></tr>')
+                                                    $('#modal_header').text("{{ country.1 }}")
+                                                    $('#modal_header1').text('number of records: ' + len)
+                                                    $('#modal_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}")
+                                                }
+                                                $("#btn_modal").trigger("click");
+                                                $('#loading2').hide(0);
+
+                                            });
+                                    });
+                                </script>
+                            </td>
+                            <td class="text-info"
+                                style="font-family: 'Lucida Console';">{{ country.1.population|floatformat:"0"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_newcases"
+                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.2|floatformat:"0"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_totalcases"
+                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.3|floatformat:"0"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_newdeaths"
+                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.4|floatformat:"0"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_totaldeaths"
+                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.5|floatformat:"0"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_newcasesper1m"
+                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.6|floatformat:"1"|intcomma }}</td>
+                            <td class="" id="{{ country.10 }}_newdeathsper1m"
+                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.8|floatformat:"1"|intcomma }}</td>
+                            <td>
+                                <form id="{{ country.10 }}days_choice">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio0"
+                                               name="day" value="0" checked="checked">
+                                        <label class="custom-control-label" for="{{ country.10 }}radio0">0</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio1"
+                                               name="day" value="1">
+                                        <label class="custom-control-label" for="{{ country.10 }}radio1">1</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio2"
+                                               name="day" value="2">
+                                        <label class="custom-control-label" for="{{ country.10 }}radio2">2</label>
+                                        </label>
+                                    </div>
+                                </form>
                             </td>
                             <script>
-                                $('#{{ country.10 }}days_choice').on('click', function (e) {
-                                    e.preventDefault();
-                                    var country = '{{ country.1 }}'
-                                    days = $('input[name=option]:checked', '#{{ country.10 }}days_choice').val();
-                                    console.log(days)
+                                $(document).ready(function () {
+                                    $('#{{ country.10 }}days_choice input').change(function (e) {
+                                        e.preventDefault();
+                                        days = $('input[name=day]:checked', '#{{ country.10 }}days_choice').val();
+                                        var country = '{{ country.1 }}'
 
-                                    $.get('{%  url 'owid:numbers_json'  %}',
-                                        {'country': country, 'days': '1'},
-                                        function (response) {
+                                        console.log(days)
 
-                                            var data = response.country;
-                                            var len = data.length;
-                                            console.log(len)
-                                            var new_cases, total_cases, new_deaths,
-                                                total_deaths, new_cases_per_million, new_deaths_per_million;
-                                            if (data[0].new_cases > -1) {
-                                                new_cases = Number(parseFloat(data[0].new_cases)
-                                                    .toFixed(0))
-                                                    .toLocaleString('en', {minimumFractionDigits: 0});
-                                            } else {
-                                                new_cases = 'no data';
-                                            }
-                                            if (data[0].total_cases > -1) {
-                                                total_cases = Number(parseFloat(data[0].total_cases)
-                                                    .toFixed(0))
-                                                    .toLocaleString('en', {minimumFractionDigits: 0});
-                                            } else {
-                                                total_cases = 'no data';
-                                            }
-                                            if (data[0].new_deaths > -1) {
-                                                new_deaths = Number(parseFloat(data[0].new_deaths)
-                                                    .toFixed(0))
-                                                    .toLocaleString('en', {minimumFractionDigits: 0});
-                                            } else {
-                                                new_deaths = 'no data';
-                                            }
-                                            if (data[0].total_deaths > -1) {
-                                                total_deaths = Number(parseFloat(data[0].total_deaths)
-                                                    .toFixed(0))
-                                                    .toLocaleString('en', {minimumFractionDigits: 0});
-                                            } else {
-                                                total_deaths = 'no data';
-                                            }
-                                            if (data[0].new_cases_per_million > -1) {
-                                                new_cases_per_million = Number(parseFloat(data[0].new_cases_per_million)
-                                                    .toFixed(1))
-                                                    .toLocaleString('en', {minimumFractionDigits: 1});
-                                            } else {
-                                                new_cases_per_million = 'no data';
-                                            }
-                                            if (data[0].new_deaths_per_million > -1) {
-                                                new_deaths_per_million = Number(parseFloat(data[0].new_deaths_per_million)
-                                                    .toFixed(1))
-                                                    .toLocaleString('en', {minimumFractionDigits: 1});
-                                            } else {
-                                                new_deaths_per_million = 'no data';
-                                            }
+                                        $.get('{%  url 'owid:numbers_json'  %}',
+                                            {'country': country, 'days': days},
+                                            function (response) {
 
-                                            $("#{{ country.10 }}_newcases").text(new_cases);
-                                            $("#{{ country.10 }}_totalcases").text(total_cases);
-                                            $("#{{ country.10 }}_newdeaths").text(new_deaths);
-                                            $("#{{ country.10 }}_totaldeaths").text(total_deaths);
-                                            $("#{{ country.10 }}_newcasesper1m").text(new_cases_per_million);
-                                            $("#{{ country.10 }}_newdeathsper1m").text(new_deaths_per_million);
+                                                var data = response.country;
+                                                var len = data.length;
+                                                console.log(len)
+                                                var new_cases, total_cases, new_deaths,
+                                                    total_deaths, new_cases_per_million, new_deaths_per_million;
+                                                if (data[0].new_cases > -1) {
+                                                    new_cases = Number(parseFloat(data[0].new_cases)
+                                                        .toFixed(0))
+                                                        .toLocaleString('en', {minimumFractionDigits: 0});
+                                                } else {
+                                                    new_cases = 'no data';
+                                                }
+                                                if (data[0].total_cases > -1) {
+                                                    total_cases = Number(parseFloat(data[0].total_cases)
+                                                        .toFixed(0))
+                                                        .toLocaleString('en', {minimumFractionDigits: 0});
+                                                } else {
+                                                    total_cases = 'no data';
+                                                }
+                                                if (data[0].new_deaths > -1) {
+                                                    new_deaths = Number(parseFloat(data[0].new_deaths)
+                                                        .toFixed(0))
+                                                        .toLocaleString('en', {minimumFractionDigits: 0});
+                                                } else {
+                                                    new_deaths = 'no data';
+                                                }
+                                                if (data[0].total_deaths > -1) {
+                                                    total_deaths = Number(parseFloat(data[0].total_deaths)
+                                                        .toFixed(0))
+                                                        .toLocaleString('en', {minimumFractionDigits: 0});
+                                                } else {
+                                                    total_deaths = 'no data';
+                                                }
+                                                if (data[0].new_cases_per_million > -1) {
+                                                    new_cases_per_million = Number(parseFloat(data[0].new_cases_per_million)
+                                                        .toFixed(1))
+                                                        .toLocaleString('en', {minimumFractionDigits: 1});
+                                                } else {
+                                                    new_cases_per_million = 'no data';
+                                                }
+                                                if (data[0].new_deaths_per_million > -1) {
+                                                    new_deaths_per_million = Number(parseFloat(data[0].new_deaths_per_million)
+                                                        .toFixed(1))
+                                                        .toLocaleString('en', {minimumFractionDigits: 1});
+                                                } else {
+                                                    new_deaths_per_million = 'no data';
+                                                }
 
-                                        });
+                                                $("#{{ country.10 }}_newcases").text(new_cases);
+                                                $("#{{ country.10 }}_totalcases").text(total_cases);
+                                                $("#{{ country.10 }}_newdeaths").text(new_deaths);
+                                                $("#{{ country.10 }}_totaldeaths").text(total_deaths);
+                                                $("#{{ country.10 }}_newcasesper1m").text(new_cases_per_million);
+                                                $("#{{ country.10 }}_newdeathsper1m").text(new_deaths_per_million);
+
+                                            });
+
+
+                                    });
                                 });
                             </script>
 
-                            </tr>
-                        {% endfor %}
-                </tbody>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>

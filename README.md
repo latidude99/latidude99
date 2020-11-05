@@ -5,9 +5,9 @@
 
 - 🌱 I’m currently learning **Python, Flask, Django**
 
-- 👨‍💻 All of my projects are available at [pc.latidude99.com](pc.latidude99.com)
+- 👨‍💻 Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)
 
-- 📫 How to reach me **latidude99@gmail.com**
+- 📫 You can reach me **latidude99@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">

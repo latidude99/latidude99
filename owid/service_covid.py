@@ -111,29 +111,59 @@ def get_covid_selection_data():
     return context
 
 
-data_latest_all = ['', []]
-data_days1_all = ['', []]
-data_days2_all = ['', []]
+data_latest_all0 = ['', []]
+data_latest_all1 = ['', []]
+data_latest_all2 = ['', []]
 
-def get_covid_numbers_data():
+
+def get_covid_numbers_data(day):
     daterange_list = []
     data_world = find_country_coviddata_all('World', daterange_list)
-    data_world = data_world[len(data_world) - 1]
-    date = data_world.date.strftime("%A, %d %B %Y")
-    last_db_date = data_world.date
+    data_world0 = data_world[len(data_world) - 1]
+    data_world1 = data_world[len(data_world) - 2]
+    data_world2 = data_world[len(data_world) - 3]
+    date0 = data_world0.date.strftime("%A, %d %B %Y")
+    date1 = data_world1.date.strftime("%a, %d %b %Y")
+    date2 = data_world2.date.strftime("%a, %d %b %Y")
+
+    last_db_date = data_world0.date
     current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
     delta = current_date - last_db_date
     print(delta)
-    if data_latest_all[0] != '' and delta.days > 0 and data_latest_all[1]:
-        data = data_latest_all[1]
-        print('if')
-    else:
-        data = find_data_by_country_continent_latest(data_world.date)
-        data_latest_all[0] = data_world.date
-        data_latest_all[1] = data
-        print('else')
-    print(data[15][1].population)
-    context = {'date': date,
+
+    data0 = ''
+    data1 = ''
+    data2 = ''
+    if day == 0:
+        if data_latest_all0[0] != '' and delta.days > 0 and data_latest_all0[1]:
+            data = data_latest_all0[1]
+            print('if0')
+        else:
+            data = find_data_by_country_continent_latest(data_world0.date)
+            data_latest_all0[0] = data_world0.date
+            data_latest_all0[1] = data0
+            print('else0')
+    if day == 1:
+        if data_latest_all1[0] != '' and delta.days > 0 and data_latest_all1[1]:
+            data = data_latest_all1[1]
+            print('if1')
+        else:
+            data = find_data_by_country_continent_latest(data_world1.date)
+            data_latest_all1[0] = data_world1.date
+            data_latest_all1[1] = data1
+            print('else1')
+    if day == 2:
+        if data_latest_all2[0] != '' and delta.days > 0 and data_latest_all2[1]:
+            data = data_latest_all2[1]
+            print('if2')
+        else:
+            data = find_data_by_country_continent_latest(data_world2.date)
+            data_latest_all2[0] = data_world2.date
+            data_latest_all2[1] = data2
+            print('else2')
+    context = {'date0': date0,
+               'date1': date1,
+               'date2': date2,
                'data': data,
                'the_world': THE_WORLD,
                'europe': EUROPE,
@@ -182,29 +212,20 @@ def get_covid_numbers_data_as_dict(country, days):
     data_world = data_world[len(data_world) - 1]
     last_db_date = data_world.date
     current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
-    delta = current_date - last_db_date
-    print(delta)
     data = []
+    if days == '0':
+        data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=0))
+        data_days1_all[0] = data_world.date
+        data_days1_all[1] = data
     if days == '1':
-        if data_days1_all[0] != '' and delta.days > 1 and data_days1_all[1]:
-            data = data_days1_all[1]
-            print('if1')
-        else:
-            data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=1))
-            data_days1_all[0] = data_world.date
-            data_days1_all[1] = data
-            print('else1')
+        data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=1))
+        data_days1_all[0] = data_world.date
+        data_days1_all[1] = data
     elif days == '2':
-        if data_days2_all[0] != '' and delta.days > 2 and data_days2_all[1]:
-            data = data_days2_all[1]
-            print('if2')
-        else:
-            data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=1))
-            data_days2_all[0] = data_world.date
-            data_days2_all[1] = data
-            print('else2')
+        data = find_data_by_country_latest(country, data_world.date - dt.timedelta(days=2))
+        data_days2_all[0] = data_world.date
+        data_days2_all[1] = data
     return data
-
 
 
 def get_country_data_as_dict(location):
