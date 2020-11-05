@@ -58,7 +58,13 @@ def covid(request):
 
 
 def numbers(request):
-    context = service_covid.get_covid_numbers_data(0)
+    day = ''
+    if request.method == "POST":
+        day = request.POST['day']
+    print('day = ' + day)
+    if day == '':
+        day = '0';
+    context = service_covid.get_covid_numbers_data(day)
     return render(request, 'owid/numbers.html', context)
 
 

@@ -5,15 +5,55 @@
     {% load humanize %}
 
     <script>
+
         $(document).ready(function () {
-            $('#loader2').hide(0);
+            $('#loader3').hide(0);
+            {#$('#check').show();#}
+
+            console.log({{ day }})
+            if ('{{ day }}' === '0') {
+                $('#day1a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day2a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day0a')
+                    .removeClass('text-secondary')
+                    .addClass('text-white')
+                    .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+            }
+            if ('{{ day }}' === '1') {
+                $('#day0a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day2a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day1a')
+                    .removeClass('text-secondary')
+                    .addClass('text-white')
+                    .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+            }
+            if ('{{ day }}' === '2') {
+                $('#day1a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day0a')
+                    .removeClass('text-white')
+                    .addClass('text-secondary');
+                $('#day2a')
+                    .removeClass('text-secondary')
+                    .addClass('text-white')
+                    .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+            }
         });
     </script>
 
     <div class="container-flex container-wrapper3 scroll-hidden">
         <div class="sticky-top pt-4"
              style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
-            <div class="row ml-2 mb-4">
+            <div class="row ml-2 mb-3">
                 <div class="col-lg-2">
                     <div class="ml-4 mt-1 mb-4">
                         <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
@@ -27,40 +67,80 @@
                     <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
                            style="background: transparent; color: lightgray;">
                 </div>
+{#                <div class="col-lg-1">#}
+{#                    <div>#}
+{#                            <span id="check" class="fas fa-check text-white  float-right mt-3  ml-2 fa-sm"#}
+{#                                  style="opacity: 80%; display: none;"></span>#}
+{#                    </div>#}
+{#                </div>#}
                 <div class="col-lg-6">
-                    <div class="row mt-2 mb-2">
+                    <div class="row mt-1 mb-1">
                         <div class="d-flex justify-content-end" style="width:95%;">
                             <div class="">
-                                <h5 class="px-4 font-weight-light">
-                                    <a href="{% url 'owid:numbers' %}" class="text-white stretched-link"
-                                       style="text-decoration: none;"
-                                       onclick="$('#loader2').show().delay(20000).hide(0);">
-                                        {{ date2 }}
-                                    </a>
-                                </h5>
+                                <form action="{% url 'owid:numbers' %}" method="post" id="day2">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="form-control" name="day" value="2">
+                                    <h5 class="px-4 font-weight-light">
+                                        <p class="text-secondary" id="day2a"
+                                           style="cursor: pointer; cursor: hand;"
+                                           onclick="$('#loader3').show().delay(20000).hide(0); $('#check').hide(0);">
+                                            {{ date2 }}
+                                        </p>
+                                    </h5>
+                                </form>
                             </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#day2a").click(function () {
+                                        $("#day2").submit();
+                                    });
+                                });
+                            </script>
                             <div class="">
-                                <h5 class="px-4 font-weight-light">
-                                    <a href="{% url 'owid:numbers' %}" class="text-white"
-                                       style="text-decoration: none;"
-                                       onclick="$('#loader2').show().delay(20000).hide(0);">
-                                        {{ date1 }}
-                                    </a>
-                                </h5>
+                                <form action="{% url 'owid:numbers' %}" method="post" id="day1">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="form-control" name="day" value="1">
+                                    <h5 class="px-4 font-weight-light">
+                                        <p class="text-secondary"
+                                           id="day1a"
+                                           style="cursor: pointer; cursor: hand;"
+                                           onclick="$('#loader3').show().delay(20000).hide(0); $('#check').hide(0);">
+                                            {{ date1 }}
+                                        </p>
+                                    </h5>
+                                </form>
                             </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#day1a").click(function () {
+                                        $("#day1").submit();
+                                    });
+                                });
+                            </script>
                             <div class="">
-                                <h5 class="px-4 font-weight-light float-right">
-                                    <a href="{% url 'owid:numbers' %}" class="text-white"
-                                       style="text-decoration: none;"
-                                       onclick="$('#loader2').show().delay(20000).hide(0);">
-                                        {{ date0 }}
-                                    </a>
-                                </h5>
+                                <form action="{% url 'owid:numbers' %}" method="post" id="day0">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="form-control" name="day" value="0">
+                                    <h5 class="px-4 font-weight-light">
+                                        <p class="text-secondary" id="day0a"
+                                           style="cursor: pointer; cursor: hand;"
+                                           onclick="$('#loader3').show().delay(20000).hide(0); $('#check').hide(0);">
+                                            {{ date0 }}
+                                        </p>
+                                    </h5>
+                                </form>
                             </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#day0a").click(function () {
+                                        $("#day0").submit();
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mr-5">
-                        <p id="loader2" class="loader2" style="width: 90%; display:;"></p>
+                        <p id="loader3" class="loader3" style="width: 90%;"></p>
                     </div>
                 </div>
             </div>
@@ -191,7 +271,7 @@
             });
         </script>
 
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-lg-3">
             </div>
             <div class="col-lg-7">
