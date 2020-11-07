@@ -5,10 +5,10 @@
     {% load humanize %}
 
     <script>
-    window.countries = [];
-    {% for country in data %}
-        window.countries.push('{{ country.10 }}')
-    {% endfor %}
+        window.countries = [];
+        {% for country in data %}
+            window.countries.push('{{ country.10 }}')
+        {% endfor %}
     </script>
     <script>
         $(document).ready(function () {
@@ -27,6 +27,15 @@
                     .removeClass('text-secondary')
                     .addClass('text-white')
                     .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+
+                for (i = 0; i < window.countries.length; i++) {
+                    $('#' + window.countries[i] + 'radio0').prop('checked', true);
+                    $('#' + window.countries[i] + 'radio0').addClass("active");
+                    $('#' + window.countries[i] + 'radio1').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio1').removeClass("active");
+                    $('#' + window.countries[i] + 'radio2').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio2').removeClass("active");
+                }
             }
             if ('{{ day }}' === '1') {
                 $('#day0a')
@@ -39,6 +48,15 @@
                     .removeClass('text-secondary')
                     .addClass('text-white')
                     .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+
+                for (i = 0; i < window.countries.length; i++) {
+                    $('#' + window.countries[i] + 'radio0').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio0').removeClass("active");
+                    $('#' + window.countries[i] + 'radio1').prop('checked', true);
+                    $('#' + window.countries[i] + 'radio1').addClass("active");
+                    $('#' + window.countries[i] + 'radio2').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio2').removeClass("active");
+                }
             }
             if ('{{ day }}' === '2') {
                 $('#day1a')
@@ -51,6 +69,15 @@
                     .removeClass('text-secondary')
                     .addClass('text-white')
                     .fadeOut("fast").fadeIn("fast").fadeOut("fast").fadeIn("fast");
+
+                for (i = 0; i < window.countries.length; i++) {
+                    $('#' + window.countries[i] + 'radio0').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio0').removeClass("active");
+                    $('#' + window.countries[i] + 'radio1').prop('checked', false);
+                    $('#' + window.countries[i] + 'radio1').removeClass("active");
+                    $('#' + window.countries[i] + 'radio2').prop('checked', true);
+                    $('#' + window.countries[i] + 'radio2').addClass("active");
+                }
             }
         });
     </script>
@@ -593,7 +620,7 @@
                                         $.get('{%  url 'owid:numbers_json'  %}',
                                             {'country': country, 'days': days},
                                             function (response) {
-
+                                                console.log('single button change ajax')
                                                 var data = response.country;
                                                 var len = data.length;
                                                 console.log(len)
@@ -688,6 +715,7 @@
                                                     $('#' + window.countries[i] + '_radiocell').removeClass('radiocell_selected');
                                                 }
                                                 $('#{{ country.10 }}_radiocell').addClass('radiocell_selected');
+
 
                                             });
                                     });
