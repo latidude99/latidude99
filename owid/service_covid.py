@@ -125,6 +125,9 @@ def get_covid_numbers_data(day):
     date0 = data_world0.date.strftime("%A, %d %B %Y")
     date1 = data_world1.date.strftime("%a, %d %b %Y")
     date2 = data_world2.date.strftime("%a, %d %b %Y")
+    date0a = data_world0.date.strftime("%d %b")
+    date1a = data_world1.date.strftime("%d %b")
+    date2a = data_world2.date.strftime("%d %b")
 
     last_db_date = data_world0.date
     current_date = dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
@@ -165,6 +168,9 @@ def get_covid_numbers_data(day):
                'date0': date0,
                'date1': date1,
                'date2': date2,
+               'date0a': date0a,
+               'date1a': date1a,
+               'date2a': date2a,
                'data': data,
                'the_world': THE_WORLD,
                'europe': EUROPE,
@@ -238,6 +244,28 @@ def get_country_data_as_dict(location):
                   }
                  for x in country_data]
     return data_dict
+
+
+def get_country_data_for_chart(type, location):
+    daterange_list = []
+    coviddata = find_country_coviddata_all(location, daterange_list)
+    labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
+    values = []
+    if type == 'new_cases':
+        values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
+    elif type == 'total_cases':
+        values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
+    elif type == 'new_deaths':
+        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
+    elif type == 'total_deaths':
+        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata]
+    elif type == 'newcasesper1m':
+        values = [x.new_cases_per_million if x.new_cases_per_million >= 0 else 0 for x in coviddata]
+    elif type == 'newdeathsper1m':
+        values = [x.new_deaths_per_million if x.new_deaths_per_million >= 0 else 0 for x in coviddata]
+
+    data = [labels, values]
+    return data
 
 
 def get_country_data(location):

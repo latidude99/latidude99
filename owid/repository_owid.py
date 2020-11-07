@@ -51,9 +51,17 @@ def find_data_by_country_continent_latest(date):
             country = []
             country.append(cont)
             country.append(item.country)
+            if item.new_cases < 0:
+                item.new_cases = 0;
             country.append(item.new_cases)
+            if item.total_cases < 0:
+                item.total_cases = 0;
             country.append(item.total_cases)
+            if item.new_deaths < 0:
+                item.new_deaths = 0;
             country.append(item.new_deaths)
+            if item.total_deaths < 0:
+                item.total_deaths = 0;
             country.append(item.total_deaths)
             country.append(item.new_cases_per_million)
             country.append(item.total_cases_per_million)

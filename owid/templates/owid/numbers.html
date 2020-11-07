@@ -5,7 +5,12 @@
     {% load humanize %}
 
     <script>
-
+    window.countries = [];
+    {% for country in data %}
+        window.countries.push('{{ country.10 }}')
+    {% endfor %}
+    </script>
+    <script>
         $(document).ready(function () {
             $('#loader3').hide(0);
             {#$('#check').show();#}
@@ -67,12 +72,12 @@
                     <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
                            style="background: transparent; color: lightgray;">
                 </div>
-{#                <div class="col-lg-1">#}
-{#                    <div>#}
-{#                            <span id="check" class="fas fa-check text-white  float-right mt-3  ml-2 fa-sm"#}
-{#                                  style="opacity: 80%; display: none;"></span>#}
-{#                    </div>#}
-{#                </div>#}
+                {#                <div class="col-lg-1">#}
+                {#                    <div>#}
+                {#                            <span id="check" class="fas fa-check text-white  float-right mt-3  ml-2 fa-sm"#}
+                {#                                  style="opacity: 80%; display: none;"></span>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div class="col-lg-6">
                     <div class="row mt-1 mb-1">
                         <div class="d-flex justify-content-end" style="width:95%;">
@@ -319,7 +324,7 @@
             </div>
         </div>
 
-        <div class="row ml-5 pl-3 mr-5 pr-4">
+        <div id="tablehead" class="row ml-5 pl-3 mr-5 pr-4">
             <div class="col-lg-12" style="background-color:transparent; color: aqua; height: 60px !important;">
                 <div class="table-responsive-sm table-dark table-hover table-borderless"
                      style="background: transparent;  color: aqua">
@@ -364,7 +369,12 @@
                                 <p class="small p-0">{{ per_1_million }}</p>
                             </td>
                             <td class="w-22 align-middle p-0">
-                                <h6 class="font-weight-light p-0 ml-3">0, 1 or 2 days ago</h6>
+                                <span class="small p-0 ml-3">load previous days</span>
+                                <p class="small p-0 ml-3">
+                                    <span id="days0a" class="text-white">{{ date0a }}&nbsp;&nbsp;</span>
+                                    <span id="days1a" class="text-secondary">{{ date1a }}&nbsp;&nbsp;</span>
+                                    <span id="days2a" class="text-secondary">{{ date2a }}</span>
+                                </p>
                             </td>
                         </tr>
                         </thead>
@@ -429,7 +439,7 @@
                     </thead>
                     <tbody id="covid_countries">
                     {% for country in data %}
-                        <tr class="font-weight-light">
+                        <tr id="{{ country }}_row" class="font-weight-light">
                             <td style="opacity:70%;">{{ country.0 }}</td>
                             <td id="{{ country.10 }}" style="cursor: pointer; cursor: hand;">
                                 <form method='GET'>
@@ -522,35 +532,53 @@
                                 </script>
                             </td>
                             <td class="text-info"
-                                style="font-family: 'Lucida Console';">{{ country.1.population|floatformat:"0"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';font-size: 18px;">{{ country.1.population|floatformat:"0"|intcomma }}</td>
                             <td class="" id="{{ country.10 }}_newcases"
-                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.2|floatformat:"0"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';color: #e9e9af;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.2|floatformat:"0"|intcomma }}
+                            </td>
                             <td class="" id="{{ country.10 }}_totalcases"
-                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.3|floatformat:"0"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';color: #e9e9af;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.3|floatformat:"0"|intcomma }}
+                            </td>
                             <td class="" id="{{ country.10 }}_newdeaths"
-                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.4|floatformat:"0"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';color: #ff6666;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.4|floatformat:"0"|intcomma }}
+                            </td>
                             <td class="" id="{{ country.10 }}_totaldeaths"
-                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.5|floatformat:"0"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';color: #ff6666;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.5|floatformat:"0"|intcomma }}
+                            </td>
                             <td class="" id="{{ country.10 }}_newcasesper1m"
-                                style="font-family: 'Lucida Console';color: #e9e9af;">{{ country.6|floatformat:"1"|intcomma }}</td>
+                                style="font-family: 'Lucida Console';color: #e9e9af;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.6|floatformat:"1"|intcomma }}
+                            </td>
                             <td class="" id="{{ country.10 }}_newdeathsper1m"
-                                style="font-family: 'Lucida Console';color: #ff6666;">{{ country.8|floatformat:"1"|intcomma }}</td>
-                            <td>
+                                style="font-family: 'Lucida Console';color: #ff6666;font-size: 18px;cursor: pointer; cursor: hand;">
+                                {{ country.8|floatformat:"1"|intcomma }}
+                            </td>
+                            <td id="{{ country.10 }}_radiocell">
                                 <form id="{{ country.10 }}days_choice">
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" type="radio" id="{{ country.10 }}radio0"
                                                name="day" value="0" checked="checked">
-                                        <label class="custom-control-label" for="{{ country.10 }}radio0">0</label>
+                                        <label class="custom-control-label mr-1" for="{{ country.10 }}radio0">
+                                            <pre> </pre>
+                                        </label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" type="radio" id="{{ country.10 }}radio1"
                                                name="day" value="1">
-                                        <label class="custom-control-label" for="{{ country.10 }}radio1">1</label>
+                                        <label class="custom-control-label ml-1 mr-1" for="{{ country.10 }}radio1">
+                                            <pre> </pre>
+                                        </label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" type="radio" id="{{ country.10 }}radio2"
                                                name="day" value="2">
-                                        <label class="custom-control-label" for="{{ country.10 }}radio2">2</label>
+                                        <label class="custom-control-label ml-1" for="{{ country.10 }}radio2">
+                                            <pre> </pre>
+                                        </label>
                                         </label>
                                     </div>
                                 </form>
@@ -561,8 +589,6 @@
                                         e.preventDefault();
                                         days = $('input[name=day]:checked', '#{{ country.10 }}days_choice').val();
                                         var country = '{{ country.1 }}'
-
-                                        console.log(days)
 
                                         $.get('{%  url 'owid:numbers_json'  %}',
                                             {'country': country, 'days': days},
@@ -623,12 +649,231 @@
                                                 $("#{{ country.10 }}_newcasesper1m").text(new_cases_per_million);
                                                 $("#{{ country.10 }}_newdeathsper1m").text(new_deaths_per_million);
 
+                                                if (days === '0') {
+                                                    $('#days0a')
+                                                        .removeClass('text-secondary')
+                                                        .addClass('text-white');
+                                                    $('#days1a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                    $('#days2a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                }
+                                                if (days === '1') {
+                                                    $('#days1a')
+                                                        .removeClass('text-secondary')
+                                                        .addClass('text-white');
+                                                    $('#days0a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                    $('#days2a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                }
+                                                if (days === '2') {
+                                                    $('#days2a')
+                                                        .removeClass('text-secondary')
+                                                        .addClass('text-white');
+                                                    $('#days1a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                    $('#days0a')
+                                                        .removeClass('text-white')
+                                                        .addClass('text-secondary');
+                                                }
+
+                                                {#console.log(window.countries);#}
+                                                for (i = 0; i < window.countries.length; i++) {
+                                                    $('#' + window.countries[i] + '_radiocell').removeClass('radiocell_selected');
+                                                }
+                                                $('#{{ country.10 }}_radiocell').addClass('radiocell_selected');
+
                                             });
-
-
                                     });
                                 });
                             </script>
+
+                            <script>
+                                $('#{{ country.10 }}_newcases').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'new_cases'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('new cases');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 255, 130, 0.7)";
+                                            var bordColor = "rgba(255, 255, 130, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
+                            <script>
+                                $('#{{ country.10 }}_totalcases').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'total_cases'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('total cases');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 255, 130, 0.7)";
+                                            var bordColor = "rgba(255, 255, 130, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
+                            <script>
+                                $('#{{ country.10 }}_newdeaths').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'new_deaths'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('new deaths');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 51, 51, 0.7)";
+                                            var bordColor = "rgba(255, 51, 51, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
+                            <script>
+                                $('#{{ country.10 }}_totaldeaths').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'total_deaths'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('total deaths');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 51, 51, 0.7)";
+                                            var bordColor = "rgba(255, 51, 51, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
+                            <script>
+                                $('#{{ country.10 }}_newcasesper1m').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'newcasesper1m'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('new cases per million');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 255, 130, 0.7)";
+                                            var bordColor = "rgba(255, 255, 130, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
+                            <script>
+                                $('#{{ country.10 }}_newdeathsper1m').on('click', function (e) {
+                                    $('#loading2').show();
+                                    e.preventDefault();
+                                    var day = '0'
+                                    var type = 'newdeathsper1m'
+                                    var country = '{{ country.1 }}'
+
+                                    $.get('{%  url 'owid:country_json_chart'  %}',
+                                        {'type': type, 'country': country},
+                                        function (response) {
+                                            var labels_json = response.country[0];
+                                            var values_json = response.country[1];
+                                            {##}
+                                            {#console.log(window.labels_json);#}
+                                            {#console.log(window.values_json);#}
+
+                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartbar_header1').text('new deaths per million');
+                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $("#btn_modal_chartbar").trigger("click");
+                                            $('#loading2').hide(0);
+
+                                            var backColor = "rgba(255, 51, 51, 0.7)";
+                                            var bordColor = "rgba(255, 51, 51, 0.7)";
+                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                        });
+                                });
+                            </script>
+
 
                         </tr>
                     {% endfor %}
@@ -654,7 +899,7 @@
 
 
 
-    <!-- The Modal -->
+    <!-- The Modal table -->
     <div class="modal" id="country_modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -696,25 +941,25 @@
                                 <td class="w-25 text-center p-0 py-3 pl-4"
                                     style="vertical-align: center !important;border: 0px !important;">
                                     date
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new cases
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total cases
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new deaths
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total deaths
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     new tests
-                                </th>
+                                </td>
                                 <td class="w-11 align-middle p-0 py-3 pl-4 ml-3" style="border: 0px !important;">
                                     total tests
-                                </th>
+                                </td>
                             </tr>
                             </thead>
 
@@ -729,11 +974,149 @@
         </div>
     </div>
 
+    <script>
+        $('#country_modal_chartbar').on('hide.bs.modal', function () {
+            {#chart_bar.destroy();#}
+            console.log('destroyed')
+        })
+    </script>
+
+    <button id="btn_modal_chartbar" type="button" class="btn btn-outline-light"
+            data-toggle="modal" data-target="#country_modal_chartbar"
+            style="display:none;">
+        Open chart modal
+    </button>
+
+    <!-- The Modal chart -->
+    <div class="modal" id="country_modal_chartbar">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #0d0d0d;">
+                    <div class="table-responsive-lg" style="width:100% !important;">
+                        <table class="table-borderless" style="width:100% !important;">
+                            <tr>
+                                <td class="w-30 px-3 mr-auto">
+                                    <h4 id="country_modal_chartbar_header"
+                                        class="modal-title text-white font-weight-light"></h4>
+                                </td>
+                                <td class="w-30">
+                                    <span id="country_modal_chartbar_header1"
+                                          class="modal-title text-white font-weight-light"></span>
+                                </td>
+
+                                <td class="w-15 px-2 mt-2">
+                                    <h5 class="modal-title text-info font-weight-light text-right">population: </h5>
+                                </td>
+                                <td class="w-15 px-1 mt-2">
+                                    <h4 id="country_modal_chartbar_header2"
+                                        class="modal-title text-info font-weight-light text-right"
+                                        style="font-family: 'Lucida Console';"></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="px-3 mt-1">
+                        <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="background-color: #0d0d0d;">
+                    <div class="">
+
+                        <div style="text-align: center;">
+                            <canvas id="chart" width="800" height="400"></canvas>
+                            <script>
+                                $.chartbar = function (labels_json, values_json, backcolor, bordcolor) {
+
+                                    if (window.chart_bar != null) {
+                                        window.chart_bar.destroy();
+                                        console.log('chart destroyed')
+                                    }
+
+                                    var ctx = document.getElementById('chart').getContext('2d');
+                                    window.chart_bar = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels_json,
+                                            datasets: [{
+                                                label: "",
+                                                data: values_json,
+                                                backgroundColor: backcolor,
+                                                borderColor: bordcolor,
+                                                borderWidth: 1,
+                                                barPercentage: 0.9,
+                                                barThickness: 'flex',
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                xAxes: [{
+                                                    gridLines: {
+                                                        color: "rgba(255, 255, 255, 0.15)",
+                                                        zeroLineColor: "rgba(255, 255, 255, 0.5)",
+                                                    },
+                                                    ticks: {
+                                                        fontColor: "rgba(255, 255, 255, 0.8)",
+                                                    }
+                                                }],
+                                                yAxes: [{
+                                                    gridLines: {
+                                                        color: "rgba(255, 255, 255, 0.15)",
+                                                        zeroLineColor: "rgba(255, 255, 255, 0.5)",
+                                                    },
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        fontColor: "rgba(255, 255, 255, 0.8)",
+                                                        userCallback: function (value, index, values) {
+                                                            return value.toLocaleString();
+                                                        }
+                                                    },
+                                                }]
+
+                                            },
+                                            legend: {
+                                                display: false,
+                                                labels: {
+                                                    fontColor: 'rgb(255, 255, 255)'
+                                                }
+                                            },
+                                            title: {
+                                                display: false,
+                                                text: ''
+                                            },
+                                            hover: {
+                                                mode: 'index',
+                                                intersect: false
+                                            },
+                                            responsive: true,
+                                            tooltips: {
+                                                enabled: true,
+                                                mode: 'index',
+                                                intersect: false,
+                                                yAlign: 'left',
+                                                callbacks: {
+                                                    label: function (tooltipItem, data) {
+                                                        var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                                        return parseInt(tooltipValue).toLocaleString();
+                                                    }
+                                                },
+                                            },
+                                        }
+                                    });
+                                }
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 
 {% endblock %}
 
-<!--
-
-
-
--->

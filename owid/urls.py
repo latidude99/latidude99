@@ -10,6 +10,7 @@ urlpatterns = [
 
     path('covid/numbers', views.numbers, name='numbers'),
     path('covid/numbers/country_json', views.country_json, name='country_json'),
+    path('covid/numbers/country_json_chart', views.country_json_chart, name='country_json_chart'),
     path('covid/numbers_json', views.numbers_json, name='numbers_json'),
 
     path('covid/country', views.country, name='country'),

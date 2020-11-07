@@ -102,6 +102,25 @@ def country_json(request):
     return JsonResponse(data, safe=False)
 
 
+def country_json_chart(request):
+    data = {'labels': '', 'values': ''}
+    if request.method == 'GET':
+        type = request.GET.get('type')
+        country_name = request.GET.get('country').lower()
+        country_name = country_name \
+            .replace('0', ' ') \
+            .replace('1', '\'') \
+            .replace('2', '(') \
+            .replace('3', ')')
+        print(country_name)
+        data_dict = service_covid.get_country_data_for_chart(type, country_name)
+        if data_dict:
+            data['country'] = data_dict
+        else:
+            data['country'] = 'no data for ' + country_name
+    return JsonResponse(data, safe=False)
+
+
 def country(request):
     if request.method == "POST":
         location = request.POST['location']
