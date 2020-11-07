@@ -250,19 +250,21 @@ def get_country_data_for_chart(type, location):
     daterange_list = []
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
+    limit = len(labels) - 60  # 2 months
+    labels = labels[limit:]
     values = []
     if type == 'new_cases':
-        values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
+        values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata][limit:]
     elif type == 'total_cases':
-        values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata]
+        values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata][limit:]
     elif type == 'new_deaths':
-        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
+        values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata][limit:]
     elif type == 'total_deaths':
-        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata]
+        values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata][limit:]
     elif type == 'newcasesper1m':
-        values = [x.new_cases_per_million if x.new_cases_per_million >= 0 else 0 for x in coviddata]
+        values = [x.new_cases_per_million if x.new_cases_per_million >= 0 else 0 for x in coviddata][limit:]
     elif type == 'newdeathsper1m':
-        values = [x.new_deaths_per_million if x.new_deaths_per_million >= 0 else 0 for x in coviddata]
+        values = [x.new_deaths_per_million if x.new_deaths_per_million >= 0 else 0 for x in coviddata][limit:]
 
     data = [labels, values]
     return data

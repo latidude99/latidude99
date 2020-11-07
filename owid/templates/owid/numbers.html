@@ -35,6 +35,15 @@
                     $('#' + window.countries[i] + 'radio1').removeClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', false);
                     $('#' + window.countries[i] + 'radio2').removeClass("active");
+                    $('#days0a')
+                        .removeClass('text-secondary')
+                        .addClass('text-white');
+                    $('#days1a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
+                    $('#days2a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
                 }
             }
             if ('{{ day }}' === '1') {
@@ -56,6 +65,15 @@
                     $('#' + window.countries[i] + 'radio1').addClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', false);
                     $('#' + window.countries[i] + 'radio2').removeClass("active");
+                    $('#days1a')
+                        .removeClass('text-secondary')
+                        .addClass('text-white');
+                    $('#days0a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
+                    $('#days2a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
                 }
             }
             if ('{{ day }}' === '2') {
@@ -77,6 +95,15 @@
                     $('#' + window.countries[i] + 'radio1').removeClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', true);
                     $('#' + window.countries[i] + 'radio2').addClass("active");
+                    $('#days2a')
+                        .removeClass('text-secondary')
+                        .addClass('text-white');
+                    $('#days1a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
+                    $('#days0a')
+                        .removeClass('text-white')
+                        .addClass('text-secondary');
                 }
             }
         });
@@ -87,7 +114,7 @@
              style="background-image: url('{{ static_base }}{{ background_pattern3 }}');">
             <div class="row ml-2 mb-3">
                 <div class="col-lg-2">
-                    <div class="ml-4 mt-1 mb-4">
+                    <div class="ml-4 mt-2 mb-4">
                         <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">
                             <span class="fas fa-chevron-left"></span>
                             &nbsp; covid-19 home
@@ -96,7 +123,8 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <input class="form-control mt-2" id="search_country" type="text" placeholder="Search.."
+                    <input class="form-control form-control-sm mt-2" id="search_country" type="text"
+                           placeholder="Search.."
                            style="background: transparent; color: lightgray;">
                 </div>
                 {#                <div class="col-lg-1">#}
@@ -302,10 +330,90 @@
                 });
             });
         </script>
-
-        <div class="row mb-2">
+        <div class="row mt-2 mb-2">
             <div class="col-lg-3">
+                <div id="help" class="ml-5" style="opacity:80%;cursor: pointer; cursor: hand;">
+                    <span class="fas fa-question mt-1 mr-2 text-white"></span>
+                    <span class="text-white">help</span>
+
+                </div>
             </div>
+
+            <script>
+                $('#help').on('click', function () {
+                    $("#btn_modal_help").trigger("click");
+                });
+            </script>
+
+            <button id="btn_modal_help" type="button" class="btn btn-small btn-outline-light"
+                    data-toggle="modal" data-target="#help_modal"
+                    style="display:none;">
+                Help
+            </button>
+
+            <!-- The Modal help -->
+            <div class="modal" id="help_modal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content text-white">
+                        <!-- Modal Header -->
+                        <div class="modal-header" style="background-color: #0d0d0d;">
+                            Help
+                            <div class="px-3 mt-1">
+                                <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                            </div>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body" style="background-color: #0d0d0d;opacity:95%;">
+                            <h5 style=" opacity:90%;">Data presented in the main table focus on the latest numbers</h5>
+                            <ul>
+                                <li style=" opacity:90%;">you can switch between the latest data and one or two days before for the whole
+                                    table
+                                    (slow, causes page reload)
+                                </li>
+                                <li style=" opacity:90%;">you can swap between the latest data and one or two days before for individual
+                                    countries
+                                    (fast, does not cause page reload)
+                                </li>
+                                <li style=" opacity:90%;">you can sort the table by each column</li>
+                                <li>you can filter and search the whole table including alphanumeric and numeric
+                                    entries
+                                </li>
+                                <li style=" opacity:90%;">you can use pre-defined filters by continents</li>
+                            </ul>
+                            <h5 class="mt-2" style=" opacity:90%;">Single country table</h5>
+                            <ul>
+                                <li style=" opacity:90%;">you can see detailed numbers for a chosen country by clicking the country name in the
+                                    main table
+                                </li>
+                                <li style=" opacity:90%;">the table will show all the recorded numbers for the country from the beginning
+                                    (fast, does not cause page reload)
+                                </li>
+                                <li style=" opacity:90%;">the table is sorted chronologically, the latest numbers first</li>
+                            </ul>
+                            <h5 class="mt-2" style=" opacity:90%;">Single country charts</h5>
+                            <ul>
+                                <li style=" opacity:90%;">you can see bar and line charts for a chosen country by clicking the relevant number in
+                                    the
+                                    main table (fast, does not cause page reload)
+                                </li>
+                                <li style=" opacity:90%;">charts available:</li>
+                                <ul>
+                                    <li style=" opacity:90%;">new total cases</li>
+                                    <li style=" opacity:90%;">new and total deaths</li>
+                                    <li style=" opacity:90%;">new cases per 1 million</li>
+                                    <li style=" opacity:90%;">new deaths per 1 million</li>
+                                </ul>
+                                <li style=" opacity:90%;">the charts show data from 60 days ago to the latest</li>
+                                <li style=" opacity:90%;">for charts going back to the beginning or showing selected time period go to the
+                                    relevant section on the Home page
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-7">
                 <ul class="nav  nav-pills">
                     <li class="w-16">
@@ -745,8 +853,8 @@
                                             $("#btn_modal_chartbar").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 255, 130, 0.7)";
-                                            var bordColor = "rgba(255, 255, 130, 0.7)";
+                                            var backColor = "rgba(255, 255, 130, 0.5)";
+                                            var bordColor = "rgba(255, 255, 130, 0.5)";
                                             $.chartbar(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
@@ -772,12 +880,12 @@
                                             $('#country_modal_chartbar_header').text("{{ country.1 }}");
                                             $('#country_modal_chartbar_header1').text('total cases');
                                             $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
-                                            $("#btn_modal_chartbar").trigger("click");
+                                            $("#btn_modal_chartline").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 255, 130, 0.7)";
-                                            var bordColor = "rgba(255, 255, 130, 0.7)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            var backColor = "rgba(255, 255, 130, 0.5)";
+                                            var bordColor = "rgba(255, 255, 130, 0.5)";
+                                            $.chartline(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
                             </script>
@@ -805,8 +913,8 @@
                                             $("#btn_modal_chartbar").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 51, 51, 0.7)";
-                                            var bordColor = "rgba(255, 51, 51, 0.7)";
+                                            var backColor = "rgba(255, 51, 51, 0.5)";
+                                            var bordColor = "rgba(255, 51, 51, 0.5)";
                                             $.chartbar(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
@@ -832,12 +940,12 @@
                                             $('#country_modal_chartbar_header').text("{{ country.1 }}");
                                             $('#country_modal_chartbar_header1').text('total deaths');
                                             $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
-                                            $("#btn_modal_chartbar").trigger("click");
+                                            $("#btn_modal_chartline").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 51, 51, 0.7)";
-                                            var bordColor = "rgba(255, 51, 51, 0.7)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            var backColor = "rgba(255, 51, 51, 0.5)";
+                                            var bordColor = "rgba(255, 51, 51, 0.5)";
+                                            $.chartline(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
                             </script>
@@ -865,8 +973,8 @@
                                             $("#btn_modal_chartbar").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 255, 130, 0.7)";
-                                            var bordColor = "rgba(255, 255, 130, 0.7)";
+                                            var backColor = "rgba(255, 255, 130, 0.5)";
+                                            var bordColor = "rgba(255, 255, 130, 0.5)";
                                             $.chartbar(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
@@ -895,8 +1003,8 @@
                                             $("#btn_modal_chartbar").trigger("click");
                                             $('#loading2').hide(0);
 
-                                            var backColor = "rgba(255, 51, 51, 0.7)";
-                                            var bordColor = "rgba(255, 51, 51, 0.7)";
+                                            var backColor = "rgba(255, 51, 51, 0.5)";
+                                            var bordColor = "rgba(255, 51, 51, 0.5)";
                                             $.chartbar(labels_json, values_json, backColor, bordColor);
                                         });
                                 });
@@ -1054,7 +1162,7 @@
                     <div class="">
 
                         <div style="text-align: center;">
-                            <canvas id="chart" width="800" height="400"></canvas>
+                            <canvas id="chartbar" width="800" height="400"></canvas>
                             <script>
                                 $.chartbar = function (labels_json, values_json, backcolor, bordcolor) {
 
@@ -1063,7 +1171,7 @@
                                         console.log('chart destroyed')
                                     }
 
-                                    var ctx = document.getElementById('chart').getContext('2d');
+                                    var ctx = document.getElementById('chartbar').getContext('2d');
                                     window.chart_bar = new Chart(ctx, {
                                         type: 'bar',
                                         data: {
@@ -1076,6 +1184,143 @@
                                                 borderWidth: 1,
                                                 barPercentage: 0.9,
                                                 barThickness: 'flex',
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                xAxes: [{
+                                                    gridLines: {
+                                                        color: "rgba(255, 255, 255, 0.15)",
+                                                        zeroLineColor: "rgba(255, 255, 255, 0.5)",
+                                                    },
+                                                    ticks: {
+                                                        fontColor: "rgba(255, 255, 255, 0.8)",
+                                                    }
+                                                }],
+                                                yAxes: [{
+                                                    gridLines: {
+                                                        color: "rgba(255, 255, 255, 0.15)",
+                                                        zeroLineColor: "rgba(255, 255, 255, 0.5)",
+                                                    },
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        fontColor: "rgba(255, 255, 255, 0.8)",
+                                                        userCallback: function (value, index, values) {
+                                                            return value.toLocaleString();
+                                                        }
+                                                    },
+                                                }]
+
+                                            },
+                                            legend: {
+                                                display: false,
+                                                labels: {
+                                                    fontColor: 'rgb(255, 255, 255)'
+                                                }
+                                            },
+                                            title: {
+                                                display: false,
+                                                text: ''
+                                            },
+                                            hover: {
+                                                mode: 'index',
+                                                intersect: false
+                                            },
+                                            responsive: true,
+                                            tooltips: {
+                                                enabled: true,
+                                                mode: 'index',
+                                                intersect: false,
+                                                yAlign: 'left',
+                                                callbacks: {
+                                                    label: function (tooltipItem, data) {
+                                                        var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                                        return parseInt(tooltipValue).toLocaleString();
+                                                    }
+                                                },
+                                            },
+                                        }
+                                    });
+                                }
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <button id="btn_modal_chartline" type="button" class="btn btn-outline-light"
+            data-toggle="modal" data-target="#country_modal_chartline"
+            style="display:none;">
+        Open chart modal
+    </button>
+
+    <!-- The Modal chart line-->
+    <div class="modal" id="country_modal_chartline">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #0d0d0d;">
+                    <div class="table-responsive-lg" style="width:100% !important;">
+                        <table class="table-borderless" style="width:100% !important;">
+                            <tr>
+                                <td class="w-30 px-3 mr-auto">
+                                    <h4 id="country_modal_chartbar_header"
+                                        class="modal-title text-white font-weight-light"></h4>
+                                </td>
+                                <td class="w-30">
+                                    <span id="country_modal_chartbar_header1"
+                                          class="modal-title text-white font-weight-light"></span>
+                                </td>
+
+                                <td class="w-15 px-2 mt-2">
+                                    <h5 class="modal-title text-info font-weight-light text-right">population: </h5>
+                                </td>
+                                <td class="w-15 px-1 mt-2">
+                                    <h4 id="country_modal_chartbar_header2"
+                                        class="modal-title text-info font-weight-light text-right"
+                                        style="font-family: 'Lucida Console';"></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="px-3 mt-1">
+                        <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="background-color: #0d0d0d;">
+                    <div class="">
+
+                        <div style="text-align: center;">
+                            <canvas id="chartline" width="800" height="400"></canvas>
+                            <script>
+                                $.chartline = function (labels_json, values_json, backcolor, bordcolor) {
+
+                                    if (window.chart_line != null) {
+                                        window.chart_line.destroy();
+                                        console.log('chart destroyed')
+                                    }
+
+                                    var ctx = document.getElementById('chartline').getContext('2d');
+                                    window.chart_line = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: labels_json,
+                                            datasets: [{
+                                                label: "",
+                                                data: values_json,
+                                                backgroundColor: backcolor,
+                                                borderColor: bordcolor,
+                                                borderWidth: 3,
+                                                pointBorderWidth: 0,
+                                                pointRadius: 2,
+                                                pointHoverRadius: 10,
+                                                fill: true,
                                             }]
                                         },
                                         options: {
