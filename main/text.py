@@ -191,6 +191,7 @@ IMAGE_COVIDUK_2 = 'images/coviduk2.png'
 IMAGE_COVIDUK_3 = 'images/coviduk3.png'
 IMAGE_COVIDUK_4 = 'images/coviduk4.png'
 
+
 # ----------------------- OWID ---------------------------
 OWID_LINK = ''
 OWID_TITLE = 'the world in numbers'
@@ -216,11 +217,35 @@ OWID_IN_DEPTH2 = 'The app downloads data from the OWID oficial website as json, 
 OWID_IN_DEPTH3 = 'The app uses MySQL database to store data that feed the charts and info pages.'
 OWID_IN_DEPTH4 = 'For the moment all data downloaded are COVID-19 related. Each country has its own page with ' \
                  'basic info and related charts. Comparisons between countries as well as the option to choose ' \
-                 'a time range for the charts are planned soon.'
+                 'a time range for the charts have been implemented. There is also a table presenting the latest ' \
+                 'numbers for each country and the option to display historic data along with charts visualising it ' \
+                 'in pop-up windows. One of the screenshoots below shows a help window describing all the options ' \
+                 'available on the page with the table.'
+OWID_IN_DEPTH5 = ''
+OWID_IN_DEPTH6 = ''
+OWID_IN_DEPTH7 = ''
+OWID_IN_DEPTH8 = ''
+
+
 IMAGE_OWID_1 = 'images/owid1.png'
 IMAGE_OWID_2 = 'images/owid2.png'
 IMAGE_OWID_3 = 'images/owid3.png'
 IMAGE_OWID_4 = 'images/owid4.png'
+IMAGE_OWID_5 = 'images/owid5.png'
+IMAGE_OWID_6 = 'images/owid6.png'
+IMAGE_OWID_7 = 'images/owid7.png'
+IMAGE_OWID_8 = 'images/owid8.png'
+IMAGE_OWID_9 = 'images/owid9.png'
+IMAGE_OWID_10 = 'images/owid10.png'
+IMAGE_OWID_11 = 'images/owid11.png'
+IMAGE_OWID_12 = 'images/owid12.png'
+IMAGE_OWID_13 = 'images/owid13.png'
+IMAGE_OWID_14 = 'images/owid14.png'
+IMAGE_OWID_15 = 'images/owid15.png'
+IMAGE_OWID_16 = 'images/owid16.png'
+IMAGE_OWID_17 = 'images/owid17.png'
+IMAGE_OWID_18 = 'images/owid18.png'
+IMAGE_OWID_19 = 'images/owid19.png'
 
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'
