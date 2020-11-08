@@ -125,17 +125,34 @@
                                 {% endfor %}
                             ],
                             datasets: [{
-                                label: "{{ dataset_label }}",
+                                label: "actual",
                                 data: [
                                     {% for item in values %}
                                         "{{ item }}",
                                     {% endfor %}
                                 ],
+                                order: 2,
                                 backgroundColor: "{{ back_colour }}",
                                 borderColor: "{{ border_colour }}",
                                 borderWidth: 1,
                                 barPercentage: 0.9,
                                 barThickness: 'flex',
+                            }, {
+                                label: "smoothed",
+                                data: [
+                                    {% for item in values_smooth %}
+                                        "{{ item }}",
+                                    {% endfor %}
+                                ],
+                                type: 'line',
+                                order: 1,
+                                backgroundColor: "white",
+                                borderColor: "white",
+                                borderWidth: 3,
+                                pointBorderWidth: 0,
+                                pointRadius: 2,
+                                pointHoverRadius: 10,
+                                fill: false
                             }]
                         },
                         options: {
@@ -158,22 +175,26 @@
                                         beginAtZero: true,
                                         fontColor: "rgba(255, 255, 255, 0.8)",
                                         userCallback: function (value, index, values) {
-                                            return value.toLocaleString();   // this is all we need
+                                            return value.toLocaleString();
                                         }
                                     },
                                 }]
 
                             },
                             tooltips: {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                yAlign: 'left',
                                 callbacks: {
                                     label: function (tooltipItem, data) {
                                         var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
                                         return parseInt(tooltipValue).toLocaleString();
                                     }
-                                }
+                                },
                             },
                             legend: {
-                                display: false,
+                                display: true,
                                 labels: {
                                     fontColor: 'rgb(255, 255, 255)'
                                 }
@@ -181,7 +202,7 @@
                             title: {
                                 display: false,
                                 text: '{{ title }}'
-                            }
+                            },
                         }
                     });
                 </script>

@@ -292,24 +292,3 @@ def charts_line_totaldeaths_country(request):
         return render(request, 'owid/charts_covid_line.html', context)
 
 
-# ----------- old -----------------
-
-
-def charts_pl_newcases_bar(request):
-    context = service_covid.get_pl_newcases_all()
-    return render(request, 'owid/charts_covid_bar.html', context)
-
-
-def charts_pl_totalcases_bar(request):
-    context = service_covid.get_pl_totalcases_all()
-    return render(request, 'owid/charts_covid_bar.html', context)
-
-
-def charts_pl_newdeaths_bar(request):
-    context = service_covid.get_pl_newdeaths_all()
-    return render(request, 'owid/charts_covid_bar.html', context)
-
-
-def charts_pl_totaldeaths_bar(request):
-    context = service_covid.get_pl_totaldeaths_all()
-    return render(request, 'owid/charts_covid_bar.html', context)

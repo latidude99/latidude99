@@ -366,11 +366,13 @@
                         <div class="modal-body" style="background-color: #0d0d0d;opacity:95%;">
                             <h5 style=" opacity:90%;">Data presented in the main table focus on the latest numbers</h5>
                             <ul>
-                                <li style=" opacity:90%;">you can switch between the latest data and one or two days before for the whole
+                                <li style=" opacity:90%;">you can switch between the latest data and one or two days
+                                    before for the whole
                                     table
                                     (slow, causes page reload)
                                 </li>
-                                <li style=" opacity:90%;">you can swap between the latest data and one or two days before for individual
+                                <li style=" opacity:90%;">you can swap between the latest data and one or two days
+                                    before for individual
                                     countries
                                     (fast, does not cause page reload)
                                 </li>
@@ -382,17 +384,22 @@
                             </ul>
                             <h5 class="mt-2" style=" opacity:90%;">Single country table</h5>
                             <ul>
-                                <li style=" opacity:90%;">you can see detailed numbers for a chosen country by clicking the country name in the
+                                <li style=" opacity:90%;">you can see detailed numbers for a chosen country by clicking
+                                    the country name in the
                                     main table
                                 </li>
-                                <li style=" opacity:90%;">the table will show all the recorded numbers for the country from the beginning
+                                <li style=" opacity:90%;">the table will show all the recorded numbers for the country
+                                    from the beginning
                                     (fast, does not cause page reload)
                                 </li>
-                                <li style=" opacity:90%;">the table is sorted chronologically, the latest numbers first</li>
+                                <li style=" opacity:90%;">the table is sorted chronologically, the latest numbers
+                                    first
+                                </li>
                             </ul>
                             <h5 class="mt-2" style=" opacity:90%;">Single country charts</h5>
                             <ul>
-                                <li style=" opacity:90%;">you can see bar and line charts for a chosen country by clicking the relevant number in
+                                <li style=" opacity:90%;">you can see bar and line charts for a chosen country by
+                                    clicking the relevant number in
                                     the
                                     main table (fast, does not cause page reload)
                                 </li>
@@ -404,7 +411,8 @@
                                     <li style=" opacity:90%;">new deaths per 1 million</li>
                                 </ul>
                                 <li style=" opacity:90%;">the charts show data from 60 days ago to the latest</li>
-                                <li style=" opacity:90%;">for charts going back to the beginning or showing selected time period go to the
+                                <li style=" opacity:90%;">for charts going back to the beginning or showing selected
+                                    time period go to the
                                     relevant section on the Home page
                                 </li>
                             </ul>
@@ -843,6 +851,7 @@
                                         function (response) {
                                             var labels_json = response.country[0];
                                             var values_json = response.country[1];
+                                            var values_smooth_json = response.country[2];
                                             {##}
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
@@ -855,7 +864,7 @@
 
                                             var backColor = "rgba(255, 255, 130, 0.5)";
                                             var bordColor = "rgba(255, 255, 130, 0.5)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            $.chartbar(labels_json, values_json, values_smooth_json, backColor, bordColor);
                                         });
                                 });
                             </script>
@@ -877,9 +886,9 @@
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
 
-                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
-                                            $('#country_modal_chartbar_header1').text('total cases');
-                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $('#country_modal_chartline_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartline_header1').text('total cases');
+                                            $('#country_modal_chartline_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
                                             $("#btn_modal_chartline").trigger("click");
                                             $('#loading2').hide(0);
 
@@ -903,6 +912,7 @@
                                         function (response) {
                                             var labels_json = response.country[0];
                                             var values_json = response.country[1];
+                                            var values_smooth_json = response.country[2];
                                             {##}
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
@@ -915,7 +925,7 @@
 
                                             var backColor = "rgba(255, 51, 51, 0.5)";
                                             var bordColor = "rgba(255, 51, 51, 0.5)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            $.chartbar(labels_json, values_json, values_smooth_json, backColor, bordColor);
                                         });
                                 });
                             </script>
@@ -937,9 +947,9 @@
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
 
-                                            $('#country_modal_chartbar_header').text("{{ country.1 }}");
-                                            $('#country_modal_chartbar_header1').text('total deaths');
-                                            $('#country_modal_chartbar_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
+                                            $('#country_modal_chartline_header').text("{{ country.1 }}");
+                                            $('#country_modal_chartline_header1').text('total deaths');
+                                            $('#country_modal_chartline_header2').text("{{ country.1.population|floatformat:"0"|intcomma }}");
                                             $("#btn_modal_chartline").trigger("click");
                                             $('#loading2').hide(0);
 
@@ -1123,7 +1133,7 @@
         Open chart modal
     </button>
 
-    <!-- The Modal chart -->
+    <!-- The Modal chartbar -->
     <div class="modal" id="country_modal_chartbar">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -1164,7 +1174,7 @@
                         <div style="text-align: center;">
                             <canvas id="chartbar" width="800" height="400"></canvas>
                             <script>
-                                $.chartbar = function (labels_json, values_json, backcolor, bordcolor) {
+                                $.chartbar = function (labels_json, values_json, values_smooth_json, backcolor, bordcolor) {
 
                                     if (window.chart_bar != null) {
                                         window.chart_bar.destroy();
@@ -1177,13 +1187,26 @@
                                         data: {
                                             labels: labels_json,
                                             datasets: [{
-                                                label: "",
+                                                label: "actual",
                                                 data: values_json,
+                                                order: 2,
                                                 backgroundColor: backcolor,
                                                 borderColor: bordcolor,
                                                 borderWidth: 1,
                                                 barPercentage: 0.9,
                                                 barThickness: 'flex',
+                                            }, {
+                                                label: "smoothed",
+                                                data: values_smooth_json,
+                                                order: 1,
+                                                type: 'line',
+                                                backgroundColor: "white",
+                                                borderColor: "white",
+                                                borderWidth: 3,
+                                                pointBorderWidth: 0,
+                                                pointRadius: 2,
+                                                pointHoverRadius: 10,
+                                                fill: false
                                             }]
                                         },
                                         options: {
@@ -1213,7 +1236,7 @@
 
                                             },
                                             legend: {
-                                                display: false,
+                                                display: true,
                                                 labels: {
                                                     fontColor: 'rgb(255, 255, 255)'
                                                 }
@@ -1258,7 +1281,7 @@
         Open chart modal
     </button>
 
-    <!-- The Modal chart line-->
+    <!-- The Modal chartline-->
     <div class="modal" id="country_modal_chartline">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -1268,11 +1291,11 @@
                         <table class="table-borderless" style="width:100% !important;">
                             <tr>
                                 <td class="w-30 px-3 mr-auto">
-                                    <h4 id="country_modal_chartbar_header"
+                                    <h4 id="country_modal_chartline_header"
                                         class="modal-title text-white font-weight-light"></h4>
                                 </td>
                                 <td class="w-30">
-                                    <span id="country_modal_chartbar_header1"
+                                    <span id="country_modal_chartline_header1"
                                           class="modal-title text-white font-weight-light"></span>
                                 </td>
 
@@ -1280,7 +1303,7 @@
                                     <h5 class="modal-title text-info font-weight-light text-right">population: </h5>
                                 </td>
                                 <td class="w-15 px-1 mt-2">
-                                    <h4 id="country_modal_chartbar_header2"
+                                    <h4 id="country_modal_chartline_header2"
                                         class="modal-title text-info font-weight-light text-right"
                                         style="font-family: 'Lucida Console';"></h4>
                                 </td>

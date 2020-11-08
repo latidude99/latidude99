@@ -47,9 +47,6 @@ urlpatterns = [
     path('charts_bar_newcases_world/newcases/', views.charts_bar_newcases_world,
          name='charts_bar_newcases_world'),
 
-    path('charts_covid_bar/pl/newcases', views.charts_pl_newcases_bar, name='charts_pl_newcases_bar'),
-    path('charts_covid_bar/pl/totalcases', views.charts_pl_totalcases_bar, name='charts_pl_totalcases_bar'),
-    path('charts_covid_bar.html/pl/newdeaths', views.charts_pl_newdeaths_bar, name='charts_pl_newdeaths_bar'),
-    path('charts_covid_bar.html/pl/totaldeaths', views.charts_pl_totaldeaths_bar, name='charts_pl_totaldeaths_bar'),
+
 
 ]

@@ -110,7 +110,7 @@ def get_covid_selection_data():
                }
     return context
 
-
+# lists serving as in-mem cache for get_covid_numbers_data(day)
 data_latest_all0 = ['', []]
 data_latest_all1 = ['', []]
 data_latest_all2 = ['', []]
@@ -253,12 +253,15 @@ def get_country_data_for_chart(type, location):
     limit = len(labels) - 60  # 2 months
     labels = labels[limit:]
     values = []
+    values_smooth = []
     if type == 'new_cases':
         values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata][limit:]
+        values_smooth = [x.new_cases_smoothed if x.new_cases_smoothed >= 0 else 0 for x in coviddata][limit:]
     elif type == 'total_cases':
         values = [x.total_cases if x.total_cases >= 0 else 0 for x in coviddata][limit:]
     elif type == 'new_deaths':
         values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata][limit:]
+        values_smooth = [x.new_deaths_smoothed if x.new_deaths_smoothed >= 0 else 0 for x in coviddata][limit:]
     elif type == 'total_deaths':
         values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata][limit:]
     elif type == 'newcasesper1m':
@@ -266,7 +269,7 @@ def get_country_data_for_chart(type, location):
     elif type == 'newdeathsper1m':
         values = [x.new_deaths_per_million if x.new_deaths_per_million >= 0 else 0 for x in coviddata][limit:]
 
-    data = [labels, values]
+    data = [labels, values, values_smooth]
     return data
 
 
@@ -737,12 +740,16 @@ def get_newcases_all(location, per100switch):
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
     if per100switch == 'True':
         values = [x.new_cases / per100 if x.new_cases >= 0 else 0 for x in coviddata]
+        values_smooth = [x.new_cases_smoothed / per100 if x.new_cases_smoothed >= 0 else 0 for x in coviddata]
     else:
         values = [x.new_cases if x.new_cases >= 0 else 0 for x in coviddata]
+        values_smooth = [x.new_cases_smoothed if x.new_cases_smoothed >= 0 else 0 for x in coviddata]
+
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
                'labels': labels,
                'values': values,
+               'values_smooth': values_smooth,
                'dataset_label': CHARTS_LABEL_NEWCASES,
                'back_colour': CHARTS_COVID_CASES_BAR_COLOR_BACK,
                'border_colour': CHARTS_COVID_CASES_BAR_COLOR_BORD,
@@ -806,13 +813,16 @@ def get_newdeaths_all(location, per100switch):
     labels = list(dict.fromkeys(labels))
     if per100switch == 'True':
         values = [x.new_deaths / per100 if x.new_deaths >= 0 else 0 for x in coviddata]
+        values_smooth = [x.new_deaths_smoothed / per100 if x.new_deaths_smoothed >= 0 else 0 for x in coviddata]
     else:
         values = [x.new_deaths if x.new_deaths >= 0 else 0 for x in coviddata]
+        values_smooth = [x.new_deaths_smoothed if x.new_deaths_smoothed >= 0 else 0 for x in coviddata]
     # values = list(dict.fromkeys(values))
     context = {'location': location,
                'back_btn': CHARTS_BACKTOCOUNTRY_BTN,
                'labels': labels,
                'values': values,
+               'values_smooth': values_smooth,
                'dataset_label': CHARTS_LABEL_NEWDEATHS,
                'back_colour': CHARTS_COVID_DEATHS_BAR_COLOR_BACK,
                'border_colour': CHARTS_COVID_DEATHS_BAR_COLOR_BORD,
