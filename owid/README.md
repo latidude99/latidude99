@@ -59,22 +59,27 @@ Phase two: CIA Factbook
 <p align="center">
 	<img src="../images/twin7a.png" width=100%></p>
    <br>
+   <p align="center">
+	<img src="../images/twin7b.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7c.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7d.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7e.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7f.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7g.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7h.png" width=100%></p>
+	<p align="center">
+	<img src="../images/twin7i.png" width=100%></p>
+
+	
 
 
 # Contact
 You can email me at latidude99@gmail.com
 
-<!--
-**latidude99/latidude99** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->

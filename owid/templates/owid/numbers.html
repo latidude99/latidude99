@@ -973,6 +973,7 @@
                                         function (response) {
                                             var labels_json = response.country[0];
                                             var values_json = response.country[1];
+                                            var values_json_smooth = response.country[2];
                                             {##}
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
@@ -985,7 +986,7 @@
 
                                             var backColor = "rgba(255, 255, 130, 0.5)";
                                             var bordColor = "rgba(255, 255, 130, 0.5)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            $.chartbar(labels_json, values_json, values_json_smooth, backColor, bordColor);
                                         });
                                 });
                             </script>
@@ -1003,6 +1004,7 @@
                                         function (response) {
                                             var labels_json = response.country[0];
                                             var values_json = response.country[1];
+                                            var values_json_smooth = response.country[2];
                                             {##}
                                             {#console.log(window.labels_json);#}
                                             {#console.log(window.values_json);#}
@@ -1015,7 +1017,7 @@
 
                                             var backColor = "rgba(255, 51, 51, 0.5)";
                                             var bordColor = "rgba(255, 51, 51, 0.5)";
-                                            $.chartbar(labels_json, values_json, backColor, bordColor);
+                                            $.chartbar(labels_json, values_json, values_json_smooth, backColor, bordColor);
                                         });
                                 });
                             </script>
