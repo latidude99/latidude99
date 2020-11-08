@@ -60,7 +60,7 @@ Phase two: CIA Factbook
 	<img src="../images/twin7a.png" width=100%></p>
    <br>
    <p align="center">
-	<img src="../images/twin7b.png" width=100%></p>
+	<img src="../images/twin7bb.png" width=100%></p>
 	<p align="center">
 	<img src="../images/twin7c.png" width=100%></p>
 	<p align="center">
