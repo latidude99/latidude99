@@ -212,6 +212,14 @@ def get_new_json_covid_data(filename):
                         new_tests_smoothed = -1
                     else:
                         new_tests_smoothed = v1['new_tests_smoothed']
+                    if 'new_cases_smoothed_per_million' not in v1:
+                        new_cases_smoothed_per_million = -1
+                    else:
+                        new_cases_smoothed_per_million = v1['new_cases_smoothed_per_million']
+                    if 'new_deaths_smoothed_per_million' not in v1:
+                        new_deaths_smoothed_per_million = -1
+                    else:
+                        new_deaths_smoothed_per_million = v1['new_deaths_smoothed_per_million']
 
                     import_date = import_date
                     db_country.coviddata_set.filter(date=date).delete()
@@ -229,6 +237,8 @@ def get_new_json_covid_data(filename):
                                                     new_tests=new_tests,
                                                     total_tests=total_tests,
                                                     new_tests_smoothed=new_tests_smoothed,
+                                                    new_cases_smoothed_per_million=new_cases_smoothed_per_million,
+                                                    new_deaths_smoothed_per_million=new_deaths_smoothed_per_million,
                                                     import_date=import_date)
 
             if has_new_data:

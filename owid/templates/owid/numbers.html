@@ -35,6 +35,10 @@
                     $('#' + window.countries[i] + 'radio1').removeClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', false);
                     $('#' + window.countries[i] + 'radio2').removeClass("active");
+
+                    $('#' + window.countries[i] + 'label0').addClass("active");
+                    $('#' + window.countries[i] + 'label1').removeClass("active");
+                    $('#' + window.countries[i] + 'label2').removeClass("active");
                     $('#days0a')
                         .removeClass('text-secondary')
                         .addClass('text-white');
@@ -65,6 +69,10 @@
                     $('#' + window.countries[i] + 'radio1').addClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', false);
                     $('#' + window.countries[i] + 'radio2').removeClass("active");
+
+                    $('#' + window.countries[i] + 'label0').removeClass("active");
+                    $('#' + window.countries[i] + 'label1').addClass("active");
+                    $('#' + window.countries[i] + 'label2').removeClass("active");
                     $('#days1a')
                         .removeClass('text-secondary')
                         .addClass('text-white');
@@ -95,6 +103,10 @@
                     $('#' + window.countries[i] + 'radio1').removeClass("active");
                     $('#' + window.countries[i] + 'radio2').prop('checked', true);
                     $('#' + window.countries[i] + 'radio2').addClass("active");
+
+                    $('#' + window.countries[i] + 'label0').removeClass("active");
+                    $('#' + window.countries[i] + 'label1').removeClass("active");
+                    $('#' + window.countries[i] + 'label2').addClass("active");
                     $('#days2a')
                         .removeClass('text-secondary')
                         .addClass('text-white');
@@ -410,7 +422,7 @@
                                     <li style=" opacity:90%;">new cases per 1 million</li>
                                     <li style=" opacity:90%;">new deaths per 1 million</li>
                                 </ul>
-                                <li style=" opacity:90%;">the charts show data from 60 days ago to the latest</li>
+                                <li style=" opacity:90%;">the charts show data from 90 days ago to the latest</li>
                                 <li style=" opacity:90%;">for charts going back to the beginning or showing selected
                                     time period go to the
                                     relevant section on the Home page
@@ -512,11 +524,11 @@
                                 <p class="small p-0">{{ per_1_million }}</p>
                             </td>
                             <td class="w-22 align-middle p-0">
-                                <span class="small p-0 ml-3">load previous days</span>
+                                <span class="small p-0 ml-3">load previous days:</span>
                                 <p class="small p-0 ml-3">
                                     <span id="days0a" class="text-white">{{ date0a }}&nbsp;&nbsp;</span>
-                                    <span id="days1a" class="text-secondary">{{ date1a }}&nbsp;&nbsp;</span>
-                                    <span id="days2a" class="text-secondary">{{ date2a }}</span>
+                                    <span id="days1a" class="text-white">{{ date1a }}&nbsp;&nbsp;</span>
+                                    <span id="days2a" class="text-white">{{ date2a }}</span>
                                 </p>
                             </td>
                         </tr>
@@ -701,37 +713,39 @@
                                 {{ country.8|floatformat:"1"|intcomma }}
                             </td>
                             <td id="{{ country.10 }}_radiocell">
-                                <form id="{{ country.10 }}days_choice">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio0"
+                                <div id="{{ country.10 }}days_choice"
+                                     class="btn-group btn-group-toggle"
+                                     data-toggle="buttons">
+                                    <label class="btn btn-sm btn-outline-light" id="{{ country.10 }}label0"
+                                           style="opacity:80% !important;">
+                                        {{ date0a }}
+                                        <input type="radio" id="{{ country.10 }}radio0" autocomplete="off"
                                                name="day" value="0" checked="checked">
-                                        <label class="custom-control-label mr-1" for="{{ country.10 }}radio0">
-                                            <pre> </pre>
-                                        </label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio1"
+                                    </label>
+
+                                    <label class="btn btn-sm btn-outline-light" id="{{ country.10 }}label1"
+                                           style="opacity:80% !important;">
+                                        {{ date1a }}
+                                        <input type="radio" id="{{ country.10 }}radio1" autocomplete="off"
                                                name="day" value="1">
-                                        <label class="custom-control-label ml-1 mr-1" for="{{ country.10 }}radio1">
-                                            <pre> </pre>
-                                        </label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" id="{{ country.10 }}radio2"
+                                    </label>
+
+                                    <label class="btn btn-sm btn-outline-light" id="{{ country.10 }}label2"
+                                           style="opacity:80% !important;">
+                                        {{ date2a }}
+                                        <input type="radio" id="{{ country.10 }}radio2" autocomplete="off"
                                                name="day" value="2">
-                                        <label class="custom-control-label ml-1" for="{{ country.10 }}radio2">
-                                            <pre> </pre>
-                                        </label>
-                                        </label>
-                                    </div>
-                                </form>
+                                    </label>
+                                </div>
                             </td>
                             <script>
                                 $(document).ready(function () {
-                                    $('#{{ country.10 }}days_choice input').change(function (e) {
+                                    $('#{{ country.10 }}days_choice input').click(function (e) {
                                         e.preventDefault();
                                         days = $('input[name=day]:checked', '#{{ country.10 }}days_choice').val();
                                         var country = '{{ country.1 }}'
+
+                                        console.log(days);
 
                                         $.get('{%  url 'owid:numbers_json'  %}',
                                             {'country': country, 'days': days},
@@ -739,7 +753,7 @@
                                                 console.log('single button change ajax')
                                                 var data = response.country;
                                                 var len = data.length;
-                                                console.log(len)
+                                                {#console.log(len)#}
                                                 var new_cases, total_cases, new_deaths,
                                                     total_deaths, new_cases_per_million, new_deaths_per_million;
                                                 if (data[0].new_cases > -1) {
@@ -792,47 +806,57 @@
                                                 $("#{{ country.10 }}_newcasesper1m").text(new_cases_per_million);
                                                 $("#{{ country.10 }}_newdeathsper1m").text(new_deaths_per_million);
 
-                                                if (days === '0') {
-                                                    $('#days0a')
-                                                        .removeClass('text-secondary')
-                                                        .addClass('text-white');
-                                                    $('#days1a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                    $('#days2a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                }
-                                                if (days === '1') {
-                                                    $('#days1a')
-                                                        .removeClass('text-secondary')
-                                                        .addClass('text-white');
-                                                    $('#days0a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                    $('#days2a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                }
-                                                if (days === '2') {
-                                                    $('#days2a')
-                                                        .removeClass('text-secondary')
-                                                        .addClass('text-white');
-                                                    $('#days1a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                    $('#days0a')
-                                                        .removeClass('text-white')
-                                                        .addClass('text-secondary');
-                                                }
+                                                {#if (days === '0') {#}
+                                                {#    $('#days0a')#}
+                                                {#        .removeClass('text-secondary')#}
+                                                {#        .addClass('text-white');#}
+                                                {#    $('#days1a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');#}
+                                                {#    $('#days2a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');}#}
+                                                {#if (days === '1') {#}
+                                                {#    $('#days1a')#}
+                                                {#        .removeClass('text-secondary')#}
+                                                {#        .addClass('text-white');#}
+                                                {#    $('#days0a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');#}
+                                                {#    $('#days2a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');}#}
+                                                {#if (days === '2') {#}
+                                                {#    $('#days2a')#}
+                                                {#        .removeClass('text-secondary')#}
+                                                {#        .addClass('text-white');#}
+                                                {#    $('#days1a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');#}
+                                                {#    $('#days0a')#}
+                                                {#        .removeClass('text-white')#}
+                                                {#        .addClass('text-secondary');}#}
 
                                                 {#console.log(window.countries);#}
-                                                for (i = 0; i < window.countries.length; i++) {
-                                                    $('#' + window.countries[i] + '_radiocell').removeClass('radiocell_selected');
+                                                {#for (i = 0; i < window.countries.length; i++) {#}
+                                                {#    $('#' + window.countries[i] + '_radiocell').removeClass('radiocell_selected');}#}
+                                                {#$('#{{ country.10 }}_radiocell').addClass('radiocell_selected');#}
+
+                                                if (days === '0') {
+                                                        $('#{{ country.10 }}label0').addClass("active");
+                                                        $('#{{ country.10 }}label1').removeClass("active");
+                                                        $('#{{ country.10 }}label2').removeClass("active");
                                                 }
-                                                $('#{{ country.10 }}_radiocell').addClass('radiocell_selected');
-
-
+                                                if (days === '1') {
+                                                        $('#{{ country.10 }}label0').removeClass("active");
+                                                        $('#{{ country.10 }}label1').addClass("active");
+                                                        $('#{{ country.10 }}label2').removeClass("active");
+                                                }
+                                                if (days === '2') {
+                                                        $('#{{ country.10 }}label0').removeClass("active");
+                                                        $('#{{ country.10 }}1').removeClass("active");
+                                                        $('#{{ country.10 }}label2').addClass("active");
+                                                }
                                             });
                                     });
                                 });

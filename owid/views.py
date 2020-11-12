@@ -2,9 +2,10 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.shortcuts import render
 
+import owid.service_owid as service_owid
 import owid.service as service
 import owid.service_covid as service_covid
-import owid.service_owid as service_owid
+import owid.service_race as service_race
 from main.secrets import *
 import latidude99.tasks as tasks
 
@@ -55,6 +56,16 @@ def tasks_owid(request):
 def covid(request):
     context = service_covid.get_covid_selection_data()
     return render(request, 'owid/covid.html', context)
+
+
+def flrace_cases(request):
+    context = service_race.get_data_d3race('totalcases')
+    return render(request, 'owid/flrace_cases.html', context)
+
+
+def flrace_deaths(request):
+    context = service_race.get_data_d3race('totalcases')
+    return render(request, 'owid/flrace_deaths.html', context)
 
 
 def numbers(request):

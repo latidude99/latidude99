@@ -7,6 +7,11 @@ import datetime as dt
 import pytz
 
 
+def find_country_coviddata_latest(country):
+    latest_obj = CovidData.objects.using('owid').filter(country__location=country).latest('date')
+    return latest_obj
+
+
 def find_country_coviddata_all(country, daterange_list):
     country_obj = Country.objects.using('owid').get(location=country)
     if len(daterange_list) == 2:
@@ -45,6 +50,7 @@ def find_data_by_continent_and_date(continent, date):
 def find_data_by_country_continent_latest(date):
     continents = ['Europe', 'Asia', 'Africa', 'North America', 'South America', 'Oceania']
     countries = []
+    countries_latest = []
     for cont in continents:
         covid_data = CovidData.objects.using('owid').filter(country__continent=cont, date=date)
         for item in covid_data:
@@ -73,6 +79,12 @@ def find_data_by_country_continent_latest(date):
                            .replace('(', '2')
                            .replace(')', '3'))
             countries.append(country)
+            countries_latest.append(item.country)
+    # countries_obj = find_countries_all()
+    # countries_names = [x.location for x in countries_obj]
+    # for c in countries_names:
+    #     if c not in countries_latest:
+    #
     return countries
 
 

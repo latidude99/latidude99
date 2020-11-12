@@ -10,6 +10,10 @@ BACKGROUND_PATTERN6 = 'images/'
 COVID_COVID_DATA_JSON_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.json'
 COVID_COVID_DATA_JSON_FILE = 'owid-covid-data.json'
 
+COVID_COVID_DATA_CSV_FILE = 'owid-covid-data.csv'
+OWID_DATA = 'data/'
+
+
 OWID_COVID_DB_CHECK_COUNTRY = 'United States'
 OWID_COVID_JSON_CHECK_COUNTRY_CODE = 'USA'
 
@@ -50,6 +54,7 @@ SOUTH_AM = 'South America'
 OCEANIA = 'Oceania'
 
 SEE_ALL_BTN = 'Latest numbers for all countries'
+SEE_RACE_CHARTS = 'Race bar charts'
 
 COUNTRY = 'Country'
 
@@ -84,7 +89,7 @@ TOTAL_DEATHS_TXT10000000 = 'per 100,000'
 
 BTN_CHARTS_TXT = 'see charts'
 
-
+LATEST_DATA = 'latest data: '
 
 CONTINENT ='continent'
 COUNTRY_NAME = 'country'
@@ -102,15 +107,15 @@ LIFE_EXPECTANCY = 'life expectancy'
 HUMAN_DEVELOPMENT_INDEX = 'human development index'
 
 NO_DATA = 'no data'
-MILLIONS = ' [millions]'
-YEARS = ' [years]'
-PPL = ' [people'
+MILLIONS = ' millions'
+YEARS = ' years'
+PPL = ' people'
 KM = ' per km'
 SQ = '2'
-PER_100_000 = ' [per 100,000 people]'
-PER_1000 = ' [per 1000 people]'
-PERCENT = '[%]'
-DOLLARS = '[$] '
+PER_100_000 = ' per 100,000 people'
+PER_1000 = ' per 1000 people'
+PERCENT = '%'
+DOLLARS = '$ '
 
 
 

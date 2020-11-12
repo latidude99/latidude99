@@ -9,6 +9,9 @@ urlpatterns = [
     path('covid/tasks', views.tasks_owid, name='tasks_owid'),
 
     path('covid/numbers', views.numbers, name='numbers'),
+    path('covid/flrace_cases', views.flrace_cases, name='flrace_cases'),
+    path('covid/flrace_deaths', views.flrace_deaths, name='flrace_deaths'),
+
     path('covid/numbers/country_json', views.country_json, name='country_json'),
     path('covid/numbers/country_json_chart', views.country_json_chart, name='country_json_chart'),
     path('covid/numbers_json', views.numbers_json, name='numbers_json'),
@@ -46,7 +49,5 @@ urlpatterns = [
 
     path('charts_bar_newcases_world/newcases/', views.charts_bar_newcases_world,
          name='charts_bar_newcases_world'),
-
-
 
 ]

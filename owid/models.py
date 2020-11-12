@@ -34,6 +34,8 @@ class CovidData(models.Model):
     total_cases_per_million = models.FloatField(default=0)
     new_deaths_per_million = models.FloatField(default=0)
     total_deaths_per_million = models.FloatField(default=0)
+    new_cases_smoothed_per_million = models.FloatField(default=0)
+    new_deaths_smoothed_per_million = models.FloatField(default=0)
     new_tests = models.FloatField(default=0)
     total_tests = models.FloatField(default=0)
     new_tests_smoothed = models.FloatField(default=0)

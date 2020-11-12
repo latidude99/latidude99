@@ -79,7 +79,7 @@ print('inside service')
 
 #send('no-replay@meridian99.com', LATITUDE99_LOGIN, 'Check OWID DB against json data', 'dummy status')
 
-# load_json_covid_data(OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE)
+#load_json_covid_data(OWID_DATA_FOLDER + COVID_COVID_DATA_JSON_FILE)
 
 #update_status_notify()
 
@@ -87,6 +87,6 @@ print('inside service')
 
 # delete_country('Solomon Islands')
 
-# delete_all_countries()
+#delete_all_countries()
 
 # download_and_update_covid()

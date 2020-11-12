@@ -240,7 +240,9 @@
                             <tr>
                                 <td class="bg-transparent text-white font-weight-lighter"
                                     style="height: 100px;font-family:'Lucida Console';">
-                                    <h4>{{ country_name }}:</h4></td>
+                                    <h4>{{ country_name }}:</h4>
+                                    <p style="opacity:50%;font-size:12px">{{ latest }}</p>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="bg-transparent text-white font-weight-lighter">
@@ -341,7 +343,10 @@
                                         <tr>
                                             <td class="bg-transparent text-white"
                                                 style="font-family: 'Lucida Console';height: 100px">
-                                                {{ country.location }}
+                                                <h5>{{ country.location }}</h5>
+                                                <p style="opacity:50%;font-size:12px">
+                                                    {{ countries_latest|index:forloop.counter0 }}
+                                                </p>
                                             </td>
                                         </tr>
                                         <tr>

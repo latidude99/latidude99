@@ -80,6 +80,7 @@ def get_covid_selection_data():
                'south_america': SOUTH_AM,
                'oceania': OCEANIA,
                'see_all_countries': SEE_ALL_BTN,
+               'see_race_charts': SEE_RACE_CHARTS,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
                'background_pattern2': BACKGROUND_PATTERN2,
@@ -250,7 +251,7 @@ def get_country_data_for_chart(type, location):
     daterange_list = []
     coviddata = find_country_coviddata_all(location, daterange_list)
     labels = [x.date.strftime(COVID_DATE_LABELS_FMT) for x in coviddata]
-    limit = len(labels) - 60  # 2 months
+    limit = len(labels) - 90  # 3 months
     labels = labels[limit:]
     values = []
     values_smooth = []
@@ -266,9 +267,11 @@ def get_country_data_for_chart(type, location):
         values = [x.total_deaths if x.total_deaths >= 0 else 0 for x in coviddata][limit:]
     elif type == 'newcasesper1m':
         values = [x.new_cases_per_million if x.new_cases_per_million >= 0 else 0 for x in coviddata][limit:]
+        values_smooth = [x.new_cases_smoothed_per_million if x.new_cases_smoothed_per_million >= 0 else 0 for x in coviddata][limit:]
     elif type == 'newdeathsper1m':
         values = [x.new_deaths_per_million if x.new_deaths_per_million >= 0 else 0 for x in coviddata][limit:]
-
+        values_smooth = [x.new_deaths_smoothed_per_million if x.new_deaths_smoothed_per_million >= 0 else 0 for x in coviddata][limit:]
+    print(values_smooth)
     data = [labels, values, values_smooth]
     return data
 
@@ -279,6 +282,7 @@ def get_country_data(location):
     location_flag = 'flags_small/' + location.lower().replace(' ', '-') + '.png'
     country = find_country(location)
     data = find_country_coviddata_all(location, daterange_list)
+    data_latest = data[len(data) -1].date.strftime("%A, %d %B %Y")
     context = {'footer_info': FOOTER_INFO,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
@@ -287,6 +291,8 @@ def get_country_data(location):
                'background_pattern4': BACKGROUND_PATTERN4,
                'background_pattern5': BACKGROUND_PATTERN5,
                'image_coronavirus': IMAGE_CORONAVIRUS,
+               'latest': LATEST_DATA,
+               'data_latest': data_latest,
                'btn_country': BTN_COUNTRY_CHANGE,
                'locations': locations,
                'flag': location_flag,
@@ -354,6 +360,7 @@ def get_countries_data(countries_selected, date_str):
     flags = []
     countries = []
     countries_names = []
+    countries_latest = []
     #    countries_data = []
     for c in countries_selected:
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
@@ -361,9 +368,9 @@ def get_countries_data(countries_selected, date_str):
         country = find_country(c)
         countries.append(country)
         countries_names.append(c)
-    #       data = find_country_coviddata_all(country)
-    #       countries_data.append(data)
-    print(countries)
+        data_latest = find_country_coviddata_latest(c).date.strftime("%a, %d %b %Y")
+        countries_latest.append(data_latest)
+    print(countries_latest)
     context = {'footer_info': FOOTER_INFO,
                'style_css': STYLE_OWID,
                'background_pattern1': BACKGROUND_PATTERN1,
@@ -374,6 +381,7 @@ def get_countries_data(countries_selected, date_str):
                'image_coronavirus': IMAGE_CORONAVIRUS,
                'btn_country': BTN_COUNTRY_CHANGE,
                'btn_countries_reselect': BTN_COUNTRIES_RESELECT,
+               'latest': LATEST_DATA,
                'locations': locations,
                'side_txt1': SIDE_TXT_1,
                'milky_way': MILKY_WAY,
@@ -392,6 +400,7 @@ def get_countries_data(countries_selected, date_str):
                'flags': flags,
                'countries': countries,
                'countries_names': countries_names,
+               'countries_latest': countries_latest,
                'date_range': date_str,
                'start_date': date_list[0],
                'end_date': date_list[1],
@@ -467,7 +476,6 @@ def get_newcases_all_group(countries_selected, daterange_str):
         countries_names.append(c)
         flag = 'flags_small/' + c.lower().replace(' ', '-') + '.png'
         flags.append(flag)
-        #        country = find_country(c)
         data = find_country_coviddata_all(c, daterange_list)
         no_data = 'NaN'
         values = [x.new_cases if x.new_cases > 0 else no_data for x in data]
