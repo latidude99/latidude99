@@ -132,7 +132,7 @@ Works on this part will commence soon(ish)
 	<p align="center">
 	<img src="../images/twin7h.png" width=100%></p>
 	<p align="center">
-	<img src="../images/twin8i.png" width=100%></p>
+	<img src="../images/twin7i.png" width=100%></p>
 	<p align="center">
 	<img src="../images/twin8a.png" width=100%></p>
 	<p align="center">
