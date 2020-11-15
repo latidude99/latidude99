@@ -1,0 +1,77 @@
+{% extends "owid/base_boot4_cia.html" %}
+{% block content %}
+    {% load static %}
+    {% static "owid/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid" xmlns:text-decoration="http://www.w3.org/1999/xhtml"
+         style="background-image: url('{{ static_base }}{{ background_pattern }}');">
+
+        <div class="row" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-8">
+                <h1 class="display-3 mt-5 mb-4 text-center">{{ title }}</h1>
+                <h4 class="text-center">{{ subtitle }}</h4>
+
+                <div class="py-5 mx-auto" style=" width:70%;">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="mt-2 mb-2" style="font-size: 20px !important;">
+                            <label for="country">{{ select_country }}</label>
+                        </div>
+
+                        <select class="form-control" id="sel1" name="country"
+                                style="background-color:transparent; border-color: #333333">
+                            <option style="background-color:deepskyblue;" selected>choose a country...</option>
+                            {% for c in countries %}
+                                <option style="background-color:deepskyblue;">{{ c }}</option>
+
+                            {% endfor %}
+                        </select>
+
+                        <div class="mt-4">
+                            <input type="submit" class="btn btn-block btn-outline-dark"
+                                   value="{{ btn_txt }}"
+                                   onclick="$('#loader3').show().delay(20000).hide(0); ">
+                        </div>
+                    </form>
+
+                    <div class="mt-5">
+                        <p id="loader3" class="loader3" style="width: 100%; display:none;"></p>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-lg-4">
+                <a href="" title=""
+                   style="background-color:#000001;color:#ffffff;text-decoration:none">
+                    <img class="mx-auto d-block img-fluid p-5" src="{{ static_base }}{{ image }}"
+                         alt="cia logo"
+                         style="width:100%">
+                </a>
+
+            </div>
+
+
+            <div class="p-3">
+                <p>{{ info0 }}</p>
+
+                <p>{{ info1 }}</p>
+
+                <p>{{ info2 }}</p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+{% endblock %}
+

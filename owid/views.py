@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 import owid.service_owid as service_owid
 import owid.service as service
+import owid.service_cia as service_cia
 import owid.service_covid as service_covid
 import owid.service_race as service_race
 from main.secrets import *
@@ -17,6 +18,16 @@ def tests(request):
 def index(request):
     context = service_owid.get_index_context()
     return render(request, 'owid/index.html', context)
+
+
+def cia(request):
+    context = service_cia.get_cia_context()
+    return render(request, 'owid/cia.html', context)
+
+
+def cia_country(request):
+    context = service_cia.get_cia_context()
+    return render(request, 'owid/cia_country.html', context)
 
 
 def tasks_owid(request):
@@ -58,14 +69,24 @@ def covid(request):
     return render(request, 'owid/covid.html', context)
 
 
-def flrace_cases(request):
-    context = service_race.get_data_d3race('totalcases')
-    return render(request, 'owid/flrace_cases.html', context)
+def flrace_cases20(request):
+    context = service_race.get_data_flrace('totalcases')
+    return render(request, 'owid/flrace_cases20.html', context)
 
 
-def flrace_deaths(request):
-    context = service_race.get_data_d3race('totalcases')
-    return render(request, 'owid/flrace_deaths.html', context)
+def flrace_deaths20(request):
+    context = service_race.get_data_flrace('totaldeaths')
+    return render(request, 'owid/flrace_deaths20.html', context)
+
+
+def flrace_cases40(request):
+    context = service_race.get_data_flrace('totalcases')
+    return render(request, 'owid/flrace_cases40.html', context)
+
+
+def flrace_deaths40(request):
+    context = service_race.get_data_flrace('totaldeaths')
+    return render(request, 'owid/flrace_deaths40.html', context)
 
 
 def numbers(request):

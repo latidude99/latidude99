@@ -1,5 +1,7 @@
 from django.db import models
 
+# ---------------- Covid-19 -----------------------------------------------------------------
+
 
 class Country(models.Model):
     location = models.CharField(max_length=200, unique=True)
@@ -53,3 +55,17 @@ class CovidData(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['date', 'country'], name="unique_date")
             ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+

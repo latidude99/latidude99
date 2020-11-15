@@ -1,0 +1,69 @@
+{% extends "owid/base_boot4_cia.html" %}
+{% block content %}
+    {% load static %}
+    {% static "owid/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid" xmlns:text-decoration="http://www.w3.org/1999/xhtml"
+         style="background-image: url('{{ static_base }}{{ background_pattern }}');">
+
+        <div class="row" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-8">
+                <h1 class="display-3 mt-5 mb-4 text-center">{{ title }}</h1>
+                <h4 class="text-center"><small>{{ subtitle }}</small></h4>
+
+
+                <div class="col-lg-4">
+                    <div id="loading1"
+                         class="spinner-grow spinner-grow-sm text-warning mt-1 mr-2 pull-right"
+                         style="display:none;"></div>
+                </div>
+
+
+                <form action="{% url 'owid:cia_country' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="input-group">
+                        <div class="mr-3 mt-2">
+                            <label for="locations">{{ select_country }}</label>
+                        </div>
+
+                        <select class="form-control" id="sel1" name="country"
+                                style="background-color:transparent;">
+                            {% for c in countries %}
+                                <option style="background-color:deepskyblue;">{{ c }}</option>
+                                <option style="background-color:deepskyblue;">test</option>
+                            {% endfor %}
+                        </select>
+
+                        <div class="input-group-append">
+                            <input type="submit" class="btn btn-outline-warning"
+                                   value="{{ btn_txt }}"
+                                   onclick="$('#loading1').show().delay(10000).hide(0);">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+    <div class="col-lg-4">
+        <a href="" title=""
+           style="background-color:#000001;color:#ffffff;text-decoration:none">
+            <img class="mx-auto d-block img-fluid p-5" src="{{ static_base }}{{ image }}"
+                 alt="cia logo"
+                 style="width:100%">
+        </a>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+
+
+
+
+{% endblock %}
+

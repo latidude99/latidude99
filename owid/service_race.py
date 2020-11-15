@@ -1,5 +1,5 @@
-#import django
-#django.setup()
+# import django
+# django.setup()
 
 from owid.owid_country_dto import OwidCountryDTO
 from owid.text_owid import *
@@ -81,6 +81,14 @@ ctx_base = {'style_css': STYLE_OWID,
                }
 
 
+def get_data_flrace(type):
+    context = {
+        'owid_data': OWID_DATA,
+    }
+    ctx = {**context, **ctx_base}
+    return ctx
+
+
 # type: 'totalcases'
 def get_data_d3race(type):
     fileout = d3_fileout_base + type + '.csv'
@@ -99,8 +107,8 @@ def get_data_d3race(type):
 
 
 
-#convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totalcases')
-#convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totaldeaths')
+# convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totalcases')
+# convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totaldeaths')
 
 
 

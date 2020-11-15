@@ -18,7 +18,7 @@
                 <a href="{% url 'owid:world' %}" title="go to the world page"
                    style="background-color:#000001;color:#ffffff;text-decoration:none">
                     <img class="mx-auto d-block img-fluid p-5" src="{{ static_base }}{{ image_coronavirus }}"
-                         alt="world_image"
+                         alt="coronavirus"
                          style="width:100%">
                 </a>
                 <div class="mt-5 pull-left">
@@ -133,9 +133,8 @@
                             </div>
                         </div>
                     {% endfor %}
-
-
                 </div>
+
                 <div class="bordershadow-white">
                     <div class="card py-2 mt-4"
                          style="background: transparent;color:beige;border-left: 2px solid orange">
@@ -161,51 +160,78 @@
                     </div>
                 </div>
                 <div class="row px-3">
-                    <div class="col-5-lg">
+                        <div class="col-3-lg">
+                            <div class="bordershadow-white">
+                                <div class="card mt-4"
+                                     style="background: transparent;color:beige;border-left: 2px solid orange">
+                                    <div class="card-header">
+                                        <h4 class="font-weight-light">
+                                            <a href="{% url 'owid:flrace_cases20' %}"
+                                               class="text-white stretched-link"
+                                               style="text-decoration: none;"
+                                               onclick="$('#loader4').show().delay(20000).hide(0);">
+                                                <p class="text-warning text-left">TOP 20</p>
+                                                Total cases race chart
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3-lg">
+                            <div class="bordershadow-white">
+                                <div class="card mt-4"
+                                     style="background: transparent;color:beige;border-left: 2px solid orange">
+                                    <div class="card-header">
+                                        <h4 class="font-weight-light">
+                                            <a href="{% url 'owid:flrace_deaths20' %}"
+                                               class="text-white stretched-link"
+                                               style="text-decoration: none;"
+                                               onclick="$('#loader4').show().delay(20000).hide(0);">
+                                                <p class="text-danger text-left">TOP 20</p>
+                                                Total deaths race chart
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    <div class="col-3-lg">
                         <div class="bordershadow-white">
-                            <div class="card py-2 pr-5 mt-4"
+                            <div class="card mt-4"
                                  style="background: transparent;color:beige;border-left: 2px solid orange">
                                 <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4 class="font-weight-light flex-grow-1">
-                                                <a href="{% url 'owid:flrace_cases' %}"
-                                                   class="text-white stretched-link"
-                                                   style="text-decoration: none;"
-                                                   onclick="$('#loader4').show().delay(20000).hide(0);">
-                                                    Total cases race chart
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-
+                                    <h4 class="font-weight-light">
+                                        <a href="{% url 'owid:flrace_cases40' %}"
+                                           class="text-white stretched-link"
+                                           style="text-decoration: none;"
+                                           onclick="$('#loader4').show().delay(20000).hide(0);">
+                                            <p class="text-warning text-left">TOP 40</p>
+                                            Total cases race chart
+                                        </a>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-2-lg">
-                        <div class="row px-5"></div>
-                    </div>
 
-                    <div class="col-5-lg">
+                    <div class="col-3-lg">
                         <div class="bordershadow-white">
-                            <div class="card py-2 pr-5 mt-4"
+                            <div class="card mt-4"
                                  style="background: transparent;color:beige;border-left: 2px solid orange">
                                 <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4 class="font-weight-light">
-                                                <a href="{% url 'owid:flrace_deaths' %}"
-                                                   class="text-white stretched-link"
-                                                   style="text-decoration: none;"
-                                                   onclick="$('#loader4').show().delay(20000).hide(0);">
-                                                    Total deaths race chart
-                                                </a>
-                                            </h4>
-
-                                        </div>
-                                    </div>
-
+                                    <h4 class="font-weight-light">
+                                        <a href="{% url 'owid:flrace_deaths40' %}"
+                                           class="text-white stretched-link"
+                                           style="text-decoration: none;"
+                                           onclick="$('#loader4').show().delay(20000).hide(0);">
+                                            <p class="text-danger text-left">TOP 40</p>
+                                            Total deaths race chart
+                                        </a>
+                                    </h4>
                                 </div>
                             </div>
                         </div>

@@ -5,12 +5,17 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('tests', views.tests, name='tests'),
 
+    path('cia', views.cia, name='cia'),
+    path('cia_country', views.cia_country, name='cia_country'),
+
     path('covid', views.covid, name='covid'),
     path('covid/tasks', views.tasks_owid, name='tasks_owid'),
 
     path('covid/numbers', views.numbers, name='numbers'),
-    path('covid/flrace_cases', views.flrace_cases, name='flrace_cases'),
-    path('covid/flrace_deaths', views.flrace_deaths, name='flrace_deaths'),
+    path('covid/flrace_cases20', views.flrace_cases20, name='flrace_cases20'),
+    path('covid/flrace_death20s', views.flrace_deaths20, name='flrace_deaths20'),
+    path('covid/flrace_cases40', views.flrace_cases40, name='flrace_cases40'),
+    path('covid/flrace_deaths40', views.flrace_deaths40, name='flrace_deaths40'),
 
     path('covid/numbers/country_json', views.country_json, name='country_json'),
     path('covid/numbers/country_json_chart', views.country_json_chart, name='country_json_chart'),
