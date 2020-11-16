@@ -13,9 +13,13 @@ urlpatterns = [
 
     path('covid/numbers', views.numbers, name='numbers'),
     path('covid/flrace_cases20', views.flrace_cases20, name='flrace_cases20'),
-    path('covid/flrace_death20s', views.flrace_deaths20, name='flrace_deaths20'),
+    path('covid/flrace_deaths20', views.flrace_deaths20, name='flrace_deaths20'),
     path('covid/flrace_cases40', views.flrace_cases40, name='flrace_cases40'),
     path('covid/flrace_deaths40', views.flrace_deaths40, name='flrace_deaths40'),
+    path('covid/flrace_cases20_100', views.flrace_cases20_100, name='flrace_cases20_100'),
+    path('covid/flrace_deaths20_100', views.flrace_deaths20_100, name='flrace_deaths20_100'),
+    path('covid/flrace_cases40_100', views.flrace_cases40_100, name='flrace_cases40_100'),
+    path('covid/flrace_deaths40_100', views.flrace_deaths40_100, name='flrace_deaths40_100'),
 
     path('covid/numbers/country_json', views.country_json, name='country_json'),
     path('covid/numbers/country_json_chart', views.country_json_chart, name='country_json_chart'),

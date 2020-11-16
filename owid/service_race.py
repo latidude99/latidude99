@@ -17,6 +17,56 @@ d3_fileout_base = OWID_DATA_FOLDER + 'csv_d3_'
 flouridh_fileout_base = OWID_DATA_FOLDER + 'csv_flourish_'
 
 
+def convert_data_to_csv_race_flourish2(flouridh_fileout_base, type):
+    lines = []
+    countries_obj = Country.objects.using('owid').all()
+    countries = [x.location for x in countries_obj]
+    data_world = CovidData.objects.using('owid').filter(country__location='World')
+    dates = [x.date for x in data_world]
+    print('dates len: ' + str(len(dates)))
+    date_line = ' ' + ', ' + ' '
+    for d in data_world:
+        date_line = date_line + ', ' + d.date.strftime('%d %b')
+    lines.append(date_line)
+
+    for c in countries_obj:
+        nums = []
+        if c.location != 'World':
+            line = c.location + ', ' + c.continent
+            data = CovidData.objects.using('owid').filter(country__location=c.location)
+            if type == 'totalcases':
+                for d in data:
+                    if d.total_cases < 0:
+                        d.total_cases = 0
+                    nums.append(str(int(d.total_cases)))
+            if type == 'totaldeaths':
+                for d in data:
+                    if d.total_deaths < 0:
+                        d.total_deaths = 0
+                    nums.append(str(int(d.total_deaths)))
+            if type == 'totalcasesper100t':
+                for d in data:
+                    if d.total_cases < 0:
+                        d.total_cases = 0
+                    nums.append(str(int(d.total_cases / (c.population / 100000))))
+            if type == 'totaldeathsper100t':
+                for d in data:
+                    if d.total_deaths < 0:
+                        d.total_deaths = 0
+                    nums.append(str(int(d.total_deaths / (c.population / 100000))))
+            zeros = ['0'] * (len(dates)-len(nums))
+            out =  zeros + nums
+            for o in out:
+                line = line + ', ' + o
+            lines.append(line)
+            print(c.location + ', ' + str(len(out)))
+    #lines = lines[:-1]
+    date = dt.datetime.now().strftime('%d %b %Y')
+    fileout = flouridh_fileout_base + type + '_' +date + '.csv'
+    with open(fileout, mode='wt', encoding='utf-8') as fileout:
+        fileout.write('\n'.join(lines))
+
+
 def convert_data_to_csv_race_flourish(flouridh_fileout_base, type):
     lines = []
     countries_obj = Country.objects.using('owid').all()
@@ -26,20 +76,21 @@ def convert_data_to_csv_race_flourish(flouridh_fileout_base, type):
         date_line = date_line + ', ' + d.date.strftime('%d %b')
     lines.append(date_line)
     for c in countries_obj:
-        line = c.location + ', ' + c.continent
-        data = CovidData.objects.using('owid').filter(country__location=c.location)
-        if type == 'totalcases':
-            for d in data:
-                if d.total_cases < 0:
-                    d.total_cases = 0
-                line = line + ', ' + str(int(d.total_cases))
-        if type == 'totaldeaths':
-            for d in data:
-                if d.total_deaths < 0:
-                    d.total_deaths = 0
-                line = line + ', ' + str(int(d.total_deaths))
-        lines.append(line)
-        print(line)
+        if c != 'World':
+            line = c.location + ', ' + c.continent
+            data = CovidData.objects.using('owid').filter(country__location=c.location)
+            if type == 'totalcases':
+                for d in data:
+                    if d.total_cases < 0:
+                        d.total_cases = 0
+                    line = line + ', ' + str(int(d.total_cases))
+            if type == 'totaldeaths':
+                for d in data:
+                    if d.total_deaths < 0:
+                        d.total_deaths = 0
+                    line = line + ', ' + str(int(d.total_deaths))
+            lines.append(line)
+            print(line)
     lines = lines[:-1]
     fileout = flouridh_fileout_base + type +'.csv'
     with open(fileout, mode='wt', encoding='utf-8') as fileout:
@@ -107,8 +158,10 @@ def get_data_d3race(type):
 
 
 
-# convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totalcases')
-# convert_data_to_csv_race_flourish(flouridh_fileout_base, 'totaldeaths')
+#convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totalcases')
+#convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totaldeaths')
+# convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totalcasesper100t')
+# convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totaldeathsper100t')
 
 
 

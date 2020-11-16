@@ -1,0 +1,33 @@
+{% extends "owid/base_boot4_race.html" %}
+{% block content %}
+    {% load static %}
+    {% static "owid/" as static_base %}
+
+
+    <div class="container-fluid">
+{#        <div class="ml-4 mt-5 mb-4">#}
+{#            <a href="{% url 'owid:covid' %}" role="button" class="btn btn-outline-light btn-sm">#}
+{#                <span class="fas fa-chevron-left"></span>#}
+{#                &nbsp; covid-19 home#}
+{#            </a>#}
+{#        </div>#}
+        <div class="row" style="width: 100%;">
+
+            <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/4367737" style="width: 100%;">
+                <script src="https://public.flourish.studio/resources/embed.js"></script></div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+

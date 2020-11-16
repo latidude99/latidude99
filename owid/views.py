@@ -89,6 +89,26 @@ def flrace_deaths40(request):
     return render(request, 'owid/flrace_deaths40.html', context)
 
 
+def flrace_cases20_100(request):
+    context = service_race.get_data_flrace('totalcases')
+    return render(request, 'owid/flrace_cases20_100.html', context)
+
+
+def flrace_deaths20_100(request):
+    context = service_race.get_data_flrace('totaldeaths')
+    return render(request, 'owid/flrace_deaths20_100.html', context)
+
+
+def flrace_cases40_100(request):
+    context = service_race.get_data_flrace('totalcases')
+    return render(request, 'owid/flrace_cases40_100.html', context)
+
+
+def flrace_deaths40_100(request):
+    context = service_race.get_data_flrace('totaldeaths')
+    return render(request, 'owid/flrace_deaths40_100.html', context)
+
+
 def numbers(request):
     day = ''
     if request.method == "POST":
