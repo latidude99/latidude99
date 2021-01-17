@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         service_race.generate_flourish_csv()
-        self.stdout.write(self.style.SUCCESS('Successfully downloaded json data and updated owid db'))
+        self.stdout.write(self.style.SUCCESS('Successfully generated CSV files for race charts'))
 
 
 
