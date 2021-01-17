@@ -155,7 +155,11 @@ def get_data_d3race(type):
 
 
 
-
+def generate_flourish_csv():
+     convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totalcases')
+     convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totaldeaths')
+     convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totalcasesper100t')
+     convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totaldeathsper100t')
 
 
 #convert_data_to_csv_race_flourish2(flouridh_fileout_base, 'totalcases')
