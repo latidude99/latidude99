@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('main.urls', 'main'), namespace='main')),
     path('owid/', include(('owid.urls', 'owid'), namespace='owid')),
+    path('pricecheck/', include(('pricecheck.urls', 'pricecheck'), namespace='pricecheck')),
 ]
