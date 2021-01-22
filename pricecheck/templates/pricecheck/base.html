@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+{% static "pricecheck/" as static_base %}
+
+<html lang="en">
+<head>
+    <title>{{title_tab}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+    <style>
+        body {
+            background-color: beige;
+            background-image: url('{{ static_base }}{{ back_pattern1 }}');
+            background-repeat: repeat;
+
+        }
+
+        body .card .card-body .card-text {
+            white-space: pre-wrap;
+        }
+
+
+    </style>
+</head>
+
+<body class="d-flex flex-column">
+
+
+    <div class="container-fluid" style="margin-top:30px;">
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+
+
+</body>
+</html>

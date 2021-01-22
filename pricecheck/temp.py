@@ -1,21 +1,21 @@
-import django
-django.setup()
+#import django
+#django.setup()
 
 import time
 import requests
 from bs4 import BeautifulSoup
 import pricecheck.service_email
 import latidude99.settings as settings
-from pricecheck.user import User
+from pricecheck.user_tmp import UserTmp
 from django.template.loader import get_template
 from django.template import Context
 
-user = User('Piotr',
+user = UserTmp('Piotr',
                 'latidude99test@gmail.com',
                 'https://www.amazon.co.uk/Audio-Technica-ATH-M50XBT-Wireless-Over-Ear-Headphones/dp/B07HKVCVSY',
                 10)
 
-print (User)
+print (UserTmp)
 
 #url = "https://www.amazon.co.uk/Audio-Technica-ATH-M50XBT-Wireless-Over-Ear-Headphones/dp/B07HKVCVSY/ref=sr_1_1?crid=133JHFPXEQBEG&dchild=1&keywords=ath+m50x+bt&qid=1611159279&sprefix=ath+m50x%2Caps%2C170&sr=8-1"
 #message = "The ATH-50XBT price"
@@ -42,6 +42,7 @@ def check_item_price(page_html):
 
 def check():
     context = check_item_price(get_page_html(user.url))
+    print(context)
     subject = 'Price check for ' + context['product']
     template = 'pricecheck/email_templ_1.html'
     sender = settings.EMAIL_HOST_USER

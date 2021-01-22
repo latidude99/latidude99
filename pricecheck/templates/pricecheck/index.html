@@ -1,0 +1,204 @@
+{% extends "pricecheck/base.html" %}
+{% block content %}
+    {% load static %}
+    {% static "pricecheck/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid"
+         style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
+
+        <div class="row" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-12 mb-5">
+                <h1 class="display-3 mt-5 mb-4 text-center">{{ title_main }}</h1>
+                <h2 class="text-center"> {{ welcome_text }}</h2>
+
+            </div>
+
+            <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
+                <h3>First</h3>
+                <div>
+                    <form action="{% url 'main:contact' %}" method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label class="float-left" for="url">{{ url }}</label>
+                            <input type="text" class="form-control" id="url"
+                                   placeholder="enter product url" name="url" required>
+                            <div class="valid-feedback">{{ error_1 }}</div>
+                            <div class="invalid-feedback">{{ error_2 }}</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-dark btn-block">{{ validate_btn }}</button>
+                    </form>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        // process the form
+                        $('form').submit(function (event) {
+                            // get the form data
+                            // there are many ways to get this data using jQuery (you can use the class or id also)
+                            var formData = {
+                                'url': $('input[name=url]').val(),
+                            };
+                            // process the form
+                            $.ajax({
+                                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                                url: '{%  url 'pricecheck:validate'  %}', // the url where we want to POST
+                                data: formData, // our data object
+                                dataType: 'json', // what type of data do we expect back from the server
+                                encode: true
+                            })
+                            // using the done promise callback
+                                .done(function (data) {
+                                    // log data to the console so we can see
+                                    console.log(data);
+                                    // here we will handle errors and validation messages
+                                    $("#pr_name").text(data['product_name']);
+                                    $("#pr_price").text(data['product_price']);
+                                    $("#pr_currency").text(data['product_currency']);
+                                    $("#pr_date").text(data['product_date']);
+                                });
+                            // stop the form from submitting the normal way and refreshing the page
+                            event.preventDefault();
+                            console.log("form submitted")  // sanity check
+                        });
+
+                    });
+                </script>
+                <br><br>
+                <div class=mt-5">
+                    <p>Product name:</p>
+                    <h5 class=pr-5" id="pr_name" style="color:blue"></h5>
+                    <p>Product price:</p>
+                    <h5 class=pr-5" id="pr_price" style="color:red"></h5>
+                    <p>Currency:</p>
+                    <h5 class=pr-5" id="pr_currency" style="color:red"></h5>
+                    <p>Validation time:</p>
+                    <h5 class=pr-5" id="pr_date" style="color:grey"></h5>
+                </div>
+            </div>
+            <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
+                <h3>Then</h3>
+                <form action="{% url 'main:contact' %}" method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="float-left" for="name">{{ name }}</label>
+                        <input type="text" class="form-control" id="name"
+                               placeholder="enter your name" name="name" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="float-left" for="email">{{ email }}</label>
+                        <input type="email" class="form-control" id="email"
+                               placeholder="enter your email address" name="email" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="float-left" for="url">{{ url }}</label>
+                        <input type="text" class="form-control" id="url"
+                               placeholder="enter product url" name="url" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="">{{ time }}</h5>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radios" id="radio1"
+                                   value="option1" checked>
+                            <label class="form-check-label" for="radio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radios" id="radio2"
+                                   value="option2">
+                            <label class="form-check-label" for="radio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radios" id="radio3"
+                                   value="option3" disabled>
+                            <label class="form-check-label" for="radio3">3 (disabled)</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-check float-left">
+                        <input class="form-check-input" type="checkbox" name="terms" required>
+                        <span class="">
+                            {{ terms }}
+                        </span>
+                        <div class="valid-feedback">{{ error_1 }}.</div>
+                        <div class="invalid-feedback">{{ error_3 }}</div>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark btn-block">{{ submit_btn }}</button>
+                </form>
+
+            </div>
+
+
+            <script>
+
+                // csrf_token
+
+                $(function () {
+
+                    // This function gets cookie with a given name
+                    function getCookie(name) {
+                        var cookieValue = null;
+                        if (document.cookie && document.cookie != '') {
+                            var cookies = document.cookie.split(';');
+                            for (var i = 0; i < cookies.length; i++) {
+                                var cookie = jQuery.trim(cookies[i]);
+                                // Does this cookie string begin with the name we want?
+                                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                    break;
+                                }
+                            }
+                        }
+                        return cookieValue;
+                    }
+
+                    var csrftoken = getCookie('csrftoken');
+
+                    /*
+                    The functions below will create a header with csrftoken
+                    */
+
+                    function csrfSafeMethod(method) {
+                        // these HTTP methods do not require CSRF protection
+                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                    }
+
+                    function sameOrigin(url) {
+                        // test that a given url is a same-origin URL
+                        // url could be relative or scheme relative or absolute
+                        var host = document.location.host; // host + port
+                        var protocol = document.location.protocol;
+                        var sr_origin = '//' + host;
+                        var origin = protocol + sr_origin;
+                        // Allow absolute or scheme relative URLs to same origin
+                        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                            // or any other URL that isn't scheme relative or absolute i.e relative.
+                            !(/^(\/\/|http:|https:).*/.test(url));
+                    }
+
+                    $.ajaxSetup({
+                        beforeSend: function (xhr, settings) {
+                            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                                // Send the token to same-origin, relative URLs only.
+                                // Send the token only if the method warrants CSRF protection
+                                // Using the CSRFToken value acquired earlier
+                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                            }
+                        }
+                    });
+
+                });
+            </script>
+        </div>
+    </div>
+
+{% endblock %}
+
