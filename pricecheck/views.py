@@ -21,12 +21,17 @@ def validate(request):
     if request.method == 'POST':
         url_text = request.POST.get('url')
         response_data = {}
-        validation = service_pricecheck.validate_url(url_text)
-        response_data['product_date'] = dt.datetime.now().strftime('%d %B %Y, %H:%M')
-        response_data['product_name'] = validation['product_name']
-        response_data['product_price'] = validation['product_price']
-        response_data['product_currency'] = validation['product_currency']
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        if url_text.strip() != '':
+            validation = service_pricecheck.validate_url(url_text)
+            response_data['status'] = 'ok'
+            response_data['product_date'] = dt.datetime.now().strftime('%d %B %Y, %H:%M')
+            response_data['product_name'] = validation['product_name']
+            response_data['product_price'] = validation['product_price']
+            response_data['product_currency'] = validation['product_currency']
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        else:
+            response_data['status'] = 'No valid URL detected'
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
         return HttpResponse(
             json.dumps({"error": "validation error"}),
