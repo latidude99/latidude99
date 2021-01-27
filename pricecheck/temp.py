@@ -31,6 +31,9 @@ def check_item_price(page_html):
 #    spans = soup.find_all("span", {"class": "value"})
     div_product = soup.find(id="productTitle")
     div_price = soup.find(id="price_inside_buybox")
+    if div_price is None:
+        div_price = soup.find(id='newBuyBoxPrice')
+    print(div_price)
     product = div_product.get_text().strip()
     price = div_price.get_text().strip()
     context = {'username': user.name,
@@ -47,8 +50,8 @@ def check():
     template = 'pricecheck/email_templ_1.html'
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
-    pricecheck.service_email.send(subject, template, context, sender, receiver)
-    print('pricecheck email sent to ' + user.email)
+    #pricecheck.service_email.send(subject, template, context, sender, receiver)
+    #print('pricecheck email sent to ' + user.email)
 
 
 
@@ -56,6 +59,6 @@ def check():
 #    time.sleep(60)
 
 
-#check_item_price(get_page_html(user.url))
+check_item_price(get_page_html(user.url))
 
 check()

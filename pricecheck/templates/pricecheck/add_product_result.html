@@ -1,0 +1,99 @@
+{% extends "pricecheck/base.html" %}
+{% block content %}
+    {% load static %}
+    {% static "pricecheck/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid"
+         style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
+
+    <div class="row p-5" style="font-family: 'Candara Light', Arial, sans-serif;">
+        <div class="col-lg-12 mb-5">
+            <h2 class="text-center">Success!</h2>
+
+        </div>
+    </div>
+    <div class="pl-2">
+        <div class="d-flex flex-row mb-1">
+            <div class="pl-2">
+                <p>The product:</p>
+            </div>
+            <div class="pl-3">
+                <p class="pr-1" style="color:blue">{{ product_db.name }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="pl-2">
+        <div class="d-flex flex-row mb-3">
+            <div class="pl-2">
+                <p>Initial price:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:red">{{ product_db.price }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Currency:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:red">{{ product_db.currency }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Email address:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.email }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Start date:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.start_date }}</p>
+            </div>
+            <div class="pl-2">
+                <p>End date:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.end_date }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Tracking duration:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.duration }}</p>
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-row mb-1">
+            <div class="pl-2">
+                <p>Tracking code:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4" style="color:darkblue">{{ product_db.track_code }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Stop code:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4" style="color:darkblue">{{ product_db.stop_code }}</p>
+            </div>
+        </div>
+
+        <hr>
+        <div class="pl-2">
+            <p>{{ success_info_1 }}</p>
+            <p>{{ success_info_2 }}</p>
+            <p>{{ success_info_3 }}</p>
+            <p>{{ success_info_4 }}</p>
+            <p>{{ success_info_5 }}</p>
+            <p>{{ success_info_6 }}</p>
+
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
+
