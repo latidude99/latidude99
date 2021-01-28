@@ -12,13 +12,13 @@
                 <h2 class="text-center"> {{ welcome_text }}</h2>
             </div>
             <div class="col-lg-5">
-                <form id="find_form" class="form-inline" action="{% url 'pricecheck:add_product' %}"
+                <form id="find_form" class="form-inline" action="{% url 'pricecheck:product_info' %}"
                       method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
-                    <p class="pl-3" for="tracking">Find tracked item:</p>
+                    <p class="pl-3" for="info">Find tracked item:</p>
                     <div class="input-group mb-3  input-group-sm ml-3">
                         <input type="text" class="form-control" placeholder="enter trackng number"
-                               id="tracking" name="email" style="background-color: beige;">
+                               id="info" name="track_code" style="background-color: beige;">
                         <div class="px-3">
                             <button type="submit" class="btn btn-outline-dark btn-sm px-5"> {{ track_btn }} </button>
                         </div>

@@ -78,6 +78,58 @@ def validate_url(url, product_id, price_ids):
     return validation
 
 
+def get_product_info_context(product):
+    product_dto = get_product_info(product)
+    context = {'product_dto': product_dto,
+               'product_info_1': PRODUCT_INFO_1,
+               'product_info_2': PRODUCT_INFO_2,
+               'product_info_3': PRODUCT_INFO_3,
+               'product_info_4': PRODUCT_INFO_4,
+               'product_info_5': PRODUCT_INFO_5,
+               'product_info_6': PRODUCT_INFO_6,
+
+               }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
+
+def get_product_info(product_dto):
+    code = product_dto.track_code.strip()
+    if len(code) < 16:
+        product_dto.error = code + ' - Invalid tracking code: the code has to be 16 characters long.'
+        return product_dto
+    try:
+        product_db = Product.objects.using('pricecheck_34').get(track_code=code)
+        user = product_db.user
+        product_dto.username = user.name
+        product_dto.email = user.email
+        product_dto.product_max_count = MAX_PRODUCT_TRACKED
+        product_dto.product_count = user.product_set.filter(tracked=True).count()
+        product_dto.name = product_db.name
+        product_dto.initial_price = product_db.initial_price
+        product_dto.currency = product_db.initial_currency
+        prices = Price.objects.using('pricecheck_34').filter(product=product_db)
+
+        product_dto.price_labels = [x.date.strftime('%d %b %Y, %H:%M') for x in prices]
+        product_dto.price_values = [x.price for x in prices]
+
+        product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
+        product_dto.end_date = product_db.end_date.strftime('%d %B %Y, %H:%M')
+        timedelta = product_db.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
+        product_dto.duration_left = str(timedelta.days)
+        product_dto.track_code = product_db.track_code
+        product_dto.stop_code = product_db.stop_code
+        product_dto.duration = str(product_db.duration) + ' day(s)'
+        product_dto.threshold_up = product_dto.currency + str(product_db.threshold_up)
+        product_dto.threshold_down = product_dto.currency + str(product_db.threshold_down)
+
+    except Product.DoesNotExist:
+        product_dto.error = code + ' - Invalid tracking code: no product found.'
+        return product_dto
+
+    return product_dto
+
+
 def get_add_product_context(product):
     product_dto = add_product(product)
     context = {'product_dto': product_dto,
@@ -91,10 +143,6 @@ def get_add_product_context(product):
                }
     ctx = {**get_base_context(), **context}
     return ctx
-
-'''
-      
-'''
 
 
 def add_product(product_dto):

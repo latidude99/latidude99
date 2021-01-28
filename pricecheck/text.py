@@ -35,3 +35,28 @@ SUCCESS_INFO_3 = 'The email will include the product name, tracking code, previo
 SUCCESS_INFO_4 = 'You can view product tracking history entering the tracking code on the home page.'
 SUCCESS_INFO_5 = 'You can stop tracking the product at any time entering the stop code.'
 SUCCESS_INFO_6 = ''
+
+
+PRODUCT_INFO_1 = ''
+PRODUCT_INFO_2 = ''
+PRODUCT_INFO_3 = ''
+PRODUCT_INFO_4 = ''
+PRODUCT_INFO_5 = ''
+PRODUCT_INFO_6 = ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

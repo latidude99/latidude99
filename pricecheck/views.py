@@ -58,6 +58,15 @@ def add_product(request):
     return render(request, 'pricecheck/add_product_result.html', context)
 
 
+def product_info(request):
+    product_dto = ProductDTO()
+    if request.method == 'POST':
+        product_dto.track_code = request.POST['track_code']
+    context = service_pricecheck.get_product_info_context(product_dto)
+    print(context)
+    return render(request, 'pricecheck/info_product.html', context)
+
+
 '''
 def numbers(request):
     day = ''
