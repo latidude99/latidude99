@@ -4,62 +4,81 @@
     {% static "pricecheck/" as static_base %}
     {% load humanize %}
 
-    <div class="container-fluid"
+    <div class="container-fluid p-4"
          style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
 
-    <div class="row p-5" style="font-family: 'Candara Light', Arial, sans-serif;">
-        <div class="col-lg-12 mb-5">
-            <h2 class="text-center">Success!</h2>
+        <div class="row p-3" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-12 mb-4">
+                <h2 class="text-center">Success!</h2>
+
+            </div>
+        </div>
+
+         <div class="pl-2">
+            <h5>{{ success_info_1 }}</h5>
+            <p>{{ success_info_2 }}</p>
+            <p>{{ success_info_3 }}</p>
+            <p>{{ success_info_4 }}</p>
+            <p>{{ success_info_5 }}</p>
+            <p>{{ success_info_6 }}</p>
+
 
         </div>
-    </div>
-    <div class="pl-2">
+        <hr>
         <div class="d-flex flex-row mb-1">
-            <div class="pl-2">
-                <p>The product:</p>
+            <div class="pl-2 ">
+                <p class="mt-1">The product:</p>
             </div>
             <div class="pl-3">
-                <p class="pr-1" style="color:blue">{{ product_db.name }}</p>
+                <p class="pr-3 " style="font-size:20px; color:blue">{{ product_dto.name }}</p>
+            </div>
+            <div class="pl-2">
+                <p class="mt-1">Initial price:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="font-size:20px; color:red">{{ product_dto.price }}</p>
+            </div>
+            <div class="pl-2">
+                <p class="mt-1">Currency:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4 font-weight-bolder" style="font-size:20px; color:red">{{ product_dto.currency }}</p>
             </div>
         </div>
-    </div>
-    <div class="pl-2">
-        <div class="d-flex flex-row mb-3">
-            <div class="pl-2">
-                <p>Initial price:</p>
-            </div>
-            <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:red">{{ product_db.price }}</p>
-            </div>
-            <div class="pl-2">
-                <p>Currency:</p>
-            </div>
-            <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:red">{{ product_db.currency }}</p>
-            </div>
+        <div class="d-flex flex-row mb-1">
             <div class="pl-2">
                 <p>Email address:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.email }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.email }}</p>
             </div>
+            <div class="pl-2">
+                <p>Number of items being tracked for this email address:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4"><span style="color:darkblue"> {{ product_dto.product_count }}</span>
+                    <span> out of </span> <span style="color:darkblue"> {{ product_dto.product_max_count }} </span>
+                    <span> allowed</span></p>
+            </div>
+        </div>
+        <div class="d-flex flex-row mb-1">
             <div class="pl-2">
                 <p>Start date:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.start_date }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.start_date }}</p>
             </div>
             <div class="pl-2">
                 <p>End date:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.end_date }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.end_date }}</p>
             </div>
             <div class="pl-2">
                 <p>Tracking duration:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4 font-weight-bolder" style="color:#666666">{{ product_db.duration }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.duration }}</p>
             </div>
         </div>
 
@@ -69,27 +88,30 @@
                 <p>Tracking code:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4" style="color:darkblue">{{ product_db.track_code }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.track_code }}</p>
             </div>
             <div class="pl-2">
                 <p>Stop code:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4" style="color:darkblue">{{ product_db.stop_code }}</p>
+                <p class="pr-4" style="color:darkblue">{{ product_dto.stop_code }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Upwards threshold:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4" style="color:darkblue">{{ product_dto.threshold_up }}</p>
+            </div>
+            <div class="pl-2">
+                <p>Downwards threshold:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4" style="color:darkblue">{{ product_dto.threshold_down }}</p>
             </div>
         </div>
 
         <hr>
-        <div class="pl-2">
-            <p>{{ success_info_1 }}</p>
-            <p>{{ success_info_2 }}</p>
-            <p>{{ success_info_3 }}</p>
-            <p>{{ success_info_4 }}</p>
-            <p>{{ success_info_5 }}</p>
-            <p>{{ success_info_6 }}</p>
 
-
-        </div>
 
     </div>
 

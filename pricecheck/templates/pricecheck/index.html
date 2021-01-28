@@ -7,338 +7,386 @@
     <div class="container-fluid"
          style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
 
-        <div class="row" style="font-family: 'Candara Light', Arial, sans-serif;">
-            <div class="col-lg-12 mb-5">
+        <div class="row mt-3 mb-4" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-12">
                 <h2 class="text-center"> {{ welcome_text }}</h2>
+            </div>
+            <div class="col-lg-5">
+                <form id="find_form" class="form-inline" action="{% url 'pricecheck:add_product' %}"
+                      method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <p class="pl-3" for="tracking">Find tracked item:</p>
+                    <div class="input-group mb-3  input-group-sm ml-3">
+                        <input type="text" class="form-control" placeholder="enter trackng number"
+                               id="tracking" name="email" style="background-color: beige;">
+                        <div class="px-3">
+                            <button type="submit" class="btn btn-outline-dark btn-sm px-5"> {{ track_btn }} </button>
+                        </div>
+                    </div>
+                    <div class="valid-feedback">{{ error_1 }}</div>
+                    <div class="invalid-feedback">{{ error_2 }}</div>
 
+                </form>
             </div>
 
-            <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
-                <div class="d-flex">
-                    <div class="pr-3">
-                        <h3>First</h3>
-                    </div>
-                    <div class="pt-3 flex-grow-1">
-                        <p id="loader3" class="loader3" style="width: 90%; display:none;"></p>
-                    </div>
+        </div>
+        <div class="col-lg-1">
+
+        </div>
+        <div class="col-lg-5">
+
+        </div>
+<hr>
+    <div class="row " style="font-family: 'Candara Light', Arial, sans-serif;">
+
+        <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
+            <div class="d-flex">
+                <div class="pr-3">
+                    <h4>First</h4>
                 </div>
-                <div>
-                    <form id="validate_form" action="#" method="post">
-                        {% csrf_token %}
-
-                        <div class="form-group">
-                            <label class="float-left" for="url">
-                                <pre>{{ url }}</pre>
-                            </label>
-                            <input type="text" class="form-control" id="url"
-                                   placeholder="enter product url" name="url" required>
-                            <div class="valid-feedback">{{ error_1 }}</div>
-                            <div class="invalid-feedback">{{ error_2 }}</div>
-                        </div>
-
-                        <button type="submit" class="btn btn-outline-dark btn-block">{{ validate_btn }}</button>
-                    </form>
+                <div class="pt-3 flex-grow-1">
+                    <p id="loader3" class="loader3" style="width: 90%; display:none;"></p>
                 </div>
+            </div>
+            <div>
+                <form id="validate_form" action="#" method="post">
+                    {% csrf_token %}
 
-                <script>
-                    $(document).ready(function () {
+                    <div class="form-group">
+                        <label class="float-left" for="url">
+                            <pre>{{ url }}</pre>
+                        </label>
+                        <input type="text" class="form-control" id="url"
+                               placeholder="enter product url" name="url" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
 
-                        $('#validate_form').submit(function (event) {
-                            var formData = {
-                                'url': $('input[name=url]').val(),
-                            };
-                            $('#loader3').show();
-                            $.ajax({
-                                type: 'POST',
-                                url: '{%  url 'pricecheck:validate'  %}',
-                                data: formData,
-                                dataType: 'json',
-                                encode: true,
+                    <button type="submit" class="btn btn-outline-dark btn-block">{{ validate_btn }}</button>
+                </form>
+            </div>
 
-                            })
-                                .done(function (data) {
-                                    $('#loader3').hide();
-                                    console.log(data);
-                                    if (data['status'] === 'ok') {
-                                        $("#pr_name").text(data['product_name']);
-                                        $("#pr_price").text(data['product_price']);
-                                        $("#pr_currency").text(data['product_currency']);
-                                        $("#pr_date").text(data['product_date']);
-                                        $("#error").css("display", "none");
-                                        $("#confirmation").css("display", "unset");
+            <script>
+                $(document).ready(function () {
 
-                                        $('#confirm_btn').prop('disabled', false);
+                    $('#validate_form').submit(function (event) {
+                        var formData = {
+                            'url': $('input[name=url]').val(),
+                        };
+                        $('#loader3').show();
+                        $.ajax({
+                            type: 'POST',
+                            url: '{%  url 'pricecheck:validate'  %}',
+                            data: formData,
+                            dataType: 'json',
+                            encode: true,
 
-                                        $('#product_name_hidden').val(data['product_name']);
-                                        $('#product_price_hidden').val(data['product_price']);
-                                        $('#product_currency_hidden').val(data['product_currency']);
-                                    } else {
-                                        $("#confirmation").css("display", "none");
-                                        $("#error").css("display", "unset");
-                                        $('#link').val('');
-                                        $('#then').prop('disabled', true)
-                                    }
-                                });
-                            event.preventDefault();
-                            console.log("form submitted")
-                        });
+                        })
+                            .done(function (data) {
+                                $('#loader3').hide();
+                                console.log(data);
+                                if (data['status'] === 'ok') {
+                                    $("#pr_name").text(data['product_name']);
+                                    $("#pr_price").text(data['product_price']);
+                                    $("#pr_currency").text(data['product_currency']);
+                                    $("#pr_date").text(data['product_date']);
+                                    $("#error").css("display", "none");
+                                    $("#confirmation").css("display", "unset");
+
+                                    $('#confirm_btn').prop('disabled', false);
+
+                                    $('#product_name_hidden').val(data['product_name']);
+                                    $('#product_price_hidden').val(data['product_price']);
+                                    $('#product_currency_hidden').val(data['product_currency']);
+                                } else {
+                                    $("#confirmation").css("display", "none");
+                                    $("#error").css("display", "unset");
+                                    $('#link').val('');
+                                    $('#then').prop('disabled', true)
+                                }
+                            });
+                        event.preventDefault();
+                        console.log("form submitted")
                     });
-                </script>
+                });
+            </script>
 
-                <div id="error" style="color:red; display:none;" class="p-5 text-center">
-                    <h4>Invalid URL detected</h4>
-                </div>
+            <div id="error" style="color:red; display:none;" class="p-5 text-center">
+                <h4>Invalid URL detected</h4>
+            </div>
 
-                <div id="confirmation" style="display:none;">
+            <div id="confirmation" style="display:none;">
 
-                    <div class="mt-2">
-                        <p class="pt-2">Product name:</p>
-                        <h5 id="pr_name" style="color:blue"></h5>
-                        <br>
-                        <div class="row">
-                            <div class="col">
-                                <div class="pb-1 flex-fill">Currency:</div>
-                                <div class="p-0 flex-fill"><h5 id="pr_currency" style="color:red"></h5></div>
+                <div class="mt-2">
+                    <p class="pt-2">Product name:</p>
+                    <h5 id="pr_name" style="color:blue"></h5>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="pb-1 flex-fill">Currency:</div>
+                            <div class="p-0 flex-fill"><h5 id="pr_currency" style="color:red"></h5></div>
 
-                            </div>
-                            <div class="col">
-                                <div class="pb-1 flex-fill">Product price:</div>
-                                <div class="p-0 flex-fill"><h5 id="pr_price" style="color:red"></h5></div>
+                        </div>
+                        <div class="col">
+                            <div class="pb-1 flex-fill">Product price:</div>
+                            <div class="p-0 flex-fill"><h5 id="pr_price" style="color:red"></h5></div>
 
-                            </div>
-                            <div class="col">
-                                <div class="pb-1 flex-fill">Validation time:</div>
-                                <div class="p-0 flex-fill"><h5 id="pr_date" style="color:grey"></h5></div>
+                        </div>
+                        <div class="col">
+                            <div class="pb-1 flex-fill">Validation time:</div>
+                            <div class="p-0 flex-fill"><h5 id="pr_date" style="color:grey"></h5></div>
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row mt-5">
-                        <div class="col-lg-6">
-                            <p>Is the product name and the price correct?</p>
-                        </div>
-                        <div class="col-lg-6">
-                            <button id="confirm_btn" class="btn btn-outline-dark btn-block"
-                                    onclick="
+                <div class="row mt-5">
+                    <div class="col-lg-6">
+                        <p>Is the product name and the price correct?</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <button id="confirm_btn" class="btn btn-outline-dark btn-block"
+                                onclick="
                                         console.log('confirmed:  ' + $('#url').val());
                                         $('#then').prop('disabled', false);
                                         $('#link').val($('#url').val());
                                         $('#link').prop('readonly', true);
+                                        $('#upwards').val($('#product_currency_hidden').val() + '0.01');
+                                        $('#downwards').val($('#product_currency_hidden').val()+ '0.01');
                                         $('#confirm_btn').prop('disabled', true);">
-                                {{ confirm_btn }}</button>
-                        </div>
+                            {{ confirm_btn }}</button>
                     </div>
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
-                <fieldset id="then" disabled>
-                    <div class="d-flex">
-                        <div class="pr-3">
-                            <h3>Then</h3>
+
+        <div class="col-lg-6" style="font-family: Arial, Helvetica, sans-serif;">
+            <fieldset id="then" disabled>
+                <div class="d-flex">
+                    <div class="pr-3">
+                        <h4>Then</h4>
+                    </div>
+                    <div class="pt-3 flex-grow-1">
+                        <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
+                    </div>
+                </div>
+                <form id="track_form" action="{% url 'pricecheck:add_product' %}" method="post"
+                      class="needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" id="product_name_hidden" name="product_name">
+                    <input type="hidden" id="product_price_hidden" name="product_price">
+                    <input type="hidden" id="product_currency_hidden" name="product_currency">
+                    <div class="form-group">
+                        <label class="float-left" for="username">{{ name }}</label>
+                        <input type="text" class="form-control" id="username"
+                               placeholder="enter your name" name="username" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="float-left" for="email">{{ email }}</label>
+                        <input type="email" class="form-control" id="email"
+                               placeholder="enter your email address" name="email" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="float-left" for="link">{{ link }}</label>
+                        <input type="text" class="form-control" id="link"
+                               style="color:darkgrey;"
+                               placeholder="this will be filled in automatically after validation"
+                               name="link" required>
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                    </div>
+                    <div class="form-group">
+                        <p class="">{{ duration }}</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio1"
+                                   value="1" checked>
+                            <label class="form-check-label" for="radio1">1 day</label>
                         </div>
-                        <div class="pt-3 flex-grow-1">
-                            <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio2"
+                                   value="2">
+                            <label class="form-check-label" for="radio1">2 days</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio3"
+                                   value="3">
+                            <label class="form-check-label" for="radio1">3 days</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio4"
+                                   value="5">
+                            <label class="form-check-label" for="radio1">5 days</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio5"
+                                   value="10">
+                            <label class="form-check-label" for="radio2">10 days</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio6"
+                                   value="15" disabled>
+                            <label class="form-check-label" for="radio3" style="color:darkgrey;">15 days</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio7"
+                                   value="30" disabled>
+                            <label class="form-check-label" for="radio3" style="color:darkgrey;">1 month</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="radio8"
+                                   value="90" disabled>
+                            <label class="form-check-label" for="radio3" style="color:darkgrey;">3 months</label>
                         </div>
                     </div>
-                    <form id="track_form" action="{% url 'pricecheck:add_product' %}" method="post"
-                          class="needs-validation"
-                          novalidate>
-                        {% csrf_token %}
-                        <input type="hidden" id="product_name_hidden" name="product_name">
-                        <input type="hidden" id="product_price_hidden" name="product_price">
-                        <input type="hidden" id="product_currency_hidden" name="product_currency">
+                    <fieldset id="promo">
                         <div class="form-group">
-                            <label class="float-left" for="username">{{ name }}</label>
-                            <input type="text" class="form-control" id="username"
-                                   placeholder="enter your name" name="username" required>
-                            <div class="valid-feedback">{{ error_1 }}</div>
-                            <div class="invalid-feedback">{{ error_2 }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="float-left" for="email">{{ email }}</label>
-                            <input type="email" class="form-control" id="email"
-                                   placeholder="enter your email address" name="email" required>
-                            <div class="valid-feedback">{{ error_1 }}</div>
-                            <div class="invalid-feedback">{{ error_2 }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="float-left" for="link">{{ link }}</label>
-                            <input type="text" class="form-control" id="link"
-                                   placeholder="this will be filled in automatically after validation"
-                                   name="link" required>
-                            <div class="valid-feedback">{{ error_1 }}</div>
-                            <div class="invalid-feedback">{{ error_2 }}</div>
-                        </div>
-                        <div class="form-group">
-                            <p class="">{{ duration }}</p>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio1"
-                                       value="1" checked>
-                                <label class="form-check-label" for="radio1">1 day</label>
+                            <div class="row">
+                                <div class="col-lg-4" style="color:darkgrey;">
+                                    Upwards change threshold:
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control form-control-sm" id="upwards"
+                                           style="color:darkgrey;" placeholder="0.01" name="upwards" readonly>
+                                </div>
+                                <div class="col-lg-4" style="color:darkgrey;">
+                                    Downwards change threshold:
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control form-control-sm" id="downwards"
+                                           style="color:darkgrey;" placeholder="0.01" name="downwards" readonly>
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio2"
-                                       value="2">
-                                <label class="form-check-label" for="radio1">2 days</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio3"
-                                       value="3">
-                                <label class="form-check-label" for="radio1">3 days</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio4"
-                                       value="5">
-                                <label class="form-check-label" for="radio1">5 days</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio5"
-                                       value="10">
-                                <label class="form-check-label" for="radio2">10 days</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio6"
-                                       value="15" disabled>
-                                <label class="form-check-label" for="radio3">15 days</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio7"
-                                       value="30" disabled>
-                                <label class="form-check-label" for="radio3">1 month</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="duration" id="radio8"
-                                       value="90" disabled>
-                                <label class="form-check-label" for="radio3">3 months</label>
-                            </div>
-                        </div>
-                        <fieldset id="promo">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col">
-                                        <pre class="float-left text-secondary">{{ promo }}</pre>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control form-control-sm" id="promocode"
-                                               placeholder="promo code" name="promocode" readonly>
-                                    </div>
-                                    <div class="col">
-                                        <button id="promo_btn" class="btn btn-outline-secondary btn-block btn-sm"
-                                                disabled
-                                                onclick="
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <pre class="float-left text-secondary">{{ promo }}</pre>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control form-control-sm" id="promocode"
+                                           placeholder="promo code" name="promocode" readonly>
+                                </div>
+                                <div class="col">
+                                    <button id="promo_btn" class="btn btn-outline-secondary btn-block btn-sm"
+                                            disabled
+                                            onclick="
                                                     console.log('promo:  ' + $('#promocode').val());
                                                     $('#radio7').prop('disabled', false);
                                                     $('#radio8').prop('disabled', false);
                                                     $('#promo_btn').prop('disabled', true);">
-                                            {{ promo_btn }}
-                                        </button>
-                                    </div>
+                                        {{ promo_btn }}
+                                    </button>
                                 </div>
                             </div>
-                        </fieldset>
-                        <div class="form-group form-check float-left">
-                            <input class="form-check-input" type="checkbox" name="terms" required>
-                            <span class="">
+                        </div>
+                    </fieldset>
+                    <div class="form-group form-check float-left">
+                        <input class="form-check-input" type="checkbox" name="terms" required>
+                        <span class="">
                             {{ terms }}
                         </span>
-                            <div class="valid-feedback">{{ error_1 }}.</div>
-                            <div class="invalid-feedback">{{ error_3 }}</div>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-outline-dark btn-block"
-                                onclick="$('#loader4').show().delay(20000).hide(0);">{{ submit_btn }}
-                        </button>
-                    </form>
-                </fieldset>
-            </div>
-
-
-            <script>
-
-                // csrf_token
-
-                $(function () {
-
-                    // This function gets cookie with a given name
-                    function getCookie(name) {
-                        var cookieValue = null;
-                        if (document.cookie && document.cookie != '') {
-                            var cookies = document.cookie.split(';');
-                            for (var i = 0; i < cookies.length; i++) {
-                                var cookie = jQuery.trim(cookies[i]);
-                                // Does this cookie string begin with the name we want?
-                                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                    break;
-                                }
-                            }
-                        }
-                        return cookieValue;
-                    }
-
-                    var csrftoken = getCookie('csrftoken');
-
-                    /*
-                    The functions below will create a header with csrftoken
-                    */
-                    function csrfSafeMethod(method) {
-                        // these HTTP methods do not require CSRF protection
-                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                    }
-
-                    function sameOrigin(url) {
-                        // test that a given url is a same-origin URL
-                        // url could be relative or scheme relative or absolute
-                        var host = document.location.host; // host + port
-                        var protocol = document.location.protocol;
-                        var sr_origin = '//' + host;
-                        var origin = protocol + sr_origin;
-                        // Allow absolute or scheme relative URLs to same origin
-                        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-                            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-                            // or any other URL that isn't scheme relative or absolute i.e relative.
-                            !(/^(\/\/|http:|https:).*/.test(url));
-                    }
-
-                    $.ajaxSetup({
-                        beforeSend: function (xhr, settings) {
-                            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-                                // Send the token to same-origin, relative URLs only.
-                                // Send the token only if the method warrants CSRF protection
-                                // Using the CSRFToken value acquired earlier
-                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            }
-                        }
-                    });
-
-                });
-            </script>
-
-            <script>
-                // Disable form submissions if there are invalid fields
-                (function () {
-                    'use strict';
-                    window.addEventListener('load', function () {
-                        // Get the forms we want to add validation styles to
-                        var forms = document.getElementsByClassName('needs-validation');
-                        // Loop over them and prevent submission
-                        var validation = Array.prototype.filter.call(forms, function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (form.checkValidity() === false) {
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                }
-                                form.classList.add('was-validated');
-                            }, false);
-                        });
-                    }, false);
-                })();
-            </script>
+                        <div class="valid-feedback">{{ error_1 }}.</div>
+                        <div class="invalid-feedback">{{ error_3 }}</div>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark btn-block"
+                            onclick="$('#loader4').show().delay(20000).hide(0);">{{ submit_btn }}
+                    </button>
+                </form>
+            </fieldset>
         </div>
+    </div>
+        <br><br>
+        <p>.</p>
+        <script>
+
+            // csrf_token
+
+            $(function () {
+
+                // This function gets cookie with a given name
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                var csrftoken = getCookie('csrftoken');
+
+                /*
+                The functions below will create a header with csrftoken
+                */
+                function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+
+                function sameOrigin(url) {
+                    // test that a given url is a same-origin URL
+                    // url could be relative or scheme relative or absolute
+                    var host = document.location.host; // host + port
+                    var protocol = document.location.protocol;
+                    var sr_origin = '//' + host;
+                    var origin = protocol + sr_origin;
+                    // Allow absolute or scheme relative URLs to same origin
+                    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                        // or any other URL that isn't scheme relative or absolute i.e relative.
+                        !(/^(\/\/|http:|https:).*/.test(url));
+                }
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                            // Send the token to same-origin, relative URLs only.
+                            // Send the token only if the method warrants CSRF protection
+                            // Using the CSRFToken value acquired earlier
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+            });
+        </script>
+
+        <script>
+            // Disable form submissions if there are invalid fields
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Get the forms we want to add validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                $('#loader4').hide();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    </div>
     </div>
 
 {% endblock %}

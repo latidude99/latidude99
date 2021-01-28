@@ -11,6 +11,7 @@ class User(models.Model):
     active = models.BooleanField(default=True)
     suspended = models.BooleanField(default=False)
     credit = models.IntegerField(default=0)
+    emails_sent = models.IntegerField(default=0)
 
     def __str__(self):
         return self.email
@@ -35,9 +36,11 @@ class Product(models.Model):
     initial_price = models.FloatField(default=0)
     initial_currency = models.CharField(max_length=50, default='')
     validated = models.BooleanField(default=False)
-    traced = models.BooleanField(default=False)
+    tracked = models.BooleanField(default=False)
     track_code = models.CharField(max_length=50, default='')
     stop_code = models.CharField(max_length=50, default='')
+    threshold_up = models.FloatField(default=0.01)
+    threshold_down = models.FloatField(default=0.01)
 
     def __str__(self):
         return self.name

@@ -40,6 +40,7 @@ def get_index_context():
                'submit_btn': SUBMIT_BTN,
                'confirm_btn': CONFIRM_BTN,
                'promo_btn': PROMO_BTN,
+               'track_btn': TRACK_BTN,
 
                }
     ctx = {**get_base_context(), **context}
@@ -78,8 +79,8 @@ def validate_url(url, product_id, price_ids):
 
 
 def get_add_product_context(product):
-    product_db = add_product(product)
-    context = {'product_db': product_db,
+    product_dto = add_product(product)
+    context = {'product_dto': product_dto,
                'success_info_1': SUCCESS_INFO_1,
                'success_info_2': SUCCESS_INFO_2,
                'success_info_3': SUCCESS_INFO_3,
@@ -116,7 +117,7 @@ def add_product(product_dto):
     product_db.initial_price = float(product_dto.price)
     product_db.initial_currency = product_dto.currency
     product_db.validated = True
-    product_db.traced = True
+    product_db.tracked = True
 
     track_code = get_random_string_16()
     while Product.objects.using('pricecheck_34').filter(track_code=track_code).exists():
@@ -141,11 +142,15 @@ def add_product(product_dto):
     price.save(using='pricecheck_34')
 
     # back to view
+    product_dto.product_max_count = MAX_PRODUCT_TRACKED
+    product_dto.product_count = user.product_set.filter(tracked=True).count()
     product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
     product_dto.end_date = product_db.end_date.strftime('%d %B %Y, %H:%M')
     product_dto.track_code = product_db.track_code
     product_dto.stop_code = product_db.stop_code
     product_dto.duration = str(product_db.duration) + ' day(s)'
+    product_dto.threshold_up = product_dto.currency + str(product_db.threshold_up)
+    product_dto.threshold_down = product_dto.currency + str(product_db.threshold_down)
 
     return product_dto
 

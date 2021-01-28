@@ -6,6 +6,7 @@ import pytz
 class ProductDTO:
     username: str = ''
     email: str = ''
+    product_count: str = ''
     url: str = ''
     duration: int = 3
     start_date: str = ''
@@ -17,5 +18,7 @@ class ProductDTO:
     tracked: bool = True
     track_code: str = ''
     stop_code: str = ''
+    threshold_up: str =''
+    threshold_down: str = ''
 
 
