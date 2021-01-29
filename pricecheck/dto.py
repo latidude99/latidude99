@@ -26,5 +26,9 @@ class ProductDTO:
     threshold_up: str =''
     threshold_down: str = ''
     error: str = ''
+    error2: str = ''
+    error3: str = ''
+
+
 
 

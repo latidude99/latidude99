@@ -192,8 +192,8 @@ def get_product_info(product_dto):
     return product_dto
 
 
-def get_add_product_context(product):
-    product_dto = add_product(product)
+def get_add_product_context(user, product):
+    product_dto = add_product(user, product)
     context = {'product_dto': product_dto,
                'success_info_1': SUCCESS_INFO_1,
                'success_info_2': SUCCESS_INFO_2,
@@ -207,15 +207,36 @@ def get_add_product_context(product):
     return ctx
 
 
-def add_product(product_dto):
+def user_limit_duplicate_check(product_dto):
     if not User.objects.using('pricecheck_34').filter(email=product_dto.email).exists():
         user = User()
         user.name = product_dto.username
         user.email = product_dto.email
         user.save(using='pricecheck_34')
+        return [True, user]
     else:
         user = User.objects.using('pricecheck_34').get(email=product_dto.email)
+        product_count = user.product_set.filter(tracked=True).count()
+        product_exist = user.product_set.filter(url=product_dto.url, tracked=True).count()
+        errors = {}
+        if product_count >= MAX_PRODUCT_TRACKED:
+            errors['error1'] = 'You are tracking ' + str(product_count) + ' products. This is the maximum number ' \
+                                 'of items allowed to be tracked simultaneously by '
+            errors['error2'] = 'You can stop tracking one of the products to start tracking a new one. To stop tracking ' \
+                                'any product please click on the relevant Stop Tracking link in the last email.'
+            errors['error3'] = 'Alternatively, you can buy me a coffee (link on the home page) and gain access to larger ' \
+                                'number of tracked items as well as longer tracking times and setting price change thresholds'
+            return [False, errors]
+        elif product_exist > 0:
+            errors['error1'] = 'You are already tracking a product with the same URL'
+            product = user.product_set.get(url=product_dto.url, tracked=True)
+            errors['error2'] = 'You can check the detals entering this product tracking code on home page: '
+            errors['error3'] = ''
+            errors['error4'] = product.track_code
+            return [False, errors]
 
+
+def add_product(user, product_dto):
     product_db = Product()
     product_db.user = user
     product_db.url = product_dto.url

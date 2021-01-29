@@ -53,8 +53,18 @@ def add_product(request):
         product_dto.duration = request.POST.get('duration') # in days
         product_dto.promocode = request.POST['promocode']
     print(product_dto)
-    context = service_pricecheck.get_add_product_context(product_dto)
-    return render(request, 'pricecheck/add_product_result.html', context)
+    user_check = service_pricecheck.user_limit_duplicate_check(product_dto)
+    print(user_check)
+    if user_check[0]:
+        user = user_check[1]
+        context = service_pricecheck.get_add_product_context(user, product_dto)
+        return render(request, 'pricecheck/add_product_result.html', context)
+    else:
+        errors = user_check[1]
+        errors['email'] = product_dto.email
+        context = {**service_pricecheck.get_base_context(), **errors}
+        return render(request, 'pricecheck/add_product_error.html', context)
+
 
 
 def product_info(request):

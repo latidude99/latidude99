@@ -3,6 +3,8 @@
 AMAZON_NAME_ID = 'productTitle'
 AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
 
+MAX_PRODUCT_TRACKED = 5
+
 BACK_PATTERN1 = 'images/vintage-concrete.png'
 
 
@@ -33,7 +35,7 @@ VALIDATE_BTN = 'Valitate product URL'
 SUBMIT_BTN = 'Submit for tracking'
 CONFIRM_BTN = 'Yes'
 PROMO_BTN = 'Unlock'
-MAX_PRODUCT_TRACKED = 5
+
 
 SUCCESS_INFO_1 = 'The product has been registered for price tracking. '
 SUCCESS_INFO_2 = 'You will receive an email every time the price changes more than the set threshold'

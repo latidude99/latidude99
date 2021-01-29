@@ -87,6 +87,9 @@
             }
         }
 
+        a:hover {
+            text-decoration-line: none; !important;
+        }
 
     </style>
 </head>
@@ -97,8 +100,9 @@
 <div class="container-fluid" style="margin-top:0px;">
 
     <div class="col-lg-12 mb-2" style="font-family: 'Candara Light', Arial, sans-serif;">
-        <h1 class="mt-4 text-center">{{ title_main }}</h1>
-
+        <a href="{% url 'pricecheck:index' %}" style="color:#333333 !important;">
+            <h1 class="mt-4 text-center">{{ title_main }}</h1>
+        </a>
     </div>
 
     {% block content %}{% endblock %}
