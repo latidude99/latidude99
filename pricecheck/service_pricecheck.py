@@ -8,12 +8,14 @@ import pricecheck.service_email
 import latidude99.settings as settings
 import datetime as dt
 import pytz
+from django.utils import timezone
 from pricecheck.text import *
 from pricecheck.models import *
 from pricecheck.dto import *
 import string, random
 
-
+name_tag = AMAZON_NAME_ID
+price_tags = AMAZON_PRICE_IDS
 
 def get_base_context():
     context = {'title_tab': TITLE_TAB,
@@ -93,6 +95,54 @@ def get_product_info_context(product):
     return ctx
 
 
+def update_prices(track_code):
+    code = track_code.strip()
+    if code != '' and len(code) < 16:
+        error = code + ' - Invalid tracking code: the code has to be 16 characters long.'
+        return error
+    elif len(code) == 16:
+        try:
+            product = Product.objects.using('pricecheck_34').get(track_code=code)
+            current_price = check_price(product,AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            price = Price(product=product, price=current_price[1:], date=dt.timezone.now, currency=current_price[0])
+            price.save(using='pricecheck_34')
+            return code + ' product price updated.'
+        except Product.DoesNotExist:
+            error = code + ' - Invalid tracking code: no product found.'
+            return error
+    else:
+        products = Product.objects.using('pricecheck_34').filter(tracked=True)
+        for product in products:
+            current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            price = Price(product=product,
+                          price=current_price[1:],
+                          date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
+                          currency=current_price[0])
+            price.save(using='pricecheck_34')
+
+        return str(len(products)) + ' products prices updated.'
+
+
+def check_price(product, name_tag, price_tags):
+    product_name = ''
+    product_price = ''
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
+    page = requests.get(product.url, headers=headers)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    div_product = soup.find(id=name_tag)
+    div_price = None
+    for id in price_tags:
+        div_price = soup.find(id=id)
+        if div_price != None:  # found the working price tag
+            break
+    if div_price != None:
+        product_name = div_product.get_text().strip()
+        product_price = div_price.get_text().strip()
+    return product_price
+
+
 def get_product_info(product_dto):
     code = product_dto.track_code.strip()
     if len(code) < 16:
@@ -108,20 +158,32 @@ def get_product_info(product_dto):
         product_dto.name = product_db.name
         product_dto.initial_price = product_db.initial_price
         product_dto.currency = product_db.initial_currency
-        prices = Price.objects.using('pricecheck_34').filter(product=product_db)
-
-        product_dto.price_labels = [x.date.strftime('%d %b %Y, %H:%M') for x in prices]
-        product_dto.price_values = [x.price for x in prices]
 
         product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
         product_dto.end_date = product_db.end_date.strftime('%d %B %Y, %H:%M')
         timedelta = product_db.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
         product_dto.duration_left = str(timedelta.days)
+
+        prices = product_db.price_set.all()
+        price_labels = [x.date.strftime('%d %b %Y, %H:%M') for x in prices]
+        price_values = [x.price for x in prices]
+        product_dto.current_price = price_values[-1]
+
+        labels_filler = ['waiting'] * (timedelta.days * 3)
+        values_filler = [0] * (timedelta.days * 3)
+        product_dto.price_labels = price_labels + labels_filler
+        product_dto.price_values = price_values + values_filler
+
         product_dto.track_code = product_db.track_code
         product_dto.stop_code = product_db.stop_code
         product_dto.duration = str(product_db.duration) + ' day(s)'
         product_dto.threshold_up = product_dto.currency + str(product_db.threshold_up)
         product_dto.threshold_down = product_dto.currency + str(product_db.threshold_down)
+
+        if product_db.tracked:
+            product_dto.status = 'Tracked'
+        else:
+            product_dto.status = 'Not tracked'
 
     except Product.DoesNotExist:
         product_dto.error = code + ' - Invalid tracking code: no product found.'

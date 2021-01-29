@@ -16,11 +16,11 @@ class ProductDTO:
     name: str = ''
     initial_price: str = ''
     current_price: str = ''
-    prices_labels: str = ' '
-    prices_values: float = 0.00
+    price_labels: str = ' '
+    price_values: float = 0.00
     price: int = 0
     currency: str = ''
-    tracked: bool = True
+    status: str = ''
     track_code: str = ''
     stop_code: str = ''
     threshold_up: str =''

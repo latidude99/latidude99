@@ -5,9 +5,8 @@ import datetime as dt
 import pytz
 import pricecheck.service_pricecheck as service_pricecheck
 from pricecheck.dto import *
+from pricecheck.text import *
 
-AMAZON_NAME_ID = 'productTitle'
-AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
 
 def tests(request):
     return render(request, 'pricecheck/test.html', {})

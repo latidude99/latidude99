@@ -7,25 +7,139 @@
     <div class="container-fluid p-4"
          style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
 
-        <div class="row p-3" style="font-size:20px;">
-            <div class="col-lg-12 mb-4">
-                <p class="text-center">Tracked item for the <span class="px-3" style="color: navy;">
+        <div class="row px-2" style="font-size:20px;">
+            <div class="col-lg-12 mb-2">
+                <p class="text-left">Search result for the <span class="px-3" style="color: navy;">
                         {{ product_dto.track_code }}</span> tracking code:</p>
 
             </div>
         </div>
 
-         <div class="pl-2">
-            <h5>{{ product_info_1 }}</h5>
-            <p>{{ product_info_2 }}</p>
-            <p>{{ product_info_3 }}</p>
-            <p>{{ product_info_4 }}</p>
-            <p>{{ product_info_5 }}</p>
-            <p>{{ product_info_6 }}</p>
+        <div class="d-flex flex-row mb-1" style="font-size:18px;">
+            <div class="pl-2 ">
+                <p class="">Status:</p>
+            </div>
+            <div class="pl-3">
+                <p class="pr-3 " style="color:blue">{{ product_dto.status }}</p>
+            </div>
+            <div class="pl-2">
+                <p class="">Current price:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4"
+                   style="color:red"> {{ product_dto.currency }}{{ product_dto.current_price|floatformat:"2"|intcomma }}</p>
+            </div>
+            <div class="pl-2">
+                <p class="">Days left:</p>
+            </div>
+            <div class="pl-2">
+                <p class="pr-4" style="color:red">{{ product_dto.duration_left }}</p>
+            </div>
+        </div>
 
+        <div class="#row" style="background-color:transparent;">
 
+            <div style="text-align: left;">
+                <canvas id="chart" width="400" height="100"></canvas>
+                <script>
+                    var ctx = document.getElementById('chart').getContext('2d');
+                    var chart_uk_new_cases = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [
+                                {% for item in  product_dto.price_labels %}
+                                    "{{ item }}",
+                                {% endfor %}
+                            ],
+                            datasets: [{
+                                label: '{{product_dto.currency}}',
+                                data: [
+                                    {% for item in product_dto.price_values %}
+                                        "{{ item }}",
+                                    {% endfor %}
+                                ],
+                                backgroundColor: "rgba(255, 0, 0, 0.50)",
+                                borderColor: "red",
+                                borderWidth: 0,
+                                barPercentage: 0.9,
+                                barThickness: '10',
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        color: "rgba(0, 0, 0, 0.15)",
+                                        zeroLineColor: "rgba(0, 0, 0, 0.5)",
+                                    },
+                                    ticks: {
+                                        fontColor: "rgba(0, 0, 0, 0.8)",
+                                    }
+                                }],
+                                yAxes: [{
+                                    gridLines: {
+                                        color: "rgba(0, 0, 0, 0.15)",
+                                        zeroLineColor: "rgba(0, 0, 0, 0.5)",
+                                    },
+                                    ticks: {
+                                        beginAtZero: true,
+                                        fontColor: "rgba(0, 0, 0, 0.8)",
+                                        userCallback: function (value, index, values) {
+                                            return value.toLocaleString();   // this is all we need
+                                        },
+                                    }
+                                }]
+
+                            },
+                            legend: {
+                                display: false,
+                                labels: {
+                                    fontColor: 'rgb(255, 0, 0)'
+                                }
+                            },
+                            title: {
+                                display: false,
+                                text: '{{ product_dto.currency }}'
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                }
+                            },
+                            elements: {
+                                point: {
+                                    radius: 1,
+                                    hoverRadius: 5,
+                                }
+                            },
+                            hover: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            responsive: true,
+                            tooltips: {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                yAlign: 'top',
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                        return parseInt(tooltipValue).toLocaleString();
+                                    }
+                                },
+                            },
+                        }
+                    });
+                </script>
+            </div>
         </div>
         <hr>
+
+        <h5>Full detail:</h5>
         <div class="d-flex flex-row mb-1">
             <div class="pl-2 ">
                 <p class="mt-1">The product:</p>
@@ -37,7 +151,8 @@
                 <p class="mt-1">Initial price:</p>
             </div>
             <div class="pl-2">
-                <p class="pr-4" style="font-size:20px; color:red">{{ product_dto.initial_price|floatformat:"2"|intcomma }}</p>
+                <p class="pr-4"
+                   style="font-size:20px; color:red">{{ product_dto.initial_price|floatformat:"2"|intcomma }}</p>
             </div>
             <div class="pl-2">
                 <p class="mt-1">Currency:</p>
@@ -110,8 +225,18 @@
                 <p class="pr-4" style="color:darkblue">{{ product_dto.threshold_down }}</p>
             </div>
         </div>
-
         <hr>
+
+        <div class="pl-2">
+            <h5>{{ product_info_1 }}</h5>
+            <p>{{ product_info_2 }}</p>
+            <p>{{ product_info_3 }}</p>
+            <p>{{ product_info_4 }}</p>
+            <p>{{ product_info_5 }}</p>
+            <p>{{ product_info_6 }}</p>
+
+
+        </div>
 
 
     </div>

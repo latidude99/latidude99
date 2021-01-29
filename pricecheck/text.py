@@ -1,6 +1,12 @@
+# VARIABLES
 
+AMAZON_NAME_ID = 'productTitle'
+AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
 
 BACK_PATTERN1 = 'images/vintage-concrete.png'
+
+
+# TEXT
 
 TITLE_TAB = 'Track'
 TITLE_MAIN = 'Price Tracking Service'

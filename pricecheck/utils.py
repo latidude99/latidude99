@@ -2,6 +2,7 @@
 #django.setup()
 
 from pricecheck.models import *
+from pricecheck.service_pricecheck import *
 
 
 def delete_all_users():
@@ -29,7 +30,7 @@ def delete_all_prices():
 #delete_all_users()
 
 
-
+#print(update_prices(''))
 
 
 
