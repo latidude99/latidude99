@@ -6,13 +6,14 @@ import pytz
 class ProductDTO:
     username: str = ''
     email: str = ''
-    product_count: str = ''
+    product_count: str = '' # active
+    total_product_count: str = '' # total
     url: str = ''
     duration: int = 3
     duration_left: int = 0
     start_date: str = ''
     end_date: str = ''
-    promocode: str = ''
+    voucher_code: str = ''
     name: str = ''
     initial_price: str = ''
     current_price: str = ''

@@ -12,6 +12,7 @@ from django.utils import timezone
 from pricecheck.text import *
 from pricecheck.models import *
 from pricecheck.dto import *
+from pricecheck.service_converters import *
 import string, random
 
 name_tag = AMAZON_NAME_ID
@@ -91,7 +92,7 @@ def get_product_info_context(product):
                'product_info_6': PRODUCT_INFO_6,
 
                }
-    ctx = {**get_base_context(), **context}
+    ctx = {**get_base_context(), **get_index_context(), **context}
     return ctx
 
 
@@ -104,7 +105,7 @@ def update_prices(track_code):
         try:
             product = Product.objects.using('pricecheck_34').get(track_code=code)
             current_price = check_price(product,AMAZON_NAME_ID, AMAZON_PRICE_IDS)
-            price = Price(product=product, price=current_price[1:], date=dt.timezone.now, currency=current_price[0])
+            price = Price(product=product, price=current_price[1:], date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC), currency=current_price[0])
             price.save(using='pricecheck_34')
             return code + ' product price updated.'
         except Product.DoesNotExist:
@@ -119,7 +120,8 @@ def update_prices(track_code):
                           date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
                           currency=current_price[0])
             price.save(using='pricecheck_34')
-
+            product_dto = convert_product_db2dto(product)
+            send_email(product_dto)
         return str(len(products)) + ' products prices updated.'
 
 
@@ -146,7 +148,7 @@ def check_price(product, name_tag, price_tags):
 def get_product_info(product_dto):
     code = product_dto.track_code.strip()
     if len(code) < 16:
-        product_dto.error = code + ' - Invalid tracking code: the code has to be 16 characters long.'
+        product_dto.error = code + '  Invalid tracking code: it has to be exactly 16 characters long.'
         return product_dto
     try:
         product_db = Product.objects.using('pricecheck_34').get(track_code=code)
@@ -217,7 +219,8 @@ def user_limit_duplicate_check(product_dto):
     else:
         user = User.objects.using('pricecheck_34').get(email=product_dto.email)
         product_count = user.product_set.filter(tracked=True).count()
-        product_exist = user.product_set.filter(url=product_dto.url, tracked=True).count()
+        product_tracked = user.product_set.filter(url=product_dto.url, tracked=True).count()
+
         errors = {}
         if product_count >= MAX_PRODUCT_TRACKED:
             errors['error1'] = 'You are tracking ' + str(product_count) + ' products. This is the maximum number ' \
@@ -227,13 +230,15 @@ def user_limit_duplicate_check(product_dto):
             errors['error3'] = 'Alternatively, you can buy me a coffee (link on the home page) and gain access to larger ' \
                                 'number of tracked items as well as longer tracking times and setting price change thresholds'
             return [False, errors]
-        elif product_exist > 0:
+        elif product_tracked > 0:
             errors['error1'] = 'You are already tracking a product with the same URL'
             product = user.product_set.get(url=product_dto.url, tracked=True)
             errors['error2'] = 'You can check the detals entering this product tracking code on home page: '
             errors['error3'] = ''
             errors['error4'] = product.track_code
             return [False, errors]
+
+    return [True, user]
 
 
 def add_product(user, product_dto):
@@ -268,11 +273,12 @@ def add_product(user, product_dto):
     price.price = product_db.initial_price
     price.currency = product_db.initial_currency
 
-    promocode = product_dto.promocode # to do: check/setup Voucher code
+    voucher_code = product_dto.voucher_code # to do: check/setup Voucher code
 
     price.save(using='pricecheck_34')
 
     # back to view
+    product_dto.initial_price = product_db.initial_price
     product_dto.product_max_count = MAX_PRODUCT_TRACKED
     product_dto.product_count = user.product_set.filter(tracked=True).count()
     product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
@@ -282,6 +288,8 @@ def add_product(user, product_dto):
     product_dto.duration = str(product_db.duration) + ' day(s)'
     product_dto.threshold_up = product_dto.currency + str(product_db.threshold_up)
     product_dto.threshold_down = product_dto.currency + str(product_db.threshold_down)
+
+    send_email(product_dto)
 
     return product_dto
 
@@ -293,7 +301,35 @@ def get_random_string_16():
     return code
 
 
-
+def send_email(product_dto):
+    context = {'url': product_dto.url,
+               'name': product_dto.name,
+               'username': product_dto.username,
+               'email': product_dto.email,
+               'product_count': product_dto.product_count,
+               'duration': product_dto.duration,
+               'duration_left': product_dto.duration_left,
+               'start_date': product_dto.start_date,
+               'end_date': product_dto.end_date,
+               'voucher_code': product_dto.voucher_code,
+               'initial_price': product_dto.initial_price,
+               'current_price': product_dto.current_price,
+               'currency': product_dto.currency,
+               'status': product_dto.status,
+               'track_code': product_dto.track_code,
+               'stop_code': product_dto.stop_code,
+               'threshold_up': product_dto.threshold_up,
+               'threshold_down': product_dto.threshold_down,
+               'error': product_dto.error,
+               'error2': product_dto.error2,
+               'error3': product_dto.error3,
+               }
+    subject = 'Price check for ' + context['name']
+    template = 'pricecheck/email_templ_add_product.html'
+    sender = settings.EMAIL_HOST_USER
+    receiver = product_dto.email
+    pricecheck.service_email.send(subject, template, context, sender, receiver)
+    print('pricecheck email sent to ' + product_dto.email)
 
 
 
@@ -303,7 +339,7 @@ def check():
     context = check_item_price(get_page_html(user.url))
     print(context)
     subject = 'Price check for ' + context['product']
-    template = 'pricecheck/email_templ_1.html'
+    template = 'pricecheck/email_templ_add_product.html'
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
     pricecheck.service_email.send(subject, template, context, sender, receiver)

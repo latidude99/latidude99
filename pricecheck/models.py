@@ -6,6 +6,8 @@ import pytz
 class User(models.Model):
     name = models.CharField(max_length=200, default='')
     email = models.CharField(max_length=200, unique=True, default='')
+    password = models.CharField(max_length=32, default='')
+    unique_id = models.CharField(max_length=32, default='')
     registered = models.BooleanField(default=False)
     registration_date =  models.DateTimeField(default=timezone.now, blank=True)
     active = models.BooleanField(default=True)
@@ -58,7 +60,7 @@ class Price(models.Model):
 
 
 
-
+#dt.timedelta(days=int(product_dto.duration))
 
 
 

@@ -62,8 +62,9 @@ def add_product(request):
     else:
         errors = user_check[1]
         errors['email'] = product_dto.email
+        errors['url'] = product_dto.url
         context = {**service_pricecheck.get_base_context(), **errors}
-        return render(request, 'pricecheck/add_product_error.html', context)
+        return render(request, 'pricecheck/add_product_error_duplicate.html', context)
 
 
 
@@ -72,7 +73,10 @@ def product_info(request):
     if request.method == 'POST':
         product_dto.track_code = request.POST['track_code']
     context = service_pricecheck.get_product_info_context(product_dto)
+    product_dto = context['product_dto']
     print(context)
+    if product_dto.error != '':
+        return render(request, 'pricecheck/index.html', context)
     return render(request, 'pricecheck/info_product.html', context)
 
 
