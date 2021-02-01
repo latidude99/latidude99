@@ -1,0 +1,30 @@
+{% extends "pricecheck/base.html" %}
+{% block content %}
+    {% load static %}
+    {% static "pricecheck/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid p-4"
+         style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
+
+        <div class="row p-3" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <div class="col-lg-12 mb-4">
+                <h2 class="text-center font-weight-bolder" style="color:red">E r r o r</h2>
+
+            </div>
+        </div>
+
+         <div class="pl-2">
+            <p class="text-center" style="color:mediumblue; font-size: 20px">
+                {{ product_dto.code }}<span style="color:black">
+                {{ product_dto.error  }} </span>
+            </p>
+
+        </div>
+        <hr>
+    </div>
+
+
+
+{% endblock %}
+

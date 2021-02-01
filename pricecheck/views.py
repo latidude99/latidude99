@@ -68,16 +68,30 @@ def add_product(request):
 
 
 
-def product_info(request):
+def product(request):
+    flag = ''
     product_dto = ProductDTO()
     if request.method == 'POST':
-        product_dto.track_code = request.POST['track_code']
-    context = service_pricecheck.get_product_info_context(product_dto)
+        if 'stop_code' in request.POST:
+            product_dto.stop_code = request.POST['stop_code']
+            flag = 'stop'
+        elif 'track_code' in request.POST:
+            product_dto.track_code = request.POST['track_code']
+            flag = 'track'
+    context = service_pricecheck.get_product_info_context(product_dto, flag)
     product_dto = context['product_dto']
     print(context)
-    if product_dto.error != '':
+    if product_dto.error1 != '':
         return render(request, 'pricecheck/index.html', context)
+    if product_dto.error2 != '':
+        return render(request, 'pricecheck/index.html', context)
+    if product_dto.error != '':
+        return render(request, 'pricecheck/product_error.html', context)
+    if flag == 'stop':
+        return render(request, 'pricecheck/stop_product.html', context)
     return render(request, 'pricecheck/info_product.html', context)
+
+
 
 
 '''

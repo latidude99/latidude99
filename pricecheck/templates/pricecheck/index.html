@@ -10,15 +10,15 @@
 
         <div class="row mt-3 mb-4" style="font-family: 'Candara Light', Arial, sans-serif;">
             <div class="col-lg-12">
-                <h2 class="text-center"> {{ welcome_text }}</h2>
+                <h2 id="found" class="text-center text-danger"> {{ welcome_text }}</h2>
             </div>
             <div class="col-lg-5">
-                <form id="find_form" class="form-inline" action="{% url 'pricecheck:product_info' %}"
+                <form id="find_form" class="form-inline" action="{% url 'pricecheck:product' %}"
                       method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
-                    <p class="pl-2" for="info">Find tracked item:</p>
+                    <p class="pl-2" for="info">Find tracked product:</p>
                     <div class="input-group mb-3  input-group-sm ml-3">
-                        <input type="text" class="form-control" placeholder="enter trackng number"
+                        <input type="text" class="form-control" placeholder="enter tracking code"
                                id="info" name="track_code" style="background-color: linen;">
                         <div class="valid-feedback">{{ error_1 }}</div>
                         <div class="invalid-feedback">{{ error_2 }}</div>
@@ -27,16 +27,32 @@
                         </div>
                     </div>
                 </form>
-                <p style="color:red; font-weight: bolder"> {{ product_dto.error }}</p>
+                <p style="color:red; font-weight: bolder"> {{ product_dto.error1 }}</p>
+            </div>
+            <div class="col-lg-2">
+                <hr>
+
+            </div>
+            <div class="col-lg-5">
+                <form id="stop_form" class="form-inline float-right" action="{% url 'pricecheck:product' %}"
+                      method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <p class="pl-2" for="info">Stop tracking product:</p>
+                    <div class="input-group mb-3  input-group-sm ml-3">
+                        <input type="text" class="form-control" placeholder="enter stop code"
+                               id="stop" name="stop_code" style="background-color: linen;">
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                        <div class="px-3">
+                            <button type="submit" class="btn btn-outline-dark btn-sm px-5"> {{ stop_btn }} </button>
+                        </div>
+                    </div>
+                </form>
+                <p class=" float-right" style="color:red; font-weight: bolder"> {{ product_dto.error2 }}</p>
             </div>
 
         </div>
-        <div class="col-lg-1">
 
-        </div>
-        <div class="col-lg-5">
-
-        </div>
         <hr>
         <div class="row " style="font-family: 'Candara Light', Arial, sans-serif;">
 
@@ -58,9 +74,10 @@
                                 <pre>{{ url }}</pre>
                             </label>
                             <div>
-                                <button id="clear"  class="btn btn-outline-danger btn-sm px-5 mt-4"
-                                        style="float: right;" >
-                                    Clear </button>
+                                <button id="clear_btn" class="btn btn-outline-danger btn-sm px-5 mt-4"
+                                        style="float: right;">
+                                    Clear
+                                </button>
                             </div>
                             <input type="text" class="form-control" id="url"
                                    placeholder="enter product url" name="url" required>
@@ -72,6 +89,16 @@
                         <button type="submit" class="btn btn-outline-dark btn-block">{{ validate_btn }}</button>
                     </form>
                 </div>
+
+                <script>
+
+                    $('#clear_btn').click(function (event) {
+                        $('#url').val('');
+                        $("#found").text('¯\\_(ツ)_/¯');
+                        event.preventDefault();
+                    });
+
+                </script>
 
                 <script>
                     $(document).ready(function () {
@@ -99,6 +126,7 @@
                                         $("#pr_date").text(data['product_date']);
                                         $("#error").css("display", "none");
                                         $("#confirmation").css("display", "unset");
+                                        $("#found").text('\\m/ (>.<) \\m/');
 
                                         $('#confirm_btn').prop('disabled', false);
 
@@ -110,6 +138,7 @@
                                         $("#error").css("display", "unset");
                                         $('#link').val('');
                                         $('#then').prop('disabled', true)
+                                        $("#found").text('(╯︵╰,)');
                                     }
                                 });
                             event.preventDefault();

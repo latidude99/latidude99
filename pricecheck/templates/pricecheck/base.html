@@ -88,7 +88,8 @@
         }
 
         a:hover {
-            text-decoration-line: none; !important;
+            text-decoration-line: none;
+        !important;
         }
 
     </style>
@@ -98,13 +99,19 @@
 
 
 <div class="container-fluid" style="margin-top:0px;">
-
-    <div class="col-lg-12 mb-2" style="font-family: 'Candara Light', Arial, sans-serif;">
-        <a href="{% url 'pricecheck:index' %}" style="color:#333333 !important;">
-            <h1 class="mt-4 text-center">{{ title_main }}</h1>
-        </a>
+    <div class="row">
+        <div class="col-lg-4">
+            <h5 class="mt-5 text-right text-muted" style="opacity:50%">║▌║█║▌│║▌║▌█</h5>
+        </div>
+        <div class="col-lg-4 mb-2" style="font-family: 'Candara Light', Arial, sans-serif;">
+            <a href="{% url 'pricecheck:index' %}" style="color:#333333 !important;">
+                <h1 class="mt-4 text-center">{{ title_main }}</h1>
+            </a>
+        </div>
+        <div class="col-lg-4">
+            <h4 class="mt-5 text-left text-muted" style="opacity:50%">ᒡ◯ᵔ◯ᒢ</h4>
+        </div>
     </div>
-
     {% block content %}{% endblock %}
 
 </div>

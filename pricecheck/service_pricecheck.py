@@ -22,7 +22,6 @@ def get_base_context():
     context = {'title_tab': TITLE_TAB,
                'title_main': TITLE_MAIN,
                'back_pattern1': BACK_PATTERN1,
-
                }
     return context
 
@@ -44,7 +43,7 @@ def get_index_context():
                'confirm_btn': CONFIRM_BTN,
                'promo_btn': PROMO_BTN,
                'track_btn': TRACK_BTN,
-
+               'stop_btn': STOP_BTN,
                }
     ctx = {**get_base_context(), **context}
     return ctx
@@ -81,27 +80,12 @@ def validate_url(url, product_id, price_ids):
     return validation
 
 
-def get_product_info_context(product):
-    product_dto = get_product_info(product)
-    context = {'product_dto': product_dto,
-               'product_info_1': PRODUCT_INFO_1,
-               'product_info_2': PRODUCT_INFO_2,
-               'product_info_3': PRODUCT_INFO_3,
-               'product_info_4': PRODUCT_INFO_4,
-               'product_info_5': PRODUCT_INFO_5,
-               'product_info_6': PRODUCT_INFO_6,
-
-               }
-    ctx = {**get_base_context(), **get_index_context(), **context}
-    return ctx
-
-
 def update_prices(track_code):
     code = track_code.strip()
-    if code != '' and len(code) < 16:
+    if code != '' and len(code) < 16:# incorrect track_code
         error = code + ' - Invalid tracking code: the code has to be 16 characters long.'
         return error
-    elif len(code) == 16:
+    elif len(code) == 16: # correct track_code
         try:
             product = Product.objects.using('pricecheck_34').get(track_code=code)
             current_price = check_price(product,AMAZON_NAME_ID, AMAZON_PRICE_IDS)
@@ -111,9 +95,10 @@ def update_prices(track_code):
         except Product.DoesNotExist:
             error = code + ' - Invalid tracking code: no product found.'
             return error
-    else:
+    else: # update all by passing '' as track_code parameter
         products = Product.objects.using('pricecheck_34').filter(tracked=True)
         for product in products:
+            latest_price = product.price_set.latest('price')
             current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
             price = Price(product=product,
                           price=current_price[1:],
@@ -121,6 +106,10 @@ def update_prices(track_code):
                           currency=current_price[0])
             price.save(using='pricecheck_34')
             product_dto = convert_product_db2dto(product)
+            # if latest_price < current_price and current_price - latest_price >= product.threshold_down:
+            #     send_email(product_dto)
+            # elif latest_price > current_price and latest_price - current_price >= product.threshold_up:
+            #     send_email(product_dto)
             send_email(product_dto)
         return str(len(products)) + ' products prices updated.'
 
@@ -145,13 +134,44 @@ def check_price(product, name_tag, price_tags):
     return product_price
 
 
-def get_product_info(product_dto):
-    code = product_dto.track_code.strip()
-    if len(code) < 16:
-        product_dto.error = code + '  Invalid tracking code: it has to be exactly 16 characters long.'
-        return product_dto
+def get_product_info_context(product, flag):
+    info = get_product_info(product, flag)
+    product_dto = info[0]
+    prices = info[1]
+    context = {'product_dto': product_dto,
+               'prices': prices,
+               'product_info_1': PRODUCT_INFO_1,
+               'product_info_2': PRODUCT_INFO_2,
+               'product_info_3': PRODUCT_INFO_3,
+               'product_info_4': PRODUCT_INFO_4,
+               'product_info_5': PRODUCT_INFO_5,
+               'product_info_6': PRODUCT_INFO_6,
+               }
+    ctx = {**get_base_context(), **get_index_context(), **context}
+    return ctx
+
+
+def get_product_info(product_dto, flag):
+    code = ''
+    prices = ''
+    product_db = ''
+    if flag  == 'track' and len(product_dto.track_code) != 16:
+        product_dto.error1 = product_dto.track_code + '  Invalid tracking code: it has to be exactly 16 characters long.'
+        return [product_dto, prices]
+    elif flag  == 'stop' and len(product_dto.stop_code) != 16:
+        product_dto.error2 = product_dto.stop_code + '  Invalid stop code: it has to be exactly 16 characters long.'
+        return [product_dto, prices]
+
     try:
-        product_db = Product.objects.using('pricecheck_34').get(track_code=code)
+        if flag  == 'stop':
+            code = product_dto.stop_code.strip()
+            product_db = Product.objects.using('pricecheck_34').get(stop_code=code)
+            product_db.tracked = False
+            product_db.save(using='pricecheck_34')
+        elif flag  == 'track':
+            code = product_dto.track_code.strip()
+            product_db = Product.objects.using('pricecheck_34').get(track_code=code)
+
         user = product_db.user
         product_dto.username = user.name
         product_dto.email = user.email
@@ -164,8 +184,10 @@ def get_product_info(product_dto):
         product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
         product_dto.end_date = product_db.end_date.strftime('%d %B %Y, %H:%M')
         timedelta = product_db.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
-        product_dto.duration_left = str(timedelta.days)
-
+        if product_db.tracked:
+            product_dto.duration_left = str(timedelta.days)
+        else:
+            product_dto.duration_left = '0'
         prices = product_db.price_set.all()
         price_labels = [x.date.strftime('%d %b %Y, %H:%M') for x in prices]
         price_values = [x.price for x in prices]
@@ -188,10 +210,11 @@ def get_product_info(product_dto):
             product_dto.status = 'Not tracked'
 
     except Product.DoesNotExist:
-        product_dto.error = code + ' - Invalid tracking code: no product found.'
-        return product_dto
+        product_dto.error = ' - Invalid code: no product found.'
+        product_dto.code = code
+        return [product_dto, prices]
 
-    return product_dto
+    return [product_dto, prices]
 
 
 def get_add_product_context(user, product):

@@ -26,7 +26,9 @@ class ProductDTO:
     stop_code: str = ''
     threshold_up: str =''
     threshold_down: str = ''
+    code = ''
     error: str = ''
+    error1: str = ''
     error2: str = ''
     error3: str = ''
 

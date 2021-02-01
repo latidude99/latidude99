@@ -24,13 +24,14 @@ DURATION = 'How long do you want to track the price?'
 PROMO = 'Unlock extra features with a promo code:' \
         '\n(buy me a cup of coffee and get a promo code)'
 PROMO_SUB = 'Promo codes can be obtained by buying me a cup of coffee.'
-TERMS = 'Agree to T&C: This service is free of charge and may stop working at any time.'
+TERMS = 'This service is free of charge and may stop working at any time. I\'m OK with it.'
 
 ERROR_1 = 'OK'
 ERROR_2 = 'please fill out this field'
 ERROR_3 = 'check this checkbox to continue'
 
 TRACK_BTN = 'Find the item'
+STOP_BTN = 'Stop tracking'
 VALIDATE_BTN = 'Valitate product URL'
 SUBMIT_BTN = 'Submit for tracking'
 CONFIRM_BTN = 'Yes'
