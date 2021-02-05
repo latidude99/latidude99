@@ -1,15 +1,15 @@
 from django.core.management.base import BaseCommand, CommandError
-import owid.service as service
+import pricecheck.commands as commands
 
 class Command(BaseCommand):
 
-    help = 'Downloads covid json data and updates owid database'
+    help = 'Updates prices for all tracked products'
 
     def add_arguments(self, parser):
         parser.add_argument('db', nargs='+')
 
     def handle(self, *args, **options):
-        service.download_and_update_covid()
+        commands.update_all_products()
         self.stdout.write(self.style.SUCCESS('Successfully downloaded json data and updated owid db'))
 
 

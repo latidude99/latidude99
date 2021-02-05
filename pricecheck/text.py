@@ -1,13 +1,3 @@
-# VARIABLES
-
-AMAZON_NAME_ID = 'productTitle'
-AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
-
-MAX_PRODUCT_TRACKED = 5
-
-BACK_PATTERN1 = 'images/vintage-concrete.png'
-
-
 # TEXT
 
 TITLE_TAB = 'Track'
@@ -38,13 +28,17 @@ CONFIRM_BTN = 'Yes'
 PROMO_BTN = 'Unlock'
 
 
-SUCCESS_INFO_1 = 'The product has been registered for price tracking. '
-SUCCESS_INFO_2 = 'You will receive an email every time the price changes more than the set threshold'
+SUCCESS_INFO_1 = 'The product has been registered for price tracking.'
+SUCCESS_INFO_2 = 'You will receive an email every time the price changes more than the set threshold. ' \
+                 'Please check your Spam folder if you don\'t see the email in the Inbox folder'
 SUCCESS_INFO_3 = 'The email will include the product name, tracking code, previous and current prices and a stop code.'
-SUCCESS_INFO_4 = 'You can view product tracking history entering the tracking code on the home page.'
+SUCCESS_INFO_4 = 'You can view the product\'s tracking history entering the tracking code on the home page.'
 SUCCESS_INFO_5 = 'You can stop tracking the product at any time entering the stop code.'
 SUCCESS_INFO_6 = ''
 
+
+SUCCESS_INFO = 'The product has been confrmed and activated for tracking.'
+FAILURE_INFO = 'Ooops! Product not found.'
 
 PRODUCT_INFO_1 = ''
 PRODUCT_INFO_2 = ''

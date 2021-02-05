@@ -47,7 +47,7 @@ def check():
     context = check_item_price(get_page_html(user.url))
     print(context)
     subject = 'Price check for ' + context['product']
-    template = 'pricecheck/email_templ_add_product.html'
+    template = 'pricecheck/email_add_product.html'
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
     #pricecheck.service_email.send(subject, template, context, sender, receiver)

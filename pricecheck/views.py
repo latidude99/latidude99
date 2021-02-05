@@ -3,9 +3,13 @@ from django.shortcuts import render
 import json
 import datetime as dt
 import pytz
-import pricecheck.service_pricecheck as service_pricecheck
+import pricecheck.service as service
+import pricecheck.service_info as service_info
+import pricecheck.service_add as service_add
+import pricecheck.service_track as service_track
 from pricecheck.dto import *
 from pricecheck.text import *
+from pricecheck.const import *
 
 
 def tests(request):
@@ -13,7 +17,7 @@ def tests(request):
 
 
 def index(request):
-    context = service_pricecheck.get_index_context()
+    context = service.get_index_context()
     return render(request, 'pricecheck/index.html', context)
 
 
@@ -23,7 +27,7 @@ def validate(request):
         url_text = request.POST.get('url')
         response_data = {}
         if url_text.strip() != '':
-            validation = service_pricecheck.validate_url(url_text, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            validation = service_info.validate_url(url_text, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
             if validation['error'] is None:
                 response_data['status'] = 'ok'
                 response_data['product_date'] = dt.datetime.now().strftime('%d %B %Y, %H:%M')
@@ -53,18 +57,29 @@ def add_product(request):
         product_dto.duration = request.POST.get('duration') # in days
         product_dto.promocode = request.POST['promocode']
     print(product_dto)
-    user_check = service_pricecheck.user_limit_duplicate_check(product_dto)
+    user_check = service_add.user_limit_duplicate_check(product_dto)
     print(user_check)
     if user_check[0]:
         user = user_check[1]
-        context = service_pricecheck.get_add_product_context(user, product_dto)
+        context = service_add.get_add_product_context(user, product_dto)
         return render(request, 'pricecheck/add_product_result.html', context)
     else:
         errors = user_check[1]
         errors['email'] = product_dto.email
         errors['url'] = product_dto.url
-        context = {**service_pricecheck.get_base_context(), **errors}
+        context = {**service.get_base_context(), **errors}
         return render(request, 'pricecheck/add_product_error_duplicate.html', context)
+
+
+def confirm_product(request):
+    confirm_code = ''
+    if request.method == 'GET':
+        confirm_code = request.GET.get('code')
+    confirmation = service_add.get_context_confirm(confirm_code)
+    context = confirmation[1]
+    if confirmation[0]:
+        return render(request, 'pricecheck/confirmation_ok.html', context)
+    return render(request, 'pricecheck/confirmation_error.html', context)
 
 
 
@@ -78,7 +93,7 @@ def product(request):
         elif 'track_code' in request.POST:
             product_dto.track_code = request.POST['track_code']
             flag = 'track'
-    context = service_pricecheck.get_product_info_context(product_dto, flag)
+    context = service_info.get_product_info_context(product_dto, flag)
     product_dto = context['product_dto']
     print(context)
     if product_dto.error1 != '':
@@ -91,30 +106,6 @@ def product(request):
         return render(request, 'pricecheck/stop_product.html', context)
     return render(request, 'pricecheck/info_product.html', context)
 
-
-
-
-'''
-def numbers(request):
-    day = ''
-    if request.method == "POST":
-        day = request.POST['day']
-    print('day = ' + day)
-    if day == '':
-        day = '0';
-    context = service_covid.get_covid_numbers_data(day)
-    return render(request, 'owid/numbers.html', context)
-
-def numbers_json(request):
-    data = {'country': ''}
-    if request.method == 'GET':
-        country = request.GET.get('country')
-        days = request.GET.get('days')
-        data_list = service_covid.get_covid_numbers_data_as_dict(country, days)
-        if data_list:
-            data['country'] = list(data_list)
-    return JsonResponse(data, safe=False)
-'''
 
 
 

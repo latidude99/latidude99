@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 import datetime as dt
 import pytz
+from pricecheck.const import *
 
 class User(models.Model):
     name = models.CharField(max_length=200, default='')
@@ -14,6 +15,7 @@ class User(models.Model):
     suspended = models.BooleanField(default=False)
     credit = models.IntegerField(default=0)
     emails_sent = models.IntegerField(default=0)
+    max_items_tracked = models.IntegerField(default=MAX_PRODUCT_TRACKED)
 
     def __str__(self):
         return self.email
@@ -43,6 +45,9 @@ class Product(models.Model):
     stop_code = models.CharField(max_length=50, default='')
     threshold_up = models.FloatField(default=0.01)
     threshold_down = models.FloatField(default=0.01)
+    confirm_link = models.CharField(max_length=200, default='')
+    confirm_code = models.CharField(max_length=50, default='')
+    confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -17,6 +17,7 @@ class ProductDTO:
     name: str = ''
     initial_price: str = ''
     current_price: str = ''
+    price_diff: int = 0
     price_labels: str = ' '
     price_values: float = 0.00
     price: int = 0
@@ -24,6 +25,9 @@ class ProductDTO:
     status: str = ''
     track_code: str = ''
     stop_code: str = ''
+    confirm_code: str = ''
+    confirm_link: str = ''
+    confirmed: str = ''
     threshold_up: str =''
     threshold_down: str = ''
     code = ''

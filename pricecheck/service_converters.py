@@ -14,15 +14,15 @@ def convert_product_db2dto(db):
     dto.url = db.url
     dto.start_date = db.start_date
     dto.end_date = db.end_date
-    dto.duration = db.duration
+    dto.duration = str(db.duration) + 'day(s)'
     timedelta = db.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
     dto.duration_left = str(timedelta.days)
     dto.voucher_code = ''
     dto.name = db.name
     dto.initial_price = db.initial_price
-    dto.current_price = db.current_price
 
     prices = db.price_set.all()
+    price_currencies = [x.currency for x in prices]
     price_labels = [x.date.strftime('%d %b %Y, %H:%M') for x in prices]
     price_values = [x.price for x in prices]
     labels_filler = ['waiting'] * (timedelta.days * 3)
@@ -30,17 +30,21 @@ def convert_product_db2dto(db):
     dto.price_labels = price_labels + labels_filler
     dto.price_values = price_values + values_filler
 
-    dto.price = db.current_price
-    dto.currency = db.currency
-    dto.status = db.status
+    dto.current_price = price_values[-1]
+    price_diff = db.initial_price - dto.current_price
+
+    dto.price = dto.current_price
+    dto.currency = price_currencies[-1]
+#    dto.status = db.status
     dto.track_code = db.track_code
     dto.stop_code = db.stop_code
     dto.threshold_up = db.threshold_up
     dto.threshold_down = db.threshold_down
     dto.error = ''
+    dto.error1 = ''
     dto.error2 = ''
     dto.error3 = ''
-
+    return dto
 
 
 

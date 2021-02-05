@@ -2,7 +2,7 @@
 #django.setup()
 
 from pricecheck.models import *
-from pricecheck.service_pricecheck import *
+from pricecheck.service_track import *
 
 
 def delete_all_users():
