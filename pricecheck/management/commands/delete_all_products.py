@@ -3,14 +3,14 @@ import pricecheck.commands as commands
 
 class Command(BaseCommand):
 
-    help = 'Updates prices for all tracked products'
+    help = 'Deletes all products'
 
     def add_arguments(self, parser):
         parser.add_argument('db', nargs='+')
 
     def handle(self, *args, **options):
-        commands.update_all_products()
-        self.stdout.write(self.style.SUCCESS('Successfully updated prices for all tracked products'))
+        commands.delete_all_products()
+        self.stdout.write(self.style.SUCCESS('Successfully deleted all products'))
 
 
 

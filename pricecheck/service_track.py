@@ -51,6 +51,7 @@ def update_prices(track_code):
                 sub = 'Price Tracking Service: ' + product_dto.name
                 templ = 'pricecheck/email_check_product.html'
                 pricecheck.service_email.send_email(product_dto, sub, templ)
+                print('price updated for: ' + product.name)
         return str(len(products)) + ' products prices updated.'
 
 
