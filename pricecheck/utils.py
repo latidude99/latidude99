@@ -1,8 +1,16 @@
 import django
 django.setup()
 
+
+import logging
+import threading
+import time
+import datetime as dt
 from pricecheck.models import *
-from pricecheck.service_track import *
+import pricecheck.service as service
+import pricecheck.service_info as service_info
+import pricecheck.service_add as service_add
+import pricecheck.service_track as service_track
 
 
 def delete_all_users():
@@ -41,6 +49,40 @@ def delete_all_products_for_user(email):
         user.product_set.all().delete()
         print('all products deleted')
 
+
+def worker(arg):
+    while not arg["stop"]:
+        logging.debug("worker thread checking in")
+        service_track.update_prices('')
+        print(dt.datetime.utcnow().replace(tzinfo=pytz.UTC))
+        time.sleep(1)
+
+def constant_product_update_intervals_and_max_munber(interval, max): # interval in sec
+    count = 0
+    while max > count:
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(relativeCreated)6d %(threadName)s %(message)s"
+        )
+        info = {"stop": False}
+        thread = threading.Thread(target=worker, args=(info,))
+        thread.start()
+        # while True:
+        #     try:
+        #         logging.debug("Checking in from main thread")
+        #         time.sleep(0.75)
+        #     except KeyboardInterrupt:
+        #         info["stop"] = True
+        #         logging.debug('Stopping')
+        #         break
+        thread.join()
+        count = count + 1
+        print('count= ' + str(count))
+        time.sleep(interval)
+
+
+
+
 # ------------------------------------------------------------------
 
 #delete_all_users()
@@ -57,7 +99,7 @@ def delete_all_products_for_user(email):
 
 
 
-
+constant_product_update_intervals_and_max_munber(interval=15,max=5)
 
 
 

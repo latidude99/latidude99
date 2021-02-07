@@ -48,9 +48,9 @@ def get_index_context():
     return ctx
 
 
-def get_random_string_16():
+def get_random_string(len):
     join = ''.join
-    code = join(random.choices(string.ascii_letters, k=16))
+    code = join(random.choices(string.ascii_letters, k=len))
     return code
 
 

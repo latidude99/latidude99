@@ -5,6 +5,9 @@ from pricecheck.models import *
 import requests
 from bs4 import BeautifulSoup
 import pricecheck.service_email
+import pricecheck.service as service
+import pricecheck.service_add as service_add
+import pricecheck.service_track as service_track
 import latidude99.settings as settings
 import datetime as dt
 import pytz
@@ -13,7 +16,6 @@ from pricecheck.text import *
 from pricecheck.const import *
 from pricecheck.models import *
 from pricecheck.dto import *
-from pricecheck.service_converters import *
 import string, random
 
 
@@ -48,6 +50,20 @@ def validate_url(url, product_id, price_ids):
     return validation
 
 
+def get_product_info_context(product_dto, flag):
+    info = get_product_info(product_dto, flag)
+    context = {'product_dto': info[0],
+               'prices': info[1],
+               # 'product_info_1': PRODUCT_INFO_1,
+               # 'product_info_2': PRODUCT_INFO_2,
+               # 'product_info_3': PRODUCT_INFO_3,
+               # 'product_info_4': PRODUCT_INFO_4,
+               # 'product_info_5': PRODUCT_INFO_5,
+               # 'product_info_6': PRODUCT_INFO_6,
+               }
+    ctx = {**service.get_base_context(), **context}
+    return ctx
+
 
 def get_product_info(product_dto, flag):
     code = ''
@@ -66,6 +82,7 @@ def get_product_info(product_dto, flag):
             product_db = Product.objects.using('pricecheck_34').get(stop_code=code)
             product_db.tracked = False
             product_db.save(using='pricecheck_34')
+
         elif flag  == 'track':
             code = product_dto.track_code.strip()
             product_db = Product.objects.using('pricecheck_34').get(track_code=code)

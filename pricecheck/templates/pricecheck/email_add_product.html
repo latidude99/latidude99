@@ -20,7 +20,7 @@
 </div>
 
 <div style="text-align:center;">
-    <p style="padding:15px;font-size:20px;">Please follow this link to confirm and activate tracking:</p>
+    <p style="padding:1px;font-size:20px;">Please follow this link to confirm your email address and activate the product tracking:</p>
     <a href="{{ product_dto.confirm_link }}"
        style="font-size:15px;margin-left:15px;
         text-decoration-line: none;color:#3875d7;">
@@ -78,26 +78,26 @@
 <hr style="margin-bottom:40px;opacity:5%;">
 
 
-<p style="display:inline;padding:10px;font-size:15px;">You will receive an email whenever the price changes more
-    than the downwards or upwards threshold value.</p>
+<p style="display:inline;padding:10px;font-size:15px;">You will receive an email every time the price changes more
+    than the downwards or upwards threshold values.</p>
 <div style="padding-top:10px;">
     <p style="margin-left:15px;font-size:15px;">
-        Additionally, you can check the price movements at any time folowing the direct link
-        <a href="http://127.0.0.1:8000/pricecheck/" style="font-size:15px;margin-left:15px;
+        Additionally, you can always check the price movements folowing a direct product link
+        <a href="{{ product_dto.track_link }}" style="font-size:15px;margin-left:15px;
             text-decoration-line: none;color:#3875d7;">track this product</a></p>
     <p style="font-size:15px;margin-left:15px;"> or going to the
-        <a href="http://127.0.0.1:8000/pricecheck/" style="margin-right:15px;
+        <a href="{{ product_dto.app_link }}" style="margin-right:15px;
             margin-left:15px;text-decoration-line: none;color:#3875d7;">
             Price Tracking Service</a> home page and entering the tracking code.
     </p>
 </div>
 <div style="padding-top:15px;">
-    <p style="display:inline;padding:15px;font-size:15px;">You can stop tracking the product by clicking this
+    <p style="display:inline;padding:15px;font-size:15px;">You can stop tracking the product and receiving these emails at any time by clicking this
         link
-    <a href="http://127.0.0.1:8000/pricecheck/" style="font-size:15px;margin-left:15px;
+    <a href="{{ product_dto.stop_link }}" style="font-size:15px;margin-left:15px;
         text-decoration-line: none;color:#3875d7;">stop tracking</a></p>
     <p style="font-size:15px;margin-left:15px;"> or going to the
-        <a href="http://127.0.0.1:8000/pricecheck/" style="text-decoration-line: none;color:#3875d7;">
+        <a href="{{ product_dto.app_link }}" style="text-decoration-line: none;color:#3875d7;">
             Price Tracking Service</a> home page and entering the stop code.
     </p>
 </div>

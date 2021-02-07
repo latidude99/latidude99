@@ -86,6 +86,15 @@ def confirm_product(request):
 def product(request):
     flag = ''
     product_dto = ProductDTO()
+
+    if request.method == 'GET':
+        if 'stop_code' in request.GET:
+            product_dto.stop_code = request.GET.get('stop_code')
+            flag = 'stop'
+        elif 'track_code' in request.POST:
+            product_dto.track_code = request.GET.get('track_code')
+            flag = 'track'
+
     if request.method == 'POST':
         if 'stop_code' in request.POST:
             product_dto.stop_code = request.POST['stop_code']
@@ -93,6 +102,7 @@ def product(request):
         elif 'track_code' in request.POST:
             product_dto.track_code = request.POST['track_code']
             flag = 'track'
+
     context = service_info.get_product_info_context(product_dto, flag)
     product_dto = context['product_dto']
     print(context)

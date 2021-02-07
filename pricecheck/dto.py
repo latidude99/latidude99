@@ -23,8 +23,11 @@ class ProductDTO:
     price: int = 0
     currency: str = ''
     status: str = ''
+    app_link: str = ''
     track_code: str = ''
+    track_link: str = ''
     stop_code: str = ''
+    stop_link: str = ''
     confirm_code: str = ''
     confirm_link: str = ''
     confirmed: str = ''

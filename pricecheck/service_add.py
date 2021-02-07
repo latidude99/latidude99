@@ -80,25 +80,29 @@ def add_product(user, product_dto):
     product_db.validated = True
     product_db.tracked = True
 
-    track_code = service.get_random_string_16()
+    track_code = service.get_random_string(16)
     while Product.objects.using('pricecheck_34').filter(track_code=track_code).exists():
-        track_code = service.get_random_string_16()
+        track_code = service.get_random_string(16)
     product_db.track_code = track_code
 
-    stop_code = service.get_random_string_16()
+    stop_code = service.get_random_string(16)
     while Product.objects.using('pricecheck_34').filter(track_code=stop_code).exists():
-        stop_code = service.get_random_string_16()
+        stop_code = service.get_random_string(16)
     product_db.stop_code = stop_code
 
-    confirm_code = service.get_random_string_16()
+    confirm_code = service.get_random_string(32)
     while Product.objects.using('pricecheck_34').filter(track_code=stop_code).exists():
-        confirm_code = service.get_random_string_16()
+        confirm_code = service.get_random_string(32)
     product_db.confirm_code = confirm_code
 
     product_db.confirm_code = confirm_code
     product_db.confirm_link = APP_BASE + '/confirm_product?code=' + confirm_code
 
     product_db.save(using='pricecheck_34')
+
+    product_dto.track_link = APP_BASE + '/confirm_product?code=' + track_code
+    product_dto.stop_link = APP_BASE + '/confirm_product?code=' + stop_code
+    product_dto.app_link = APP_BASE
 
     price = Price()
     price.product = product_db

@@ -4,7 +4,7 @@
 from pricecheck.models import *
 import requests
 from bs4 import BeautifulSoup
-import pricecheck.service_email
+import pricecheck.service_email as service_email
 import latidude99.settings as settings
 import datetime as dt
 import pytz
@@ -35,6 +35,11 @@ def update_prices(track_code):
         products = Product.objects.using('pricecheck_34').filter(confirmed=True,tracked=True)
         for product in products:
             if product.confirmed:
+                timedelta = product.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
+                if timedelta.days < 0:
+                    product.tracked = False
+                    product.save(using='pricecheck_34')
+                    continue
                 latest_price = product.price_set.latest('price')
                 current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
                 price = Price(product=product,
@@ -43,14 +48,20 @@ def update_prices(track_code):
                               currency=current_price[0])
                 price.save(using='pricecheck_34')
                 product_dto = convert_product_db2dto(product)
+                product_dto.track_link = APP_BASE + '/product?track_code=' + product.track_code
+                product_dto.stop_link = APP_BASE + '/product?stop_code=' + product.stop_code
+                product_dto.app_link = APP_BASE
 
-                # if latest_price < current_price and current_price - latest_price >= product.threshold_down:
-                #     send_email(product_dto)
-                # elif latest_price > current_price and latest_price - current_price >= product.threshold_up:
-                #     send_email(product_dto)
                 sub = 'Price Tracking Service: ' + product_dto.name
                 templ = 'pricecheck/email_check_product.html'
-                pricecheck.service_email.send_email(product_dto, sub, templ)
+                if latest_price < current_price and current_price - latest_price >= product.threshold_down:
+                    service_email.send_email(product_dto, sub, templ)
+                elif latest_price > current_price and latest_price - current_price >= product.threshold_up:
+                    service_email.send_email(product_dto, sub, templ)
+                # sub = 'Price Tracking Service: ' + product_dto.name
+                # templ = 'pricecheck/email_check_product.html'
+                # service_email.send_email(product_dto, sub, templ)
+
                 print('price updated for: ' + product.name)
         return str(len(products)) + ' products prices updated.'
 
