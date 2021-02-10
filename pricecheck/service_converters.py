@@ -4,7 +4,7 @@ import pytz
 from pricecheck.text import *
 from pricecheck.models import *
 from pricecheck.dto import *
-
+import datetime as dt
 
 def convert_product_db2dto(db):
     dto = ProductDTO()

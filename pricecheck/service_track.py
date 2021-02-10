@@ -54,10 +54,17 @@ def update_prices(track_code):
 
                 sub = 'Price Tracking Service: ' + product_dto.name
                 templ = 'pricecheck/email_check_product.html'
-                if latest_price < current_price and current_price - latest_price >= product.threshold_down:
+
+                if latest_price.price < float(current_price[1:]) and float(current_price[1:]) - latest_price.price >= product.threshold_down:
                     service_email.send_email(product_dto, sub, templ)
-                elif latest_price > current_price and latest_price - current_price >= product.threshold_up:
+                    print('threshold_down')
+                    print('current_price')
+                    print(float(current_price[1:]))
+                elif latest_price.price > float(current_price[1:]) and latest_price.price - float(current_price[1:]) >= product.threshold_up:
                     service_email.send_email(product_dto, sub, templ)
+                    print('threshold_up')
+                    print('current_price')
+                    print(float(current_price[1:]))
                 # sub = 'Price Tracking Service: ' + product_dto.name
                 # templ = 'pricecheck/email_check_product.html'
                 # service_email.send_email(product_dto, sub, templ)
@@ -72,7 +79,7 @@ def check_price(product, name_tag, price_tags):
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
-    page = requests.get(product.url, headers=headers)
+    page = requests.get(product.url, headers=headers, proxies=proxies)
     soup = BeautifulSoup(page.content, 'html.parser')
     div_product = soup.find(id=name_tag)
     div_price = None

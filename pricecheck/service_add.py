@@ -1,22 +1,15 @@
 # import django
 # django.setup()
 
-from pricecheck.models import *
-import requests
-from bs4 import BeautifulSoup
-import pricecheck.service_email
-import pricecheck.service as service
-import pricecheck.service_info as service_info
-import pricecheck.service_track as service_track
-import pricecheck.service_converters as service_converters
-import latidude99.settings as settings
 import datetime as dt
+
 import pytz
-from django.utils import timezone
-from pricecheck.text import *
+
+import pricecheck.service as service
+import pricecheck.service_converters as service_converters
+import pricecheck.service_email
 from pricecheck.models import *
-from pricecheck.dto import *
-import string, random
+from pricecheck.text import *
 
 
 def user_limit_duplicate_check(product_dto):
@@ -32,8 +25,8 @@ def user_limit_duplicate_check(product_dto):
         product_tracked = user.product_set.filter(url=product_dto.url, tracked=True).count()
 
         errors = {}
-        if products_tracked_count >= MAX_PRODUCT_TRACKED:
-            errors['error1'] = 'You are tracking ' + str(product_count) + ' products. This is the maximum number ' \
+        if products_tracked_count >= user.max_items_tracked:
+            errors['error1'] = 'You are tracking ' + str(products_tracked_count) + ' products. This is the maximum number ' \
                                  'of items allowed to be tracked simultaneously by '
             errors['error2'] = 'You can stop tracking one of the products to start tracking a new one. To stop tracking ' \
                                 'any product please click on the relevant Stop Tracking link in the last email.'
@@ -100,8 +93,8 @@ def add_product(user, product_dto):
 
     product_db.save(using='pricecheck_34')
 
-    product_dto.track_link = APP_BASE + '/confirm_product?code=' + track_code
-    product_dto.stop_link = APP_BASE + '/confirm_product?code=' + stop_code
+    product_dto.track_link = APP_BASE + '/product?track_code=' + track_code
+    product_dto.stop_link = APP_BASE + '/product?stop_code=' + stop_code
     product_dto.app_link = APP_BASE
 
     price = Price()
@@ -116,7 +109,7 @@ def add_product(user, product_dto):
 
     # back to view
     product_dto.initial_price = product_db.initial_price
-    product_dto.product_max_count = MAX_PRODUCT_TRACKED
+    product_dto.product_max_count = user.max_items_tracked
     product_dto.product_count = user.product_set.filter(tracked=True).count()
     product_dto.start_date = product_db.start_date.strftime('%d %B %Y, %H:%M')
     product_dto.end_date = product_db.end_date.strftime('%d %B %Y, %H:%M')

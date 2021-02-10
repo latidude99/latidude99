@@ -1,15 +1,16 @@
+import json
+
 from django.http import HttpResponse
 from django.shortcuts import render
-import json
+
 import datetime as dt
 import pytz
+
 import pricecheck.service as service
-import pricecheck.service_info as service_info
 import pricecheck.service_add as service_add
-import pricecheck.service_track as service_track
-from pricecheck.dto import *
-from pricecheck.text import *
+import pricecheck.service_info as service_info
 from pricecheck.const import *
+from pricecheck.dto import *
 
 
 def tests(request):
@@ -91,7 +92,7 @@ def product(request):
         if 'stop_code' in request.GET:
             product_dto.stop_code = request.GET.get('stop_code')
             flag = 'stop'
-        elif 'track_code' in request.POST:
+        elif 'track_code' in request.GET:
             product_dto.track_code = request.GET.get('track_code')
             flag = 'track'
 

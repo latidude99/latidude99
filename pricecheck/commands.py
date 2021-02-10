@@ -1,12 +1,8 @@
 #import django
 #django.setup()
 
-from pricecheck.models import *
-import pricecheck.utils as utils
-import pricecheck.service as service
-import pricecheck.service_info as service_info
-import pricecheck.service_add as service_add
 import pricecheck.service_track as service_track
+from pricecheck.models import *
 
 
 def update_all_products():

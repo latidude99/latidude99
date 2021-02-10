@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils import timezone
-import datetime as dt
-import pytz
+
 from pricecheck.const import *
+
 
 class User(models.Model):
     name = models.CharField(max_length=200, default='')

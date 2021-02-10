@@ -1,11 +1,12 @@
-import django
-django.setup()
+#import django
+#django.setup()
 
 
 import logging
 import threading
 import time
 import datetime as dt
+import pytz
 from pricecheck.models import *
 import pricecheck.service as service
 import pricecheck.service_info as service_info
@@ -99,7 +100,7 @@ def constant_product_update_intervals_and_max_munber(interval, max): # interval 
 
 
 
-constant_product_update_intervals_and_max_munber(interval=15,max=5)
+#constant_product_update_intervals_and_max_munber(interval=15,max=5)
 
 
 

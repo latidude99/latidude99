@@ -1,20 +1,12 @@
 # import django
 # django.setup()
 
-from pricecheck.models import *
-import requests
-from bs4 import BeautifulSoup
-import pricecheck.service_email
-import latidude99.settings as settings
-import datetime as dt
-import pytz
-from django.utils import timezone
+import random
+import string
 from pricecheck.text import *
 from pricecheck.const import *
-from pricecheck.models import *
-from pricecheck.dto import *
+
 from pricecheck.service_converters import *
-import string, random
 
 
 def get_base_context():

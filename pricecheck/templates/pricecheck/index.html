@@ -95,6 +95,8 @@
                     $('#clear_btn').click(function (event) {
                         $('#url').val('');
                         $("#found").text('¯\\_(ツ)_/¯');
+                        $("#error").css('display', 'none');
+                        $("#confirmation").css('display', 'none');
                         event.preventDefault();
                     });
 
@@ -268,7 +270,7 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio6"
                                        value="15">
-                                <label class="form-check-label" for="radio3" style="color:darkgrey;">15 days</label>
+                                <label class="form-check-label" for="radio3">15 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio7"
@@ -313,7 +315,7 @@
                                                 disabled
                                                 onclick="
                                                     console.log('promo:  ' + $('#promocode').val());
-                                                    $('#radio7').prop('disabled', false);
+                                                    {#$('#radio7').prop('disabled', false);#}
                                                     $('#radio8').prop('disabled', false);
                                                     $('#promo_btn').prop('disabled', true);">
                                             {{ promo_btn }}

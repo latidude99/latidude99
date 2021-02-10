@@ -22,7 +22,7 @@ import string, random
 def validate_url(url, product_id, price_ids):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
-    page = requests.get(url, headers=headers)
+    page = requests.get(url, headers=headers, proxies=proxies)
     soup = BeautifulSoup(page.content, 'html.parser')
     div_product = soup.find(id=product_id)
     div_price = None
@@ -61,7 +61,7 @@ def get_product_info_context(product_dto, flag):
                # 'product_info_5': PRODUCT_INFO_5,
                # 'product_info_6': PRODUCT_INFO_6,
                }
-    ctx = {**service.get_base_context(), **context}
+    ctx = {**service.get_base_context(), **service.get_index_context(), **context}
     return ctx
 
 
@@ -84,8 +84,13 @@ def get_product_info(product_dto, flag):
             product_db.save(using='pricecheck_34')
 
         elif flag  == 'track':
+            print('flag = track')
             code = product_dto.track_code.strip()
             product_db = Product.objects.using('pricecheck_34').get(track_code=code)
+
+        if product_db == '':
+            product_dto.error1 = 'An error occurred while connecting to database.'
+            return [product_dto, prices]
 
         user = product_db.user
         product_dto.username = user.name
