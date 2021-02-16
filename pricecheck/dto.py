@@ -15,8 +15,9 @@ class ProductDTO:
     voucher_code: str = ''
     name: str = ''
     initial_price: str = ''
+    previous_price: str = ''
     current_price: str = ''
-    price_diff: int = 0
+    price_diff: float = 0
     price_labels: str = ' '
     price_values: float = 0.00
     price: int = 0

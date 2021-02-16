@@ -40,13 +40,17 @@ def update_prices(track_code):
                     product.tracked = False
                     product.save(using='pricecheck_34')
                     continue
-                latest_price = product.price_set.latest('price')
+                prices = product.price_set.all()
+                price_values = [x.price for x in prices]
+                initial_price = price_values[0]
+                latest_price = price_values[-1]
                 current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
                 price = Price(product=product,
                               price=current_price[1:],
                               date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
                               currency=current_price[0])
                 price.save(using='pricecheck_34')
+                product = Product.objects.using('pricecheck_34').get(track_code=product.track_code)
                 product_dto = convert_product_db2dto(product)
                 product_dto.track_link = APP_BASE + '/product?track_code=' + product.track_code
                 product_dto.stop_link = APP_BASE + '/product?stop_code=' + product.stop_code
@@ -55,12 +59,14 @@ def update_prices(track_code):
                 sub = 'Price Tracking Service: ' + product_dto.name
                 templ = 'pricecheck/email_check_product.html'
 
-                if latest_price.price < float(current_price[1:]) and float(current_price[1:]) - latest_price.price >= product.threshold_down:
+                if latest_price < float(current_price[1:]) and float(current_price[1:]) - latest_price >= product.threshold_down:
+                    product_dto.price_diff = float(current_price[1:]) - latest_price
                     service_email.send_email(product_dto, sub, templ)
                     print('threshold_down')
                     print('current_price')
                     print(float(current_price[1:]))
-                elif latest_price.price > float(current_price[1:]) and latest_price.price - float(current_price[1:]) >= product.threshold_up:
+                elif latest_price > float(current_price[1:]) and latest_price - float(current_price[1:]) >= product.threshold_up:
+                    product_dto.price_diff = float(current_price[1:]) - latest_price
                     service_email.send_email(product_dto, sub, templ)
                     print('threshold_up')
                     print('current_price')
