@@ -16,6 +16,7 @@ from pricecheck.text import *
 from pricecheck.const import *
 from pricecheck.models import *
 from pricecheck.dto import *
+from pricecheck.service_converters import *
 import string, random
 from lxml.html import fromstring
 from itertools import cycle
@@ -26,12 +27,7 @@ def get_product_info_context(product_dto, flag):
     info = get_product_info(product_dto, flag)
     context = {'product_dto': info[0],
                'prices': info[1],
-               # 'product_info_1': PRODUCT_INFO_1,
-               # 'product_info_2': PRODUCT_INFO_2,
-               # 'product_info_3': PRODUCT_INFO_3,
-               # 'product_info_4': PRODUCT_INFO_4,
-               # 'product_info_5': PRODUCT_INFO_5,
-               # 'product_info_6': PRODUCT_INFO_6,
+
                }
     ctx = {**service.get_base_context(), **service.get_index_context(), **context}
     return ctx
@@ -111,10 +107,37 @@ def get_product_info(product_dto, flag):
     return [product_dto, prices]
 
 
+def get_product_list_context(email, user_id):
+    info = get_product_list(email, user_id)
+    context = {'status': info[0],
+               'error_msg': info[1],
+               'products': info[2],
+               'user': info[3]
+               }
+    print(info)
+    ctx = {**service.get_base_context(), **service.get_index_context(), **context}
+    return ctx
 
 
+def get_product_list(email, user_id):
+    dto_list = []
+    if User.objects.using('pricecheck_34').filter(email=email, unique_id=user_id).exists():
+        user = User.objects.using('pricecheck_34').get(email=email, unique_id=user_id)
+        products = Product.objects.using('pricecheck_34').filter(user=user)
 
+        for product in products:
+            dto = convert_product_db2dto(product)
+            if product.tracked:
+                dto.status = 'tracked'
+            else:
+                dto.status = 'stopped or expired'
+            dto_list.append(dto)
 
+        dto_list.sort(key=lambda x: x.status, reverse=True)
+        return [True, None, dto_list, user]
+    else:
+       error= 'The email address and the unique user id do not match'
+    return [False, error, None, None]
 
 
 

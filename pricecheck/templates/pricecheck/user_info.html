@@ -1,0 +1,160 @@
+{% extends "pricecheck/base.html" %}
+{% block content %}
+    {% load static %}
+    {% static "pricecheck/" as static_base %}
+    {% load humanize %}
+
+    <div class="container-fluid p-4"
+         style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
+
+    <div class="row px-2" style="font-size:20px;">
+        <div class="col-lg-12 mb-2">
+            <p class="text-center" style="margin-top:1px;font-size: 30px;color:#96281b;">
+                Howdy!
+            </p>
+            <p class="text-center" style="text-align:center;margin-top:5px;font-size: 25px;color:#96281b;">
+                welcome back {{ user.name }}
+            </p>
+        </div>
+    </div>
+
+
+    <p style="text-align:left;margin-top:30px;font-size: 23px;color:navy;">Here is a list of all your
+        products:</p>
+
+    <hr>
+
+    {% for item in products %}
+
+        {% if item.status != 'tracked' %}
+            <div style="opacity:50%;">
+
+
+        {% else %}
+            <div>
+        {% endif %}
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="d-flex flex-row mb-1" style="font-size:18px;">
+                <div class="pl-2 ">
+                    <p class="">Status:</p>
+                </div>
+                <div class="pl-3">
+                    <p class="pr-3 " style="color:blue">{{ item.status }}</p>
+                </div>
+                <div class="pl-2">
+                    <p class="">Current price:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4"
+                       style="color:red">
+                        {{ item.currency }}{{ item.current_price|floatformat:"2"|intcomma }}</p>
+                </div>
+                <div class="pl-2">
+                    <p class="">Days left:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:red">{{ item.duration_left }}</p>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row mb-1">
+                <div class="pl-2 ">
+                    <p class="mt-1">The product:</p>
+                </div>
+                <div class="pl-3">
+                    <p class="pr-3 " style="font-size:20px; color:blue">{{ item.name }}</p>
+                </div>
+                <div class="pl-2">
+                    <p class="mt-1">Initial price:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4"
+                       style="font-size:20px; color:red">{{ item.initial_price|floatformat:"2"|intcomma }}</p>
+                </div>
+                <div class="pl-2">
+                    <p class="mt-1">Currency:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="font-size:20px; color:red">{{ item.currency }}</p>
+                </div>
+            </div>
+            <div class="d-flex flex-row mb-1">
+                <div class="pl-2">
+                    <p>Email address:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.email }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>Number of items being tracked for this email address:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4"><span style="color:darkblue"> {{ item.product_count }}</span>
+                        <span> out of </span> <span
+                                style="color:darkblue"> {{ item.product_max_count }} </span>
+                        <span> allowed</span></p>
+                </div>
+            </div>
+            <div class="d-flex flex-row mb-1">
+                <div class="pl-2">
+                    <p>Start date:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.start_date }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>End date:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.end_date }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>Tracking duration:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.duration }}</p>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-row mb-1">
+                <div class="pl-2">
+                    <p>Tracking code:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.track_code }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>Stop code:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.stop_code }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>Upwards threshold:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.threshold_up }}</p>
+                </div>
+                <div class="pl-2">
+                    <p>Downwards threshold:</p>
+                </div>
+                <div class="pl-2">
+                    <p class="pr-4" style="color:darkblue">{{ item.threshold_down }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+
+    </div>
+    </div>
+        <hr>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

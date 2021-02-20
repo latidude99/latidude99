@@ -17,6 +17,10 @@ def user_limit_duplicate_check(product_dto):
         user = User()
         user.name = product_dto.username
         user.email = product_dto.email
+        unique_id = service.get_random_string(32)
+        while User.objects.using('pricecheck_34').filter(unique_id=unique_id).exists():
+            unique_id = service.get_random_string(32)
+        user.unique_id = unique_id
         user.save(using='pricecheck_34')
         return [True, user]
     else:
@@ -30,14 +34,16 @@ def user_limit_duplicate_check(product_dto):
                                  'of items allowed to be tracked simultaneously by '
             errors['error2'] = 'You can stop tracking one of the products to start tracking a new one. To stop tracking ' \
                                 'any product please click on the relevant Stop Tracking link in the last email.'
-            errors['error3'] = 'Alternatively, you can buy me a coffee (link on the home page) and gain access to larger ' \
-                                'number of tracked items as well as longer tracking times and setting price change thresholds'
+            errors['error3'] = '' #'Alternatively, you can buy me a coffee (link on the home page) and gain access to larger ' \
+                                #'number of tracked items as well as longer tracking times and setting price change thresholds'
             return [False, errors]
         elif product_tracked > 0:
             errors['error1'] = 'You are already tracking a product with the same URL'
             product = user.product_set.get(url=product_dto.url, tracked=True)
             errors['error2'] = 'You can check the detals entering this product tracking code on home page: '
-            errors['error3'] = ''
+            errors['error3'] = 'You can stop tracking and start it again. ' \
+                               'On the home page use the stop track code from the confirmation email ' \
+                               ' and then validate the product again.'
             errors['error4'] = product.track_code
             return [False, errors]
 
@@ -70,6 +76,8 @@ def add_product(user, product_dto):
     product_db.end_date = start_date + dt.timedelta(days=int(product_dto.duration))
     product_db.initial_price = float(product_dto.price)
     product_db.initial_currency = product_dto.currency
+    product_db.threshold_up = product_dto.threshold_up
+    product_db.threshold_down = product_dto.threshold_down
     product_db.validated = True
     product_db.tracked = True
 

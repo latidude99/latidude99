@@ -56,7 +56,9 @@ def add_product(request):
         product_dto.username = request.POST['username']
         product_dto.email = request.POST['email']
         product_dto.url = request.POST['link']
-        product_dto.duration = request.POST.get('duration') # in days
+        product_dto.duration = request.POST.get('duration') # int, in days
+        product_dto.threshold_up = request.POST.get('upwards')  # float, in currency
+        product_dto.threshold_down = request.POST.get('downwards')  # float, in currency
         product_dto.promocode = request.POST['promocode']
     print(product_dto)
     user_check = service_add.user_limit_duplicate_check(product_dto)
@@ -107,7 +109,6 @@ def product(request):
 
     context = service_info.get_product_info_context(product_dto, flag)
     product_dto = context['product_dto']
-    print(context)
     if product_dto.error1 != '':
         return render(request, 'pricecheck/index.html', context)
     if product_dto.error2 != '':
@@ -117,6 +118,25 @@ def product(request):
     if flag == 'stop':
         return render(request, 'pricecheck/stop_product.html', context)
     return render(request, 'pricecheck/info_product.html', context)
+
+
+
+def user(request):
+    list_email = ''
+    user_id = ''
+    if request.method == 'POST':
+        if 'user_email' in request.POST and 'user_id' in request.POST:
+            list_email = request.POST['user_email']
+            user_id = request.POST['user_id']
+
+    context = service_info.get_product_list_context(list_email, user_id)
+    if context['status'] == False:
+        context['user_email'] = list_email
+        context['user_id'] = user_id
+        print(context)
+        return render(request, 'pricecheck/user_error.html', context)
+    else:
+        return render(request, 'pricecheck/user_info.html', context)
 
 
 

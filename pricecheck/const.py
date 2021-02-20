@@ -54,7 +54,7 @@ PROXY_POOL_SSL = 'https://sslproxies.org/'
 PROXY_POOL_ANON = 'https://free-proxy-list.net/anonymous-proxy.html'
 PROXY_POOL_UK = 'https://free-proxy-list.net/uk-proxy.html'
 
-PROXY_POOL = PROXY_POOL_UK
+PROXY_POOL = PROXY_POOL_NEW
 
 
 

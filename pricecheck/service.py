@@ -35,6 +35,7 @@ def get_index_context():
                'promo_btn': PROMO_BTN,
                'track_btn': TRACK_BTN,
                'stop_btn': STOP_BTN,
+               'list_btn': LIST_BTN,
                }
     ctx = {**get_base_context(), **context}
     return ctx

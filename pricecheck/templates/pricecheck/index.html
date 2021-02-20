@@ -13,7 +13,32 @@
                 <h2 id="found" class="text-center text-danger"> {{ welcome_text }}</h2>
             </div>
             <div class="col-lg-5">
-                <form id="find_form" class="form-inline" action="{% url 'pricecheck:product' %}"
+
+                <p class="pl-3" for="list">List all your products:</p>
+                <form id="find_form" class="form-group" action="{% url 'pricecheck:user' %}"
+                      method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="input-group mb-3  input-group-sm ml-3">
+                        <input type="email" class="form-control mr-3 w-25" placeholder="enter your email"
+                               id="list_email" name="user_email" style="background-color: linen;">
+                         <input type="text" class="form-control w-25" placeholder="enter your code"
+                               id="user_id" name="user_id" style="background-color: linen;">
+                        <div class="valid-feedback">{{ error_1 }}</div>
+                        <div class="invalid-feedback">{{ error_2 }}</div>
+                        <div class="px-3">
+                            <button type="submit" class="btn btn-outline-dark btn-sm px-5"> {{ list_btn }} </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-lg-2">
+                <hr>
+
+            </div>
+            <div class="col-lg-5">
+
+                <form id="find_form" class="form-inline float-right" action="{% url 'pricecheck:product' %}"
                       method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
                     <p class="pl-2" for="info">Find tracked product:</p>
@@ -28,12 +53,7 @@
                     </div>
                 </form>
                 <p style="color:red; font-weight: bolder"> {{ product_dto.error1 }}</p>
-            </div>
-            <div class="col-lg-2">
-                <hr>
 
-            </div>
-            <div class="col-lg-5">
                 <form id="stop_form" class="form-inline float-right" action="{% url 'pricecheck:product' %}"
                       method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
@@ -250,179 +270,183 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio2"
                                        value="2">
-                                <label class="form-check-label" for="radio1">2 days</label>
+                                <label class="form-check-label" for="radio2">2 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio3"
                                        value="3">
-                                <label class="form-check-label" for="radio1">3 days</label>
+                                <label class="form-check-label" for="radio3">3 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio4"
                                        value="5">
-                                <label class="form-check-label" for="radio1">5 days</label>
+                                <label class="form-check-label" for="radio4">5 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio5"
                                        value="10">
-                                <label class="form-check-label" for="radio2">10 days</label>
+                                <label class="form-check-label" for="radio5">10 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio6"
                                        value="15">
-                                <label class="form-check-label" for="radio3">15 days</label>
+                                <label class="form-check-label" for="radio6">15 days</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio7"
-                                       value="30" disabled>
-                                <label class="form-check-label" for="radio3" style="color:darkgrey;">1 month</label>
+                                       value="30">
+                                <label class="form-check-label" for="radio7">1 month</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio8"
                                        value="90" disabled>
-                                <label class="form-check-label" for="radio3" style="color:darkgrey;">3 months</label>
+                                <label class="form-check-label" for="radio8" style="color:darkgrey;">3 months</label>
                             </div>
                         </div>
                         <fieldset id="promo">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-4" style="color:darkgrey;">
+                                    <div class="col-lg-4">
                                         Upwards change threshold:
                                     </div>
                                     <div class="col-lg-2">
                                         <input type="text" class="form-control form-control-sm" id="upwards"
-                                               style="color:darkgrey;" placeholder="0.01" name="upwards" readonly>
+                                               placeholder="0.01" name="upwards">
                                     </div>
-                                    <div class="col-lg-4" style="color:darkgrey;">
-                                        Downwards change threshold:
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <input type="text" class="form-control form-control-sm" id="downwards"
-                                               style="color:darkgrey;" placeholder="0.01" name="downwards" readonly>
-                                    </div>
+                                    <div class="col-lg-4"
+                                    ">
+                                    Downwards change threshold:
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col">
-                                        <pre class="float-left text-secondary">{{ promo }}</pre>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control form-control-sm" id="promocode"
-                                               placeholder="promo code" name="promocode" readonly>
-                                    </div>
-                                    <div class="col">
-                                        <button id="promo_btn" class="btn btn-outline-secondary btn-block btn-sm"
-                                                disabled
-                                                onclick="
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control form-control-sm" id="downwards"
+                                           placeholder="0.01" name="downwards">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <pre class="float-left text-secondary mt-1">{{ promo }}</pre>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control form-control-sm" id="promocode"
+                                           placeholder="promo code" name="promocode" readonly>
+                                </div>
+                                <div class="col">
+                                    <button id="promo_btn" class="btn btn-outline-secondary btn-block btn-sm"
+                                            disabled
+                                            onclick="
                                                     console.log('promo:  ' + $('#promocode').val());
                                                     {#$('#radio7').prop('disabled', false);#}
                                                     $('#radio8').prop('disabled', false);
                                                     $('#promo_btn').prop('disabled', true);">
-                                            {{ promo_btn }}
-                                        </button>
-                                    </div>
+                                        {{ promo_btn }}
+                                    </button>
                                 </div>
                             </div>
-                        </fieldset>
-                        <div class="form-group form-check float-left">
-                            <input class="form-check-input" type="checkbox" name="terms" required>
-                            <span class="">
+                            <hr>
+
+            </div>
+            </fieldset>
+            <div class="form-group form-check float-left">
+                <input class="form-check-input" type="checkbox" name="terms" required>
+                <span class="">
                             {{ terms }}
                         </span>
-                            <div class="valid-feedback">{{ error_1 }}.</div>
-                            <div class="invalid-feedback">{{ error_3 }}</div>
-                        </div>
-                        <button type="submit" class="btn btn-outline-dark btn-block"
-                                onclick="$('#loader4').show().delay(20000).hide(0);">{{ submit_btn }}
-                        </button>
-                    </form>
-                </fieldset>
+                <div class="valid-feedback">{{ error_1 }}.</div>
+                <div class="invalid-feedback">{{ error_3 }}</div>
             </div>
+            <button type="submit" class="btn btn-outline-dark btn-block"
+                    onclick="$('#loader4').show().delay(20000).hide(0);">{{ submit_btn }}
+            </button>
+            </form>
+            </fieldset>
         </div>
-        <br><br>
-        <p>.</p>
-        <script>
+    </div>
+    <br><br>
+    <p>.</p>
+    <script>
 
-            // csrf_token
+        // csrf_token
 
-            $(function () {
+        $(function () {
 
-                // This function gets cookie with a given name
-                function getCookie(name) {
-                    var cookieValue = null;
-                    if (document.cookie && document.cookie != '') {
-                        var cookies = document.cookie.split(';');
-                        for (var i = 0; i < cookies.length; i++) {
-                            var cookie = jQuery.trim(cookies[i]);
-                            // Does this cookie string begin with the name we want?
-                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
+            // This function gets cookie with a given name
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
                         }
                     }
-                    return cookieValue;
                 }
+                return cookieValue;
+            }
 
-                var csrftoken = getCookie('csrftoken');
+            var csrftoken = getCookie('csrftoken');
 
-                /*
-                The functions below will create a header with csrftoken
-                */
-                function csrfSafeMethod(method) {
-                    // these HTTP methods do not require CSRF protection
-                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                }
+            /*
+            The functions below will create a header with csrftoken
+            */
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
 
-                function sameOrigin(url) {
-                    // test that a given url is a same-origin URL
-                    // url could be relative or scheme relative or absolute
-                    var host = document.location.host; // host + port
-                    var protocol = document.location.protocol;
-                    var sr_origin = '//' + host;
-                    var origin = protocol + sr_origin;
-                    // Allow absolute or scheme relative URLs to same origin
-                    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-                        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-                        // or any other URL that isn't scheme relative or absolute i.e relative.
-                        !(/^(\/\/|http:|https:).*/.test(url));
-                }
+            function sameOrigin(url) {
+                // test that a given url is a same-origin URL
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                    // or any other URL that isn't scheme relative or absolute i.e relative.
+                    !(/^(\/\/|http:|https:).*/.test(url));
+            }
 
-                $.ajaxSetup({
-                    beforeSend: function (xhr, settings) {
-                        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-                            // Send the token to same-origin, relative URLs only.
-                            // Send the token only if the method warrants CSRF protection
-                            // Using the CSRFToken value acquired earlier
-                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                        }
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                        // Send the token to same-origin, relative URLs only.
+                        // Send the token only if the method warrants CSRF protection
+                        // Using the CSRFToken value acquired earlier
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
                     }
-                });
-
+                }
             });
-        </script>
 
-        <script>
-            // Disable form submissions if there are invalid fields
-            (function () {
-                'use strict';
-                window.addEventListener('load', function () {
-                    // Get the forms we want to add validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                                $('#loader4').hide();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-        </script>
+        });
+    </script>
+
+    <script>
+        // Disable form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Get the forms we want to add validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            $('#loader4').hide();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
     </div>
     </div>
 

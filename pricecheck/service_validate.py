@@ -37,7 +37,7 @@ def validate_url(url, product_id, price_ids):
     div_product = None
     proxies_num = len(proxies_pool)
     count = 0
-    while count < proxies_num:
+    while count < 15: #proxies_num:
         count = count + 1
         try:
             proxy = choice(proxies_pool)
@@ -48,10 +48,10 @@ def validate_url(url, product_id, price_ids):
             print("trying with:", proxy_dict)
             response = requests.get(url,
                                     headers=headers,
-                                 #   proxies=proxy_dict,
-                                    timeout=7)
+                                    proxies=proxy_dict,
+                                    timeout=15)
 
-           # print(response.json())
+            print(response.json())
             soup = BeautifulSoup(response.content, 'html.parser')
             div_product = soup.find(id=product_id)
 

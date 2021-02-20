@@ -31,7 +31,7 @@
         {% else %}
             The price has gone down
             <span style="color:red;padding:15px;margin-right:30px;">
-            {{ product_dto.currency }}{{ product_dto.price_diff|floatformat:"2"|intcomma }}
+            {{ product_dto.price_diff|floatformat:"2"|intcomma }}
             </span>
         {% endif %}
 

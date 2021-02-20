@@ -25,7 +25,7 @@ def update_prices(track_code):
     elif len(code) == 16:  # correct track_code
         try:
             product = Product.objects.using('pricecheck_34').get(track_code=code)
-            current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            current_price = check_price_proxy(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
             price = Price(product=product, price=current_price[1:], date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
                           currency=current_price[0])
             price.save(using='pricecheck_34')
@@ -46,7 +46,7 @@ def update_prices(track_code):
                 price_values = [x.price for x in prices]
                 initial_price = price_values[0]
                 latest_price = price_values[-1]
-                current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+                current_price = check_price_proxy(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
                 price = Price(product=product,
                               price=current_price[1:],
                               date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
@@ -75,6 +75,7 @@ def update_prices(track_code):
                     print('threshold_up')
                     print('current_price')
                     print(float(current_price[1:]))
+
                 # sub = 'Price Tracking Service: ' + product_dto.name
                 # templ = 'pricecheck/email_check_product.html'
                 # service_email.send_email(product_dto, sub, templ)

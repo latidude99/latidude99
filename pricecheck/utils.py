@@ -14,6 +14,22 @@ import pricecheck.service_add as service_add
 import pricecheck.service_track as service_track
 
 
+def set_missing_unique_id_for_users():
+    users = User.objects.using('pricecheck_34').all()
+    for user in users:
+        if len(user.unique_id) < 32:
+            unique_id = service.get_random_string(32)
+            while User.objects.using('pricecheck_34').filter(unique_id=unique_id).exists():
+                unique_id = service.get_random_string(32)
+            user.unique_id = unique_id
+            print('unique_id set for ' + user.email + ', ' + user.unique_id)
+        user.save(using='pricecheck_34')
+
+
+# set_missing_unique_id_for_users()
+
+
+
 def delete_all_users():
     User.objects.using('pricecheck_34').all().delete()
     print('all users deleted')
