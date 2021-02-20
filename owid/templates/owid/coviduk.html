@@ -1,0 +1,87 @@
+{% extends "main/base_boot4_main.html" %}
+{% block content %}
+    {% load static %}
+    {% static "main/" as static_base %}
+    <div class="container" style="font-family:'Courier New';">
+        <div class="row">
+            <div class=" col-lg-10 mb-3">
+                <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+                    <span class="fas fa-chevron-left"></span>
+                    home
+                </a>
+                <div class="row mt-4">
+                    <div class="col-lg-8" style="background-color:transparent;">
+                        <a href="{{ coviduk_link }}" target="_blank" style="text-decoration: none; color: inherit;">
+                            <h3 class="text-justify font-weight-bold">{{ title }}</h3></a>
+                    </div>
+                    <div class="col-lg-4">
+                        <a class="btn btn-outline-dark btn-block text-lowercase float-right"
+                           href="{{ coviduk_link }}"
+                           target="_blank">
+                            {{ app_btn_txt }}
+                            <span class="fas fa-external-link-alt  text-info float-right mr-2 mt-1"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-2">
+                <div class="float-center" style=" background-color:transparent;">
+                    <a href="{{ coviduk_link }}" target="_blank" title="go to the app page"
+                       style="background-color:transparent;color:#000000;text-decoration:none">
+                        <img class="mx-auto d-block img-fluid" src="{{ static_base }}{{ image }}"
+                             alt="world_image" style="max-height: 110px;background-color:transparent;">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <code class="text-lowercase font-weight-bold">{{ in_short }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ in_short_txt }}</p>
+
+        <code class="text-lowercase font-weight-bold">{{ app_tech }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ app_tech_txt }}</p>
+
+        <code class="text-lowercase font-weight-bold">{{ code }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3"><a href="{{ github_link }}"
+                                     target="_blank"><code>{{ github_link }}
+         <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p>
+
+        <code class="text-lowercase font-weight-bold">{{ data_source }}</code>
+        <hr>
+        <p class="py-1 px-4 mb-3">{{ data_source_txt }}<a href="{{ data_source_link }}"
+                                                          target="_blank"><code>{{ data_source_txt2 }}
+         <span class="fas fa-external-link-alt fa-sm text-info mr-2 mt-1"></span></code></a></p>
+
+        <code class="text-lowercase font-weight-bold">{{ in_depth }}</code>
+        <hr>
+        <div class="py-1 px-4 mb-3">
+            <p>{{ in_depth_txt1 }}</p>
+            <p>{{ in_depth_txt2 }}</p>
+            <p>{{ in_depth_txt3 }}</p>
+            <p>{{ in_depth_txt4 }}</p>
+        </div>
+        <code class="text-lowercase font-weight-bold">{{ images }}</code>
+        <hr>
+        <br>
+        <div class="py-1 px-4 mb-3">
+            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image1 }}" alt="image1">
+            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image2 }}" alt="image1">
+            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image3 }}" alt="image1">
+            <img class="mx-auto d-block img-fluid mb-3 img-thumbnail" src="{{ static_base }}{{ image4 }}" alt="image1">
+        </div>
+    </div>
+
+
+    <div class="col-lg-12 mt-4 mb-3" style="font-family:'Courier New';">
+        <a href="{% url 'main:index' %}" role="button" class="btn btn-outline-dark btn-sm">
+            <span class="fas fa-chevron-left"></span>
+            home
+        </a>
+    </div>
+
+{% endblock %}
+

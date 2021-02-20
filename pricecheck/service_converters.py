@@ -31,7 +31,7 @@ def convert_product_db2dto(db):
     dto.price_values = price_values + values_filler
 
     dto.initial_price = price_values[0]
-    if len(dto.price_values) > 1:
+    if len(price_values) > 1:
         dto.previous_price = price_values[-2]
     else:
         dto.previous_price = price_values[-1]

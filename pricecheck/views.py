@@ -9,6 +9,7 @@ import pytz
 import pricecheck.service as service
 import pricecheck.service_add as service_add
 import pricecheck.service_info as service_info
+import pricecheck.service_validate as service_validate
 from pricecheck.const import *
 from pricecheck.dto import *
 
@@ -28,7 +29,7 @@ def validate(request):
         url_text = request.POST.get('url')
         response_data = {}
         if url_text.strip() != '':
-            validation = service_info.validate_url(url_text, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            validation = service_validate.validate_url(url_text, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
             if validation['error'] is None:
                 response_data['status'] = 'ok'
                 response_data['product_date'] = dt.datetime.now().strftime('%d %B %Y, %H:%M')

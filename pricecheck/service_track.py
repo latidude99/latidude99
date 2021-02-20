@@ -13,26 +13,28 @@ from pricecheck.text import *
 from pricecheck.models import *
 from pricecheck.dto import *
 from pricecheck.service_converters import *
+from pricecheck.const import *
 import string, random
-
+import pricecheck.service_proxy as service_proxy
 
 def update_prices(track_code):
     code = track_code.strip()
-    if code != '' and len(code) < 16:# incorrect track_code
+    if code != '' and len(code) < 16:  # incorrect track_code
         error = code + ' - Invalid tracking code: the code has to be 16 characters long.'
         return error
-    elif len(code) == 16: # correct track_code
+    elif len(code) == 16:  # correct track_code
         try:
             product = Product.objects.using('pricecheck_34').get(track_code=code)
-            current_price = check_price(product,AMAZON_NAME_ID, AMAZON_PRICE_IDS)
-            price = Price(product=product, price=current_price[1:], date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC), currency=current_price[0])
+            current_price = check_price(product, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            price = Price(product=product, price=current_price[1:], date=dt.datetime.utcnow().replace(tzinfo=pytz.UTC),
+                          currency=current_price[0])
             price.save(using='pricecheck_34')
             return code + ' product price updated.'
         except Product.DoesNotExist:
             error = code + ' - Invalid tracking code: no product found.'
             return error
-    else: # update all by passing '' as track_code parameter
-        products = Product.objects.using('pricecheck_34').filter(confirmed=True,tracked=True)
+    else:  # update all by passing '' as track_code parameter
+        products = Product.objects.using('pricecheck_34').filter(confirmed=True, tracked=True)
         for product in products:
             if product.confirmed:
                 timedelta = product.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
@@ -59,13 +61,15 @@ def update_prices(track_code):
                 sub = 'Price Tracking Service: ' + product_dto.name
                 templ = 'pricecheck/email_check_product.html'
 
-                if latest_price < float(current_price[1:]) and float(current_price[1:]) - latest_price >= product.threshold_down:
+                if latest_price < float(current_price[1:]) and float(
+                        current_price[1:]) - latest_price >= product.threshold_down:
                     product_dto.price_diff = float(current_price[1:]) - latest_price
                     service_email.send_email(product_dto, sub, templ)
                     print('threshold_down')
                     print('current_price')
                     print(float(current_price[1:]))
-                elif latest_price > float(current_price[1:]) and latest_price - float(current_price[1:]) >= product.threshold_up:
+                elif latest_price > float(current_price[1:]) and latest_price - float(
+                        current_price[1:]) >= product.threshold_up:
                     product_dto.price_diff = float(current_price[1:]) - latest_price
                     service_email.send_email(product_dto, sub, templ)
                     print('threshold_up')
@@ -99,10 +103,42 @@ def check_price(product, name_tag, price_tags):
     return product_price
 
 
+def check_price_proxy(product, name_tag, price_tags):
+    product_name = ''
+    product_price = ''
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
 
+    proxies_pool = service_proxy.get_proxies_1(PROXY_POOL)
+    print('proxies_pool: ' + str(len(proxies_pool)))
+    div_price = None
+    proxies_num = len(proxies_pool)
+    count = 0
+    while count < proxies_num:
+        count = count + 1
+        try:
+            proxy = random.choice(proxies_pool)
+            proxy_dict = {
+                'http': proxy,
+                'https': proxy
+            }
+            print("trying with:", proxy_dict)
+            response = requests.get(product.url,
+                                    headers=headers,
+                                 #   proxies=proxy_dict,
+                                    timeout=7)
 
+            soup = BeautifulSoup(response.content, 'html.parser')
+            for id in price_tags:
+                div_price = soup.find(id=id)
+                if div_price != None:  # found the working price tag
+                    break
+            break
+        except:
+            print("Connection error, looking for another proxy")
+            pass
 
+    if div_price != None:
+        product_price = div_price.get_text().strip()
 
-
-
-
+    return product_price

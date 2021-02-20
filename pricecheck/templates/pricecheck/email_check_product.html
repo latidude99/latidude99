@@ -19,8 +19,22 @@
     <p style="text-align:center;font-size: 25px;color:#96281b;">
         We have news on a product you are tracking!</p>
     <p style="text-align:center;font-size: 25px;color:#96281b;">
-        The price has changed for: <span style="color:red;padding:15px;margin-right:30px;">
-        {{ product_dto.price_diff|floatformat:"2"|intcomma }}</span></p>
+
+        {% if product_dto.price_diff == 0 %}
+            The price has not changed since the last time but you have
+            {{ product.dto.duration_left }} tracking days left for this item.
+        {% elif product_dto.price_diff > 0 %}
+            The price has gone up
+            <span style="color:red;padding:15px;margin-right:30px;">
+            {{ product_dto.currency }}{{ product_dto.price_diff|floatformat:"2"|intcomma }}
+            </span>
+        {% else %}
+            The price has gone down
+            <span style="color:red;padding:15px;margin-right:30px;">
+            {{ product_dto.currency }}{{ product_dto.price_diff|floatformat:"2"|intcomma }}
+            </span>
+        {% endif %}
+
 </div>
 
 
@@ -109,121 +123,6 @@
 <p style="text-align:center;margin-top:50px;font-size: 15px;color:#96281b;">Thank you for using Price Tracking
     Service.</p>
 
-<script>
-    window.onload = function () {
-        var URI;
-        var ctx = document.getElementById('chart').getContext('2d');
-        var data = {
-            labels: [
-                {% for item in  product_dto.price_labels %}
-                    "{{ item }}",
-                {% endfor %}
-            ],
-            datasets: [{
-                label: '{{product_dto.currency}}',
-                data: [
-                    {% for item in product_dto.price_values %}
-                        "{{ item }}",
-                    {% endfor %}
-                ],
-                backgroundColor: "rgba(255, 0, 0, 0.50)",
-                borderColor: "red",
-                borderWidth: 0,
-                barPercentage: 0.9,
-                barThickness: '10',
-            }]
-        };
-        var options = {
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0.15)",
-                        zeroLineColor: "rgba(0, 0, 0, 0.5)",
-                    },
-                    ticks: {
-                        fontColor: "rgba(0, 0, 0, 0.8)",
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0.15)",
-                        zeroLineColor: "rgba(0, 0, 0, 0.5)",
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        fontColor: "rgba(0, 0, 0, 0.8)",
-                        userCallback: function (value, index, values) {
-                            return value.toLocaleString();   // this is all we need
-                        },
-                    }
-                }]
-
-            },
-            legend: {
-                display: false,
-                labels: {
-                    fontColor: 'rgb(255, 0, 0)'
-                }
-            },
-            title: {
-                display: false,
-                text: '{{ product_dto.currency }}'
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                }
-            },
-            elements: {
-                point: {
-                    radius: 1,
-                    hoverRadius: 5,
-                }
-            },
-            hover: {
-                mode: 'index',
-                intersect: false
-            },
-            responsive: true,
-            tooltips: {
-                enabled: true,
-                mode: 'index',
-                intersect: false,
-                yAlign: 'top',
-                callbacks: {
-                    label: function (tooltipItem, data) {
-                        var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                        return parseInt(tooltipValue).toLocaleString();
-                    }
-                },
-            },
-            animation: {
-                onComplete: done
-            },
-        };
-
-        var prices = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: options,
-        });
-
-        function done() {
-            URI = prices.toBase64Image();
-            console.log(URI);
-            $('#image').attr("src", URI);
-        }
-
-        {#console.log(document.getElementById('image').innerText);#}
-        {#document.getElementById('image').src = prices.toBase64Image();#}
-    };
-
-</script>
-
- <img id="image" src="" alt="canvas chart" width="80%">
 
 </body>
 </html>
