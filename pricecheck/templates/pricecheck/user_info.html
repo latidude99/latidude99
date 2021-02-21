@@ -35,7 +35,7 @@
         {% endif %}
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             <div class="d-flex flex-row mb-1" style="font-size:18px;">
                 <div class="pl-2 ">
                     <p class="">Status:</p>
@@ -97,7 +97,7 @@
                         <span> allowed</span></p>
                 </div>
             </div>
-            <div class="d-flex flex-row mb-1">
+            <div class="d-flex flex-row">
                 <div class="pl-2">
                     <p>Start date:</p>
                 </div>
@@ -119,7 +119,7 @@
             </div>
 
 
-            <div class="d-flex flex-row mb-1">
+            <div class="d-flex flex-row">
                 <div class="pl-2">
                     <p>Tracking code:</p>
                 </div>
@@ -146,8 +146,40 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-8">
+
+        <div class="col-lg-3">
+
+            <form id="find_form" class="form-group" action="{% url 'pricecheck:product' %}"
+                  method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                    <input type="hidden" class="form-control" id="info" name="track_code"
+                           value="{{ item.track_code }}"
+                           style="background-color: linen;">
+                    <div class="px-3">
+                        <button type="submit" class="btn btn-outline-dark btn-block btn-sm px-5">Go to product page</button>
+                    </div>
+            </form>
+
+
+            <form id="stop_form" class="form-group" action="{% url 'pricecheck:product' %}"
+                  method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                    <input type="hidden" class="form-control" id="stop" name="stop_code"
+                           value="{{ item.stop_code }}"
+                           style="background-color: linen;">
+                    {% if item.status != 'tracked' %}
+                        <div class="px-3">
+                            <button type="submit" class="btn btn-outline-danger btn-block btn-sm px-5"
+                            disabled> Stop tracking</button>
+                        </div>
+                    {% else %}
+                        <div class="px-3">
+                            <button type="submit" class="btn btn-outline-danger btn-block btn-sm px-5"> {{ stop_btn }} </button>
+                        </div>
+                    {% endif %}
+            </form>
+        </div>
 
     </div>
     </div>

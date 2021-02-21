@@ -90,7 +90,10 @@ def get_product_info(product_dto, flag):
 
         product_dto.track_code = product_db.track_code
         product_dto.stop_code = product_db.stop_code
-        product_dto.duration = str(product_db.duration) + ' day(s)'
+        if product_db.duration == 1:
+            product_dto.duration = str(product_db.duration) + ' day'
+        else:
+            product_db.duration = str(product_db.duration) + ' days'
         product_dto.threshold_up = product_dto.currency + str(product_db.threshold_up)
         product_dto.threshold_down = product_dto.currency + str(product_db.threshold_down)
 

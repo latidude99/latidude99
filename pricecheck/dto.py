@@ -8,7 +8,7 @@ class ProductDTO:
     product_count: str = '' # active
     total_product_count: str = '' # total
     url: str = ''
-    duration: int = 3
+    duration: int = 0
     duration_left: int = 0
     start_date: str = ''
     end_date: str = ''

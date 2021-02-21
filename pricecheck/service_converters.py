@@ -14,9 +14,15 @@ def convert_product_db2dto(db):
     dto.url = db.url
     dto.start_date = db.start_date
     dto.end_date = db.end_date
-    dto.duration = str(db.duration) + 'day(s)'
+    if db.duration == 1:
+        dto.duration = str(db.duration) + ' day'
+    else:
+        dto.duration = str(db.duration) + ' days'
     timedelta = db.end_date - dt.datetime.utcnow().replace(tzinfo=pytz.UTC)
-    dto.duration_left = str(timedelta.days)
+    if timedelta.days < 0:
+     dto.duration_left = '0'
+    else:
+        dto.duration_left = str(timedelta.days)
     dto.voucher_code = ''
     dto.name = db.name
     dto.initial_price = db.initial_price
