@@ -8,7 +8,7 @@
          style="background-image: url('{{ static_base }}{{ back_pattern1 }}');">
 
 
-        <div class="row mt-3 mb-4" style="font-family: 'Candara Light', Arial, sans-serif;">
+        <div class="row mt-3 mb-0" style="font-family: 'Candara Light', Arial, sans-serif;">
             <div class="col-lg-12">
                 <h2 id="found" class="text-center text-danger"> {{ welcome_text }}</h2>
             </div>
@@ -21,7 +21,7 @@
                     <div class="input-group mb-3  input-group-sm ml-3">
                         <input type="email" class="form-control mr-3 w-25" placeholder="enter your email"
                                id="list_email" name="user_email" style="background-color: linen;">
-                         <input type="text" class="form-control w-25" placeholder="enter your code"
+                        <input type="text" class="form-control w-25" placeholder="enter your code"
                                id="user_id" name="user_id" style="background-color: linen;">
                         <div class="valid-feedback">{{ error_1 }}</div>
                         <div class="invalid-feedback">{{ error_2 }}</div>
@@ -73,6 +73,117 @@
 
         </div>
 
+        <div id="accordion">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none;">
+                    <a class="card-link panel-heading collapsed stretched-link" data-toggle="collapse"
+                       data-target="#info_main" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-family: 'Candara Light', Arial, sans-serif;
+                               font-size:22px; color:#96281b;">
+                        <i class="fa mr-4" style="font-size: 17px;" aria-hidden="true"></i>
+                        How it all works
+                    </a>
+                    <div id="info_main" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+
+                        <p style="font-size: 18px;margin-bottom: 20px;">
+                            The goal of this little project is to find the best price of a product you have
+                            found online.
+                            <span style="font-size: 16px;opacity: 60%; margin-left: 20px;">
+                                (say you've found the headphones you like and now waiting
+                                for the price to drop)
+                            </span>
+                        </p>
+                        <div class="row" >
+
+                            <div class="col-lg-4 info_text" style="border-left: darkgrey solid 1px">
+                                <p>Setting things up:</p>
+                                <ul>
+                                    <li>first you need to check the link - if the validation is successfull you will
+                                        see the item name and price.
+                                    </li>
+                                    <li>then if you confirm that it is indeed correct the other part of the service
+                                        becomes active
+                                    </li>
+
+                                    <li> you will need to enter your name/nickname andthe email address to receive
+                                        price movement alerts
+                                    </li>
+                                    <li>you can choose how long you want to track the product and optionally enter
+                                        threshold for price movements, up and down
+                                    </li>
+                                    <li>after submitting the product for trcking you will receive an email with a
+                                        confirmation link
+                                    </li>
+                                    <li>you will need to confirm your email address by clicking on the confirmation
+                                        link, otherwise the tracking will not start
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 info_text" style="border-left: darkgrey solid 1px">
+
+                                <p>
+                                    Afterwards::
+                                </p>
+                                <ul>
+                                    <li>
+                                        you will receive an email every time the price changes more than the upwards
+                                        or downwards thresholds
+                                    </li>
+                                    <li>
+                                        each email will include basic product information, your personal unique id
+                                        as well as track and stop codes
+                                    </li>
+                                    <li>
+                                        the prices are checked 5 times a day, this however will increase soon
+                                    </li>
+                                    <li>
+                                        you can see detailed product information and the price history by entering
+                                        the tracking code on the home page - price history is presented as a chart and a
+                                        table
+                                    </li>
+                                    <li>
+                                        you can stop tracking any product at any time by entering 'stop track'
+                                        code on the home page
+                                    </li>
+                                    <li>
+                                        you can see a list of all the product you have been tracking,
+                                        including stopped and expired ones
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                            <div class="col-lg-4 info_text" style="color:red;border-left: darkgrey solid 1px">
+
+                                <p>
+                                    A few things:
+                                </p>
+                                <ul>
+                                    <li>
+                                        at this moment only links to products on amazon.co.uk are implemented.
+                                    </li>
+                                    <li>
+                                        due to Amazon actively blocking scrapping only 50% or less of the links pass the
+                                        validation now  (working on improving it)
+                                    </li>
+                                    <li>
+                                        other Amazon websites will be added if/when the problem described above is solved.
+                                    </li>
+                                    <li>
+                                        other retailers (John Levis, Argos etc.) will be added later on
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <hr>
         <div class="row " style="font-family: 'Candara Light', Arial, sans-serif;">
 
@@ -100,7 +211,7 @@
                                 </button>
                             </div>
                             <input type="text" class="form-control" id="url"
-                                   placeholder="enter product url" name="url" required>
+                                   placeholder="enter product url" name="url" required autofocus>
 
                             <div class="valid-feedback">{{ error_1 }}</div>
                             <div class="invalid-feedback">{{ error_2 }}</div>
@@ -300,7 +411,8 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="duration" id="radio8"
                                        value="90" disabled>
-                                <label class="form-check-label" for="radio8" style="color:darkgrey;">3 months</label>
+                                <label class="form-check-label" for="radio8" style="color:darkgrey;">3
+                                    months</label>
                             </div>
                         </div>
                         <fieldset id="promo">

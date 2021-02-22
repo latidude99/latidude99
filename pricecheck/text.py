@@ -4,6 +4,8 @@ TITLE_TAB = 'Track'
 TITLE_MAIN = 'Price Tracking Service'
 WELCOME_TEXT = 'Hiya!'
 
+INFO_MAIN = ''
+
 
 URL = 'Paste a link to the product which price you want to track. \n' \
       'Only Amazon product pages are enabled at the moment.'

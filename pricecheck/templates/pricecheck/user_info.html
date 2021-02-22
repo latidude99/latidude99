@@ -22,7 +22,7 @@
     <p style="text-align:left;margin-top:30px;font-size: 23px;color:navy;">Here is a list of all your
         products:</p>
 
-    <hr>
+    <hr class="list">
 
     {% for item in products %}
 
@@ -156,7 +156,7 @@
                            value="{{ item.track_code }}"
                            style="background-color: linen;">
                     <div class="px-3">
-                        <button type="submit" class="btn btn-outline-dark btn-block btn-sm px-5">Go to product page</button>
+                        <button type="submit" class="btn btn-outline-dark btn-block px-5">Go to product page</button>
                     </div>
             </form>
 
@@ -170,12 +170,12 @@
                            style="background-color: linen;">
                     {% if item.status != 'tracked' %}
                         <div class="px-3">
-                            <button type="submit" class="btn btn-outline-danger btn-block btn-sm px-5"
+                            <button type="submit" class="btn btn-outline-danger btn-block px-5"
                             disabled> Stop tracking</button>
                         </div>
                     {% else %}
                         <div class="px-3">
-                            <button type="submit" class="btn btn-outline-danger btn-block btn-sm px-5"> {{ stop_btn }} </button>
+                            <button type="submit" class="btn btn-outline-danger btn-block px-5"> {{ stop_btn }} </button>
                         </div>
                     {% endif %}
             </form>
@@ -183,7 +183,7 @@
 
     </div>
     </div>
-        <hr>
+        <hr class="list">
     {% endfor %}
 
 </div>
