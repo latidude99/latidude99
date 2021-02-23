@@ -1,13 +1,15 @@
 # Price Tracking Service
 
-[![](https://img.shields.io/badge/%20$%20-buy%20me%20a%20coffe-yellow.svg)](https:://www.buymeacoffee.com/zWn1I6bVf)
+[![](https://img.shields.io/badge/%20$%20-buy%20me%20a%20coffe-yellow.svg)](https://www.buymeacoffee.com/zWn1I6bVf)
 
-Live at: [http://pc.latidude99.com/owid/](http://pc.latidude99.com/pricecheck/)
+Live at: [http://pc.latidude99.com/pricecheck/](http://pc.latidude99.com/pricecheck/)
   
 ## General Info
 
 My third Python project.  
-Tracking prices of selected products 
+A service allowing users to track price changes of products they find online.
+
+
 
 Phase one: Amazon  
 Phase two: John Lewis, Argos
@@ -22,64 +24,31 @@ Phase two: John Lewis, Argos
 - Chart.js 2.9.3
 
 
-## Features
+## How it works
 
-The main page shows the latest numbers for each continent.  
+The idea behind it is for users to find an item they want ot buy on Amazon UK (other sites to be added later) and use this service to track price changes. Users are notified by email whenever the price goes up or down allowing them to pick the best time to buy. Price checking is conducted 5 times a day.
+
+First, a link to the product goes through the validation process that checks if the service recognizes the URL and is able to detect the product details (e.g. the name, price and currency).
+
+Then the product can be submitted for tracking, with minimum necessary information:
+
+ - user name and email address
+ - url to the product - this gets copied automatically after successful validation to avoid typos or copying errors
+ - tracking duration (in days)
+ - upwards and downwards price movement thresholds
+ - promo code (optional) that unlocks extra features such as extended tracking period and maximum number of items being tracked simultaneously by one user
  
-### COVID-19
+After the product's submition an email with the confirmation link is sent out - nothing is tracked until the user's email address is confirmed.
 
-#### Section I - Single country data and charts
+Once confirmed the user will receive an email whenever the product's price changes more than the upwards or downwards thersholds, it will contain the old and new prices as well as track and stop codes.
 
-Shows charts and statistics on the selected country:
-- population
-- population density
-- median age
-- gdp per capita
-- life expectancy
-- cardiovascular death rate
-- diabetes prevalence
-- etc.
+Detailed information on price history in charts and tables can be accessed from the home page with a unique track code for each product.
 
-Charts available:
-- new cases / new cases per 100,000 population (bar charts)
-- total cases / total cases per 100,000 population (line charts)
-- new deaths / new deaths per 100,000 population (bar charts)
-- total deaths / total deaths per 100,000 population (line charts)
+Tracking can be stopped at any time with a unique stop code for each product.
 
-#### Section II - Multiple country data and charts
-
- Data and charts types are the same as in the previous section but for up to 5 countries.  
- This allows a direct comparison between countries.
+Users are able to see a detailed list of all products they have been tracking entering their email address and the unique user ID (generated when the email address is submitted for the first time) 
  
- Choosing the time period shown on charts is also possible.
- 
- #### Section III -  Latest numbers and charts
- 
- This section shows the latest data for all countrues in a tabular form.
- 
- - you can switch between the latest data and one or two days back for the whole table (page reload)
- - you can swap between the latest data and one or two days back for individual countries (AJAX)
- - you can sort the table by any column
- - you can filter and search the whole table including alphanumeric and numeric entries
- - you can use pre-defined filters by continents
 
-Clicking on the country name brings up a modal with a table showing data for that country from the beginning of the year (AJAX).  
-The table is sorted chronologically, the latest numbers first.  
-
-Clicking on the numbers in any country row brings up a modal with a relevant chart (bar or line) showing data from 90 days ago to the latest.  
-Charts available:
-- new and total cases
-- new and total deaths
-- new cases per 1 million
-- new deaths per 1 million
-    
-
-#### Section IV -  Race charts
- 
- Total cases and total deaths race charts made with the excelent Flourish service.
- 
-## CIA Factbook
-Works on this part will commence soon(ish)
 
 ## Screenshots
 
