@@ -62,3 +62,11 @@ def check():
 #check_item_price(get_page_html(user.url))
 
 #check()
+
+'''
+opening links pointing outside the host domain in a new tab:
+
+$(document.links).filter(function() {
+    return this.hostname != window.location.hostname;
+}).attr('target', '_blank');
+'''

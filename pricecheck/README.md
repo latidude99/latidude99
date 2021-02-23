@@ -1,8 +1,8 @@
 # Price Tracking Service
 
-[![](https://img.shields.io/badge/%20$%20-buy%20me%20a%20coffe-yellow.svg)](https://www.buymeacoffee.com/zWn1I6bVf)
+[![](https://img.shields.io/badge/%20$%20-buy%20me%20a%20coffe-yellow.svg)](https:://www.buymeacoffee.com/zWn1I6bVf)
 
-Live at: [http://pc.latidude99.com/owid/](http://pc.latidude99.com/owid/)
+Live at: [http://pc.latidude99.com/owid/](http://pc.latidude99.com/pricecheck/)
   
 ## General Info
 
