@@ -8,6 +8,7 @@ urlpatterns = [
     path('soon', views.soon, name='soon'),
     path('covid', views.coviduk, name='coviduk'),
     path('mowid', views.mowid, name='mowid'),
+    path('mpricecheck', views.mpricecheck, name='mpricecheck'),
     path('enquiry', views.enquiry, name='enquiry'),
     path('contacts', views.contacts, name='contacts'),
     path('links', views.links, name='links'),

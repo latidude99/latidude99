@@ -6,6 +6,47 @@
         <div class="row">
             <div class="col-lg-12" style="background-color:transparent;">
 
+
+                <div class="card" style="border-left: 5px solid orange;">
+                    <div class="card-body py-0 mt-3">
+                        <a href="{% url 'main:mpricecheck' %}" class="stretched-link"
+                           style="text-decoration: none;color: inherit;">
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <h4 class="text-justify text-lowercase font-weight-bold">
+                                        {{ title_python_proj_3 }}</h4>
+                                    <p class="card-text text-lowercase">{{ desc_python_proj_3 }}</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <i class="fab fa-python ml-4 fa-3x mt-3"></i>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul>
+                                        <li><small class="font-weight-bolder">{{ python3 }}</small></li>
+                                        <li><small>{{ django3 }}</small></li>
+                                        <li><small>{{ chartsjs }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <ul>
+                                        <li><small>{{ bootstrap4 }}</small></li>
+                                        <li><small>{{ jquery }}</small></li>
+                                        <li><small>{{ mysql5 }}</small></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3">
+                                    <img class="rounded mx-auto d-block img-fluid float-right"
+                                         src="{{ static_base }}{{ image_python_proj_3 }}"
+                                         alt="piotr"
+                                         style="background-color:transparent; max-height:100px; width: auto;">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <br>
+
                 <div class="card" style="border-left: 5px solid orange;">
                     <div class="card-body py-0 mt-3">
                         <a href="{% url 'main:mowid' %}" class="stretched-link"
@@ -30,6 +71,7 @@
                                 <div class="col-lg-2 mt-2">
                                     <ul>
                                         <li><small>{{ bootstrap4 }}</small></li>
+                                        <li><small>{{ jquery }}</small></li>
                                         <li><small>{{ mysql5 }}</small></li>
                                     </ul>
                                 </div>

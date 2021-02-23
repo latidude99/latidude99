@@ -78,6 +78,7 @@ MYSQL5 = 'MySQL 5.7'
 NITRODB = 'NitroDB'
 BOOTSTRAP3 = 'Bootstrap 3'
 BOOTSTRAP4 = 'Bootstrap 4'
+JQUERY = 'jQuery'
 SPRING4 = 'Spring 4'
 SPRING5 = 'Spring 5'
 SPRINGBOOT15 = 'Spring Boot 1.5'
@@ -105,6 +106,7 @@ PYTHON_PROJ_TYPE_1 = 'FLASK'
 PYTHON_PROJ_TYPE_2 = 'DJANGO'
 PYTHON_PROJ_1 = 'covid19 in the uk'
 PYTHON_PROJ_2 = 'the world in numbers'
+PYTHON_PROJ_3 = 'price tracker'
 ANDROID_PROJECTS = 'Android '
 ANDROID_PROJ_1 = 'map reading tools'
 
@@ -117,6 +119,11 @@ IMAGE_PYTHON_PROJ_2 = 'images/chart_hungary.png'
 TITLE_PYTHON_PROJ_2 = 'The world in numbers'
 DESC_PYTHON_PROJ_2 = 'Statistics on various \naspects of life'
 GITHUB_PYTHON_PROJ_2 = 'https://github.com/latidude99/latidude99/tree/master/owid'
+
+IMAGE_PYTHON_PROJ_3 = 'images/pr_0.png'
+TITLE_PYTHON_PROJ_3 = 'Price Tracker'
+DESC_PYTHON_PROJ_3 = 'Price tracking service'
+GITHUB_PYTHON_PROJ_3 = 'https://github.com/latidude99/latidude99/tree/master/pricecheck'
 
 IMAGE_JAVA_PROJ_1 = 'images/enquiry.png'
 TITLE_JAVA_PROJ_1 = 'Enquiry System'
@@ -246,6 +253,71 @@ IMAGE_OWID_16 = 'images/owid16.png'
 IMAGE_OWID_17 = 'images/owid17.png'
 IMAGE_OWID_18 = 'images/owid18.png'
 IMAGE_OWID_19 = 'images/owid19.png'
+
+
+# ----------------------- PRICECHECK ---------------------------
+PRICECHECK_LINK = ''
+PRICECHECK_TITLE = 'price tracker'
+PRICECHECK_SUBTITLE = 'tracking price movements of user selected items'
+PRICECHECK_SUBTITLE2 = ''
+PRICECHECK_DATA_SUPPLY = ''
+PRICECHECK_APP_BTN_TXT = 'go to the app'
+IMAGE_PRICECHECK = 'images/pr_0.png'
+
+PRICECHECK_IN_SHORT = 'A service allowing users to track price changes of products they find online'
+PRICECHECK_TECH = 'Python 3, Django 3, MySQL 5.7, Bootstrap 4, jQuery, Charts.js '
+PRICECHECK_DATA_SOURCE_TXT = ''
+PRICECHECK_DATA_SOURCE_TXT2 = ''
+PRICECHECK_DATA_SOURCE_LINK = ''
+PRICECHECK_IN_DEPTH1 = 'My third Python web project. Again, Django has been employed as the framework of choice. '
+PRICECHECK_IN_DEPTH2 = 'The idea behind it is for users to find items they want ot buy on Amazon UK ' \
+                       '(other sites to be added later) and use this service to track price changes. ' \
+                       'Users are notified by email whenever the price goes up or down allowing them to pick ' \
+                       'the best time to buy. Price checking is conducted 5 times a day.'
+PRICECHECK_IN_DEPTH3 = 'First, a link to the product goes through the validation process that checks if the service ' \
+                       'recognizes the URL and is able to detect the product details (e.g. the name, price and currency).'
+PRICECHECK_IN_DEPTH4 = 'Then the product can be submitted for tracking, with minimum necessary information:'
+PRICECHECK_IN_DEPTH5 = 'user name and email address'
+PRICECHECK_IN_DEPTH6 = 'url to the product - this gets copied automatically after successful validation ' \
+                       'to avoid typos or copying errors'
+PRICECHECK_IN_DEPTH7 = 'tracking duration (in days)'
+PRICECHECK_IN_DEPTH8 = 'upwards and downwards price movement thresholds'
+PRICECHECK_IN_DEPTH9 = 'promo code (optional) that unlocks extra features such as extended tracking period and ' \
+                       'maximum number of items being tracked simultaneously by one user'
+PRICECHECK_IN_DEPTH10 = 'After the product\'s submition an email with the confirmation link is sent out - ' \
+                        'nothing is tracked until the user\'s email address is confirmed.  '
+PRICECHECK_IN_DEPTH11 = 'Once confirmed the user will receive an email whenever the product\'s price changes more ' \
+                        'than the upwards or downwards thersholds - it will contain the old and new prices' \
+                        ' as well as track and stop codes.'
+PRICECHECK_IN_DEPTH12 = 'Detailed information on price history in charts and tables can be accessed from the home ' \
+                        'page with a unique track code for each product.'
+PRICECHECK_IN_DEPTH13 = 'Tracking can be stopped at any time with a unique stop code for each product.'
+PRICECHECK_IN_DEPTH14 = 'Users are able to see a detailed list of all products they have been tracking entering ' \
+                        'their email address and the unique user ID (generated when the email address is submitted ' \
+                        'for the first time)'
+
+
+IMAGE_PRICECHECK_1 = 'images/pr_1.png'
+IMAGE_PRICECHECK_2 = 'images/pr_2.png'
+IMAGE_PRICECHECK_3 = 'images/pr_3.png'
+IMAGE_PRICECHECK_4 = 'images/pr_4.png'
+IMAGE_PRICECHECK_5 = 'images/pr_5.png'
+IMAGE_PRICECHECK_6 = 'images/pr_6.png'
+IMAGE_PRICECHECK_7 = 'images/pr_7.png'
+IMAGE_PRICECHECK_8 = 'images/pr_8.png'
+IMAGE_PRICECHECK_9 = 'images/pr_9.png'
+IMAGE_PRICECHECK_10 = 'images/pr_10.png'
+IMAGE_PRICECHECK_11 = 'images/pr_11.png'
+IMAGE_PRICECHECK_12 = 'images/pr_12.png'
+IMAGE_PRICECHECK_13 = 'images/pr_13.png'
+IMAGE_PRICECHECK_14 = 'images/pr_14.png'
+IMAGE_PRICECHECK_15 = 'images/pr_15.png'
+IMAGE_PRICECHECK_16 = 'images/pr_16.png'
+IMAGE_PRICECHECK_17 = 'images/pr_17.png'
+IMAGE_PRICECHECK_18 = 'images/pr_18.png'
+IMAGE_PRICECHECK_19 = 'images/pr_19.png'
+
+
 
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'
