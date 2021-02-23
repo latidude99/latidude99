@@ -1,7 +1,7 @@
 <h1 align="left">Hi 👋, I'm Piotr</h1>
 <h3 align="left">A passionate Java and Python developer form London</h3>
 
-- 🔭 I’m currently working on **The World in Numbers**
+- 🔭 I’m currently working on **Price Tracking Service**
 
 - 🌱 I’m currently learning **Python, Flask, Django**
 
