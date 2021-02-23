@@ -53,60 +53,29 @@ Users are able to see a detailed list of all products they have been tracking en
 ## Screenshots
 
 
-<img src="../images/twin1.png" width=100%></p>
-  <img src="../images/twin2.png" width=100%></p>
+<img src="../images/pr_1.png" width=100%></p>
+<img src="../images/pr_2.png" width=100%></p>
   <br>
 <p align="center">
-  <img src="../images/twin3.png" width=100%></p>
+  <img src="../images/pr_3.png" width=100%></p>
   <br>
 <p align="center">
-	<img src="../images/twin4a.png" width=100%> </p>
+	<img src="../images/pr_4.png" width=100%> </p>
 	<p align="center">
-	<img src="../images/twin4b.png" width=100%> </p>
+	<img src="../images/pr_5.png" width=100%> </p>
 	<p align="center">
-	<img src="../images/twin4c.png" width=100%> </p>
+	<img src="../images/pr_6.png" width=100%> </p>
 	<p align="center">
-	<img src="../images/twin4d.png" width=100%> </p>
+	<img src="../images/pr_7.png" width=100%> </p>
   <br>
 <p align="center">
-	<img src="../images/twin5.png" width=100%></p>
+	<img src="../images/pr_8.png" width=100%></p>
    <br>
    <p align="center">
-	<img src="../images/twin6a.png" width=100%> </p>
+	<img src="../images/pr_9.png" width=100%> </p>
 	<p align="center">
-	<img src="../images/twin6b.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/twin6c.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/twin6d.png" width=100%> </p>
- <p align="center">
-	<img src="../images/twin7.png" width=100%></p>
-  <br>
-<p align="center">
-	<img src="../images/twin7a.png" width=100%></p>
-   <br>
-   <p align="center">
-	<img src="../images/twin7bb.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7c.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7d.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7e.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7f.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7g.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7h.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin7i.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin8a.png" width=100%></p>
-	<p align="center">
-	<img src="../images/twin8b.png" width=100%></p>
-
-	
+	<img src="../images/pr_10.png" width=100%> </p>
+ 
 
 
 # Contact
