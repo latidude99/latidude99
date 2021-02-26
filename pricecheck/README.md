@@ -54,7 +54,7 @@ Users are able to see a detailed list of all products they have been tracking en
 
 
 <img src="../images/pr_1.png" width=100%></p>
-<img src="../images/pr_2.png" width=100%></p>
+<img src="../images/pr_2a.png" width=100%></p>
   <br>
 <p align="center">
   <img src="../images/pr_3.png" width=100%></p>
