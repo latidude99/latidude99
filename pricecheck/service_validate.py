@@ -29,12 +29,18 @@ import string, random
 
 
 def validate_url(url):
-    validation = ''
+    validation = {}
+    validation['product_name'] = ''
+    validation['product_price'] = ''
+    validation['product_currency'] = ''
+    validation['error'] = 'No price found'
     response = get_response(url)
-    if LEWIS_WEBSITE in url:
-        validation = validate_lewis(response, LEWIS_NAME_CLASS, LEWIS_PRICE_CLASS)
-    elif AMAZON_WEBSITE in url:
+    if AMAZON_WEBSITE in url:
         validation = validate_amazon(response, AMAZON_NAME_ID, AMAZON_PRICE_IDS[1])
+    elif LEWIS_WEBSITE in url:
+        validation = validate_lewis(response, LEWIS_NAME_CLASS, LEWIS_PRICE_CLASS)
+    if CURRYS_WEBSITE in url:
+        validation = validate_currys(response, CURRYS_NAME_CLASS, CURRYS_PRICE_CLASS)
 
     return validation
 
@@ -51,13 +57,14 @@ def get_response(url):
         response = requests.get(url,
                                 headers=headers,
                                 #  proxies=proxies,
-                                timeout=15)
+                                timeout=10)
     except:
         print("Connection error")
         pass
     return response
 
 
+# AMAZON UK
 def validate_amazon(response, name, price):
     div_price = None
     div_product = None
@@ -81,6 +88,7 @@ def validate_amazon(response, name, price):
     return validation
 
 
+# JOHN LEWIS
 def validate_lewis(response, name, price):
     div_price = None
     div_product = None
@@ -96,6 +104,34 @@ def validate_lewis(response, name, price):
     if div_price != None:
         product_name = div_product[0].text
         product_price = (div_price[0].text)
+        validation['product_name'] = product_name
+        validation['product_price'] = product_price[1:]
+        validation['product_currency'] = product_price[:1]
+        validation['error'] = None
+    else:
+        validation['product_name'] = ''
+        validation['product_price'] = ''
+        validation['product_currency'] = ''
+        validation['error'] = 'No price found'
+    return validation
+
+
+# CURRYS- price not working
+def validate_currys(response, name, price):
+    div_price = None
+    div_product = None
+    soup = BeautifulSoup(response.content, 'html.parser')
+    print('search by class')
+    div_product = soup.find_all('h1', {'class': name})
+    div_price = soup.find('div', {'class': price})
+
+    print(div_product)
+    print(div_price)
+
+    validation = {}
+    if div_price != None and div_price != []:
+        product_name = div_product[0]
+        product_price = (div_price)
         validation['product_name'] = product_name
         validation['product_price'] = product_price[1:]
         validation['product_currency'] = product_price[:1]

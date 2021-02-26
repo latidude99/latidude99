@@ -9,9 +9,14 @@ AMAZON_WEBSITE = 'amazon.co.uk'
 AMAZON_NAME_ID = 'productTitle'
 AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
 
-LEWIS_WEBSITE = 'www.johnlewis.com'
+LEWIS_WEBSITE = 'johnlewis.com'
 LEWIS_NAME_CLASS = 'ProductHeader__title--2klR1'
 LEWIS_PRICE_CLASS = 'ProductPrice__item--1p_iL'
+
+CURRYS_WEBSITE = 'currys.co.uk'
+CURRYS_NAME_CLASS = 'page-title'
+CURRYS_PRICE_CLASS = 'amounts'
+
 
 MAX_PRODUCT_TRACKED = 10
 
