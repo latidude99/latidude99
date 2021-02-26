@@ -74,7 +74,7 @@ def add_product(user, product_dto):
     product_db.start_date = start_date
     product_db.duration = product_dto.duration
     product_db.end_date = start_date + dt.timedelta(days=int(product_dto.duration))
-    product_db.initial_price = float(product_dto.price)
+    product_db.initial_price = float(product_dto.price.replace(',', ''))
     product_db.initial_currency = product_dto.currency
     product_db.threshold_up = product_dto.threshold_up
     product_db.threshold_down = product_dto.threshold_down
@@ -142,12 +142,15 @@ def get_context_confirm(confirm_code):
         product_db.confirmed = True
         product_db.save(using='pricecheck_34')
         product_dto = service_converters.convert_product_db2dto(product_db)
+        user = product_db.user
+        product_dto.product_max_count = user.max_items_tracked
         context = {'product_dto': product_dto,
                    'success_info': SUCCESS_INFO,
                    'failure_info': FAILURE_INFO,
                    }
         ctx = {**service.get_base_context(), **context}
-        print(product_db)
+        print(user)
+        #print(product_db)
         print(context)
         return [True, ctx]
     else:

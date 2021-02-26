@@ -29,7 +29,9 @@ def validate(request):
         url_text = request.POST.get('url')
         response_data = {}
         if url_text.strip() != '':
-            validation = service_validate.validate_url(url_text, AMAZON_NAME_ID, AMAZON_PRICE_IDS)
+            # development / production
+            validation = service_validate.validate_url(url_text)
+
             if validation['error'] is None:
                 response_data['status'] = 'ok'
                 response_data['product_date'] = dt.datetime.now().strftime('%d %B %Y, %H:%M')
@@ -57,8 +59,16 @@ def add_product(request):
         product_dto.email = request.POST['email']
         product_dto.url = request.POST['link']
         product_dto.duration = request.POST.get('duration') # int, in days
-        product_dto.threshold_up = request.POST.get('upwards')  # float, in currency
-        product_dto.threshold_down = request.POST.get('downwards')  # float, in currency
+        up = request.POST.get('upwards')  # float, in currency
+        if up == '':
+            product_dto.threshold_up = '0.01'
+        else:
+            product_dto.threshold_up = up.replace('£', '')
+        down = request.POST.get('downwards')  # float, in currency
+        if down == '':
+            product_dto.threshold_down = '0.01'
+        else:
+            product_dto.threshold_down = down.replace('£', '')
         product_dto.promocode = request.POST['promocode']
     print(product_dto)
     user_check = service_add.user_limit_duplicate_check(product_dto)

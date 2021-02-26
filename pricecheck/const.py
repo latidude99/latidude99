@@ -5,8 +5,13 @@ APP_BASE = 'http://pc.latidude99.com/pricecheck'
 
 # /confirm_product?code=fsWeSFSlkjhLkngv
 
+AMAZON_WEBSITE = 'amazon.co.uk'
 AMAZON_NAME_ID = 'productTitle'
 AMAZON_PRICE_IDS = ['price_inside_buybox', 'newBuyBoxPrice']
+
+LEWIS_WEBSITE = 'www.johnlewis.com'
+LEWIS_NAME_CLASS = 'ProductHeader__title--2klR1'
+LEWIS_PRICE_CLASS = 'ProductPrice__item--1p_iL'
 
 MAX_PRODUCT_TRACKED = 10
 
@@ -14,34 +19,14 @@ BACK_PATTERN1 = 'images/vintage-concrete.png'
 
 # prod
 proxies_prod = {
-    "http": "http://87.173.188.201:8080",
-    "https": "http://18.159.213.142:3128",
-    # "http": "http://poell.online",
-    # "http": "http://45.245.212.164",
-    # "http": "http://95.216.194.46:1081",
-    # "http": "http://138.197.14.103:3128",
-    # "http": "http://36.89.126.183:8080",
-    # "http": "http://189.61.87.178:8080",
-    # "http": "http://207.144.111.230:8080",
-    # "http": "http://138.59.150.198:8080",
-
-    #    "https": "http://172.104.143.223:8080"
+     "http": "http://85.214.91.218:3128",
+     "https": "http://35.175.242.158:3128",
 }
 
 # dev
 proxies = {
-    "http": '78.141.242.65:8080',
-    "https": '78.141.242.65:8080'
-    # "http": "http://146.120.214.62:8080",
-    #  "http": "http://83.242.123.248:8080",
-    # "http": "http://187.95.114.125:3128",
-    # "http": "http://195.53.49.11:3128",
-    # "http": "http://195.154.58.0:8080",
-    # "http": "http://68.188.63.149:8080",
-    # "http": "http://91.126.239.175:8080",
-    # "http": "http://3.135.219.183:3128",
-    # "http": "http://154.202.56.21:3128",
-    # "https": "http://197.97.95.98:8080",
+    "http": "http://139.180.147.242:8080",
+    "https": "http://139.180.147.242:8080",
 
 }
 

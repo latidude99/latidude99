@@ -7,6 +7,7 @@ class ProductDTO:
     email: str = ''
     product_count: str = '' # active
     total_product_count: str = '' # total
+    product_max_count: str = '' # max
     url: str = ''
     duration: int = 0
     duration_left: int = 0

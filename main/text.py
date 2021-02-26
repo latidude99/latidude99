@@ -298,7 +298,7 @@ PRICECHECK_IN_DEPTH14 = 'Users are able to see a detailed list of all products t
 
 
 IMAGE_PRICECHECK_1 = 'images/pr_1.png'
-IMAGE_PRICECHECK_2 = 'images/pr_2.png'
+IMAGE_PRICECHECK_2 = 'images/pr_2a.png'
 IMAGE_PRICECHECK_3 = 'images/pr_3.png'
 IMAGE_PRICECHECK_4 = 'images/pr_4.png'
 IMAGE_PRICECHECK_5 = 'images/pr_5.png'
