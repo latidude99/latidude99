@@ -5,6 +5,9 @@ import main.secrets as secrets
 APP_BASE = 'http://127.0.0.1:8000/snc'
 #APP_BASE = 'http://pc.latidude99.com/snc'
 
+SNC_DATA = 'data/'
+SNC_CATALOGUE_FILE = 'data/snc_catalogue.xml'
+
 
 GOOGLE_API_KEY_DEV_UN = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_DEV_UNRESTRICTED
 GOOGLE_API_KEY_DEV = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_DEV

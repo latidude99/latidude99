@@ -14,16 +14,18 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <style>
-        {#body {#}
-        {#    background-color: paleturquoise;#}
-        {#background-image: url('{{ static_base }}{{ back_pattern1 }}');#}{#background-repeat: repeat;#}
-        {#}#}
 
+    <style>
         html, body, #map-canvas {
             height: 100%;
             margin: 0px;
-            padding: 0px
+            padding: 0px;
+            overflow: hidden;
+
+        }
+
+        footer {
+            position: absolute;
         }
 
         h5 {
@@ -34,17 +36,16 @@
 
         #zoomLevel {
             background-color: skyblue;
-            color: beige;
+            color: #333333;
             text-align: center;
             font-size: 12px;
-            font-family: Verdana;
         }
 
         body .card .card-body .card-text {
             white-space: pre-wrap;
         }
 
-        .loader3 {
+        .loader1 {
             width: 100%;
             height: 2px;
             display: inline-block;
@@ -53,7 +54,7 @@
             overflow: hidden;
         }
 
-        .loader3::after {
+        .loader1::after {
             content: '';
             box-sizing: border-box;
             width: 0;
@@ -74,7 +75,7 @@
             }
         }
 
-        .loader4 {
+        .loader2 {
             width: 100%;
             height: 2px;
             display: inline-block;
@@ -83,7 +84,7 @@
             overflow: hidden;
         }
 
-        .loader4::after {
+        .loader2::after {
             content: '';
             box-sizing: border-box;
             width: 0;
@@ -143,14 +144,14 @@
 <body class="">
 
 
-<div class="container-fluid" style="margin-top:0px;">
-    <div class="row">
-        <div class="col-lg-9">
-
-            {% block content_left %}{% endblock %}
-
-        </div>
-        <div class="col-lg-3">
+<div class="row h-100">
+    <!-- CHARTS -->
+    <div class="col-lg-9 h-100">
+        {% block content_left %}{% endblock %}
+    </div>
+    <!-- INFO -->
+    <div class="col-lg-3 h-100">
+        <div class="container-fluid h-100" style="margin:0px;">
             <a href="{% url 'snc:index' %}" style="color:#333333 !important;">
                 <h3 class="mt-4 text-center">{{ title_main }}</h3>
             </a>
@@ -164,44 +165,44 @@
                                font-family: 'Candara Light', Arial, sans-serif;
                                font-size:22px; color:#96281b;">
                             <i class="fa mr-4" style="font-size: 17px;" aria-hidden="true"></i>
-                            How it works
+                            Help
                         </a>
                         <span class="px-5 mt-1 float-right text-danger" style="opacity:90%">ᒡ◯ᵔ◯ᒢ</span>
+                        <hr>
 
                         <div id="info_main" class="collapse" data-parent="#accordion"
                              aria-labelledby="info_main_head" style="color:#96281b;">
 
-                            <p style="font-size: 18px;margin-bottom: 20px;">
-                                The goal of this little project is to find the best price of a product you have
-                                found online.
-                                <span style="font-size: 16px;opacity: 60%; margin-left: 20px;">
-                                (say you've found the headphones you like and now waiting
-                                for the price to drop)
-                            </span>
+                            <p style="font-size: 18px;margin-bottom: 0px;">
+                                This is a visual representation of the
                             </p>
+                            <span style="color:navy;">
+                                UKHO Standard Navigational Chart
+                            </span>
+                                catalogue.
                             <div class="row">
 
-                                <div class="col-lg-12 info_text" style="border-left: darkgrey solid 1px">
-                                    <p>Setting things up:</p>
+                                <div class="col-lg-12 info_text">
+                                    <p>.</p>
                                     <ul>
-                                        <li>first you need to check the link - if the validation is successfull you will
-                                            see the item name and price
+                                        <li>
+                                            the catalogue is published on a weekly basis
                                         </li>
-                                        <li>then if you confirm that it is indeed correct the other part of the service
-                                            becomes active
+                                        <li>
+
                                         </li>
 
-                                        <li> you will need to enter your name/nickname andthe email address to receive
-                                            price movement alerts
+                                        <li>
+
                                         </li>
-                                        <li>you can choose how long you want to track the product and optionally enter
-                                            threshold for price movements, up and down
+                                        <li>
+
                                         </li>
-                                        <li>after submitting the product for trcking you will receive an email with a
-                                            confirmation link
+                                        <li>
+
                                         </li>
-                                        <li>you will need to confirm your email address by clicking on the confirmation
-                                            link, otherwise the tracking will not start
+                                        <li>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -214,17 +215,21 @@
 
             {% block content_right %}{% endblock %}
 
-            <footer>
-                <div class="mt-4 float-center" style="cursor:pointer;">
-                    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-                            data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
-                            data-font="Comic"
-                            data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
-                            data-coffee-color="#ffffff">
-                    </script>
+            <div class="" style="position:absolute; bottom:10px; right:10px">
+                <div class="row">
+                    <div class="col-lg-0"></div>
+                    <div class="col-lg-12">
+                        <div class="mt-4 float-right" style="cursor:pointer;margin-right: 0px;">
+                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
+                                    data-font="Comic"
+                                    data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
+                                    data-coffee-color="#ffffff">
+                            </script>
+                        </div>
+                    </div>
                 </div>
-
-            </footer>
+            </div>
         </div>
     </div>
 

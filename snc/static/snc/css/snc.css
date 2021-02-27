@@ -1,0 +1,95 @@
+
+body .container .container-fluid .row {
+    background-color: transparent;
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scroll-hidden {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.vertical-nav {
+    overflow-y: scroll;
+    min-width: 17rem;
+    width: 17rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+}
+
+.page-content {
+    width: calc(100% - 17rem);
+    margin-left: 17rem;
+    transition: all 0.4s;
+}
+
+/* for toggle behavior */
+#sidebar.active {
+    margin-left: -17rem;
+}
+
+#content.active {
+    width: 100%;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -17rem;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #content {
+        width: 100%;
+        margin: 0;
+    }
+
+    #content.active {
+        margin-left: 17rem;
+        width: calc(100% - 17rem);
+    }
+}
+
+
+#project-list {
+    color: white;
+    text-decoration: none;
+}
+
+#project-list:hover {
+    text-decoration: none;
+    color: yellow !important;
+}
+
+hr {
+    opacity: 30%;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    height: 2px;
+    background-color: darkcyan;
+    border: none;
+}
+
+.center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+

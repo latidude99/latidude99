@@ -3,76 +3,6 @@
 {% static "snc/" as static_base %}
 {% load humanize %}
 
-{#  ----------------------------------- INFO --------------------------------------------- #}
-{% block content_right %}
-    <div class="container-fluid">
-
-        <div class="row mt-3" style="">
-
-        </div>
-        <div class="info_text" style="border-left: darkgrey solid 1px">
-            <p>Setting things up:</p>
-            <ul>
-                <li>first you need to check the link - if the validation is successfull you will
-                    see the item name and price
-                </li>
-                <li>then if you confirm that it is indeed correct the other part of the service
-                    becomes active
-                </li>
-
-                <li> you will need to enter your name/nickname andthe email address to receive
-                    price movement alerts
-                </li>
-                <li>you can choose how long you want to track the product and optionally enter
-                    threshold for price movements, up and down
-                </li>
-                <li>after submitting the product for trcking you will receive an email with a
-                    confirmation link
-                </li>
-                <li>you will need to confirm your email address by clicking on the confirmation
-                    link, otherwise the tracking will not start
-                </li>
-            </ul>
-        </div>
-        <div class="info_text" style="border-left: darkgrey solid 1px">
-
-            <p>
-                Afterwards::
-            </p>
-            <ul>
-                <li>
-                    you will receive an email every time the price changes more than the upwards
-                    or downwards thresholds
-                </li>
-                <li>
-                    each email will include basic product information, your personal unique id
-                    as well as track and stop codes
-                </li>
-                <li>
-                    the prices are checked 5 times a day, this however will increase soon
-                </li>
-                <li>
-                    you can see detailed product information and the price history by entering
-                    the tracking code on the home page - price history is presented as a chart and a
-                    table
-                </li>
-                <li>
-                    you can stop tracking any product at any time by entering 'stop track'
-                    code on the home page
-                </li>
-                <li>
-                    you can see a list of all the product you have been tracking,
-                    including stopped and expired ones
-                </li>
-
-            </ul>
-
-        </div>
-    </div>
-    <hr>
-
-
-{% endblock %}
 
 {#  ----------------------------------- CHARTS --------------------------------------------- #}
 {% block content_left %}
@@ -294,7 +224,21 @@
     </script>
 
 
+{% endblock %}
+
+
+
+{#  ----------------------------------- INFO --------------------------------------------- #}
+{% block content_right %}
+
+    <div class="container-fluid"></div>
+        <div class="row mt-3"></div>
+
+        <div class="info_text" style="border-left: darkgrey solid 1px">
+
+        </div>
 
 
 
 {% endblock %}
+
