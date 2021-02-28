@@ -11,6 +11,9 @@ import datetime as dt
 import pytz
 
 
+
+# tools ------------------------------------------------------------------
+
 def delete_all_catalogues():
     Catalogue.objects.using('snc').all().delete()
     print('all catalogues deleted')
@@ -19,10 +22,16 @@ def delete_all_charts():
     Chart.objects.using('snc').all().delete()
     print('all charts deleted')
 
+
 # untangle ------------------------------------------------------------------
 
-def get_xml_object(SNC_CATALOGUE_FILE):
-    obj = untangle.parse(SNC_CATALOGUE_FILE)
+def import_calogue_from_file(catalogue_file):
+    obj = get_xml_object(catalogue_file)
+    import_charts(obj)
+    print('file parsed, all charts imported')
+
+def get_xml_object(catalogue_file):
+    obj = untangle.parse(catalogue_file)
     return obj
 
 
@@ -48,14 +57,26 @@ def import_catalogue(obj):
 def import_charts(obj):
     catalogue = import_catalogue(obj)
     catalogue.save(using='snc')
+
     charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
-    for ch in charts:
+    for ch in charts[6:8]:
         chart = Chart()
         chart.catalogue = catalogue
         chart.number = ch.ShortName.cdata
         chart.title = ch.Metadata.DatasetTitle.cdata
-        chart.scale = ch.Metadata.Scale.cdata
-        chart.folio = ch.Metadata.Folio.ID.cdata
+        try:
+            chart.scale = ch.Metadata.Scale.cdata
+        except:
+            pass
+        try:
+            chart.folio = ch.Metadata.Folio.ID.cdata
+        except:
+            pass
+        try:
+            chart.last_nm_number = ch.Metadata.LastNMNumber.cdata
+            chart.last_nm_date = ch.Metadata.LastNMDate.cdata
+        except:
+            pass
         chart.cat_number = ch.Metadata.CatalogueNumber.cdata
         chart.int_number = ''
         chart.status = ch.Metadata.Status.ChartStatus.cdata
@@ -63,63 +84,122 @@ def import_charts(obj):
         chart.new_edition_date = ch.Metadata.ChartNewEditionDate.cdata
         chart.import_date = dt.datetime.now(pytz.timezone('Europe/London'))
         chart.save(using='snc')
+        print('chart ' + chart.number + ', saved')
+
+        # chart polygon
         try:
             positions = ch.Metadata.GeographicLimit.Polygon.Position
+            print(positions)
             chart_polygon = ChartPolygon()
-            for p in positions:
+            chart_polygon.chart = chart
+            chart_polygon.save(using='snc')
+            for pos in positions:
                 chart_position = ChartPosition()
                 chart_position.chart_polygon = chart_polygon
-                chart_position.lat = p['latitude']
-                chart_position.lon = p['longitude']
+                chart_position.lat = pos['latitude']
+                chart_position.lon = pos['longitude']
+                chart_position.save(using='snc')
+            print('--------- polygon type: chart, saved')
+        except:
+            # chart bounding box (no polygon)
+            try:
+                boundbox = ch.Metadata.GeographicLimit.BoundingBox
+                north = boundbox.NorthLimit.cdata
+                south = boundbox.SouthLimit.cdata
+                west = boundbox.WestLimit.cdata
+                east = boundbox.EastLimit.cdata
+
+                chart_polygon_bounding = ChartPolygon()
+                chart_polygon_bounding.save(using='snc')
+
+                # converts bounds to vertices
+                northwest = ChartPosition()
+                northwest.chart_polygon = chart_polygon_bounding
+                northwest.lat = north
+                northwest.lon = west
+                northwest.save(using='snc')
+
+                norteast = ChartPosition()
+                norteast.chart_polygon = chart_polygon_bounding
+                norteast.lat = north
+                norteast.lon = east
+                norteast.save(using='snc')
+
+                southeast = ChartPosition()
+                southeast.chart_polygon = chart_polygon_bounding
+                southeast.lat = south
+                southeast.lon = east
+                southeast.save(using='snc')
+
+                southwest = ChartPosition()
+                southwest.chart_polygon = chart_polygon_bounding
+                southwest.lat = south
+                southwest.lon = west
+                southwest.save(using='snc')
+
+                print('--------- polygon type: bounding box, saved')
+            except:
+                pass
+            pass
+
+        # panels
+        try:
+            panels = ch.Metadata.Panel
+            print('panels: ' + str(len(panels)))
+            if len(panels) > 0:
+                for pan in panels:
+                    panel = Panel()
+                    panel.chart = chart
+                    panel.panel_id = pan.PanelID.cdata
+                    panel.area = pan.PanelAreaName.cdata
+                    panel.name = pan.PanelName.cdata
+                    panel.scale = pan.PanelScale.cdata
+                    panel.save(using='snc')
+                    # panel polygon
+                    panel_polygon = PanelPolygon()
+                    panel_polygon.panel = panel
+                    panel_polygon.save(using='snc')
+
+                    positions = pan.Polygon.Position
+                    for p in positions:
+                        panel_position = PanelPosition()
+                        panel_position.panel_polygon = panel_polygon
+                        panel_position.lat = p['latitude']
+                        panel_position.lon = p['longitude']
+                        panel_position.save(using='snc')
+                    print('--------- polygon type: panel, saved')
         except:
             pass
 
+        # NMs
+        try:
+            notices = ch.Metadata.NoticesToMariners
+            for n in notices:
+                notice = Notice()
+                notice.chart = chart
+                notice.year = n.Year.cdata
+                notice.week = n.Week.cdata
+                notice.number = n.Number.cdata
+                notice.type = n.Type.cdata
+                notice.save(using='snc')
+                print('--------- notice: ' + notice.number + ', saved')
+        except:
+            pass
+
+    # sets import process finished flag to true
+    catalogue.ready = True
+    catalogue.save(using='snc')
+    print('calogue ready set to True')
 
 
 
 
-catalogue = import_catalogue(get_xml_object(SNC_CATALOGUE_FILE))
-print(catalogue.file_identifier)
-print(catalogue.organisation_name)
-print(catalogue.fax)
-print(catalogue.phone)
-print(catalogue.deliveryPoint)
-print(catalogue.city)
-print(catalogue.administrative_area)
-print(catalogue.postal_code)
-print(catalogue.country)
-print(catalogue.email)
-print(catalogue.date)
 
 
-'''
-obj = untangle.parse(SNC_CATALOGUE_FILE)
-
-print(obj.UKHOCatalogueFile.BaseFileMetadata.MD_FileIdentifier.cdata)
-print(obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart[0].ShortName.cdata)
-print('snc:')
-snc_list = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
-print(len(snc_list))
-
-snc_slice = snc_list[3500:]
-print(len(snc_slice))
-for item in snc_list:
-    # print(item.ShortName.cdata)
-    # print(item.Metadata.DatasetTitle.cdata)
-    # print(item.Metadata.Scale.cdata)
-    # print(item.Metadata.GeographicLimit.Polygon)
 
 
-    # pos = item.Metadata.GeographicLimit.Polygon.Position
-    # for p in pos:
-    #     print(p['latitude'] + ', ' + p['longitude'])
 
-    try:
-        boundbox = item.Metadata.GeographicLimit.BoundingBox
-        print(item.ShortName.cdata)
-        print(boundbox.NorthLimit.cdata)
-    except:
-        pass
 
-'''
+
+
 

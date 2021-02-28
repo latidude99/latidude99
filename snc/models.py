@@ -15,8 +15,10 @@ class Catalogue(models.Model):
     postal_code = models.CharField(max_length=50, default='')
     country = models.CharField(max_length=50, default='')
     email = models.CharField(max_length=50, default='')
-    date =  models.DateTimeField(default=timezone.now, blank=True)
+    date =  models.DateField(default=None, blank=True)
     expired = models.BooleanField(default=False)
+    ready = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.file_identifier
@@ -29,11 +31,13 @@ class Chart(models.Model):
     title = models.CharField(max_length=500, default='')
     scale = models.CharField(max_length=50, default='')
     folio = models.CharField(max_length=50, default='')
+    last_nm_number = models.CharField(max_length=50, default='')
+    last_nm_date = models.CharField(max_length=50, default='')
     cat_number = models.CharField(max_length=50, default='')
     int_number = models.CharField(max_length=50, default='')
     status = models.CharField(max_length=50, default='')
-    status_date = models.DateTimeField(default=None, blank=True)
-    new_edition_date = models.DateTimeField(default=None, blank=True)
+    status_date = models.DateField(default=None, blank=True)
+    new_edition_date = models.DateField(default=None, blank=True)
     import_date = models.DateTimeField(default=None, blank=True)
 
     def __str__(self):
@@ -43,7 +47,8 @@ class Chart(models.Model):
 class Panel(models.Model):
     chart = models.ForeignKey(Chart, on_delete=models.CASCADE, default=1)
     panel_id = models.CharField(max_length=50, default='')
-    area = models.CharField(max_length=50, default='')
+    area = models.CharField(max_length=500, default='')
+    name = models.CharField(max_length=500, default='')
     scale = models.CharField(max_length=50, default='')
 
     def __str__(self):
