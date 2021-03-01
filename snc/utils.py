@@ -4,17 +4,31 @@ django.setup()
 import untangle
 import xmltodict
 
-import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.point
+import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
+from snc.models import *
 from snc.const import *
 import snc.service_parse as service_parse
+import snc.service_converters as service_converters
 
 
 
-service_parse.import_calogue_from_file(SNC_CATALOGUE_FILE)
+#service_parse.import_calogue_from_file(SNC_CATALOGUE_FILE)
 
 #service_parse.delete_all_charts()
 
+chartDB = Chart.objects.using('snc').get(catalogue=53, number='1006')
+chart = service_converters.chartDB_2_chartDTO(chartDB)
 
+print(chart.number)
+print(chart.title)
+print(chart.scale)
+print(chart.status)
+print(chart.status_date)
+print(chart.folio)
+print(chart.cat_number)
+print(chart.polygons)
+print(chart.panels)
+print(chart.notices)
 
 '''
 def get_panels():

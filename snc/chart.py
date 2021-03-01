@@ -12,10 +12,10 @@ class ChartDTO:
     status: str = ''
     status_date: str = ''
     new_edition_date: str = ''
-    notices: [] = field(default_factory=list)
-    polygon: [] =  field(default_factory=list)
-    panel: [] =  field(default_factory=list)
     import_date: str = ''
+    polygons: [] =  field(default_factory=list)
+    panels: [] =  field(default_factory=list)
+    notices: [] = field(default_factory=list)
 
 
 

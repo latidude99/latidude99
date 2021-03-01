@@ -4,7 +4,7 @@
 import untangle
 import xmltodict
 
-import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.point
+import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
 from snc.const import *
 from snc.models import *
 import datetime as dt
@@ -59,7 +59,12 @@ def import_charts(obj):
     catalogue.save(using='snc')
 
     charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
-    for ch in charts[6:8]:
+    for ch in charts:
+
+        num = ch.ShortName.cdata
+        if num != 'JP1085' and num != '1006':
+            continue
+
         chart = Chart()
         chart.catalogue = catalogue
         chart.number = ch.ShortName.cdata
@@ -89,7 +94,6 @@ def import_charts(obj):
         # chart polygon
         try:
             positions = ch.Metadata.GeographicLimit.Polygon.Position
-            print(positions)
             chart_polygon = ChartPolygon()
             chart_polygon.chart = chart
             chart_polygon.save(using='snc')
@@ -104,12 +108,14 @@ def import_charts(obj):
             # chart bounding box (no polygon)
             try:
                 boundbox = ch.Metadata.GeographicLimit.BoundingBox
+
                 north = boundbox.NorthLimit.cdata
                 south = boundbox.SouthLimit.cdata
                 west = boundbox.WestLimit.cdata
                 east = boundbox.EastLimit.cdata
 
                 chart_polygon_bounding = ChartPolygon()
+                chart_polygon_bounding.chart = chart
                 chart_polygon_bounding.save(using='snc')
 
                 # converts bounds to vertices
@@ -144,6 +150,7 @@ def import_charts(obj):
 
         # panels
         try:
+            check = ch.Metadata.Panel[0].Polygon # check if Panels have any Polygon
             panels = ch.Metadata.Panel
             print('panels: ' + str(len(panels)))
             if len(panels) > 0:

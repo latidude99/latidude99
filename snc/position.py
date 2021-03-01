@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class PointDTO:
+class PositionDTO:
     lat: str = ''
     lon: str = ''
 

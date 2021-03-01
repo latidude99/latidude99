@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class ChartDTO:
+class CatalogueDTO:
     file_identifier: str = ''
     organisation_name: str = ''
     fax: str = ''
@@ -14,6 +14,7 @@ class ChartDTO:
     country: str = ''
     email: str = ''
     date: str = ''
+    charts: [] = field(default_factory=list)
 
 
 
