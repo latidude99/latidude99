@@ -39,6 +39,9 @@ class Chart(models.Model):
     status_date = models.DateField(default=None, blank=True)
     new_edition_date = models.DateField(default=None, blank=True)
     import_date = models.DateTimeField(default=None, blank=True)
+    chart_scale_category = models.CharField(max_length=50, default='')
+    max_scale_category = models.CharField(max_length=50, default='')
+
 
     def __str__(self):
         return self.number + ', ' + self.title
@@ -50,6 +53,7 @@ class Panel(models.Model):
     area = models.CharField(max_length=500, default='')
     name = models.CharField(max_length=500, default='')
     scale = models.CharField(max_length=50, default='')
+    panel_scale_category = models.CharField(max_length=50, default='')
 
     def __str__(self):
         return self.panel_id + ', ' + self.scale

@@ -20,6 +20,55 @@ def get_latest_catalogue():
     return catalogue
 
 
+def find_charts_all():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id)
+    return charts
+
+
+def find_charts_SCALE_1():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_1_TEXT)
+    return charts
+
+
+def find_charts_SCALE_2():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_2_TEXT)
+    return charts
+
+
+def find_charts_SCALE_3():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_3_TEXT)
+    return charts
+
+
+def find_charts_SCALE_4():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_4_TEXT)
+    return charts
+
+
+def find_charts_SCALE_5():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_5_TEXT)
+    return charts
+
+
+def find_charts_SCALE_6():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_6_TEXT)
+    return charts
+
+
+def find_charts_SCALE_7():
+    catalogue = get_latest_catalogue()
+    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_7_TEXT)
+    return charts
+
+
+
 # adds scale category to imported charts that are missing it
 def add_scale_category():
     catalogue = get_latest_catalogue()

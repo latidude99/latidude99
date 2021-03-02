@@ -5,6 +5,7 @@ import untangle
 import xmltodict
 
 import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
+import snc.utils as utils
 from snc.const import *
 from snc.models import *
 import datetime as dt
@@ -13,6 +14,11 @@ import pytz
 
 
 # tools ------------------------------------------------------------------
+
+
+def delete_catalogue(num):
+    Catalogue.objects.using('snc').filter(id=num).delete()
+    print('catalogue id: ' + num + ' deleted')
 
 def delete_all_catalogues():
     Catalogue.objects.using('snc').all().delete()
@@ -61,9 +67,10 @@ def import_charts(obj):
     charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
     for ch in charts:
 
-        num = ch.ShortName.cdata
-        if num != 'JP1085' and num != '1006':
-            continue
+        # # testing
+        # num = ch.ShortName.cdata
+        # if num != 'JP1085' and num != '1006':
+        #     continue
 
         chart = Chart()
         chart.catalogue = catalogue
@@ -90,6 +97,10 @@ def import_charts(obj):
         chart.import_date = dt.datetime.now(pytz.timezone('Europe/London'))
         chart.save(using='snc')
         print('chart ' + chart.number + ', saved')
+        # max scale calculations, finding min scale denominator
+        min = 100_000_000
+        if chart.scale != '' and int(ch.scale.strip()) < min:
+            min = int(chart.scale.strip())
 
         # chart polygon
         try:
@@ -167,6 +178,9 @@ def import_charts(obj):
                     panel_polygon.panel = panel
                     panel_polygon.save(using='snc')
 
+                    if panel.scale != '' and int(panel.scale.strip()) < min:
+                        min = int(panel.scale.strip())
+
                     positions = pan.Polygon.Position
                     for p in positions:
                         panel_position = PanelPosition()
@@ -193,12 +207,13 @@ def import_charts(obj):
         except:
             pass
 
+        chart.max_scale_category = utils.calculate_scale_category(min)
+        chart.save(using='snc')
+
     # sets import process finished flag to true
     catalogue.ready = True
     catalogue.save(using='snc')
-    print('calogue ready set to True')
-
-
+    print('catalogue ready set to True')
 
 
 
