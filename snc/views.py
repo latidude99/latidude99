@@ -19,6 +19,14 @@ def info(request):
     return render(request, 'snc/index.html', context)
 
 
+def search_single(request):
+    num = ''
+    if request.method == 'POST':
+        num = request.POST['number']
+    context = service.get_search_single_context(num)
+    return render(request, 'snc/index.html', context)
+
+
 def charts_all(request):
     context = service.get_all_charts_context()
     return render(request, 'snc/index.html', context)

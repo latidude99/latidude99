@@ -20,6 +20,12 @@ def get_latest_catalogue():
     return catalogue
 
 
+def find_chart(num):
+    catalogue = get_latest_catalogue()
+    chart = catalogue.chart_set.filter(number=num)
+    return chart
+
+
 def find_charts_all():
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id)

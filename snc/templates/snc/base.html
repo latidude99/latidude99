@@ -242,7 +242,7 @@
                                         {{ catalogue.country }}</span>
                                 </p>
                                 <p style="margin-bottom: 0px">
-                                    Total charts count:
+                                    Total chart count:
                                     <span style="color:navy;font-size:17px;">
                                         {{ catalogue.charts_count }}</span>
                                 </p>
@@ -266,9 +266,32 @@
 
                 </div>
             </div>
+            <!-- accordion end -->
+            <div>
+                <form action="{% url 'snc:search_single' %}" method="post"
+                      class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <div class="mr-3 mt-2">
+                            <label for="number">Search catalogue:</label>
+                        </div>
+
+                        <input class="form-control" id="search1" name="number" required placeholder="enter chart number"
+                               style="height: calc(1.5em + .75rem + 4px); background-color:transparent; color:#333333;">
+                        <div class="input-group-append">
+                            <input type="submit" class="btn btn-primary"
+                                   onclick="$('#loading1').show().delay(10000).hide(0);">
+                        </div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Please enter chart number</div>
+                    </div>
+                </form>
+            </div>
+
+            {% block content_right %}{% endblock %}
+
         </div>
 
-        {% block content_right %}{% endblock %}
 
         <div class="" style="position:absolute; bottom:10px; right:10px">
             <div class="row">
@@ -285,11 +308,92 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
+<script>
 
-</div>
+    // csrf_token
+
+    $(function () {
+
+        // This function gets cookie with a given name
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        /*
+        The functions below will create a header with csrftoken
+        */
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        function sameOrigin(url) {
+            // test that a given url is a same-origin URL
+            // url could be relative or scheme relative or absolute
+            var host = document.location.host; // host + port
+            var protocol = document.location.protocol;
+            var sr_origin = '//' + host;
+            var origin = protocol + sr_origin;
+            // Allow absolute or scheme relative URLs to same origin
+            return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                // or any other URL that isn't scheme relative or absolute i.e relative.
+                !(/^(\/\/|http:|https:).*/.test(url));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                    // Send the token to same-origin, relative URLs only.
+                    // Send the token only if the method warrants CSRF protection
+                    // Using the CSRFToken value acquired earlier
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+    });
+</script>
+
+<script>
+    // Disable form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        $('#loader4').hide();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 
 </body>

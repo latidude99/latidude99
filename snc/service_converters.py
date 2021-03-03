@@ -39,6 +39,7 @@ def chartsDB_2_chartsDTO(chartsDB):
 
 
 def chartDB_2_chartDTO(chartDB):
+    print(chartDB)
     chartDTO = ChartDTO()
     chartDTO.catalogue_id = chartDB.catalogue_id
     chartDTO.number = chartDB.number

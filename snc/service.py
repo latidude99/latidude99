@@ -42,6 +42,33 @@ def get_info_context():
     return ctx
 
 
+def get_search_single_context(num):
+    charts = []
+    catalogueDB = repo.get_latest_catalogue()
+    print(num)
+    if catalogueDB.chart_set.filter(number=num).exists():
+        chartDB = catalogueDB.chart_set.get(number=num)
+        chart = service_converters.chartDB_2_chartDTO(chartDB)
+        charts.append(chart)
+    catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    if len(charts) > 0:
+        print('chart found: ' + num)
+        context = {
+            'catalogue': catalogue,
+            'charts': charts,
+        }
+    else:
+        print('chart not found: ' + num)
+        context = {
+            'catalogue': catalogue,
+            'charts': charts,
+            'search_single_error': 'Chart \'' + num + '\' not found'
+        }
+    ctx = {**get_index_context(), **context}
+    return ctx
+
+
+
 def get_all_charts_context():
     chartsDB = repo.find_charts_all()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
