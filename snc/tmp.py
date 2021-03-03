@@ -1,5 +1,5 @@
-import django
-django.setup()
+#import django
+#django.setup()
 
 import untangle
 import xmltodict
@@ -11,6 +11,8 @@ import snc.service_parse as service_parse
 import snc.service_converters as service_converters
 import snc.utils as utils
 import snc.repository as repo
+import snc.service_converters as service_converters
+
 
 
 #service_parse.import_calogue_from_file(SNC_CATALOGUE_FILE)
@@ -35,6 +37,23 @@ import snc.repository as repo
 # print(len(repo.find_charts_SCALE_5()))
 # print(len(repo.find_charts_SCALE_6()))
 # print(len(repo.find_charts_SCALE_7()))
+
+
+# chartsDB = repo.find_charts_SCALE_1()
+# print('folio-------------------')
+# print(chartsDB[0].folio)
+# print(chartsDB[45].folio)
+# print(chartsDB[455].folio)
+
+
+# obj = untangle.parse(SNC_CATALOGUE_FILE)
+# charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
+
+
+
+
+
+
 
 
 '''

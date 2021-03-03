@@ -7,7 +7,7 @@ class CatalogueDTO:
     organisation_name: str = ''
     fax: str = ''
     phone: str = ''
-    deliveryPoint: str = ''
+    delivery_point: str = ''
     city: str = ''
     administrative_area: str = ''
     postal_code: str = ''
@@ -15,7 +15,7 @@ class CatalogueDTO:
     email: str = ''
     date: str = ''
     charts: [] = field(default_factory=list)
-
+    charts_count: int = ''
 
 
 

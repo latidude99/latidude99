@@ -28,143 +28,119 @@
             infoWindow = new google.maps.InfoWindow();
             var markers = [];
 
+            {% for chart in  charts %}
+                {% if chart.polygons|length > 0 %}
+                    {% for polygon in  chart.polygons %}
+                        var chart_{{ chart.number }}_poly = new google.maps.Polygon({
+                            paths: [
+                                {% for position in  polygon.positions %}
+                                    new google.maps.LatLng({{ position.lat }}, {{ position.lon }}),
+                                {% endfor %}
+                            ],
+                            strokeColor: '{{ colour }}',
+                            strokeOpacity: 0.8,
+                            clickable: true,
+                            strokeWeight: '2',
+                            fillColor: '{{ chart.colour }}',
+                            fillOpacity: '0.05',
+                            number: '{{ chart.number }}',
+                            type: 'chart',
+                            name: '{{ chart.title }}',
+                            scale: '1:{{ chart.scale|intcomma }}',
+                            zoomMax: '{{ chart.zoom_max }}',
+                            zoomMin: '{{ chart.zoom_min }}',
+                            map: map,
+                            zIndex: '{{ chart.zoom_max }}'
+                        });
 
-            var chart2_1_polygon = new google.maps.Polygon({
-                paths: [
-                    new google.maps.LatLng(48.16667, -13.78665),
-                    new google.maps.LatLng(62.83405, -13.78665),
-                    new google.maps.LatLng(62.83405, 3.41228),
-                    new google.maps.LatLng(48.16667, 3.41228)],
-                strokeColor: '#990033',
-                strokeOpacity: 0.8,
-                clickable: true,
-                strokeWeight: '2',
-                fillColor: '#990033',
-                fillOpacity: '0.05',
-                number: '2',
-                type: 'chart',
-                name: 'British Isles',
-                scale: '1:1,500,000',
-                zoomMax: '6',
-                zoomMin: '3',
-                map: map
-                , zIndex: '6'
-            });
+                        google.maps.event.addListener(chart_{{ chart.number }}_poly, 'click', showInfo);
 
-            google.maps.event.addListener(chart2_1_polygon, 'click', showInfo);
+                        var chart_{{ chart.number }}_marker = new google.maps.Marker({
+                            map: map,
+                            position: new google.maps.LatLng(
+                                {{ chart.label_position.lat }}, {{ chart.label_position.lon }}),
+                            icon: " ",
+                            draggable: false,
+                            clickable: true,
+                            visible: true,
+                            zoomMax: '{{ chart.zoom_max }}',
+                            zoomMin: '{{ chart.zoom_min }}',
+                            label: {
+                                text: '{{ chart.number }}',
+                                color: '{{ chart.colour }}',
+                                fontSize: '16px',
+                                fontShadow: "6px",
+                                fontWeight: "regular"
+                            }
+                        });
+                        markers.push(chart_{{ chart.number }}_marker);
+                    {% endfor %}
+                {% else %}
+                    {#nothing for now#}
+                {% endif %}
+                {% if chart.panels|length > 0 %}
+                    {% for panel in  chart.panels %}
+                        {% for poly in  panel.polygons %}
 
+                            var panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly
+                                = new google.maps.Polygon({
+                                paths: [
+                                    {% for pos in  poly.positions %}
+                                        new google.maps.LatLng({{ pos.lat }}, {{ pos.lon }}),
+                                    {% endfor %}
+                                ],
+                                strokeColor: '{{ colour }}',
+                                strokeOpacity: 0.8,
+                                clickable: true,
+                                strokeWeight: '1',
+                                strokeDasharray: '-',
+                                fillColor: '{{ panel.colour }}',
+                                fillOpacity: '0.3',
+                                number: '{{ chart.number }} / {{ panel.panel_id }})',
+                                type: 'panel',
+                                name: '{{ panel.name }}',
+                                scale: '{{ panel.scale }}',
+                                zoomMax: '22',
+                                zoomMin: '8',
+                                map: map,
+                                zIndex: '22'
+                            });
 
-            var marker_chart2_1_polygon = new google.maps.Marker({
-                map: map,
-                position: new google.maps.LatLng(48.16667, -12.9267035),
-                icon: " ",
-                draggable: false,
-                clickable: true,
-                visible: true,
-                zoomMax: '6',
-                zoomMin: '3',
-                label: {
-                    text: '2',
-                    color: '#990033',
-                    fontSize: '16px',
-                    fontShadow: "6px",
-                    fontWeight: "regular"
-                }
-            });
+                            google.maps.event.addListener(
+                                panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly, 'click', showInfo);
 
-            markers.push(marker_chart2_1_polygon);
+                            var marker_{{ panel.panel_id }}_of_{{ chart.number }}_poly
+                                = new google.maps.Marker({
+                                map: map,
+                                position: new google.maps.LatLng(
+                                    {{ panel.label_position.lat }}, {{ panel.label_position.lon }}),
+                                icon: " ",
+                                draggable: false,
+                                clickable: true,
+                                visible: true,
+                                zoomMax: '22',
+                                zoomMin: '8',
+                                label: {
+                                    text: '{{ chart.number }} panel {{ panel.panel_id }})',
+                                    color: '{{ panel.colour }}',
+                                    fontSize: '12px',
+                                    fontShadow: "6px",
+                                    fontWeight: "regular"
+                                }
+                            });
+                            markers.push(panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly);
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
 
-            var chart3_1_polygon = new google.maps.Polygon({
-                paths: [
-                    new google.maps.LatLng(-7.83333, 70.6539),
-                    new google.maps.LatLng(-4.57842, 70.6539),
-                    new google.maps.LatLng(-4.57842, 72.83333),
-                    new google.maps.LatLng(-7.83333, 72.83333)],
-                strokeColor: '#006622',
-                strokeOpacity: 0.8,
-                clickable: true,
-                strokeWeight: '2',
-                fillColor: '#006622',
-                fillOpacity: '0.05',
-                number: '3',
-                type: 'chart',
-                name: 'Chagos Archipelago',
-                scale: '1:360,000',
-                zoomMax: '8',
-                zoomMin: '5',
-                map: map
-                , zIndex: '8'
-            });
-
-            google.maps.event.addListener(chart3_1_polygon, 'click', showInfo);
-
-
-            var marker_chart3_1_polygon = new google.maps.Marker({
-                map: map,
-                position: new google.maps.LatLng(-7.83333, 70.76287149999999),
-                icon: " ",
-                draggable: false,
-                clickable: true,
-                visible: true,
-                zoomMax: '8',
-                zoomMin: '5',
-                label: {
-                    text: '3',
-                    color: '#006622',
-                    fontSize: '16px',
-                    fontShadow: "6px",
-                    fontWeight: "regular"
-                }
-            });
-
-            markers.push(marker_chart3_1_polygon);
-
-            var chart5_1_polygon = new google.maps.Polygon({
-                paths: [
-                    new google.maps.LatLng(11.65, 51.91667),
-                    new google.maps.LatLng(13.66712, 51.91667),
-                    new google.maps.LatLng(13.66712, 55.0663),
-                    new google.maps.LatLng(11.65, 55.0663)],
-                strokeColor: '#660066',
-                strokeOpacity: 0.8,
-                clickable: true,
-                strokeWeight: '2',
-                fillColor: '#660066',
-                fillOpacity: '0.05',
-                number: '5',
-                type: 'chart',
-                name: '`Abd Al Kuri to Suqutra (Socotra)',
-                scale: '1:350,000',
-                zoomMax: '8',
-                zoomMin: '5',
-                map: map
-                , zIndex: '8'
-            });
-
-            google.maps.event.addListener(chart5_1_polygon, 'click', showInfo);
-
-
-            var marker_chart5_1_polygon = new google.maps.Marker({
-                map: map,
-                position: new google.maps.LatLng(11.65, 52.074151500000006),
-                icon: " ",
-                draggable: false,
-                clickable: true,
-                visible: true,
-                zoomMax: '8',
-                zoomMin: '5',
-                label: {
-                    text: '5',
-                    color: '#660066',
-                    fontSize: '16px',
-                    fontShadow: "6px",
-                    fontWeight: "regular"
-                }
-            });
-
-            markers.push(marker_chart5_1_polygon);
-
-            var polygons = new Array(chart2_1_polygon, chart3_1_polygon, chart5_1_polygon,);
+            var polygons = new Array(
+                {% for chart in  charts %}
+                    {% if chart.polygons|length > 0 %}
+                        chart_{{ chart.number }}_poly,
+                    {% endif %}
+                {% endfor %}
+            );
 
             google.maps.event.addListener(map, 'zoom_changed', function () {
                 var zoom = map.getZoom();
@@ -192,6 +168,8 @@
             var bounds = new google.maps.LatLngBounds();
             for (var i = 0; i < 1; i++) {
                 var paths = polygons[i].getPaths();
+                console.log(polygons[i])
+                console.log(paths)
                 paths.forEach(function (path) {
                     var ar = path.getArray();
                     for (var i = 0, l = ar.length; i < l; i++) {
@@ -232,11 +210,13 @@
 {% block content_right %}
 
     <div class="container-fluid"></div>
-        <div class="row mt-3"></div>
+    <div class="row mt-3">
 
-        <div class="info_text" style="border-left: darkgrey solid 1px">
 
-        </div>
+
+    </div>
+
+    <div class="info_text" style="border-left: darkgrey solid 1px"></div>
 
 
 

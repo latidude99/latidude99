@@ -9,6 +9,7 @@ from snc.models import *
 from snc.const import *
 import snc.service_parse as service_parse
 import snc.service_converters as service_converters
+import random
 
 
 def get_latest_catalogue():
@@ -66,6 +67,19 @@ def calculate_scale_category(scale):
     return category
 
 
+def get_colour():
+    colours = ["#0033cc", "#008080", "#996633", "#990033", "#006666", "#73264d", "#660066", "#000099",
+               "#004d00", "#800000", "#006622", "#66194d", "#24478f", "#806000", "#260033", "#992600", "#003300"]
+    return random.choice(colours)
+
+
+
+
+
+
+
+
+'''
 def print_chart_detail():
     catalogue = get_latest_catalogue()
 
@@ -107,7 +121,7 @@ def print_chart_detail():
     else:
         print('no catalogue loaded')
 
-
+'''
 
 
 

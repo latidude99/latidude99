@@ -145,93 +145,148 @@
 
 
 <div class="row h-100">
+
     <!-- CHARTS -->
     <div class="col-lg-9 h-100">
         {% block content_left %}{% endblock %}
     </div>
+
     <!-- INFO -->
     <div class="col-lg-3 h-100">
         <div class="container-fluid h-100" style="margin:0px;">
             <a href="{% url 'snc:index' %}" style="color:#333333 !important;">
                 <h3 class="mt-4 text-center">{{ title_main }}</h3>
             </a>
+            <p class="text-center" style="font-size: 18px;margin-bottom: 0px;">
+                catalogue
+                <span style="color:navy;font-size:20px;">{{ catalogue.file_identifier }}</span>
+                <span>, released </span>
+                <span style="color:navy;font-size:20px;">{{ catalogue.date }}</span>
+            </p>
 
             <div id="accordion">
                 <div class="card bg-transparent" style="border:none;">
                     <div class="card-header bg-transparent" style="border:none;">
-                        <a class="card-link panel-heading collapsed stretched-link" data-toggle="collapse"
+                        <a class="card-link panel-heading collapsed" data-toggle="collapse"
                            data-target="#info_main" aria-expanded="true" aria-controls="info_main"
                            style="text-decoration: none; cursor:pointer;
-                               font-family: 'Candara Light', Arial, sans-serif;
-                               font-size:22px; color:#96281b;">
-                            <i class="fa mr-4" style="font-size: 17px;" aria-hidden="true"></i>
-                            Help
+                               font-size:16px; color:grey;">
+                            <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="true"></i>
+                            catalogue detail
                         </a>
-                        <span class="px-5 mt-1 float-right text-danger" style="opacity:90%">ᒡ◯ᵔ◯ᒢ</span>
+                        <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                           data-target="#help" aria-expanded="true" aria-controls="help"
+                           style="text-decoration: none; cursor:pointer;
+                               font-size:16px; color:grey;">
+                            <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="true"></i>
+                            help
+                        </a>
                         <hr>
 
                         <div id="info_main" class="collapse" data-parent="#accordion"
                              aria-labelledby="info_main_head" style="color:#96281b;">
+                            <div style="">
+                                <p style="margin-bottom: 0px">
+                                    Catalogue number:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.file_identifier }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Catalogue release date:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.date }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Released by:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.organisation_name }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Email:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.email }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Phone:
+                                    <span style="color:navy;font-size:17px; margin-right:15px;">
+                                        {{ catalogue.phone }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Fax:
+                                    <span style="color:navy;font-size:17px; margin-right:15px;">
+                                        {{ catalogue.fax }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Delivery Point:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.delivery_point }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    City:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.city }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Administrative Area:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.administrative_area }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Postal Code:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.postal_code }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Country:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.country }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Total charts count:
+                                    <span style="color:navy;font-size:17px;">
+                                        {{ catalogue.charts_count }}</span>
+                                </p>
+                            </div>
+                        </div>
 
-                            <p style="font-size: 18px;margin-bottom: 0px;">
-                                This is a visual representation of the
-                            </p>
-                            <span style="color:navy;">
-                                UKHO Standard Navigational Chart
-                            </span>
-                                catalogue.
-                            <div class="row">
+                        <div id="help" class="collapse" data-parent="#accordion"
+                             aria-labelledby="info_main_head" style="color:#96281b;">
 
-                                <div class="col-lg-12 info_text">
-                                    <p>.</p>
-                                    <ul>
-                                        <li>
-                                            the catalogue is published on a weekly basis
-                                        </li>
-                                        <li>
+                            <div style="">
+                                <p style="margin-bottom: 0px">
+                                    This is where the help will appear.
+                                    <span style="color:navy;font-size:17px;">
 
-                                        </li>
-
-                                        <li>
-
-                                        </li>
-                                        <li>
-
-                                        </li>
-                                        <li>
-
-                                        </li>
-                                        <li>
-
-                                        </li>
-                                    </ul>
-                                </div>
+                                    </span>
+                                </p>
 
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+        </div>
 
-            {% block content_right %}{% endblock %}
+        {% block content_right %}{% endblock %}
 
-            <div class="" style="position:absolute; bottom:10px; right:10px">
-                <div class="row">
-                    <div class="col-lg-0"></div>
-                    <div class="col-lg-12">
-                        <div class="mt-4 float-right" style="cursor:pointer;margin-right: 0px;">
-                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
-                                    data-font="Comic"
-                                    data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
-                                    data-coffee-color="#ffffff">
-                            </script>
-                        </div>
+        <div class="" style="position:absolute; bottom:10px; right:10px">
+            <div class="row">
+                <div class="col-lg-0"></div>
+                <div class="col-lg-12">
+                    <div class="mt-4 float-right" style="cursor:pointer;margin-right: 0px;opacity:60%;">
+                        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                                data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
+                                data-font="Comic"
+                                data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
+                                data-coffee-color="#ffffff">
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 </div>
