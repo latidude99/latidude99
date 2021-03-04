@@ -24,6 +24,33 @@
 
         }
 
+        #notices {
+            height: 350px;
+            overflow-y: scroll;
+        }
+
+        #panels {
+            height: 300px;
+            overflow-y: scroll;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scroll-hidden::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scroll-hidden {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        #acc_head:hover {
+            text-decoration: none;
+            color: black !important;
+            {#background-color: #eeeeee !important;#}
+        }
+
         footer {
             position: absolute;
         }
@@ -63,7 +90,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            animation: animFw 10s linear infinite;
+            animation: animFw 2s linear infinite;
         }
 
         @keyframes animFw {
@@ -152,7 +179,7 @@
     </div>
 
     <!-- INFO -->
-    <div class="col-lg-3 h-100">
+    <div class="col-lg-3 h-100 scroll-hidden">
         <div class="container-fluid h-100" style="margin:0px;">
             <a href="{% url 'snc:index' %}" style="color:#333333 !important;">
                 <h3 class="mt-4 text-center">{{ title_main }}</h3>
@@ -172,7 +199,7 @@
                            style="text-decoration: none; cursor:pointer;
                                font-size:16px; color:grey;">
                             <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="true"></i>
-                            catalogue detail
+                            catalogue details
                         </a>
                         <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
                            data-target="#help" aria-expanded="true" aria-controls="help"
@@ -267,25 +294,32 @@
                 </div>
             </div>
             <!-- accordion end -->
-            <div>
+            <div class="mr-2">
                 <form action="{% url 'snc:search_single' %}" method="post"
                       class="needs-validation" novalidate>
                     {% csrf_token %}
-                    <div class="input-group">
-                        <div class="mr-3 mt-2">
-                            <label for="number">Search catalogue:</label>
+                    <div class="input-group input-group-sm">
+                        <div class="mr-3 mt-1">
+                            Search cataloguge:
                         </div>
 
-                        <input class="form-control" id="search1" name="number" required placeholder="enter chart number"
-                               style="height: calc(1.5em + .75rem + 4px); background-color:transparent; color:#333333;">
+                        <input class="form-control" id="search1" name="number" required
+                               placeholder="enter chart number">
                         <div class="input-group-append">
-                            <input type="submit" class="btn btn-primary"
-                                   onclick="$('#loading1').show().delay(10000).hide(0);">
+                            <button type="submit" class="btn btn-primary btn-sm ml-3" id="search_single"
+                                    onclick="$('#error').hide();$('#loader1').show().delay(10000).hide(0);">
+                                Submit
+                            </button>
                         </div>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback">Please enter chart number</div>
+                        <div id="error">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Please enter chart number</div>
+                        </div>
                     </div>
                 </form>
+                <div class="pt-2 flex-grow-1">
+                    <p id="loader1" class="loader1" style="width: 90%; display:none;"></p>
+                </div>
             </div>
 
             {% block content_right %}{% endblock %}
@@ -386,7 +420,7 @@
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
-                        $('#loader4').hide();
+                        $('#loader1').hide();
                     }
                     form.classList.add('was-validated');
                 }, false);

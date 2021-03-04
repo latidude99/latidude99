@@ -39,12 +39,13 @@ def chartsDB_2_chartsDTO(chartsDB):
 
 
 def chartDB_2_chartDTO(chartDB):
-    print(chartDB)
+   # print(chartDB)
     chartDTO = ChartDTO()
     chartDTO.catalogue_id = chartDB.catalogue_id
     chartDTO.number = chartDB.number
     chartDTO.title = chartDB.title
-    chartDTO.scale = chartDB.scale
+    if chartDB.scale != '':
+        chartDTO.scale = int(chartDB.scale)
     chartDTO.folio = chartDB.folio
     chartDTO.cat_number = chartDB.cat_number
     chartDTO.int_number = chartDB.int_number
@@ -52,6 +53,9 @@ def chartDB_2_chartDTO(chartDB):
     chartDTO.status_date = chartDB.status_date
     chartDTO.new_edition_date = chartDB.new_edition_date
     chartDTO.import_date = chartDB.import_date
+    chartDTO.last_nm_number = chartDB.last_nm_number
+    chartDTO.last_nm_date = chartDB.last_nm_date
+
     # AFAIK only one main chart, could change in future
     chart_polygonsDB = chartDB.chartpolygon_set.all()
     chartDTO.polygons = chart_polygonsDB_2_polygonsDTO(chart_polygonsDB)
@@ -60,7 +64,8 @@ def chartDB_2_chartDTO(chartDB):
     chartDTO.panels = panelsDB_2_panelsDTO(panelsDB)
 
     noticesDB = chartDB.notice_set.all()
-    chartDTO.notices = noticedDB_2_noticesDTO(noticesDB)
+    chartDTO.notices = noticesDB_2_noticesDTO(noticesDB)
+    chartDTO.notices.reverse() # newest first
 
     chartDTO.max_scale_category = chartDB.max_scale_category
     scale = ''
@@ -95,11 +100,11 @@ def get_chart_polys_formatted(polygonsDB):
     return polys
 
 
-def noticedDB_2_noticesDTO(noticesDB):
+def noticesDB_2_noticesDTO(noticesDB):
     noticesDTO = []
     if noticesDB != '':
         for noticeDB in noticesDB:
-            noticeDTO = NoticeDTO
+            noticeDTO = NoticeDTO()
             noticeDTO.year = noticeDB.year
             noticeDTO.week = noticeDB.week
             noticeDTO.number = noticeDB.number
@@ -111,11 +116,12 @@ def noticedDB_2_noticesDTO(noticesDB):
 def panelsDB_2_panelsDTO(panelsDB):
     panelsDTO = []
     for panelDB in panelsDB:
-        panelDTO = PanelDTO
+        panelDTO = PanelDTO()
         panelDTO.panel_id = panelDB.panel_id
         panelDTO.area = panelDB.area
         panelDTO.name = panelDB.name
-        panelDTO.scale = panelDB.scale
+        if panelDB.scale != '':
+            panelDTO.scale = int(panelDB.scale)
         polygonsDB = panelDB.panelpolygon_set.all()
         panelDTO.polygons = panel_polygonsDB_2_polygonsDTO(polygonsDB)
         if len(panelDTO.polygons) > 0:
@@ -123,26 +129,6 @@ def panelsDB_2_panelsDTO(panelsDB):
         panelDTO.colour = PANEL_COLOUR
         panelsDTO.append(panelDTO)
     return panelsDTO
-
-
-def chart_polygonsDB_2_polygonsDTO(polygonsDB):
-    polygonsDTO = []
-    for polygonDB in polygonsDB:
-        polygonDTO = PolygonDTO()
-        positionsDB = polygonDB.chartposition_set.all()
-        polygonDTO.positions = chart_positionsDB_2_positionsDTO(positionsDB)
-        polygonsDTO.append(polygonDTO)
-    return polygonsDTO
-
-
-def chart_positionsDB_2_positionsDTO(positionsDB):
-    positionsDTO = []
-    for p in positionsDB:
-        posDTO = PositionDTO()
-        posDTO.lat = p.lat
-        posDTO.lon = p.lon
-        positionsDTO.append(posDTO)
-    return positionsDTO
 
 
 def panel_polygonsDB_2_polygonsDTO(polygonsDB):
@@ -156,6 +142,26 @@ def panel_polygonsDB_2_polygonsDTO(polygonsDB):
 
 
 def panel_positionsDB_2_positionsDTO(positionsDB):
+    positionsDTO = []
+    for p in positionsDB:
+        posDTO = PositionDTO()
+        posDTO.lat = p.lat
+        posDTO.lon = p.lon
+        positionsDTO.append(posDTO)
+    return positionsDTO
+
+
+def chart_polygonsDB_2_polygonsDTO(polygonsDB):
+    polygonsDTO = []
+    for polygonDB in polygonsDB:
+        polygonDTO = PolygonDTO()
+        positionsDB = polygonDB.chartposition_set.all()
+        polygonDTO.positions = chart_positionsDB_2_positionsDTO(positionsDB)
+        polygonsDTO.append(polygonDTO)
+    return polygonsDTO
+
+
+def chart_positionsDB_2_positionsDTO(positionsDB):
     positionsDTO = []
     for p in positionsDB:
         posDTO = PositionDTO()

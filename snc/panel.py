@@ -8,7 +8,7 @@ class PanelDTO:
     area: str = ''
     name: str = ''
     scale: str = ''
-    polygons: [] =  field(default_factory=list)
+    polygons: [] = field(default_factory=list)
     # calculated
     panel_centre: str = ''
     label_position: str = ''

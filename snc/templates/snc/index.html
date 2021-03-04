@@ -29,6 +29,7 @@
             var markers = [];
 
             {% for chart in  charts %}
+                <!-- ---------------- chart ---------------- -->
                 {% if chart.polygons|length > 0 %}
                     {% for polygon in  chart.polygons %}
                         var chart_{{ chart.number }}_poly = new google.maps.Polygon({
@@ -76,12 +77,13 @@
                         markers.push(chart_{{ chart.number }}_marker);
                     {% endfor %}
                 {% else %}
-                    {#nothing for now#}
+                    {# no chart polygon #}
                 {% endif %}
+
                 {% if chart.panels|length > 0 %}
                     {% for panel in  chart.panels %}
+                        <!-- ---------------- panel ---------------- -->
                         {% for poly in  panel.polygons %}
-
                             var panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly
                                 = new google.maps.Polygon({
                                 paths: [
@@ -95,15 +97,15 @@
                                 strokeWeight: '1',
                                 strokeDasharray: '-',
                                 fillColor: '{{ panel.colour }}',
-                                fillOpacity: '0.3',
-                                number: '{{ chart.number }} / {{ panel.panel_id }})',
+                                fillOpacity: '0.2',
+                                number: '{{ chart.number }} ({{ panel.panel_id }})',
                                 type: 'panel',
                                 name: '{{ panel.name }}',
                                 scale: '{{ panel.scale }}',
-                                zoomMax: '22',
-                                zoomMin: '8',
+                                zoomMax: '{{ chart.zoom_max }}',
+                                zoomMin: '{{ chart.zoom_min }}',
                                 map: map,
-                                zIndex: '22'
+                                zIndex: '{{ chart.zoom_max }}'
                             });
 
                             google.maps.event.addListener(
@@ -121,24 +123,30 @@
                                 zoomMax: '22',
                                 zoomMin: '8',
                                 label: {
-                                    text: '{{ chart.number }} panel {{ panel.panel_id }})',
+                                    text: '{{ chart.number }} panel {{ panel.panel_id }}/{{ chart.panels|length }}',
                                     color: '{{ panel.colour }}',
                                     fontSize: '12px',
                                     fontShadow: "6px",
                                     fontWeight: "regular"
                                 }
                             });
-                            markers.push(panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly);
+                            markers.push(marker_{{ panel.panel_id }}_of_{{ chart.number }}_poly);
                         {% endfor %}
+                        <!-- ---------------- panel end ---------------- -->
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-
+            <!-- ---------------- chart end ---------------- -->
             var polygons = new Array(
                 {% for chart in  charts %}
                     {% if chart.polygons|length > 0 %}
                         chart_{{ chart.number }}_poly,
                     {% endif %}
+                    {% for panel in  chart.panels %}
+                        {% if panel.polygons|length > 0 %}
+                            panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly,
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             );
 
@@ -166,7 +174,7 @@
             });
 
             var bounds = new google.maps.LatLngBounds();
-            for (var i = 0; i < 1; i++) {
+            for (var i = 0; i < polygons.length; i++) {
                 var paths = polygons[i].getPaths();
                 console.log(polygons[i])
                 console.log(paths)
@@ -215,6 +223,171 @@
 
     <div class="info_text" style="border-left: darkgrey solid 1px"></div>
 
+    {% for chart in  charts %}
+        <!-- charts accordion start -->
+        <div id="chart_acc">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none;">
+                    <a class="card-link panel-heading" data-toggle="collapse" id="acc_head"
+                       data-target="#info_chart_main" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:16px; color:grey;">
+                        <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="false"></i>
+                        chart details
+                    </a>
+                    <hr>
+
+                    <div id="info_chart_main" class="collapse show" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div style="">
+                            <p style="margin-bottom: 2px">
+                                Chart number:
+                                <span style="color:navy;font-size:17px;">
+                                        {{ chart.number }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Chart title:
+                                <span style="color:navy;font-size:17px;">
+                                        {{ chart.title }}</span>
+                            </p>
+                            {% if chart.polygons|length > 0 %}
+                                <p style="margin-bottom: 2px">
+                                    Chart scale:
+                                    <span style="color:navy;font-size:17px;">
+                                        1 : {{ chart.scale|intcomma }}</span>
+                                </p>
+                            {% else %}
+                                <p style="margin-bottom: 2px">
+                                Chart scale:
+                                <span style="color:navy;font-size:17px;">
+                                        no main polygon</span>
+                            {% endif %}
+                            <p style="margin-bottom: 2px">
+                                Status:
+                                <span style="color:navy;font-size:17px;">
+                                        {{ chart.status }}</span>
+                                <span style="color:navy;font-size:17px;">
+                                        , {{ chart.status_date }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                New edition date:
+                                <span style="color:navy;font-size:17px; margin-right:15px;">
+                                        {{ chart.new_edition_date }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Last NM number:
+                                {% if chart.last_nm_number == '' %}
+                                    <span style="color:grey;font-size:17px; margin-right:15px;">
+                                         none</span>
+                                {% else %}
+                                    <span style="color:navy;font-size:17px; margin-right:15px;">
+                                        {{ chart.last_nm_number }}</span>
+                                {% endif %}
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Last NM date (week-year):
+                                {% if chart.last_nm_date == '' %}
+                                    <span style="color:grey;font-size:17px; margin-right:15px;">
+                                         none</span>
+                                {% else %}
+                                    <span style="color:navy;font-size:17px; margin-right:15px;">
+                                        {{ chart.last_nm_date }}</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- panels accordion start -->
+        <div>
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
+                       data-target="#info_chart_panels" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:16px; color:grey;">
+                        <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="true"></i>
+                        panels ({{ chart.panels|length }})
+                    </a>
+                    <hr>
+                    <div id="info_chart_panels" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div id="panels" class="scroll-hidden">
+                            {% if chart.panels|length > 0 %}
+                                {% for panel in chart.panels %}
+                                    <p style="margin-bottom: 1px">
+                                        panel id:
+                                        <span style="color:navy;font-size:17px;">
+                                        {{ panel.panel_id }}</span>
+                                    </p>
+                                    <p style="margin-bottom: 1px">
+                                        panel name:
+                                        <span style="color:navy;font-size:17px;">
+                                        {{ panel.name }}</span>
+                                    </p>
+                                    <p style="margin-bottom: 10px">
+                                        panel scale:
+                                        <span style="color:navy;font-size:17px;">
+                                        1 : {{ panel.scale|intcomma }}</span>
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                <p style="color:grey;font-size:17px; margin-left:15px;">
+                                    none</p>
+                            {% endif %}
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- panels accordion end -->
+
+        <!-- notices accordion start -->
+        <div>
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
+                       data-target="#info_chart_notices" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:16px; color:grey;">
+                        <i class="fa mr-3" style="font-size:14px;color:grey;" aria-hidden="true"></i>
+                        notices ({{ chart.notices|length }})
+                    </a>
+                    <hr>
+                    <div id="info_chart_notices" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div id="notices" class="scroll-hidden">
+                            {% if chart.notices|length > 0 %}
+                                {% for notice in chart.notices %}
+                                    <p style="margin-bottom: 5px">
+                                        number:
+                                        <span style="color:navy;font-size:17px;">
+                                        {{ notice.number }}</span>
+                                        , week:
+                                        <span style="color:navy;font-size:17px;">
+                                        {{ notice.week }}</span>
+                                        <span style="color:navy;font-size:17px;">
+                                    , year:
+                                            {{ notice.year }}</span>
+                                        <span style="color:grey;font-size:14px;">
+                                         / {{ notice.type }}</span>
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                <p style="color:grey;font-size:17px; margin-left:15px;">
+                                    none</p>
+                            {% endif %}
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- notices accordion end -->
+    {% endfor %}
 
 
 {% endblock %}

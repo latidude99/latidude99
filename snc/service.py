@@ -50,6 +50,7 @@ def get_search_single_context(num):
         chartDB = catalogueDB.chart_set.get(number=num)
         chart = service_converters.chartDB_2_chartDTO(chartDB)
         charts.append(chart)
+        print(charts[0])
     catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
     if len(charts) > 0:
         print('chart found: ' + num)
