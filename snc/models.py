@@ -104,10 +104,18 @@ class Notice(models.Model):
         return self.year + ', ' + self.week + ' / ' + self.number
 
 
-#dt.timedelta(days=int(product_dto.duration))
+# ----------- ready made html with charts ------------
 
+class Page(models.Model):
+    catalogue = models.ForeignKey(Catalogue, on_delete=models.CASCADE, default=1)
+    catalogue_date = models.CharField(max_length=50,default='')
+    scale_range = models.CharField(max_length=50, default='')
+    type = models.CharField(max_length=50, default='')
+    html = models.TextField(max_length=1000000, default='no_html')
+    generated = models.BooleanField(default=False)
 
-
+    def __str__(self):
+        return self.generated
 
 
 

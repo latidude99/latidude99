@@ -19,11 +19,17 @@ def info(request):
     return render(request, 'snc/index.html', context)
 
 
-def search_single(request):
-    num = ''
+def multisearch(request):
+    nums = []
+    data = ''
     if request.method == 'POST':
-        num = request.POST['number']
-    context = service.get_search_single_context(num)
+        data = request.POST['number']
+    if ',' in data:
+        nums =data.split(',')
+        nums = [x.strip() for x in nums]
+    else:
+        nums.append(data.strip())
+    context = service.get_search_multiple_context(nums)
     return render(request, 'snc/index.html', context)
 
 

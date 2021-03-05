@@ -9,6 +9,15 @@ SNC_DATA = 'data/'
 SNC_CATALOGUE_FILE = 'data/snc_catalogue.xml'
 
 
+SNC_SCALE_1_HTML = 'data/scale_1_html'
+SNC_SCALE_2_HTML = 'data/scale_2_html'
+SNC_SCALE_3_HTML = 'data/scale_3_html'
+SNC_SCALE_4_HTML = 'data/scale_4_html'
+SNC_SCALE_5_HTML = 'data/scale_5_html'
+SNC_SCALE_6_HTML = 'data/scale_6_html'
+SNC_SCALE_7_HTML = 'data/scale_7_html'
+
+
 GOOGLE_API_KEY_DEV_UN = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_DEV_UNRESTRICTED
 GOOGLE_API_KEY_DEV = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_DEV
 GOOGLE_API_KEY_PROD = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_PROD

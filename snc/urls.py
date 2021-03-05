@@ -15,7 +15,7 @@ urlpatterns = [
     path('charts_6', views.charts_6, name='charts_6'),
     path('charts_7', views.charts_7, name='charts_7'),
 
-    path('search_single', views.search_single, name='search_single'),
+    path('multisearch', views.multisearch, name='multisearch'),
 
 ]
 
