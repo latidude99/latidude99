@@ -13,6 +13,7 @@ class PanelDTO:
     panel_centre: str = ''
     label_position: str = ''
     colour: str = ''
+    zindex: str = ''
 
 
 

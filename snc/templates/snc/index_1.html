@@ -10,7 +10,7 @@
     <div id="zoomLevel"></div>
     <div id="map-canvas" style='z-index:30;'></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&v=beta&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&callback=initMap"></script>
 
     <script>
         var map;
@@ -19,7 +19,7 @@
         function initialize() {
             var mapOptions = {
                 zoom: 5,
-                center: {lat: 54.15, lng: -2.72},
+                center: { lat: 54.15, lng: -2.72},
                 mapTypeId: google.maps.MapTypeId.ROAD
             };
 
@@ -50,7 +50,7 @@
                             zoomMax: '{{ chart.zoom_max }}',
                             zoomMin: '{{ chart.zoom_min }}',
                             map: map,
-                            zIndex: '{{ chart.zindex }}'
+                            zIndex: '{{ chart.zoom_max }}'
                         });
 
                         google.maps.event.addListener(chart_{{ chart.number }}_poly, 'click', showInfo);
@@ -104,7 +104,7 @@
                                 zoomMax: '{{ chart.zoom_max }}',
                                 zoomMin: '{{ chart.zoom_min }}',
                                 map: map,
-                                zIndex: '{{ panel.zindex }}'
+                                zIndex: '{{ chart.zoom_max }}'
                             });
 
                             google.maps.event.addListener(
@@ -172,7 +172,7 @@
                 document.getElementById("zoomLevel").innerHTML = 'Zoom Level: ' + zoom;
             });
 
-            if (polygons.length > 0) {
+            if(polygons.length > 0){
                 var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < polygons.length; i++) {
                     var paths = polygons[i].getPaths();
@@ -223,30 +223,18 @@
 
 {#  ----------------------------------- INFO --------------------------------------------- #}
 {% block content_right %}
-    <div class="ml-2">
-        {% if search_multi_ok != '' %}
-            <p style="color:navy;font-size:12px; margin-bottom:0px;padding-bottom: 0px">
-                {{ search_multi_ok }}
-            </p>
-        {% else %}
-            <p style="color:red;font-size:12px">
-                {{ search_multi_error }}
-            </p>
-            <p style="color:red;font-size:12px">
-                {{ search_multi_error1 }}
-            </p>
-            <p style="color:red;font-size:12px">
-                {{ search_multi_error2 }}
-            </p>
-        {% endif %}
-    </div>
-    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 8px;"></div>
+
+    <p style="color:red;">
+        {{ search_single_error }}
+    </p>
+
+    <div class="info_text" style="border-left: darkgrey solid 1px"></div>
     <div id="search" class="scroll-hidden">
     {% for chart in  charts %}
         <!-- charts accordion start -->
-        <div id="accordion">
+        <div id="chart_acc">
         <div class="card bg-transparent" style="border:none;">
-            <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
+            <div class="card-header bg-transparent" style="border:none;">
                 <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
                    data-target="#info_chart_main{{ chart.number }}" aria-expanded="true"
                    aria-controls="info_main"
@@ -260,11 +248,11 @@
                     <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span>
                     <span style="color:navy;font-size:12px;">{{ chart.notices|length }}</span>
                 </a>
-                <hr style="margin-bottom: 0px; margin-top: 0px">
+                <hr style="margin-bottom: 0px;">
 
                 <div id="info_chart_main{{ chart.number }}" class="collapse" data-parent="#accordion"
                      aria-labelledby="info_main_head" style="color:#96281b;">
-                    <div id="charts" class="scroll-hidden" style="font-size:12px;margin-top: 4px;">
+                    <div id="charts" class="scroll-hidden" style="font-size:12px;margin-top: 6px;">
                         <p style="margin-bottom: 2px">
                             Chart number:
                             <span style="color:navy;font-size:12px;">

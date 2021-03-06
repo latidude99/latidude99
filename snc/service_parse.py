@@ -2,7 +2,7 @@
 #django.setup()
 
 import untangle
-import xmltodict
+#import xmltodict
 
 import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
 import snc.utils as utils

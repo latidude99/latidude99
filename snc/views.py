@@ -25,8 +25,15 @@ def multisearch(request):
     if request.method == 'POST':
         data = request.POST['number']
     if ',' in data:
-        nums =data.split(',')
+        nums = data.split(',')
         nums = [x.strip() for x in nums]
+    elif '-' in data:
+        limits = data.split('-')
+        limits = [x.strip() for x in limits]
+        try:
+            nums = list(range(int(limits[0]), int(limits[1])))
+        except:
+            pass
     else:
         nums.append(data.strip())
     context = service.get_search_multiple_context(nums)
