@@ -31,7 +31,12 @@ def multisearch(request):
         limits = data.split('-')
         limits = [x.strip() for x in limits]
         try:
-            nums = list(range(int(limits[0]), int(limits[1])))
+            first = int(limits[0])
+            second = int(limits[1])
+            if first < second:
+                nums = list(range(first, second))
+            else:
+                nums = list(range(second, first))
         except:
             pass
     else:
