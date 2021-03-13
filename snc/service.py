@@ -104,6 +104,7 @@ def get_SCALE1_charts_context():
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
+        'search_multi_ok': 'Found ' + str(len(charts)) + ' chart(s)'
     }
     ctx = {**get_index_context(), **context}
     return ctx

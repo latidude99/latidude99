@@ -79,49 +79,7 @@ def get_colour():
 
 
 
-'''
-def print_chart_detail():
-    catalogue = get_latest_catalogue()
 
-    if catalogue != '':
-        chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue.id, number='1006')
-
-        for ch in chartsDB:
-            chart = service_converters.chartDB_2_chartDTO(ch)
-
-            print('\n')
-            print('chart number----------------')
-            print(chart.number)
-            print(chart.title)
-            print(chart.scale)
-            print(chart.status)
-            print(chart.status_date)
-            print(chart.folio)
-            print(chart.cat_number)
-
-            print('chart polygons----------------')
-            print(chart.polygons)
-            if len(chart.polygons) > 0:
-                print(len(chart.polygons))
-                print(chart.polygons[0].positions[0].lat)
-                print(chart.polygons[0].positions[0].lon)
-
-            print('panels----------------')
-            print(chart.panels)
-            if len(chart.panels) > 0:
-                print(chart.panels[0].polygons)
-                print(chart.panels[0].polygons[0].positions[0].lat)
-                print(chart.panels[0].polygons[0].positions[0].lon)
-
-            print('notices----------------')
-            print(chart.notices)
-            if len(chart.notices) > 0:
-                print(chart.notices[0].week)
-
-    else:
-        print('no catalogue loaded')
-
-'''
 
 
 

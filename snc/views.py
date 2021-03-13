@@ -24,6 +24,7 @@ def multisearch(request):
     data = ''
     if request.method == 'POST':
         data = request.POST['number']
+        data.capitalize()
     if ',' in data:
         nums = data.split(',')
         nums = [x.strip() for x in nums]

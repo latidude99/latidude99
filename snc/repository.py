@@ -13,9 +13,11 @@ import snc.service_converters as service_converters
 
 def get_latest_catalogue():
     catalogue = ''
-    while True:
-        catalogue = Catalogue.objects.using('snc').latest('date')
-        if catalogue.ready:
+    catalogues = Catalogue.objects.using('snc').all()
+    for c in reversed(catalogues):
+        print(c.id)
+        if c.ready:
+            catalogue = c
             break
     return catalogue
 

@@ -18,7 +18,7 @@ import pytz
 
 def delete_catalogue(num):
     Catalogue.objects.using('snc').filter(id=num).delete()
-    print('catalogue id: ' + num + ' deleted')
+    print('catalogue id: ' + str(num) + ' deleted')
 
 def delete_all_catalogues():
     Catalogue.objects.using('snc').all().delete()
@@ -31,10 +31,23 @@ def delete_all_charts():
 
 # untangle ------------------------------------------------------------------
 
-def import_calogue_from_file(catalogue_file):
+def import_catalogue_from_file(catalogue_file):
+    catalogue = ''
+    catalogues = Catalogue.objects.using('snc').all()
+    for c in reversed(catalogues):
+        print('catalogue id :' + str(c.id))
+        if c.ready:
+            catalogue = c
+            break
+
     obj = get_xml_object(catalogue_file)
-    import_charts(obj)
-    print('file parsed, all charts imported')
+    file_catalogue_identifier = int(obj.UKHOCatalogueFile.BaseFileMetadata.MD_FileIdentifier.cdata)
+    if file_catalogue_identifier > int(catalogue.file_identifier):
+        import_charts(obj)
+        print('file parsed, all charts imported')
+    else:
+        #import_charts(obj) # dev, to be removed for prod
+        print('no new catalogue in the file')
 
 def get_xml_object(catalogue_file):
     obj = untangle.parse(catalogue_file)
@@ -67,10 +80,12 @@ def import_charts(obj):
     charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
     for ch in charts:
 
-        # # testing
-        # num = ch.ShortName.cdata
-        # if num != 'JP1085' and num != '1006':
-        #     continue
+        # testing
+       #  num = ch.ShortName.cdata
+       #  if num != 'JP1085' and num != '1006' and num != '4000' and num != '4004' and num != '1007' and num != '1330'\
+       #          and num != '4005' and num != '4008' and num != '4012' and num != '4016' and num != '4007' and num != '4015':
+       # # if num != '4004':
+       #      continue
 
         chart = Chart()
         chart.catalogue = catalogue
@@ -97,14 +112,22 @@ def import_charts(obj):
         chart.import_date = dt.datetime.now(pytz.timezone('Europe/London'))
         chart.save(using='snc')
         print('chart ' + chart.number + ', saved')
+
+        if chart.number == '4000': # skips plygons for chart 4000, don't display correctly
+            continue
+
         # max scale calculations, finding min scale denominator
         min = 100_000_000
-        if chart.scale != '' and int(ch.scale.strip()) < min:
-            min = int(chart.scale.strip())
+        try:
+            if chart.scale != '' and int(ch.scale.strip()) < min:
+                min = int(chart.scale.strip())
+        except:
+            pass
 
-        # chart polygon
+        # single main chart polygon
         try:
             positions = ch.Metadata.GeographicLimit.Polygon.Position
+            print('inside single main polygon')
             chart_polygon = ChartPolygon()
             chart_polygon.chart = chart
             chart_polygon.save(using='snc')
@@ -114,56 +137,120 @@ def import_charts(obj):
                 chart_position.lat = pos['latitude']
                 chart_position.lon = pos['longitude']
                 chart_position.save(using='snc')
-            print('--------- polygon type: chart, saved')
+            print('--------- single main chart polygon, saved')
         except:
-            # chart bounding box (no polygon)
-            try:
-                boundbox = ch.Metadata.GeographicLimit.BoundingBox
-
-                north = boundbox.NorthLimit.cdata
-                south = boundbox.SouthLimit.cdata
-                west = boundbox.WestLimit.cdata
-                east = boundbox.EastLimit.cdata
-
-                chart_polygon_bounding = ChartPolygon()
-                chart_polygon_bounding.chart = chart
-                chart_polygon_bounding.save(using='snc')
-
-                # converts bounds to vertices
-                northwest = ChartPosition()
-                northwest.chart_polygon = chart_polygon_bounding
-                northwest.lat = north
-                northwest.lon = west
-                northwest.save(using='snc')
-
-                norteast = ChartPosition()
-                norteast.chart_polygon = chart_polygon_bounding
-                norteast.lat = north
-                norteast.lon = east
-                norteast.save(using='snc')
-
-                southeast = ChartPosition()
-                southeast.chart_polygon = chart_polygon_bounding
-                southeast.lat = south
-                southeast.lon = east
-                southeast.save(using='snc')
-
-                southwest = ChartPosition()
-                southwest.chart_polygon = chart_polygon_bounding
-                southwest.lat = south
-                southwest.lon = west
-                southwest.save(using='snc')
-
-                print('--------- polygon type: bounding box, saved')
-            except:
-                pass
             pass
 
-        # panels
+        # multiple main chart polygons
         try:
-            check = ch.Metadata.Panel[0].Polygon # check if Panels have any Polygon
+            check = ch.Metadata.GeographicLimit.Polygon[1].Position
+            print('inside multiple main polygons')
+            polygons = ch.Metadata.GeographicLimit.Polygon
+            north = 0
+            south = 0
+            west = 0
+            east = 0
+
+            for poly in polygons:
+                chart_polygon = ChartPolygon()
+                chart_polygon.chart = chart
+                chart_polygon.save(using='snc')
+
+                positions = poly.Position
+                for pos in positions:
+                    chart_position = ChartPosition()
+                    chart_position.chart_polygon = chart_polygon
+                    chart_position.lat = pos['latitude']
+                    chart_position.lon = pos['longitude']
+                    chart_position.save(using='snc')
+
+
+            #         if float(pos['latitude'].strip()) > north:
+            #             north = float(pos['latitude'].strip())
+            #         elif float(pos['latitude'].strip()) < south:
+            #             south = float(pos['latitude'].strip())
+            #         if float(pos['longitude'].strip()) > east:
+            #             east = float(pos['longitude'].strip())
+            #         elif float(pos['longitude'].strip()) < west:
+            #             west = float(pos['longitude'].strip())
+            #
+            #
+            # # converts bounds to vertices
+            # northwest = ChartPosition()
+            # northwest.chart_polygon = chart_polygon
+            # northwest.lat = str(north)
+            # northwest.lon = str(west)
+            # northwest.save(using='snc')
+            #
+            # northeast = ChartPosition()
+            # northeast.chart_polygon = chart_polygon
+            # northeast.lat = str(north)
+            # northeast.lon = str(east)
+            # northeast.save(using='snc')
+            #
+            # southeast = ChartPosition()
+            # southeast.chart_polygon = chart_polygon
+            # southeast.lat = str(south)
+            # southeast.lon = str(east)
+            # southeast.save(using='snc')
+            #
+            # southwest = ChartPosition()
+            # southwest.chart_polygon = chart_polygon
+            # southwest.lat = str(south)
+            # southwest.lon = str(west)
+            # southwest.save(using='snc')
+            print('multiple main polygons simplyfied and saved')
+
+        except:
+            pass
+
+        # chart bounding box (no polygon)
+        try:
+            boundbox = ch.Metadata.GeographicLimit.BoundingBox
+            print('inside bounding box')
+            north = boundbox.NorthLimit.cdata
+            south = boundbox.SouthLimit.cdata
+            west = boundbox.WestLimit.cdata
+            east = boundbox.EastLimit.cdata
+
+            chart_polygon_bounding = ChartPolygon()
+            chart_polygon_bounding.chart = chart
+            chart_polygon_bounding.save(using='snc')
+
+            # converts bounds to vertices
+            northwest = ChartPosition()
+            northwest.chart_polygon = chart_polygon_bounding
+            northwest.lat = north
+            northwest.lon = west
+            northwest.save(using='snc')
+
+            northeast = ChartPosition()
+            northeast.chart_polygon = chart_polygon_bounding
+            northeast.lat = north
+            northeast.lon = east
+            northeast.save(using='snc')
+
+            southeast = ChartPosition()
+            southeast.chart_polygon = chart_polygon_bounding
+            southeast.lat = south
+            southeast.lon = east
+            southeast.save(using='snc')
+
+            southwest = ChartPosition()
+            southwest.chart_polygon = chart_polygon_bounding
+            southwest.lat = south
+            southwest.lon = west
+            southwest.save(using='snc')
+
+            print('--------- bounding box polygon saved')
+        except:
+            pass
+
+        # single panel
+        try:
+            check = ch.Metadata.Panel.Polygon # check if there is a single Panel
             panels = ch.Metadata.Panel
-            print('panels: ' + str(len(panels)))
+            print('inside single panel')
             if len(panels) > 0:
                 for pan in panels:
                     panel = Panel()
@@ -173,22 +260,193 @@ def import_charts(obj):
                     panel.name = pan.PanelName.cdata
                     panel.scale = pan.PanelScale.cdata
                     panel.save(using='snc')
-                    # panel polygon
-                    panel_polygon = PanelPolygon()
-                    panel_polygon.panel = panel
-                    panel_polygon.save(using='snc')
 
                     if panel.scale != '' and int(panel.scale.strip()) < min:
                         min = int(panel.scale.strip())
 
-                    positions = pan.Polygon.Position
-                    for p in positions:
-                        panel_position = PanelPosition()
-                        panel_position.panel_polygon = panel_polygon
-                        panel_position.lat = p['latitude']
-                        panel_position.lon = p['longitude']
-                        panel_position.save(using='snc')
-                    print('--------- polygon type: panel, saved')
+                    # panel polygons
+                    polygons = pan.Polygon
+                    try:
+                        # multiple panel polygons
+                        check= polygons[1].Position
+                        print('inside multiple panel polygons')
+                        north = 0
+                        south = 0
+                        west = 0
+                        east = 0
+
+                        for poly in polygons:
+                            panel_polygon = PanelPolygon()
+                            panel_polygon.panel = panel
+                            panel_polygon.save(using='snc')
+
+                            positions = poly.Position
+                            for pos in positions:
+                                panel_position = PanelPosition()
+                                panel_position.panel_polygon = panel_polygon
+                                panel_position.lat = pos['latitude']
+                                panel_position.lon = pos['longitude']
+                                panel_position.save(using='snc')
+
+                        #         if float(pos['latitude'].strip()) > north:
+                        #             north = float(pos['latitude'].strip())
+                        #         elif float(pos['latitude'].strip()) < south:
+                        #             south = float(pos['latitude'].strip())
+                        #         if float(pos['longitude'].strip()) > east:
+                        #             east = float(pos['longitude'].strip()) -1
+                        #         elif float(pos['longitude'].strip()) < west:
+                        #             west = float(pos['longitude'].strip())
+                        #
+                        # # converts bounds to vertices
+                        # southwest = PanelPosition()
+                        # southwest.panel_polygon = panel_polygon
+                        # southwest.lat = str(south)
+                        # southwest.lon = str(west)
+                        # southwest.save(using='snc')
+                        #
+                        # southeast = PanelPosition()
+                        # southeast.panel_polygon = panel_polygon
+                        # southeast.lat = str(south)
+                        # southeast.lon = str(east)
+                        # southeast.save(using='snc')
+                        #
+                        # northeast = PanelPosition()
+                        # northeast.panel_polygon = panel_polygon
+                        # northeast.lat = str(north)
+                        # northeast.lon = str(east)
+                        # northeast.save(using='snc')
+                        #
+                        # northwest = PanelPosition()
+                        # northwest.panel_polygon = panel_polygon
+                        # northwest.lat = str(north)
+                        # northwest.lon = str(west)
+                        # northwest.save(using='snc')
+
+                        print('--------- multi polygon panel, saved')
+
+                        #doesn't draw correctly
+                        # PositionDTO(lat='83.75008', lon='-100.0')
+                        # PositionDTO(lat='83.75008',lon='180.0')
+                        # PositionDTO(lat='-78.75', lon='180.0')
+                        # PositionDTO(lat='-78.75', lon='-100.0')
+
+                        # print(northwest)
+                        # print(northeast)
+                        # print(southeast)
+                        # print(southwest)
+                        #print(panel_polygon.panelposition_set.all())
+
+                    except:
+                        try:
+                            # single panel polygon
+                            check = polygons.Position
+                            print('inside single panel polygon')
+                            panel_polygon = PanelPolygon()
+                            panel_polygon.panel = panel
+                            panel_polygon.save(using='snc')
+
+                            positions = pan.Polygon.Position
+                            for p in positions:
+                                panel_position = PanelPosition()
+                                panel_position.panel_polygon = panel_polygon
+                                panel_position.lat = p['latitude']
+                                panel_position.lon = p['longitude']
+                                panel_position.save(using='snc')
+                            print('--------- single polygon panel, saved')
+                        except:
+                            pass
+        except:
+            pass
+
+        # multiple panels
+        try:
+            check = ch.Metadata.Panel[0].Polygon  # check if there are multiple Panels
+            print('inside multiple panels')
+            panels = ch.Metadata.Panel
+            if len(panels) > 0:
+                for pan in panels:
+                    panel = Panel()
+                    panel.chart = chart
+                    panel.panel_id = pan.PanelID.cdata
+                    panel.area = pan.PanelAreaName.cdata
+                    panel.name = pan.PanelName.cdata
+                    panel.scale = pan.PanelScale.cdata
+                    panel.save(using='snc')
+
+                    if panel.scale != '' and int(panel.scale.strip()) < min:
+                        min = int(panel.scale.strip())
+
+                    # panel polygons
+                    polygons = pan.Polygon
+                    try:
+                        # multiple panel polygons
+                        check = polygons[1].Position
+                        print('inside multiple panel polygons')
+                        north = 0
+                        south = 0
+                        west = 0
+                        east = 0
+                        for poly in polygons:
+                            positions = poly.Position
+                            for pos in positions:
+                                if float(pos['latitude'].strip()) > north:
+                                    north = float(pos['latitude'].strip())
+                                elif float(pos['latitude'].strip()) < south:
+                                    south = float(pos['latitude'].strip())
+                                if float(pos['longitude'].strip()) > east:
+                                    east = float(pos['longitude'].strip())
+                                elif float(pos['longitude'].strip()) < west:
+                                    west = float(pos['longitude'].strip())
+
+                        panel_polygon = PanelPolygon()
+                        panel_polygon.chart = chart
+                        panel_polygon.save(using='snc')
+
+                        # converts bounds to vertices
+                        northwest = PanelPosition()
+                        northwest.panel_polygon = panel_polygon
+                        northwest.lat = str(north)
+                        northwest.lon = str(west)
+                        northwest.save(using='snc')
+
+                        northeast = PanelPosition()
+                        northeast.panel_polygon = panel_polygon
+                        northeast.lat = str(north)
+                        northeast.lon = str(east)
+                        northeast.save(using='snc')
+
+                        southeast = PanelPosition()
+                        southeast.panel_polygon = panel_polygon
+                        southeast.lat = str(south)
+                        southeast.lon = str(east)
+                        southeast.save(using='snc')
+
+                        southwest = PanelPosition()
+                        southwest.panel_polygon = panel_polygon
+                        southwest.lat = str(south)
+                        southwest.lon = str(west)
+                        southwest.save(using='snc')
+                        print('--------- multi polygon panel, saved')
+
+                    except:
+                        try:
+                            # single panel polygon
+                            check = polygons.Position
+                            print('inside single panel polygon')
+                            panel_polygon = PanelPolygon()
+                            panel_polygon.panel = panel
+                            panel_polygon.save(using='snc')
+
+                            positions = pan.Polygon.Position
+                            for p in positions:
+                                panel_position = PanelPosition()
+                                panel_position.panel_polygon = panel_polygon
+                                panel_position.lat = p['latitude']
+                                panel_position.lon = p['longitude']
+                                panel_position.save(using='snc')
+                            print('--------- single polygon panel, saved')
+                        except:
+                            pass
         except:
             pass
 

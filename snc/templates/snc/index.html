@@ -275,7 +275,7 @@
                             <span style="color:navy;font-size:12px;">
                                         {{ chart.title }}</span>
                         </p>
-                        {% if chart.polygons|length > 0 %}
+                        {% if chart.scale != '' %}
                             <p style="margin-bottom: 2px">
                                 Chart scale:
                                 <span style="color:navy;font-size:12px;">
@@ -359,13 +359,14 @@
                                     {% for notice in chart.notices %}
                                         <p style="margin-bottom: 2px">
 
-                                                            <span style="color:navy;font-size:12px;">
+                                            <span style="color:navy;font-size:12px;">
                                                             {{ notice.number }}</span>
-                                            , week:
+                                                , week:
                                             <span style="color:navy;font-size:12px;">
                                                             {{ notice.week }}</span>
+                                            <span style="color:grey;font-size:12px;">
+                                                , year:</span>
                                             <span style="color:navy;font-size:12px;">
-                                                            , year:
                                                 {{ notice.year }}</span>
                                             <span style="color:grey;font-size:12px;">
                                                             / {{ notice.type }}</span>

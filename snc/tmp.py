@@ -1,5 +1,5 @@
-#import django
-#django.setup()
+import django
+django.setup()
 
 import untangle
 #import xmltodict
@@ -8,20 +8,45 @@ import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
 from snc.models import *
 from snc.const import *
 import snc.service_parse as service_parse
+import snc.service_parse_2 as service_parse_2
 import snc.service_converters as service_converters
 import snc.utils as utils
 import snc.repository as repo
-import snc.service_converters as service_converters
+import snc.service_geojson as service_geojson
 
 
+def delete_catalogue_range(a, b):
+    for i in range(a, b):
+        print(i)
+        service_parse.delete_catalogue(i)
 
-#service_parse.import_calogue_from_file(SNC_CATALOGUE_FILE)
+
+def get_charts():
+    nums = [4004]
+    charts = []
+    catalogueDB = repo.get_latest_catalogue()
+    catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    for num in nums:
+        if catalogueDB.chart_set.filter(number=num).exists():
+            chartDB = catalogueDB.chart_set.get(number=num)
+            chart = service_converters.chartDB_2_chartDTO(chartDB)
+            charts.append(chart)
+            print(charts[0])
+            print(charts[0].polygons)
+
+    return charts
+
+
+#service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+
+delete_catalogue_range(23, 50)
+
 
 #service_parse.delete_all_charts()
 
 #service_parse.delete_all_catalogues()
 
-#service_parse.delete_catalogue('24')
+#service_parse.delete_catalogue('23')
 
 #utils.print_chart_detail()
 
@@ -49,10 +74,12 @@ import snc.service_converters as service_converters
 # obj = untangle.parse(SNC_CATALOGUE_FILE)
 # charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
 
+#service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+
+#get_charts()
 
 
-
-
+#print(service_geojson.generate_geojson(' '))
 
 
 
@@ -153,17 +180,6 @@ for item in snc_list:
 
 
 
-
-
-
-# ---------------------------------------------------------------------------
-
-
-# xmltodict ------------------------------------------------------------------
-
-
-
-# ---------------------------------------------------------------------------
 
 
 

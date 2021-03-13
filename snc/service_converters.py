@@ -63,6 +63,11 @@ def chartDB_2_chartDTO(chartDB):
     panelsDB = chartDB.panel_set.all()
     chartDTO.panels = panelsDB_2_panelsDTO(panelsDB)
 
+    if len(chartDTO.polygons) == 0 and len(chartDTO.panels) == 1:
+        chartDTO.polygons = chartDTO.panels[0].polygons
+        chartDTO.scale = chartDTO.panels[0].scale
+        chartDTO.panels = []
+
     noticesDB = chartDB.notice_set.all()
     chartDTO.notices = noticesDB_2_noticesDTO(noticesDB)
     chartDTO.notices.reverse() # newest first

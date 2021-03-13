@@ -14,7 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #service_download.download_and_save_catalogue()
         time.sleep(10)
-        service_parse.import_calogue_from_file(SNC_CATALOGUE_FILE)
+        service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
         self.stdout.write(self.style.SUCCESS('Successfully downloaded and imported the latest snc catalogue'))
 
 
