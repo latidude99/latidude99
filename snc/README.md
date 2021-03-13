@@ -34,21 +34,8 @@ A service displaying coverage of the UKHO Standard Navigational Charts on Google
   <img src="../images/snc_3.png" width=100%></p>
   <br>
 <p align="center">
-	<img src="../images/snc_4.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/snc_5.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/snc_6.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/snc_7.png" width=100%> </p>
-  <br>
-<p align="center">
-	<img src="../images/snc_8.png" width=100%></p>
-   <br>
-   <p align="center">
-	<img src="../images/snc_9.png" width=100%> </p>
-	<p align="center">
-	<img src="../images/snc_10.png" width=100%> </p>
+<img src="../images/snc_4.png" width=100%> </p>
+	
  
 
 
