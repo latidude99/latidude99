@@ -108,7 +108,7 @@ PYTHON_PROJ_TYPE_2 = 'DJANGO'
 PYTHON_PROJ_1 = 'covid19 in the uk'
 PYTHON_PROJ_2 = 'the world in numbers'
 PYTHON_PROJ_3 = 'price tracker'
-PYTHON_PROJ_4 = 'UKHO chart search'
+PYTHON_PROJ_4 = 'chart coverage reader'
 ANDROID_PROJECTS = 'Android '
 ANDROID_PROJ_1 = 'map reading tools'
 
