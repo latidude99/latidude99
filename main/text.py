@@ -87,6 +87,7 @@ HIBERNATE = 'Hibernate'
 APACHELUCENE = 'Apache Lucene'
 THYMELEAF3 = 'Thymeleaf 3'
 CHARTJS = 'Charts.js'
+GOOGLE_MAPS_API = 'Google Maps'
 
 JAVA_PROJECTS = 'Java '
 JAVA_PROJ_TYPE_1 = 'SPRING'
@@ -107,6 +108,7 @@ PYTHON_PROJ_TYPE_2 = 'DJANGO'
 PYTHON_PROJ_1 = 'covid19 in the uk'
 PYTHON_PROJ_2 = 'the world in numbers'
 PYTHON_PROJ_3 = 'price tracker'
+PYTHON_PROJ_4 = 'UKHO chart search'
 ANDROID_PROJECTS = 'Android '
 ANDROID_PROJ_1 = 'map reading tools'
 
@@ -124,6 +126,11 @@ IMAGE_PYTHON_PROJ_3 = 'images/pr_0.png'
 TITLE_PYTHON_PROJ_3 = 'Price Tracker'
 DESC_PYTHON_PROJ_3 = 'Price tracking service'
 GITHUB_PYTHON_PROJ_3 = 'https://github.com/latidude99/latidude99/tree/master/pricecheck'
+
+IMAGE_PYTHON_PROJ_4 = 'images/snc_0.png'
+TITLE_PYTHON_PROJ_4 = 'Chart Coverage Reader'
+DESC_PYTHON_PROJ_4 = 'Admiralty Charts Coverage Index'
+GITHUB_PYTHON_PROJ_4 = 'https://github.com/latidude99/latidude99/tree/master/snc'
 
 IMAGE_JAVA_PROJ_1 = 'images/enquiry.png'
 TITLE_JAVA_PROJ_1 = 'Enquiry System'
@@ -316,6 +323,51 @@ IMAGE_PRICECHECK_16 = 'images/pr_16.png'
 IMAGE_PRICECHECK_17 = 'images/pr_17.png'
 IMAGE_PRICECHECK_18 = 'images/pr_18.png'
 IMAGE_PRICECHECK_19 = 'images/pr_19.png'
+
+
+# ----------------------- SNC ---------------------------
+SNC_LINK = ''
+SNC_TITLE = 'charts coverage index'
+SNC_SUBTITLE = 'admiralty charts coverage search utility'
+SNC_SUBTITLE2 = ''
+SNC_DATA_SUPPLY = ''
+SNC_APP_BTN_TXT = 'go to the app'
+IMAGE_SNC = 'images/snc_0.png'
+
+SNC_IN_SHORT = 'A slim down web version of the desktop application. Desktop JavaFX application ,' \
+               ' re-written in Python as a web application. Serves detailed information on Standard Admiralty Charts ' \
+                     'and shows their coverage on Google Maps.'
+SNC_TECH = 'Python 3, Django 3, MySQL 5.7, Bootstrap 4, Google Maps Javascript API v.3 '
+SNC_DATA_SOURCE_TXT = ''
+SNC_DATA_SOURCE_TXT2 = ''
+SNC_DATA_SOURCE_LINK = ''
+SNC_IN_DEPTH1 = 'My fourth Python web project, based on Django framework. '
+SNC_IN_DEPTH2 = 'Every week the United Kingdom Hydrographic Office issues a digital catalogue ' \
+                      'for their Standard Paper Charts in XML format. It\'s not the most pleasant thing ' \
+                      'in the world to use it in its raw form. ' \
+                      'Hence the idea to make searching ' \
+                      'for charts information a bit more user friendly.'
+SNC_IN_DEPTH3 = 'The application makes it possible to search for ' \
+                      'the exact match of a single chart or a range of charts.'
+
+SNC_IN_DEPTH4 = 'Detailed information of the found chart is displayed in the right panel. ' \
+                      'That includes basic info such as scale, edition date, last NM number and date as well as ' \
+                'number of panels with their names and scales. Also, lists all the Notices to Mariners for the chart,' \
+                ' starting with the latest one.'
+SNC_IN_DEPTH5 = 'The charts coverage is shown on the left side on top of Google Maps'
+
+
+IMAGE_SNC_1 = 'images/snc_1.png'
+IMAGE_SNC_2 = 'images/snc_2.png'
+IMAGE_SNC_3 = 'images/snc_3.png'
+IMAGE_SNC_4 = 'images/snc_4.png'
+IMAGE_SNC_5 = 'images/snc_5.png'
+IMAGE_SNC_6 = 'images/snc_6.png'
+IMAGE_SNC_7 = 'images/snc_7.png'
+IMAGE_SNC_8 = 'images/snc_8.png'
+IMAGE_SNC_9 = 'images/snc_9.png'
+IMAGE_SNC_10 = 'images/snc_10.png'
+
 
 
 

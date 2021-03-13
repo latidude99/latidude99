@@ -65,6 +65,10 @@ def mpricecheck(request):
     context = serv.get_main_pricecheck_ctx()
     return render(request, 'main/mpricecheck.html', context)
 
+def msnc(request):
+    context = serv.get_main_snc_ctx()
+    return render(request, 'main/msnc.html', context)
+
 def enquiry(request):
     context = serv.get_main_enquiry_ctx()
     return render(request, 'main/enquiry.html', context)

@@ -1,5 +1,5 @@
-import django
-django.setup()
+#import django
+#django.setup()
 
 import untangle
 #import xmltodict
@@ -39,7 +39,7 @@ def get_charts():
 
 #service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-delete_catalogue_range(23, 50)
+#delete_catalogue_range(50, 60)
 
 
 #service_parse.delete_all_charts()

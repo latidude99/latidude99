@@ -65,6 +65,7 @@ def get_base_ctx():
         'apachelucene': APACHELUCENE,
         'thymeleaf3': THYMELEAF3,
         'chartsjs': CHARTJS,
+        'google_maps_api': GOOGLE_MAPS_API,
         'jcoord': JCOORD,
     }
     return context
@@ -98,6 +99,7 @@ def get_main_ctx():
                'nav_python_proj1': PYTHON_PROJ_1,
                'nav_python_proj2': PYTHON_PROJ_2,
                'nav_python_proj3': PYTHON_PROJ_3,
+               'nav_python_proj4': PYTHON_PROJ_4,
                'nav_android_proj': ANDROID_PROJECTS,
                'nav_android_proj1': ANDROID_PROJ_1,
                'contact': CONTACT_TXT,
@@ -120,6 +122,9 @@ def get_index_ctx():
                'title_python_proj_3': TITLE_PYTHON_PROJ_3,
                'desc_python_proj_3': DESC_PYTHON_PROJ_3,
                'image_python_proj_3': IMAGE_PYTHON_PROJ_3,
+               'title_python_proj_4': TITLE_PYTHON_PROJ_4,
+               'desc_python_proj_4': DESC_PYTHON_PROJ_4,
+               'image_python_proj_4': IMAGE_PYTHON_PROJ_4,
                'title_java_proj_1': TITLE_JAVA_PROJ_1,
                'desc_java_proj_1': DESC_JAVA_PROJ_1,
                'image_java_proj_1': IMAGE_JAVA_PROJ_1,
@@ -319,6 +324,41 @@ def get_main_pricecheck_ctx():
         'image17': IMAGE_PRICECHECK_17,
         'image18': IMAGE_PRICECHECK_18,
         'image19': IMAGE_PRICECHECK_19,
+    }
+    ctx = {**get_main_ctx(), **context}
+    return ctx
+
+
+def get_main_snc_ctx():
+    context = {
+        'github_link': GITHUB_PYTHON_PROJ_4,
+        'app_link': SNC_LINK,
+        'app_btn_txt': SNC_APP_BTN_TXT,
+        'image': IMAGE_SNC,
+        'title': SNC_TITLE,
+        'subtitile': SNC_SUBTITLE,
+        'subtitle2': SNC_SUBTITLE2,
+        'data_supply': SNC_DATA_SUPPLY,
+        'in_short_txt': SNC_IN_SHORT,
+        'app_tech_txt': SNC_TECH,
+        'data_source_txt': SNC_DATA_SOURCE_TXT,
+        'data_source_txt2': SNC_DATA_SOURCE_TXT2,
+        'data_source_link': SNC_DATA_SOURCE_LINK,
+        'in_depth_txt1': SNC_IN_DEPTH1,
+        'in_depth_txt2': SNC_IN_DEPTH2,
+        'in_depth_txt3': SNC_IN_DEPTH3,
+        'in_depth_txt4': SNC_IN_DEPTH4,
+        'in_depth_txt5': SNC_IN_DEPTH5,
+        'image1': IMAGE_SNC_1,
+        'image2': IMAGE_SNC_2,
+        'image3': IMAGE_SNC_3,
+        'image4': IMAGE_SNC_4,
+        'image5': IMAGE_SNC_5,
+        'image6': IMAGE_SNC_6,
+        'image7': IMAGE_SNC_7,
+        'image8': IMAGE_SNC_8,
+        'image9': IMAGE_SNC_9,
+        'image10': IMAGE_SNC_10,
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
