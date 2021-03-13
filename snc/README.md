@@ -21,7 +21,11 @@ A service displaying coverage of the UKHO Standard Navigational Charts on Google
 
 ## How it works
 
- 
+The application makes it possible to search for the exact match of a single chart or a range of charts.
+
+Detailed information of the found chart is displayed in the right panel. That includes basic info such as scale, edition date, last NM number and date as well as number of panels with their names and scales. Also, lists all the Notices to Mariners for the chart, starting with the latest one.
+
+The charts coverage is shown on the left side on top of Google Maps 
 
 
 ## Screenshots
