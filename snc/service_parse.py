@@ -46,7 +46,7 @@ def import_catalogue_from_file(catalogue_file):
         import_charts(obj)
         print('file parsed, all charts imported')
     else:
-        #import_charts(obj) # dev, to be removed for prod
+        # import_charts(obj) # dev, to be removed for prod
         print('no new catalogue in the file')
 
 def get_xml_object(catalogue_file):
@@ -113,7 +113,7 @@ def import_charts(obj):
         chart.save(using='snc')
         print('chart ' + chart.number + ', saved')
 
-        if chart.number == '4000': # skips plygons for chart 4000, don't display correctly
+        if chart.number == '4000': # skips polygons for chart 4000, don't display correctly
             continue
 
         # max scale calculations, finding min scale denominator

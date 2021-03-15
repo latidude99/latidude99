@@ -29,20 +29,32 @@
 
             {% for chart in  charts %}
                 <!-- ---------------- chart ---------------- -->
+                console.log('chart ' + {{ chart.number }});
+
                 {% if chart.polygons|length > 0 %}
                     {% for polygon in  chart.polygons %}
-                        var chart_{{ chart.number }}_poly = new google.maps.Polygon({
+                        var chart_{{ chart.number }}_poly_{{ forloop.counter0 }} = new google.maps.Polygon({
                             paths: [
                                 {% for position in  polygon.positions %}
                                     new google.maps.LatLng({{ position.lat }}, {{ position.lon }}),
                                 {% endfor %}
                             ],
-                            strokeColor: '{{ colour }}',
-                            strokeOpacity: 0.8,
+                            {% if chart.number|add:"0" >= 4000 and chart.number|add:"0" < 4020  %}
+                                strokeColor: '#003399',
+                                strokeOpacity: '0',
+                                fillOpacity: '0.2',
+                                strokeWeight: '0',
+                                strokeDasharray: '',
+                                fillColor: '#003399',
+                            {% else %}
+                                strokeColor: '{{ colour }}',
+                                strokeOpacity: '0.8',
+                                fillOpacity: '0.2',
+                                strokeWeight: '1',
+                                strokeDasharray: '-',
+                                fillColor: '{{ panel.colour }}',
+                            {% endif %}
                             clickable: true,
-                            strokeWeight: '2',
-                            fillColor: '{{ chart.colour }}',
-                            fillOpacity: '0.05',
                             number: '{{ chart.number }}',
                             type: 'chart',
                             name: '{{ chart.title }}',
@@ -53,7 +65,7 @@
                             zIndex: '{{ chart.zindex }}'
                         });
 
-                        google.maps.event.addListener(chart_{{ chart.number }}_poly, 'click', showInfo);
+                        google.maps.event.addListener(chart_{{ chart.number }}_poly_{{ forloop.counter0 }}, 'click', showInfo);
 
                         var chart_{{ chart.number }}_marker = new google.maps.Marker({
                             map: map,
@@ -83,20 +95,29 @@
                     {% for panel in  chart.panels %}
                         <!-- ---------------- panel ---------------- -->
                         {% for poly in  panel.polygons %}
-                            var panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly
+                            var panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }}
                                 = new google.maps.Polygon({
                                 paths: [
                                     {% for pos in  poly.positions %}
                                         new google.maps.LatLng({{ pos.lat }}, {{ pos.lon }}),
                                     {% endfor %}
                                 ],
-                                strokeColor: '{{ colour }}',
-                                strokeOpacity: 0.8,
                                 clickable: true,
-                                strokeWeight: '1',
-                                strokeDasharray: '-',
-                                fillColor: '{{ panel.colour }}',
-                                fillOpacity: '0.2',
+                                {% if chart.number >= 4000 and chart.number < 4020  %}
+                                    strokeColor: '#003399',
+                                    strokeOpacity: '0',
+                                    fillOpacity: '0.2',
+                                    strokeWeight: '0',
+                                    strokeDasharray: '',
+                                    fillColor: '#003399',
+                                {% else %}
+                                    strokeColor: '{{ colour }}',
+                                    strokeOpacity: '0.8',
+                                    fillOpacity: '0.2',
+                                    strokeWeight: '1',
+                                    strokeDasharray: '-',
+                                    fillColor: '{{ panel.colour }}',
+                                {% endif %}
                                 number: '{{ chart.number }} ({{ panel.panel_id }})',
                                 type: 'panel',
                                 name: '{{ panel.name }}',
@@ -108,7 +129,7 @@
                             });
 
                             google.maps.event.addListener(
-                                panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly, 'click', showInfo);
+                                panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }}, 'click', showInfo);
 
                             var marker_{{ panel.panel_id }}_of_{{ chart.number }}_poly
                                 = new google.maps.Marker({
@@ -138,13 +159,11 @@
             <!-- ---------------- chart end ---------------- -->
             var polygons = new Array(
                 {% for chart in  charts %}
-                    {% if chart.polygons|length > 0 %}
-                        chart_{{ chart.number }}_poly,
-                    {% endif %}
+                    {% for poly in  chart.polygons %}
+                        chart_{{ chart.number }}_poly_{{ forloop.counter0 }},
+                    {% endfor %}
                     {% for panel in  chart.panels %}
-                        {% if panel.polygons|length > 0 %}
-                            panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly,
-                        {% endif %}
+                        panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }},
                     {% endfor %}
                 {% endfor %}
             );
@@ -361,7 +380,7 @@
 
                                             <span style="color:navy;font-size:12px;">
                                                             {{ notice.number }}</span>
-                                                , week:
+                                            , week:
                                             <span style="color:navy;font-size:12px;">
                                                             {{ notice.week }}</span>
                                             <span style="color:grey;font-size:12px;">
