@@ -9,6 +9,11 @@ def index(request):
     return render(request, 'snc/index.html', context)
 
 
+def charts(request):
+    context = service.get_charts_context()
+    return render(request, 'snc/charts.html', context)
+
+
 def admin(request):
     context = service.get_index_context()
     return render(request, 'snc/index.html', context)

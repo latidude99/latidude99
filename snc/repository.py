@@ -28,43 +28,59 @@ def find_chart(num):
     return chart
 
 
+def find_charts(nums):
+    charts = []
+    catalogueDB = get_latest_catalogue()
+   # catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    if len(nums) == 0:
+        nums = range(1, 3)
+    for num in nums:
+        if catalogueDB.chart_set.filter(number=num).exists():
+            chartDB = catalogueDB.chart_set.get(number=num)
+            chart = service_converters.chartDB_2_chartDTO(chartDB)
+            charts.append(chart)
+    return charts
+
+
+
 def find_charts_all():
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id)
     return charts
 
 
-def find_charts_SCALE_1():
+def find_charts_SCALE_1(): # 24 charts
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_1_TEXT)
     return charts
 
 
-def find_charts_SCALE_2():
+def find_charts_SCALE_2(): # 875 charts
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_2_TEXT)
     return charts
 
 
-def find_charts_SCALE_3():
+def find_charts_SCALE_3(): # 270 charts
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_3_TEXT)
     return charts
 
 
-def find_charts_SCALE_4():
+def find_charts_SCALE_4(): # 31 charts
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_4_TEXT)
     return charts
 
 
-def find_charts_SCALE_5():
+def find_charts_SCALE_5(): # 10 charts
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_5_TEXT)
     return charts
 
 
-def find_charts_SCALE_6():
+def find_charts_SCALE_6(): #
     catalogue = get_latest_catalogue()
     charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_6_TEXT)
     return charts

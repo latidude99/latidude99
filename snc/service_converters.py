@@ -11,7 +11,6 @@ from snc.utils_chart_centre import *
 import datetime as dt
 
 
-
 def catalogueDB_2_catalogueDTO(db):
     dto = CatalogueDTO()
     dto.file_identifier = db.file_identifier
@@ -24,10 +23,9 @@ def catalogueDB_2_catalogueDTO(db):
     dto.postal_code = db.postal_code
     dto.country = db.country
     dto.email = db.email
-    dto.date = db.date#.strftime('%d %B %Y')
+    dto.date = db.date  # .strftime('%d %B %Y')
     dto.charts_count = db.chart_set.all().count()
     return dto
-
 
 
 def chartsDB_2_chartsDTO(chartsDB):
@@ -39,7 +37,7 @@ def chartsDB_2_chartsDTO(chartsDB):
 
 
 def chartDB_2_chartDTO(chartDB):
-   # print(chartDB)
+    # print(chartDB)
     chartDTO = ChartDTO()
     chartDTO.catalogue_id = chartDB.catalogue_id
     chartDTO.number = chartDB.number
@@ -70,7 +68,7 @@ def chartDB_2_chartDTO(chartDB):
 
     noticesDB = chartDB.notice_set.all()
     chartDTO.notices = noticesDB_2_noticesDTO(noticesDB)
-    chartDTO.notices.reverse() # newest first
+    chartDTO.notices.reverse()  # newest first
 
     chartDTO.max_scale_category = chartDB.max_scale_category
     scale = ''
@@ -90,6 +88,7 @@ def chartDB_2_chartDTO(chartDB):
         chartDTO.label_position = calculate_polygon_bottom_left_inside(chartDTO.polygons[0])
     chartDTO.colour = CHART_COLOUR
 
+    print('chart ' + chartDTO.number + ' converted from DB to DTO')
     return chartDTO
 
 
@@ -157,6 +156,9 @@ def panel_positionsDB_2_positionsDTO(positionsDB):
         posDTO.lat = p.lat
         posDTO.lon = p.lon
         positionsDTO.append(posDTO)
+    # closes polygons, necessary for Google Maps Data.Polygon (not necessary for Google Maps Polygon)
+    if positionsDTO[0].lat != positionsDTO[-1].lat or positionsDTO[0].lon != positionsDTO[-1].lon:
+        positionsDTO.append(positionsDTO[0])
     return positionsDTO
 
 
@@ -177,6 +179,9 @@ def chart_positionsDB_2_positionsDTO(positionsDB):
         posDTO.lat = p.lat
         posDTO.lon = p.lon
         positionsDTO.append(posDTO)
+    # closes polygons, necessary for Google Maps Data.Polygon (not necessary for Google Maps Polygon)
+    if positionsDTO[0].lat != positionsDTO[-1].lat or positionsDTO[0].lon != positionsDTO[-1].lon:
+        positionsDTO.append(positionsDTO[0])
     return positionsDTO
 
 
@@ -185,6 +190,7 @@ def getZoomMaxMin():
     maxmin_levels['max'] = '22'
     maxmin_levels['min'] = '1'
     return maxmin_levels
+
 
 def calculateZoomMaxMin(scale):
     maxmin_levels = {}
@@ -241,4 +247,3 @@ def calculateZoomMaxMin(scale):
         maxmin_levels['min'] = '1'
 
     return maxmin_levels
-

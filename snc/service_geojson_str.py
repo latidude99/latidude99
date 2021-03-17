@@ -1,8 +1,6 @@
 #import django
 #django.setup()
 
-from geojson import Point, Polygon, MultiPolygon, Feature, FeatureCollection, dump
-import json
 import random
 import string
 from snc.text import *
@@ -14,85 +12,6 @@ from snc.chart import *
 from snc.position import *
 import datetime as dt
 
-
-def generate_geojson(charts):
-    features = []
-    invalid_charts = []
-    invalid_panels = []
-
-    for chart in charts:
-
-        for chart_poly in chart.polygons:
-            geo_chart_polys = []
-            geo_chart_poly = Polygon([[(float(x.lon), float(x.lat)) for x in chart_poly.positions]])
-            geo_chart_polys.append(geo_chart_poly)
-
-        chart_multi_poly = MultiPolygon(geo_chart_polys)
-        # print(chart_multi_poly.is_valid)
-        if chart_multi_poly.is_valid:
-            features.append(Feature
-                            (geometry=chart_multi_poly,
-                             properties={
-                                 "type": "chart",
-                                 "chart_number": chart.number,
-                                 "chart_title": chart.title,
-                                 "chart_scale": chart.scale,
-                                 "set_zIndex": True,
-                                 "zIndex": chart.zindex,
-                                 "color": "navy",
-                                 "panels": len(chart.panels),
-                             }))
-            print('polygon geometry added for ' + chart.number)
-        else:
-            invalid_charts.append(chart.number)
-
-
-        for panel in chart.panels:
-            geo_panel_polys = []
-            for panel_poly in panel.polygons:
-                geo_poly = Polygon([[(float(x.lon), float(x.lat)) for x in panel_poly.positions]])
-                geo_panel_polys.append(geo_poly)
-            #    print(geo_poly.is_valid)
-
-            panel_multi_poly = MultiPolygon(geo_panel_polys)
-            # print(multi_poly.is_valid)
-            if panel_multi_poly.is_valid:
-                features.append(Feature
-                                (geometry=panel_multi_poly,
-                                 properties={
-                                     "type": "panel",
-                                     "chart_number": chart.number,
-                                     "chart_title": chart.title,
-                                     "panel_number": panel.panel_id,
-                                     "panel_name": panel.name,
-                                     "panel_scale": panel.scale,
-                                     "set_zIndex": True,
-                                     "zIndex": panel.zindex,
-                                     "color": "green",
-                                 }))
-                print('polygon geometry added for ' + chart.number)
-            else:
-                invalid_panels.append(chart.number + panel.panel_id)
-
-
-    print('invalid polygons in charts:')
-    print(invalid_charts)
-    print('invalid polygons in panels:')
-    print(invalid_panels)
-
-    feature_collection = FeatureCollection(features)
-
-    geo_str = json.dumps(feature_collection)
-
-    with open(SNC_GEOJSON_FILE, 'w') as f:
-        dump(feature_collection, f)
-
-    print(geo_str)
-
-    return geo_str
-
-
-'''
 def generate_geojson(charts):
     chart_start_str = '{ \n' \
         '  "type": "FeatureCollection",\n' \
@@ -210,7 +129,7 @@ def generate_geojson(charts):
     return total_out_string
 
 
-'''
+
 
 
 '''

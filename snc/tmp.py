@@ -21,8 +21,7 @@ def delete_catalogue_range(a, b):
         service_parse.delete_catalogue(i)
 
 
-def get_charts():
-    nums = [4004]
+def get_charts(nums):
     charts = []
     catalogueDB = repo.get_latest_catalogue()
     catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
@@ -31,13 +30,13 @@ def get_charts():
             chartDB = catalogueDB.chart_set.get(number=num)
             chart = service_converters.chartDB_2_chartDTO(chartDB)
             charts.append(chart)
-            print(charts[0])
-            print(charts[0].polygons)
+            # print(charts[0])
+            # print(charts[0].polygons)
 
     return charts
 
 
-service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+#service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
 #delete_catalogue_range(50, 60)
 
@@ -76,10 +75,16 @@ service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
 #service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-#get_charts()
 
 
-#print(service_geojson.generate_geojson(' '))
+#charts = get_charts([4720])
+
+# chartsDB = repo.find_charts_all()
+# charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
+charts = repo.find_charts([1330, 1322, 2])
+print('number of charts: ' + str(len(charts)))
+
+print(service_geojson.generate_geojson(charts))
 
 
 

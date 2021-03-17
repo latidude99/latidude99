@@ -8,6 +8,7 @@ from snc.const import *
 import snc.repository as repo
 import snc.service_converters as service_converters
 import snc.utils as utils
+import snc.service_geojson as service_geojson
 
 
 
@@ -31,6 +32,31 @@ def get_index_context():
     ctx = {**get_base_context(), **context}
     return ctx
 
+
+def get_charts_context():
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    # chartsDB = repo.find_charts_SCALE_2()
+    # charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
+    # print('number of charts: ' + str(len(charts)))
+    # #charts = repo.find_charts([4004])
+    #
+    # charts_geojson = service_geojson.generate_geojson(charts)
+
+    charts_geojson = ''
+    with open(SNC_DATA_FOLDER + 'charts2.json', 'r') as reader:
+        charts_geojson = reader.read()
+
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': charts_geojson,
+               }
+    ctx = {**get_base_context(), **context}
+    return ctx
 
 def get_info_context():
     catalogueDB = repo.get_latest_catalogue()

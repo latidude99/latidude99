@@ -39,17 +39,17 @@
                                     new google.maps.LatLng({{ position.lat }}, {{ position.lon }}),
                                 {% endfor %}
                             ],
-                            {% if chart.number|add:"0" >= 4000 and chart.number|add:"0" < 4020  %}
+                            {% if chart.number|add:"0" >= 4000 and chart.number|add:"0" < 4026  %}
                                 strokeColor: '#003399',
                                 strokeOpacity: '0',
-                                fillOpacity: '0.2',
+                                fillOpacity: '0.1',
                                 strokeWeight: '0',
                                 strokeDasharray: '',
                                 fillColor: '#003399',
                             {% else %}
                                 strokeColor: '{{ colour }}',
                                 strokeOpacity: '0.8',
-                                fillOpacity: '0.2',
+                                fillOpacity: '0.1',
                                 strokeWeight: '1',
                                 strokeDasharray: '-',
                                 fillColor: '{{ panel.colour }}',
@@ -58,7 +58,7 @@
                             number: '{{ chart.number }}',
                             type: 'chart',
                             name: '{{ chart.title }}',
-                            scale: '1:{{ chart.scale|intcomma }}',
+                            scale: '{{ chart.scale|intcomma }}',
                             zoomMax: '{{ chart.zoom_max }}',
                             zoomMin: '{{ chart.zoom_min }}',
                             map: map,
@@ -103,17 +103,17 @@
                                     {% endfor %}
                                 ],
                                 clickable: true,
-                                {% if chart.number >= 4000 and chart.number < 4020  %}
+                                {% if chart.number >= 4000 and chart.number < 4026  %}
                                     strokeColor: '#003399',
                                     strokeOpacity: '0',
-                                    fillOpacity: '0.2',
+                                    fillOpacity: '0.1',
                                     strokeWeight: '0',
                                     strokeDasharray: '',
                                     fillColor: '#003399',
                                 {% else %}
                                     strokeColor: '{{ colour }}',
                                     strokeOpacity: '0.8',
-                                    fillOpacity: '0.2',
+                                    fillOpacity: '0.1',
                                     strokeWeight: '1',
                                     strokeDasharray: '-',
                                     fillColor: '{{ panel.colour }}',
@@ -121,7 +121,7 @@
                                 number: '{{ chart.number }} ({{ panel.panel_id }})',
                                 type: 'panel',
                                 name: '{{ panel.name }}',
-                                scale: '{{ panel.scale }}',
+                                scale: '{{ panel.scale|intcomma }}',
                                 zoomMax: '{{ chart.zoom_max }}',
                                 zoomMin: '{{ chart.zoom_min }}',
                                 map: map,
@@ -163,7 +163,7 @@
                         chart_{{ chart.number }}_poly_{{ forloop.counter0 }},
                     {% endfor %}
                     {% for panel in  chart.panels %}
-                        panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }},
+                        panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_0,
                     {% endfor %}
                 {% endfor %}
             );
