@@ -106,16 +106,18 @@ class Notice(models.Model):
 
 # ----------- ready made html with charts ------------
 
-class Page(models.Model):
+class Geojson(models.Model):
     catalogue = models.ForeignKey(Catalogue, on_delete=models.CASCADE, default=1)
-    catalogue_date = models.CharField(max_length=50,default='')
+    cat_id = models.CharField(max_length=50,default='')
     scale_range = models.CharField(max_length=50, default='')
+    chart_range = models.CharField(max_length=50, default='')
     type = models.CharField(max_length=50, default='')
-    html = models.TextField(max_length=1000000, default='no_html')
-    generated = models.BooleanField(default=False)
+    json = models.TextField(max_length=1000000, default='no_data')
+    charts_number = models.CharField(max_length=50, default='')
+    ready = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.generated
+        return self.cat_id + ', ' + self.scale_range + ', charts number' + self.charts_number
 
 
 

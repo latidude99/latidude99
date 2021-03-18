@@ -8,7 +8,9 @@ APP_BASE = 'http://127.0.0.1:8000/snc'
 
 SNC_DATA = 'data/'
 SNC_CATALOGUE_FILE = SNC_DATA_FOLDER + 'snc_catalogue.xml'
-SNC_GEOJSON_FILE = SNC_DATA_FOLDER + 'charts2.json'
+SNC_GEOJSON_FILE = SNC_DATA_FOLDER + 'charts_all.json'
+
+
 
 
 SNC_SCALE_1_HTML = 'data/scale_1_html'
@@ -34,6 +36,8 @@ SCALE_4 = 350000
 SCALE_5 = 1500000
 SCALE_6 = 5000000
 
+
+SCALE_ALL_TEXT = 'all scales'
 SCALE_1_TEXT = '> 1:4,000'
 SCALE_2_TEXT = '1:4,000 - 1:22,000'
 SCALE_3_TEXT = '1:22,000 - 1:90,000'
@@ -41,6 +45,16 @@ SCALE_4_TEXT = '1:90,000 - 1:350,000'
 SCALE_5_TEXT = '1:350,000 - 1:1,500,000'
 SCALE_6_TEXT = '1:1,500,000 - 5,000,000'
 SCALE_7_TEXT = '< 1:5,000,000'
+
+RANGE = [SCALE_1_TEXT,
+         SCALE_2_TEXT,
+         SCALE_3_TEXT,
+         SCALE_4_TEXT,
+         SCALE_5_TEXT,
+         SCALE_6_TEXT,
+         SCALE_7_TEXT,
+         SCALE_ALL_TEXT,
+         ]
 
 CHART_COLOUR = '#000099'
 PANEL_COLOUR = '#006600'

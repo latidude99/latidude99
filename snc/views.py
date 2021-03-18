@@ -9,8 +9,13 @@ def index(request):
     return render(request, 'snc/index.html', context)
 
 
+def charts_file(request):
+    context = service.get_charts_geojson_file_context()
+    return render(request, 'snc/charts.html', context)
+
+
 def charts(request):
-    context = service.get_charts_context()
+    context = service.get_charts_geojson_db_context()
     return render(request, 'snc/charts.html', context)
 
 

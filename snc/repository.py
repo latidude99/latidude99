@@ -22,6 +22,11 @@ def get_latest_catalogue():
     return catalogue
 
 
+def find_geojson(scale_range):
+    catalogue = get_latest_catalogue()
+    geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range = scale_range).latest("id")
+    return geojson
+
 def find_chart(num):
     catalogue = get_latest_catalogue()
     chart = catalogue.chart_set.filter(number=num)

@@ -33,7 +33,7 @@ def get_index_context():
     return ctx
 
 
-def get_charts_context():
+def get_charts_geojson_file_context():
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
@@ -45,7 +45,7 @@ def get_charts_context():
     # charts_geojson = service_geojson.generate_geojson(charts)
 
     charts_geojson = ''
-    with open(SNC_DATA_FOLDER + 'charts2.json', 'r') as reader:
+    with open(SNC_GEOJSON_FILE, 'r') as reader:
         charts_geojson = reader.read()
 
     context = {
@@ -57,6 +57,24 @@ def get_charts_context():
                }
     ctx = {**get_base_context(), **context}
     return ctx
+
+
+def get_charts_geojson_db_context():
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    geojson = repo.find_geojson(SCALE_1_TEXT)
+    print(geojson)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': geojson.json,
+               }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
 
 def get_info_context():
     catalogueDB = repo.get_latest_catalogue()
