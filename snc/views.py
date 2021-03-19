@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 import snc.service as service
+from snc.const import *
 
 
 
@@ -15,7 +16,7 @@ def charts_file(request):
 
 
 def charts(request):
-    context = service.get_charts_geojson_db_context()
+    context = service.get_charts_geojson_db_context(SCALE_7_TEXT)
     return render(request, 'snc/charts.html', context)
 
 

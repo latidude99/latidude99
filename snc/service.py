@@ -59,11 +59,11 @@ def get_charts_geojson_file_context():
     return ctx
 
 
-def get_charts_geojson_db_context():
+def get_charts_geojson_db_context(scale):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
-    geojson = repo.find_geojson(SCALE_1_TEXT)
+    geojson = repo.find_geojson(scale)
     print(geojson)
     context = {
         'catalogue': catalogueDTO,

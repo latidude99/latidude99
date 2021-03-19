@@ -113,11 +113,11 @@ class Geojson(models.Model):
     chart_range = models.CharField(max_length=50, default='')
     type = models.CharField(max_length=50, default='')
     json = models.TextField(max_length=1000000, default='no_data')
-    charts_number = models.CharField(max_length=50, default='')
+    chart_number = models.CharField(max_length=50, default='')
     ready = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.cat_id + ', ' + self.scale_range + ', charts number' + self.charts_number
+        return self.cat_id + ', ' + self.scale_range + ', charts number' + self.chart_number
 
 
 

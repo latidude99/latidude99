@@ -30,15 +30,17 @@ def catalogueDB_2_catalogueDTO(db):
 
 def chartsDB_2_chartsDTO(chartsDB):
     charts = []
+    print(chartsDB)
     for chartDB in chartsDB:
-        chart = chartDB_2_chartDTO(chartDB)
-        charts.append(chart)
+        if chartDB != None:
+            chart = chartDB_2_chartDTO(chartDB)
+            charts.append(chart)
     return charts
 
 
 def chartDB_2_chartDTO(chartDB):
-    # print(chartDB)
     chartDTO = ChartDTO()
+
     chartDTO.catalogue_id = chartDB.catalogue_id
     chartDTO.number = chartDB.number
     chartDTO.title = chartDB.title

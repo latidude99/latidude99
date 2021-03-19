@@ -84,7 +84,7 @@ def get_charts(nums):
 #charts = repo.find_charts([1330, 2, 32, 34])
 #print('number of charts: ' + str(len(charts)))
 
-print(service_geojson.generate_geojson_and_save_db(RANGE))
+print(service_geojson.generate_geojson_and_save_db([SCALE_7_TEXT]))
 
 
 
