@@ -26,7 +26,7 @@
         }
 
         #search {
-            height: 400px;
+            height: 500px;
             overflow-y: scroll;
         }
 
@@ -45,13 +45,27 @@
             overflow-y: scroll;
         }
 
+        .scroll-hidden-inner::-webkit-scrollbar {
+            width: 5px; /* width of the entire scrollbar */
+        }
+
+        .scroll-hidden-inner::-webkit-scrollbar-track {
+            background: transparent; /* color of the tracking area */
+        }
+
+        .scroll-hidden-inner::-webkit-scrollbar-thumb {
+            background-color: #26d0ce; /* color of the scroll thumb */
+            border-radius: 10px; /* roundness of the scroll thumb */
+            border: 1px solid orange; /* creates padding around scroll thumb */
+        }
+
         /* Hide scrollbar for Chrome, Safari and Opera */
-        .scroll-hidden::-webkit-scrollbar {
+        .scroll-hidden-outer::-webkit-scrollbar {
             display: none;
         }
 
         /* Hide scrollbar for IE, Edge and Firefox */
-        .scroll-hidden {
+        .scroll-hidden-outer {
             -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none; /* Firefox */
         }

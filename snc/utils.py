@@ -36,13 +36,12 @@ def add_scale_category():
 
 def get_scale_category(chart):
     min = 100000000
-    if chart.scale != '' and int(chart.scale.strip()) < min:
-        min = int(chart.scale.strip())
-    panels = chart.panel_set.all()
-    if len(panels) > 0:
-        for p in panels:
-            if p.scale != '' and int(p.scale.strip()) < min:
-                min = int(p.scale.strip())
+    if chart.scale != '' and chart.scale < min:
+        min = chart.scale
+    if len(chart.panels) > 0:
+        for p in chart.panels:
+            if p.scale != '' and p.scale.strip < min:
+                min = p.scale
     return calculate_scale_category(min)
 
 

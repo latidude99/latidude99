@@ -33,19 +33,26 @@ def get_index_context():
     return ctx
 
 
-def get_charts_geojson_file_context():
+def get_info_context():
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    context = {
+        'catalogue': catalogueDTO,
+               }
+    ctx = {**get_index_context(), **context}
+    return ctx
+
+
+# ------------------------- geojson ---------------------------------
+
+# fetches geojson from file located in snc/data/
+def get_charts_geojson_file_context(file_name):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
-    # chartsDB = repo.find_charts_SCALE_2()
-    # charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    # print('number of charts: ' + str(len(charts)))
-    # #charts = repo.find_charts([4004])
-    #
-    # charts_geojson = service_geojson.generate_geojson(charts)
-
+    file_path = SNC_DATA_FOLDER + file_name
     charts_geojson = ''
-    with open(SNC_GEOJSON_FILE, 'r') as reader:
+    with open(file_path, 'r') as reader:
         charts_geojson = reader.read()
 
     context = {
@@ -59,11 +66,29 @@ def get_charts_geojson_file_context():
     return ctx
 
 
-def get_charts_geojson_db_context(scale):
+def get_chart_multi_geojson_db_context(nums):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
-    geojson = repo.find_geojson(scale)
+    geojson = repo.find_geojson_multiple(nums)
+    print('---')
+    print(geojson)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': geojson,
+               }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
+
+def get_chart_single_geojson_db_context(num):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    geojson = repo.find_geojson_single(num)
     print(geojson)
     context = {
         'catalogue': catalogueDTO,
@@ -76,16 +101,24 @@ def get_charts_geojson_db_context(scale):
     return ctx
 
 
-def get_info_context():
+def get_charts_geojson_db_context(scale_range):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    geojson = repo.find_geojson(scale_range)
+    print(geojson)
     context = {
         'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': geojson.json,
                }
-    ctx = {**get_index_context(), **context}
+    ctx = {**get_base_context(), **context}
     return ctx
 
 
+# ------------------------- chartDTO ---------------------------------
 def get_search_multiple_context(nums):
     catalogueDB = repo.get_latest_catalogue()
     catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)

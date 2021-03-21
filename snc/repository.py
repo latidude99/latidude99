@@ -22,16 +22,41 @@ def get_latest_catalogue():
     return catalogue
 
 
+# ------------------------- geojson ---------------------------------
+def find_geojson_single(num):
+    catalogue = get_latest_catalogue()
+    geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
+    return geojson
+
+
+def find_geojson_multiple(nums):
+    catalogue = get_latest_catalogue()
+
+    comma = ','
+    json_start = '{"type": "FeatureCollection", "features": ['  # 42 chars
+    json_end = ']}'  # 2 chars
+
+    json = json_start
+    for num in nums:
+        if Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).exists():
+            geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
+            json = json + geojson_single.json[43:-2] + comma
+        print('added' + str(num))
+    json = json[:-1] + json_end  # removing comma after last feature
+    return json
+
+
 def find_geojson(scale_range):
     catalogue = get_latest_catalogue()
     geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range = scale_range).latest("id")
     return geojson
 
+
+# ------------------------- chartDTO ---------------------------------
 def find_chart(num):
     catalogue = get_latest_catalogue()
     chart = catalogue.chart_set.filter(number=num)
     return chart
-
 
 def find_charts(nums):
     charts = []

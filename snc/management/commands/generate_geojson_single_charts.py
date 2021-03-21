@@ -1,12 +1,13 @@
 from django.core.management.base import BaseCommand, CommandError
 import snc.service_parse as service_parse
+import snc.service_geojson as service_geojson
 from snc.const import *
 import time
 
 
 class Command(BaseCommand):
 
-    help = 'Parses the latest snc catalogue from the UKHO website.'
+    help = 'Generates and saves geojson for all charts'
 
     def add_arguments(self, parser):
         parser.add_argument('db', nargs='+')
@@ -14,8 +15,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #service_download.download_and_save_catalogue()
         time.sleep(10)
-        service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
-        self.stdout.write(self.style.SUCCESS('Successfully imported the latest snc catalogue from file'))
+        service_geojson.generate_geojson_and_save_db_single_charts([])
+        self.stdout.write(self.style.SUCCESS('Successfully generated and saved geojson for all all charts'))
 
 
 

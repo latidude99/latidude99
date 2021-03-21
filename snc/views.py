@@ -16,7 +16,9 @@ def charts_file(request):
 
 
 def charts(request):
-    context = service.get_charts_geojson_db_context(SCALE_7_TEXT)
+    context = service.get_chart_multi_geojson_db_context(range(1, 200))
+   # context = service.get_chart_single_geojson_db_context('2')
+   # context = service.get_charts_geojson_db_context(SCALE_7_TEXT)
     return render(request, 'snc/charts.html', context)
 
 

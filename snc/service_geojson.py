@@ -14,50 +14,76 @@ import datetime as dt
 import locale
 
 
+def save_geojson_to_file(geojson, file):
+    with open(file, 'w') as f:
+        dump(geojson, f)
+    return 'geojson saved to file'
 
-# @range - list of chart numbers, generated without opening and closing for geojson
-def generate_geojson_and_save_db_single_charts(range):
+
+# @range - list of chart numbers
+def generate_geojson_and_save_db_single_charts(nums):
     catalogue = repo.get_latest_catalogue()
-    geojson = Geojson()
 
-    for num in range:
-        chartDB = Chart.objects.using('snc').filter(catalogue=catalogue.id, number=num)
-        chart = service_converters.chartDB_2_chartDTO(chartDB)
-        json = generate_geojson([chart])
+    if len(nums) == 0:
+        chartsDB = catalogue.chart_set.all()
+        for chartDB in chartsDB:
+            chart = service_converters.chartDB_2_chartDTO(chartDB)
+            gjson = generate_geojson([chart])
 
-        geojson.type = 'single'
-        geojson.chart_number = num
-        geojson.json = json
-        geojson.catalogue = catalogue
-        geojson.cat_id = catalogue.id
-        geojson.ready = True
-#        geojson.save(using='snc')
-        print(geojson.json)
-    return 'generated and saved in DB geojson for charts: ' + ', '.join(range)
+            geojson = Geojson()
+            geojson.type = 'single'
+            geojson.chart_number = chartDB.number
+            geojson.json = gjson
+            geojson.catalogue = catalogue
+            geojson.cat_id = catalogue.id
+            geojson.ready = True
+            geojson.save(using='snc')
+            #  print(geojson.json)
+
+    else:
+        for num in nums:
+            if Chart.objects.using('snc').filter(catalogue=catalogue, number=num).exists():
+                chartDB = Chart.objects.using('snc').get(catalogue=catalogue, number=num)
+                print(chartDB)
+                chart = service_converters.chartDB_2_chartDTO(chartDB)
+                gjson = generate_geojson([chart])
+
+                geojson = Geojson()
+                geojson.type = 'single'
+                geojson.chart_number = num
+                geojson.json = gjson
+                geojson.catalogue = catalogue
+                geojson.cat_id = catalogue.id
+                geojson.ready = True
+                geojson.save(using='snc')
+                #  print(geojson.json)
+
+    return 'generated and saved in DB geojson for charts: ' + str(range)
 
 
 # @range - list of scale range constants defined in const.py (SCALE_ALL_TEXT, SCALE_1_TEXT etc.)
-def generate_geojson_and_save_db(range):
+def generate_geojson_and_save_db(scale_range):
     catalogue = repo.get_latest_catalogue()
     geojson = Geojson()
     chartsDB = []
 
-    for scale in range:
+    for scale in scale_range:
         if scale == SCALE_ALL_TEXT:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue.id)
+            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue) #.latest('id')
             geojson.scale_range = scale
         else:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=scale)
+            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue, max_scale_category=scale) #.latest('id')
             geojson.scale_range = scale
 
         charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-        json = generate_geojson(charts)
+        if len(charts) > 0:
+            json = generate_geojson(charts)
 
-        geojson.json = json
-        geojson.catalogue = catalogue
-        geojson.cat_id = catalogue.id
-        geojson.ready = True
-        geojson.save(using='snc')
+            geojson.json = json
+            geojson.catalogue = catalogue
+            geojson.cat_id = catalogue.id
+            geojson.ready = True
+            geojson.save(using='snc')
 
     return 'generated and saved in DB geojson for charts: ' + ', '.join(range)
 
@@ -145,15 +171,12 @@ def generate_geojson(charts):
     feature_collection = FeatureCollection(features)
 
     geo_str = json.dumps(feature_collection)
-    print(geo_str)
+    #print(geo_str)
 
     return geo_str
 
 
-def save_geojson_to_file(geojson, file):
-    with open(file, 'w') as f:
-        dump(geojson, f)
-    return 'geojson saved to file'
+
 
 
 

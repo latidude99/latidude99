@@ -1,10 +1,11 @@
-#import django
-#django.setup()
+# import django
+# django.setup()
 
 import untangle
-#import xmltodict
+# import xmltodict
 
 import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
+import snc.service_geojson as service_geojson
 import snc.utils as utils
 from snc.const import *
 from snc.models import *
@@ -12,17 +13,16 @@ import datetime as dt
 import pytz
 
 
-
 # tools ------------------------------------------------------------------
-
-
 def delete_catalogue(num):
     Catalogue.objects.using('snc').filter(id=num).delete()
     print('catalogue id: ' + str(num) + ' deleted')
 
+
 def delete_all_catalogues():
     Catalogue.objects.using('snc').all().delete()
     print('all catalogues deleted')
+
 
 def delete_all_charts():
     Chart.objects.using('snc').all().delete()
@@ -30,6 +30,18 @@ def delete_all_charts():
 
 
 # untangle ------------------------------------------------------------------
+def parse_import_catalogue_with_geojson(catalogue_file):
+    # parse and load catalogue to DB
+    import_catalogue_from_file(catalogue_file)
+
+    # generate set of geojson entries and save to DB (SCALE_1_TEXT etc)
+    service_geojson.generate_geojson_and_save_db(SCALE_RANGE_ALL)
+
+    # generate set of geojson entries and save to DB (SCALE_1_TEXT etc)
+    service_geojson.generate_geojson_and_save_db_single_charts(range(1, 9000))
+
+    return 'ok - parsed - imported - generated geojson'
+
 
 def import_catalogue_from_file(catalogue_file):
     catalogue = ''
@@ -48,6 +60,7 @@ def import_catalogue_from_file(catalogue_file):
     else:
         # import_charts(obj) # dev, to be removed for prod
         print('no new catalogue in the file')
+
 
 def get_xml_object(catalogue_file):
     obj = untangle.parse(catalogue_file)
@@ -68,7 +81,7 @@ def import_catalogue(obj):
     catalogue.country = meta.MD_PointOfContact.ResponsibleParty.contactInfo.address.country.cdata
     catalogue.email = meta.MD_PointOfContact.ResponsibleParty.contactInfo.address.electronicMailAddress.cdata
     catalogue.date = dt.datetime.strptime(meta.MD_DateStamp.cdata, '%Y-%m-%d').date()
-     #date_stanp.pytz.timezone('Europe/London')
+    # date_stanp.pytz.timezone('Europe/London')
 
     return catalogue
 
@@ -81,11 +94,12 @@ def import_charts(obj):
     for ch in charts:
 
         # testing
-       #  num = ch.ShortName.cdata
-       #  if num != 'JP1085' and num != '1006' and num != '4000' and num != '4004' and num != '1007' and num != '1330'\
-       #          and num != '4005' and num != '4008' and num != '4012' and num != '4016' and num != '4007' and num != '4015':
-       # # if num != '4004':
-       #      continue
+        # num = ch.ShortName.cdata
+        #  if num != 'JP1085' and num != '1006' and num != '4000' and num != '4004' and num != '1007' and num != '1330'\
+        #          and num != '4005' and num != '4008' and num != '4012' and num != '4016' and num != '4007'
+        #          and num != '4015':
+        #  if num != '8028':
+        #      continue
 
         chart = Chart()
         chart.catalogue = catalogue
@@ -94,7 +108,7 @@ def import_charts(obj):
         try:
             chart.scale = ch.Metadata.Scale.cdata
         except:
-            pass
+            chart.scale = ''
         try:
             chart.folio = ch.Metadata.Folio.ID.cdata
         except:
@@ -113,13 +127,13 @@ def import_charts(obj):
         chart.save(using='snc')
         print('chart ' + chart.number + ', saved')
 
-        if chart.number == '4000': # skips polygons for chart 4000, don't display correctly
+        if chart.number == '4000':  # skips polygons for chart 4000, they don't display correctly
             continue
 
         # max scale calculations, finding min scale denominator
         min = 100_000_000
         try:
-            if chart.scale != '' and int(ch.scale.strip()) < min:
+            if chart.scale != '' and int(chart.scale.strip()) < min:
                 min = int(chart.scale.strip())
         except:
             pass
@@ -163,7 +177,6 @@ def import_charts(obj):
                     chart_position.lat = pos['latitude']
                     chart_position.lon = pos['longitude']
                     chart_position.save(using='snc')
-
 
             #         if float(pos['latitude'].strip()) > north:
             #             north = float(pos['latitude'].strip())
@@ -248,7 +261,7 @@ def import_charts(obj):
 
         # single panel
         try:
-            check = ch.Metadata.Panel.Polygon # check if there is a single Panel
+            check = ch.Metadata.Panel.Polygon  # check if there is a single Panel
             panels = ch.Metadata.Panel
             print('inside single panel')
             if len(panels) > 0:
@@ -268,7 +281,7 @@ def import_charts(obj):
                     polygons = pan.Polygon
                     try:
                         # multiple panel polygons
-                        check= polygons[1].Position
+                        check = polygons[1].Position
                         print('inside multiple panel polygons')
                         north = 0
                         south = 0
@@ -324,7 +337,7 @@ def import_charts(obj):
 
                         print('--------- multi polygon panel, saved')
 
-                        #doesn't draw correctly
+                        # doesn't draw correctly
                         # PositionDTO(lat='83.75008', lon='-100.0')
                         # PositionDTO(lat='83.75008',lon='180.0')
                         # PositionDTO(lat='-78.75', lon='180.0')
@@ -334,7 +347,7 @@ def import_charts(obj):
                         # print(northeast)
                         # print(southeast)
                         # print(southwest)
-                        #print(panel_polygon.panelposition_set.all())
+                        # print(panel_polygon.panelposition_set.all())
 
                     except:
                         try:
@@ -465,21 +478,14 @@ def import_charts(obj):
         except:
             pass
 
-        chart.max_scale_category = utils.calculate_scale_category(min)
+        if min > 45_000_000:
+            chart.max_scale_category = 'undefined'
+        else:
+            chart.max_scale_category = utils.calculate_scale_category(min)
         chart.save(using='snc')
+        print('chart.max_scale_category: ' + chart.max_scale_category)
 
     # sets import process finished flag to true
     catalogue.ready = True
     catalogue.save(using='snc')
     print('catalogue ready set to True')
-
-
-
-
-
-
-
-
-
-
-

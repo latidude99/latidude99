@@ -1,16 +1,8 @@
 import django
 django.setup()
 
-import untangle
-#import xmltodict
-
-import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
-from snc.models import *
-from snc.const import *
 import snc.service_parse as service_parse
-import snc.service_parse_2 as service_parse_2
 import snc.service_converters as service_converters
-import snc.utils as utils
 import snc.repository as repo
 import snc.service_geojson as service_geojson
 
@@ -38,7 +30,7 @@ def get_charts(nums):
 
 #service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-#delete_catalogue_range(50, 60)
+#delete_catalogue_range(61, 70)
 
 
 #service_parse.delete_all_charts()
@@ -73,26 +65,29 @@ def get_charts(nums):
 # obj = untangle.parse(SNC_CATALOGUE_FILE)
 # charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
 
-#service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
-
-
-
-#charts = get_charts([4720])
-
-#chartsDB = repo.find_charts_all()
-#charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-#charts = repo.find_charts([1330, 2, 32, 34])
-#print('number of charts: ' + str(len(charts)))
-
-print(service_geojson.generate_geojson_and_save_db([SCALE_7_TEXT]))
 
 
 
 
+# charts = get_charts([4720])
+
+# chartsDB = repo.find_charts_all()
+# charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
+# charts = repo.find_charts([1330, 2, 32, 34])
+# print('number of charts: ' + str(len(charts)))
 
 
+# charts = get_charts(['JP1032'])
+# print(utils.get_scale_category(charts[0]))
 
 
+#---------------------------------------------------------------------------
+
+# service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+
+# print(service_geojson.generate_geojson_and_save_db(SCALE_RANGE))
+
+print(service_geojson.generate_geojson_and_save_db_single_charts([]))
 
 
 
