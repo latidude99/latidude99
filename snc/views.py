@@ -16,10 +16,31 @@ def charts_file(request):
 
 
 def charts(request):
-    context = service.get_chart_multi_geojson_db_context(range(1, 200))
-   # context = service.get_chart_single_geojson_db_context('2')
-   # context = service.get_charts_geojson_db_context(SCALE_7_TEXT)
-    return render(request, 'snc/charts.html', context)
+    ctx = {}
+    map_context = {}
+    context = service.get_info_context()
+    if request.method == 'GET':
+        context = service.get_charts_geojson_scale_range_single_db_context(SCALE_ALL_TEXT)
+
+    if request.method == 'POST':
+        scales = request.POST.getlist('scale')
+        zoom = request.POST['zoom']
+        centre = request.POST['centre']
+        bounds = request.POST['bounds']
+        map_context = {'map_zoom': zoom, 'map_centre': centre, 'map_bounds': bounds}
+
+        print(scales)
+        print(zoom)
+        print(centre)
+        print(bounds)
+
+        if len(scales) < 1:
+            context = service.get_index_context()
+            return render(request, 'snc/index.html', context)
+        context = service.get_charts_geojson_scale_range_multiple_db_context(scales)
+
+    ctx = {**context, **map_context}
+    return render(request, 'snc/charts.html', ctx)
 
 
 def admin(request):
@@ -102,7 +123,20 @@ def charts_7(request):
 
 
 
+'''
 
+def numbers_json(request):
+    data = {'country': ''}
+    if request.method == 'GET':
+        country = request.GET.get('country')
+        days = request.GET.get('days')
+        data_list = service_covid.get_covid_numbers_data_as_dict(country, days)
+        if data_list:
+            data['country'] = list(data_list)
+    return JsonResponse(data, safe=False)
+
+
+'''
 
 
 

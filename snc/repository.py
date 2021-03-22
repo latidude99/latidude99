@@ -39,17 +39,39 @@ def find_geojson_multiple(nums):
     json = json_start
     for num in nums:
         if Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).exists():
-            geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
+            #geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
+            geojson_single = Geojson.objects.using('snc').filter(chart_number=num).latest("id")
             json = json + geojson_single.json[43:-2] + comma
         print('added' + str(num))
     json = json[:-1] + json_end  # removing comma after last feature
     return json
 
 
-def find_geojson(scale_range):
-    catalogue = get_latest_catalogue()
-    geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range = scale_range).latest("id")
+# takes single scale range as string
+def find_geojson_scale_range_single(catalogue, scale_range):
+    # catalogue = get_latest_catalogue()
+    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+    geojson = Geojson.objects.using('snc').filter(scale_range=scale_range).latest("id")
     return geojson
+
+
+# takes multiple scale ranges as list of strings
+def find_geojson_scale_range_multiple(catalogue, scale_ranges):
+    # catalogue = get_latest_catalogue()
+
+    comma = ','
+    json_start = '{"type": "FeatureCollection", "features": ['  # 42 chars
+    json_end = ']}'  # 2 chars
+
+    json = json_start
+    for scale_range in scale_ranges:
+        if Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).exists():
+            # geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+            geojson_single = Geojson.objects.using('snc').filter(scale_range=scale_range).latest("id")
+            json = json + geojson_single.json[43:-2] + comma
+        print('added' + str(scale_range))
+    json = json[:-1] + json_end  # removing comma after last feature
+    return json
 
 
 # ------------------------- chartDTO ---------------------------------
@@ -61,7 +83,7 @@ def find_chart(num):
 def find_charts(nums):
     charts = []
     catalogueDB = get_latest_catalogue()
-   # catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    # catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
     if len(nums) == 0:
         nums = range(1, 3)

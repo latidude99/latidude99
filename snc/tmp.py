@@ -5,6 +5,7 @@ import snc.service_parse as service_parse
 import snc.service_converters as service_converters
 import snc.repository as repo
 import snc.service_geojson as service_geojson
+from snc.const import *
 
 
 def delete_catalogue_range(a, b):
@@ -37,7 +38,7 @@ def get_charts(nums):
 
 #service_parse.delete_all_catalogues()
 
-#service_parse.delete_catalogue('23')
+#service_parse.delete_catalogue('60')
 
 #utils.print_chart_detail()
 
@@ -85,9 +86,9 @@ def get_charts(nums):
 
 # service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-# print(service_geojson.generate_geojson_and_save_db(SCALE_RANGE))
+print(service_geojson.generate_geojson_and_save_db([SCALE_2_TEXT]))
 
-print(service_geojson.generate_geojson_and_save_db_single_charts([]))
+# print(service_geojson.generate_geojson_and_save_db_single_charts([]))
 
 
 

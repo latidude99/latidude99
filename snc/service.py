@@ -16,6 +16,17 @@ def get_base_context():
     context = {'title_tab': TITLE_TAB,
                'title_main': TITLE_MAIN,
                'back_pattern1': BACK_PATTERN1,
+               'scale1': SCALE_1_TEXT,
+               'scale2': SCALE_2_TEXT,
+               'scale3': SCALE_3_TEXT,
+               'scale4': SCALE_4_TEXT,
+               'scale5': SCALE_5_TEXT,
+               'scale6': SCALE_6_TEXT,
+               'scale7': SCALE_7_TEXT,
+               'scale0': SCALE_ALL_TEXT,
+               'map_zoom': MAP_ZOOM,
+               'map_centre': MAP_CENTRE,
+               'map_bounds': MAP_BOUNDS,
                }
     return context
 
@@ -45,45 +56,6 @@ def get_info_context():
 
 # ------------------------- geojson ---------------------------------
 
-# fetches geojson from file located in snc/data/
-def get_charts_geojson_file_context(file_name):
-    catalogueDB = repo.get_latest_catalogue()
-    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
-
-    file_path = SNC_DATA_FOLDER + file_name
-    charts_geojson = ''
-    with open(file_path, 'r') as reader:
-        charts_geojson = reader.read()
-
-    context = {
-        'catalogue': catalogueDTO,
-        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
-        'google_api_key_dev': GOOGLE_API_KEY_DEV,
-        'google_api_key_prod': GOOGLE_API_KEY_PROD,
-        'charts_geojson': charts_geojson,
-               }
-    ctx = {**get_base_context(), **context}
-    return ctx
-
-
-def get_chart_multi_geojson_db_context(nums):
-    catalogueDB = repo.get_latest_catalogue()
-    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
-
-    geojson = repo.find_geojson_multiple(nums)
-    print('---')
-    print(geojson)
-    context = {
-        'catalogue': catalogueDTO,
-        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
-        'google_api_key_dev': GOOGLE_API_KEY_DEV,
-        'google_api_key_prod': GOOGLE_API_KEY_PROD,
-        'charts_geojson': geojson,
-               }
-    ctx = {**get_base_context(), **context}
-    return ctx
-
-
 def get_chart_single_geojson_db_context(num):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
@@ -101,18 +73,101 @@ def get_chart_single_geojson_db_context(num):
     return ctx
 
 
-def get_charts_geojson_db_context(scale_range):
+def get_chart_multi_geojson_db_context(nums):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
 
-    geojson = repo.find_geojson(scale_range)
-    print(geojson)
+    geojson = repo.find_geojson_multiple(nums)
+    # print('---')
+    # print(geojson)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': geojson,
+               }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
+
+def get_charts_geojson_scale_range_single_db_context(scale_range):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    geojson = repo.find_geojson_scale_range_single(catalogueDB, scale_range)
+
+    ctx_scale_ranges = {'sc1checked': 'checked',
+                        'sc2checked': 'checked',
+                        'sc3checked': 'checked',
+                        'sc4checked': 'checked',
+                        'sc5checked': 'checked',
+                        'sc6checked': 'checked',
+                        'sc7checked': 'checked'
+                        }
+
+    #print(geojson)
     context = {
         'catalogue': catalogueDTO,
         'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
         'google_api_key_dev': GOOGLE_API_KEY_DEV,
         'google_api_key_prod': GOOGLE_API_KEY_PROD,
         'charts_geojson': geojson.json,
+               }
+    ctx = {**get_base_context(), **context, **ctx_scale_ranges}
+    return ctx
+
+
+def get_charts_geojson_scale_range_multiple_db_context(scale_ranges):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    geojson = repo.find_geojson_scale_range_multiple(catalogueDB, scale_ranges)
+
+    ctx_scale_ranges = {}
+    if SCALE_1_TEXT in scale_ranges:
+        ctx_scale_ranges['sc1checked'] = 'checked'
+    if SCALE_2_TEXT in scale_ranges:
+        ctx_scale_ranges['sc2checked'] = 'checked'
+    if SCALE_3_TEXT in scale_ranges:
+        ctx_scale_ranges['sc3checked'] = 'checked'
+    if SCALE_4_TEXT in scale_ranges:
+        ctx_scale_ranges['sc4checked'] = 'checked'
+    if SCALE_5_TEXT in scale_ranges:
+        ctx_scale_ranges['sc5checked'] = 'checked'
+    if SCALE_6_TEXT in scale_ranges:
+        ctx_scale_ranges['sc6checked'] = 'checked'
+    if SCALE_7_TEXT in scale_ranges:
+        ctx_scale_ranges['sc7checked'] = 'checked'
+
+    print(geojson)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': geojson,
+               }
+    ctx = {**get_base_context(), **context, **ctx_scale_ranges}
+    return ctx
+
+
+# fetches geojson from file located in snc/data/
+def get_charts_geojson_file_context(file_name):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    file_path = SNC_DATA_FOLDER + file_name
+    charts_geojson = ''
+    with open(file_path, 'r') as reader:
+        charts_geojson = reader.read()
+
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': charts_geojson,
                }
     ctx = {**get_base_context(), **context}
     return ctx

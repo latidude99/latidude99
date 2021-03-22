@@ -38,7 +38,7 @@ def parse_import_catalogue_with_geojson(catalogue_file):
     service_geojson.generate_geojson_and_save_db(SCALE_RANGE_ALL)
 
     # generate set of geojson entries and save to DB (SCALE_1_TEXT etc)
-    service_geojson.generate_geojson_and_save_db_single_charts(range(1, 9000))
+    service_geojson.generate_geojson_and_save_db_single_charts([])
 
     return 'ok - parsed - imported - generated geojson'
 

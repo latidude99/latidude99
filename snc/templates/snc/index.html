@@ -10,22 +10,104 @@
     <div id="zoomLevel"></div>
     <div id="map-canvas" style='z-index:30;'></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&v=beta&callback=initMap"></script>
+    <div id="scale-info-box">
+        <p class="ml-1" style="font-size: 16px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+        </p>
+        <div class="ml-3 text-left">
+            <div class="row mb-2 text-right">
+                <a href="{% url 'snc:charts' %}" role="button" class="btn btn-primary btn-sm py-0"
+                   style="font-size: 12px;"
+                   onclick="$('#error').hide();$('#loader2').show().delay(10000).hide(0);">
+                    display all charts
+                </a>
+            </div>
+        </div>
+
+        <p class="ml-1" style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+            or select scale range:</p>
+        <form action="{% url 'snc:charts' %}" method="post" style="text-shadow: 1px 1px #26d0ce;">
+            {% csrf_token %}
+            <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
+            <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
+            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc1" name="scale"
+                       value="{{ scale1 }}" {{ sc1checked }}>
+                <label class="custom-control-label pt-1" for="sc1">> 1:4,000</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc2" name="scale"
+                       value="{{ scale2 }}" {{ sc2checked }}>
+                <label class="custom-control-label pt-1" for="sc2">1: 4k - 22k</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc3" name="scale"
+                       value="{{ scale3 }}" {{ sc3checked }}>
+                <label class="custom-control-label pt-1" for="sc3">1: 22k - 90k</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc4" name="scale"
+                       value="{{ scale4 }}" {{ sc4checked }}>
+                <label class="custom-control-label pt-1" for="sc4">1: 90k - 1:350k</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc5" name="scale"
+                       value="{{ scale5 }}" {{ sc5checked }}>
+                <label class="custom-control-label pt-1" for="sc5">1: 350k - 1,5M</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc6" name="scale"
+                       value="{{ scale6 }}" {{ sc6checked }}>
+                <label class="custom-control-label pt-1" for="sc6">1: 1,5M - 5M</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sc7" name="scale"
+                       value="{{ scale7 }}" {{ sc7checked }}>
+                <label class="custom-control-label pt-1" for="sc7">< 1: 5M</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm pb-1 mt-2 ml-2" id="apply_scale"
+                    style="font-size: 12px;">Apply
+            </button>
+        </form>
+    </div>
 
     <script>
-        var map;
-        var infoWindow;
+        let map;
+        let infoWindow;
 
-        function initialize() {
-            var mapOptions = {
-                zoom: 5,
-                center: {lat: 54.15, lng: -2.72},
-                mapTypeId: google.maps.MapTypeId.ROAD
+        document.getElementById("scale-info-box").style.zIndex = '20000';
+
+        function initMap() {
+            let mapOptions = {
+                zoom: {{ map_zoom }},
+                center: {{ map_centre }},
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+
+            let map_zoom, map_centre_lat, map_centre_lon, map_centre, map_bounds;
+
+            google.maps.event.addListener(map, 'idle', function () {
+
+                map_bounds = map.getBounds();
+                map_centre_lat = map.getCenter().lat();
+                map_centre_lon = map.getCenter().lng();
+                map_centre = '{lat: ' + map_centre_lat + ', lng: ' + map_centre_lon + '}';
+                map_zoom = map.getZoom();
+                document.getElementById("map_zoom").value = map_zoom;
+                document.getElementById("map_centre").value = map_centre;
+                document.getElementById("map_bounds").value = map_bounds;
+                console.log(map_bounds);
+                console.log(map_centre_lat);
+                console.log(map_centre_lon);
+                console.log(map_centre);
+                console.log(map_zoom);
+            });
+
+
             infoWindow = new google.maps.InfoWindow();
-            var markers = [];
+            let markers = [];
 
             {% for chart in  charts %}
                 <!-- ---------------- chart ---------------- -->
@@ -231,9 +313,11 @@
             infoWindow.open(map);
         }
 
-        google.maps.event.addDomListener(window, 'load', initialize);
+        {#google.maps.event.addDomListener(window, 'load', initMap());#}
 
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&callback=initMap&libraries=&v=weekly"></script>
 
 
 {% endblock %}

@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('charts', views.charts, name='charts'),
+    path('charts/<int:scale>/', views.charts, name='charts'),
+
     path('charts_file', views.charts_file, name='charts_file'),
     path('admin', views.admin, name='user'),
     path('info', views.info, name='info'),

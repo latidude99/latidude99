@@ -23,6 +23,7 @@ def save_geojson_to_file(geojson, file):
 # @range - list of chart numbers
 def generate_geojson_and_save_db_single_charts(nums):
     catalogue = repo.get_latest_catalogue()
+    processed = []
 
     if len(nums) == 0:
         chartsDB = catalogue.chart_set.all()
@@ -38,7 +39,7 @@ def generate_geojson_and_save_db_single_charts(nums):
             geojson.cat_id = catalogue.id
             geojson.ready = True
             geojson.save(using='snc')
-            #  print(geojson.json)
+            processed.append(chartDB.number)
 
     else:
         for num in nums:
@@ -56,7 +57,7 @@ def generate_geojson_and_save_db_single_charts(nums):
                 geojson.cat_id = catalogue.id
                 geojson.ready = True
                 geojson.save(using='snc')
-                #  print(geojson.json)
+                processed.append(num)
 
     return 'generated and saved in DB geojson for charts: ' + str(range)
 
@@ -70,22 +71,23 @@ def generate_geojson_and_save_db(scale_range):
     for scale in scale_range:
         if scale == SCALE_ALL_TEXT:
             chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue) #.latest('id')
-            geojson.scale_range = scale
+            geojson.scale_range = scale_range
         else:
             chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue, max_scale_category=scale) #.latest('id')
             geojson.scale_range = scale
+            print(scale)
 
         charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
         if len(charts) > 0:
-            json = generate_geojson(charts)
+            gjson = generate_geojson(charts)
 
-            geojson.json = json
+            geojson.json = gjson
             geojson.catalogue = catalogue
             geojson.cat_id = catalogue.id
             geojson.ready = True
             geojson.save(using='snc')
 
-    return 'generated and saved in DB geojson for charts: ' + ', '.join(range)
+    return 'generated and saved in DB geojson for charts: ' + ', '.join(scale_range)
 
 
 def generate_geojson(charts):
