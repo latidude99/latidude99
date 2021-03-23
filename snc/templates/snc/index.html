@@ -10,6 +10,12 @@
     <div id="zoomLevel"></div>
     <div id="map-canvas" style='z-index:30;'></div>
 
+    <!-- load geojson charts loader -->
+    <div id="loader-box">
+        <span id="loader2" class="loader2" style="width: 100%; display:none;"></span>
+        <span id="loader3" class="loader3" style="width: 100%; display:none;"></span>
+    </div>
+
     <div id="scale-info-box">
         <p class="ml-1" style="font-size: 16px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
         </p>
@@ -17,7 +23,9 @@
             <div class="row mb-2 text-right">
                 <a href="{% url 'snc:charts' %}" role="button" class="btn btn-primary btn-sm py-0"
                    style="font-size: 12px;"
-                   onclick="$('#error').hide();$('#loader2').show().delay(10000).hide(0);">
+                   onclick="$('#error').hide();
+                                $('#loader2').show().delay(5000).hide(0);
+                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
                     display all charts
                 </a>
             </div>
@@ -29,7 +37,7 @@
             {% csrf_token %}
             <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
             <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
-            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">
+{#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="sc1" name="scale"
                        value="{{ scale1 }}" {{ sc1checked }}>
@@ -66,7 +74,10 @@
                 <label class="custom-control-label pt-1" for="sc7">< 1: 5M</label>
             </div>
             <button type="submit" class="btn btn-primary btn-sm pb-1 mt-2 ml-2" id="apply_scale"
-                    style="font-size: 12px;">Apply
+                    style="font-size: 12px;"
+                            onclick="$('#error').hide();
+                                $('#loader2').show().delay(5000).hide(0);
+                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">Apply
             </button>
         </form>
     </div>
@@ -76,6 +87,7 @@
         let infoWindow;
 
         document.getElementById("scale-info-box").style.zIndex = '20000';
+        document.getElementById("loader-box").style.zIndex = '20000';
 
         function initMap() {
             let mapOptions = {
@@ -90,19 +102,14 @@
 
             google.maps.event.addListener(map, 'idle', function () {
 
-                map_bounds = map.getBounds();
+                {#map_bounds = map.getBounds();#}
                 map_centre_lat = map.getCenter().lat();
                 map_centre_lon = map.getCenter().lng();
                 map_centre = '{lat: ' + map_centre_lat + ', lng: ' + map_centre_lon + '}';
                 map_zoom = map.getZoom();
                 document.getElementById("map_zoom").value = map_zoom;
                 document.getElementById("map_centre").value = map_centre;
-                document.getElementById("map_bounds").value = map_bounds;
-                console.log(map_bounds);
-                console.log(map_centre_lat);
-                console.log(map_centre_lon);
-                console.log(map_centre);
-                console.log(map_zoom);
+                {#document.getElementById("map_bounds").value = map_bounds;#}
             });
 
 

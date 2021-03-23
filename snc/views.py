@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
 import snc.service as service
 from snc.const import *
+from snc.chart import *
+from snc.models import *
 
 
 
@@ -11,7 +14,7 @@ def index(request):
 
 
 def charts_file(request):
-    context = service.get_charts_geojson_file_context()
+    context = service.get_charts_geojson_file_context(SNC_GEOJSON_FILE)
     return render(request, 'snc/charts.html', context)
 
 
@@ -26,13 +29,8 @@ def charts(request):
         scales = request.POST.getlist('scale')
         zoom = request.POST['zoom']
         centre = request.POST['centre']
-        bounds = request.POST['bounds']
-        map_context = {'map_zoom': zoom, 'map_centre': centre, 'map_bounds': bounds}
-
-        print(scales)
-        print(zoom)
-        print(centre)
-        print(bounds)
+        # bounds = request.POST['bounds']
+        map_context = {'map_zoom': zoom, 'map_centre': centre} #, 'map_bounds': bounds}
 
         if len(scales) < 1:
             context = service.get_index_context()
@@ -41,6 +39,18 @@ def charts(request):
 
     ctx = {**context, **map_context}
     return render(request, 'snc/charts.html', ctx)
+
+
+def chartdetails(request):
+    chart = ''
+    data = {'chart': ''}
+    if request.method == 'GET':
+        chart_number = request.GET.get('chart_number')
+        chartDTO = service.get_single_context(chart_number)
+        chartJSON = service.chartDTO_2_chartJSON(chartDTO)
+
+    data['chart'] = chartJSON
+    return JsonResponse(data, safe=False)
 
 
 def admin(request):

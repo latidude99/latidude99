@@ -84,7 +84,8 @@ def chartDB_2_chartDTO(chartDB):
         zoom_const = getZoomMaxMin()
         chartDTO.zoom_min = zoom_const['min']
         chartDTO.zoom_max = zoom_const['max']
-        chartDTO.zindex = zoom['max']
+
+        chartDTO.zindex = int(100_000_000 / int(scale)) # zoom['max']
 
     if len(chartDTO.polygons) > 0:
         chartDTO.label_position = calculate_polygon_bottom_left_inside(chartDTO.polygons[0])
@@ -131,7 +132,7 @@ def panelsDB_2_panelsDTO(panelsDB):
         if panelDB.scale != '':
             panelDTO.scale = int(panelDB.scale)
             zoom = calculateZoomMaxMin(int(panelDB.scale.strip()))
-            panelDTO.zindex = zoom['max']
+            panelDTO.zindex = int(100_000_000 / panelDTO.scale) # zoom['max']
         polygonsDB = panelDB.panelpolygon_set.all()
         panelDTO.polygons = panel_polygonsDB_2_polygonsDTO(polygonsDB)
         if len(panelDTO.polygons) > 0:

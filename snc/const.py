@@ -3,8 +3,8 @@
 import main.secrets as secrets
 from latidude99.settings import SNC_STATIC_DATA_FOLDER, SNC_DATA_FOLDER
 
-APP_BASE = 'http://127.0.0.1:8000/snc'
-#APP_BASE = 'http://pc.latidude99.com/snc'
+#APP_BASE = 'http://127.0.0.1:8000/snc'
+APP_BASE = 'http://pc.latidude99.com/snc'
 
 SNC_DATA = 'data/'
 SNC_CATALOGUE_FILE = SNC_DATA_FOLDER + 'snc_catalogue.xml'

@@ -7,6 +7,7 @@ from snc.text import *
 from snc.const import *
 import snc.repository as repo
 import snc.service_converters as service_converters
+from snc.chart import *
 import snc.utils as utils
 import snc.service_geojson as service_geojson
 
@@ -174,6 +175,23 @@ def get_charts_geojson_file_context(file_name):
 
 
 # ------------------------- chartDTO ---------------------------------
+
+def get_single_context(num):
+    chart = ChartDTO()
+    catalogueDB = repo.get_latest_catalogue()
+    catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    if catalogueDB.chart_set.filter(number=num).exists():
+        chartDB = catalogueDB.chart_set.get(number=num)
+        chart = service_converters.chartDB_2_chartDTO(chartDB)
+    return chart
+
+
+def chartDTO_2_chartJSON(chartDTO):
+    chartJSON = {}
+
+    return chartJSON
+
+
 def get_search_multiple_context(nums):
     catalogueDB = repo.get_latest_catalogue()
     catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
