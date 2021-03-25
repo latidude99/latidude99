@@ -42,7 +42,7 @@ def charts(request):
 
 
 def chartdetails(request):
-    chart = ''
+    chartJSON = ''
     data = {'chart': ''}
     if request.method == 'GET':
         chart_number = request.GET.get('chart_number')
@@ -95,58 +95,8 @@ def charts_all(request):
     return render(request, 'snc/index.html', context)
 
 
-def charts_1(request):
-    context = service.get_SCALE1_charts_context()
-    return render(request, 'snc/index.html', context)
 
 
-def charts_2(request):
-    context = service.get_SCALE2_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-def charts_3(request):
-    context = service.get_SCALE3_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-def charts_4(request):
-    context = service.get_SCALE4_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-def charts_5(request):
-    context = service.get_SCALE5_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-def charts_6(request):
-    context = service.get_SCALE6_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-def charts_7(request):
-    context = service.get_SCALE7_charts_context()
-    return render(request, 'snc/index.html', context)
-
-
-
-
-
-'''
-
-def numbers_json(request):
-    data = {'country': ''}
-    if request.method == 'GET':
-        country = request.GET.get('country')
-        days = request.GET.get('days')
-        data_list = service_covid.get_covid_numbers_data_as_dict(country, days)
-        if data_list:
-            data['country'] = list(data_list)
-    return JsonResponse(data, safe=False)
-
-
-'''
 
 
 

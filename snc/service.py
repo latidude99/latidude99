@@ -10,7 +10,9 @@ import snc.service_converters as service_converters
 from snc.chart import *
 import snc.utils as utils
 import snc.service_geojson as service_geojson
+import locale
 
+locale.setlocale(locale.LC_ALL, '')
 
 
 def get_base_context():
@@ -141,7 +143,7 @@ def get_charts_geojson_scale_range_multiple_db_context(scale_ranges):
     if SCALE_7_TEXT in scale_ranges:
         ctx_scale_ranges['sc7checked'] = 'checked'
 
-    print(geojson)
+    #print(geojson)
     context = {
         'catalogue': catalogueDTO,
         'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
@@ -186,8 +188,48 @@ def get_single_context(num):
     return chart
 
 
-def chartDTO_2_chartJSON(chartDTO):
-    chartJSON = {}
+def chartDTO_2_chartJSON(ch):
+    panels = []
+    if len(ch.panels) > 0:
+        for p in ch.panels:
+            panel = {'id': p.panel_id,
+                     'name': p.name,
+                     'scale': '1 : ' + f'{int(p.scale):n}',
+                     }
+            panels.append(panel)
+
+    notices = []
+    if len(ch.notices) > 0:
+        for n in ch.notices:
+            notice = {'year': n.year,
+                     'week': n.week,
+                     'number': n.number,
+                      'type': n.type
+                     }
+            notices.append(notice)
+    scale = ''
+    if ch.scale != '':
+        scale = '1 ' + f'{int(ch.scale):n}'
+    else:
+        scale = 'no main polygon'
+    chartJSON = {
+        'catalogue_id': ch.catalogue_id,
+        'number' : ch.number,
+        'title': ch.title,
+        'scale': scale,
+        'status': ch.status,
+        'status_date': ch.status_date,
+        'new_edition_date': ch.new_edition_date,
+        'last_nm_number':  ch.last_nm_number,
+        'last_nm_date': ch.last_nm_date,
+        'max_scale_category': ch.max_scale_category,
+        'zoom_min': ch.zoom_min,
+        'zoom_max': ch.zoom_max,
+        'colour': ch.colour,
+        'zindex': ch.zindex,
+        'panels': panels,
+        'notices': notices,
+    }
 
     return chartJSON
 
@@ -195,7 +237,7 @@ def chartDTO_2_chartJSON(chartDTO):
 def get_search_multiple_context(nums):
     catalogueDB = repo.get_latest_catalogue()
     catalogue = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
-    print(nums)
+    #print(nums)
     charts = []
     if len(nums) > 0 and len(nums) <= 15:
         for num in nums:
@@ -238,7 +280,7 @@ def get_search_multiple_context(nums):
 def get_all_charts_context():
     chartsDB = repo.find_charts_all()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -250,7 +292,7 @@ def get_all_charts_context():
 def get_SCALE1_charts_context():
     chartsDB = repo.find_charts_SCALE_1()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -263,7 +305,7 @@ def get_SCALE1_charts_context():
 def get_SCALE2_charts_context():
     chartsDB = repo.find_charts_SCALE_2()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -275,7 +317,7 @@ def get_SCALE2_charts_context():
 def get_SCALE3_charts_context():
     chartsDB = repo.find_charts_SCALE_3()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -287,7 +329,7 @@ def get_SCALE3_charts_context():
 def get_SCALE4_charts_context():
     chartsDB = repo.find_charts_SCALE_4()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -299,7 +341,7 @@ def get_SCALE4_charts_context():
 def get_SCALE5_charts_context():
     chartsDB = repo.find_charts_SCALE_5()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -311,7 +353,7 @@ def get_SCALE5_charts_context():
 def get_SCALE6_charts_context():
     chartsDB = repo.find_charts_SCALE_6()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,
@@ -323,7 +365,7 @@ def get_SCALE6_charts_context():
 def get_SCALE7_charts_context():
     chartsDB = repo.find_charts_SCALE_7()
     charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
-    print('number of charts: ' + str(len(charts)))
+    #print('number of charts: ' + str(len(charts)))
     context = {
         'catalogue': charts[0].catalogue_id,
         'charts': charts,

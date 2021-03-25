@@ -135,6 +135,7 @@
             background: rgba(255, 255, 255, 0.15);
             overflow: hidden;
         }
+
         .loader2::after {
             content: '';
             box-sizing: border-box;
@@ -146,6 +147,7 @@
             left: 0;
             animation: animFw 5s linear infinite;
         }
+
         @keyframes animFw {
             0% {
                 width: 0;
@@ -163,17 +165,50 @@
             background: rgba(255, 255, 255, 0.15);
             overflow: hidden;
         }
+
         .loader3::after {
             content: '';
             box-sizing: border-box;
             width: 0;
             height: 2px;
-            background:#f5dd5d;
+            background: #f5dd5d;
             position: absolute;
             top: 0;
             left: 0;
             animation: animFw 5s linear infinite;
         }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+
+        .loader4 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader4::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: #3875d7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 2s linear infinite;
+        }
+
         @keyframes animFw {
             0% {
                 width: 0;
@@ -187,6 +222,7 @@
             text-decoration-line: none;
         !important;
         }
+
 
         hr.list {
             border: 1px solid black;
@@ -295,7 +331,7 @@
 
             <div id="accordion">
                 <div class="card bg-transparent" style="border:none;">
-                    <div class="card-header bg-transparent" style="border:none;">
+                    <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
                         <a class="card-link panel-heading collapsed" data-toggle="collapse"
                            data-target="#info_main" aria-expanded="true" aria-controls="info_main"
                            style="text-decoration: none; cursor:pointer;
@@ -426,6 +462,9 @@
                     <form action="{% url 'snc:multisearch' %}" method="post"
                           class="needs-validation" novalidate>
                         {% csrf_token %}
+                        <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
+                            Use the search to display and focus only on one or a few charts.
+                        </p>
                         <div class="input-group input-group-sm" style="font-size: 14px">
                             <div class="mr-3 mt-1">
                                 Search charts:
@@ -448,6 +487,7 @@
                     </form>
                     <div class="pt-2 flex-grow-1">
                         <p id="loader1" class="loader1" style="width: 90%; display:none;"></p>
+                        <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
                     </div>
                 </div>
 
@@ -461,16 +501,22 @@
                 <div class="row">
                     <div class="col-lg-0"></div>
                     <div class="col-lg-12">
-                        <div class="mt-4 float-right" style="cursor:pointer;margin-right: 0px;opacity:40%;">
-                            <script type="text/javascript"
-                                    src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000"
-                                    data-emoji=""
+                        <div class="mt-4 float-right" style="cursor:pointer;">
+                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
                                     data-font="Comic"
-                                    data-text="Buy me a coffee" data-outline-color="#000000"
-                                    data-font-color="#000000"
+                                    data-text="Buy me a coffee" data-outline-color="#669900" data-font-color="#000080"
                                     data-coffee-color="#ffffff">
                             </script>
+                            {#                            <script type="text/javascript"#}
+                            {#                                    src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"#}
+                            {#                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000"#}
+                            {#                                    data-emoji=""#}
+                            {#                                    data-font="Comic"#}
+                            {#                                    data-text="Buy me a coffee" data-outline-color="#000000"#}
+                            {#                                    data-font-color="#000000"#}
+                            {#                                    data-coffee-color="#ffffff">#}
+                            {#                            </script>#}
                         </div>
                     </div>
                 </div>
