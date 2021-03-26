@@ -29,6 +29,12 @@ def delete_all_charts():
     print('all charts deleted')
 
 
+def delete_gejson_catalogue_id(ids):
+    for id in ids:
+        Geojson.objects.using('snc').filter(catalogue_id__exact=id).delete()
+        print('deleted geojsons in catalogue_id ' + str(id))
+
+
 # untangle ------------------------------------------------------------------
 def parse_import_catalogue_with_geojson(catalogue_file):
     # parse and load catalogue to DB

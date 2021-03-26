@@ -1,4 +1,4 @@
-# VARIABLES
+# CONSTANTS
 
 import main.secrets as secrets
 from latidude99.settings import SNC_STATIC_DATA_FOLDER, SNC_DATA_FOLDER

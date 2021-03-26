@@ -65,10 +65,11 @@ def generate_geojson_and_save_db_single_charts(nums):
 # @range - list of scale range constants defined in const.py (SCALE_ALL_TEXT, SCALE_1_TEXT etc.)
 def generate_geojson_and_save_db(scale_range):
     catalogue = repo.get_latest_catalogue()
-    geojson = Geojson()
+
     chartsDB = []
 
     for scale in scale_range:
+        geojson = Geojson()
         if scale == SCALE_ALL_TEXT:
             chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue) #.latest('id')
             geojson.scale_range = scale_range
@@ -78,6 +79,7 @@ def generate_geojson_and_save_db(scale_range):
             print(scale)
 
         charts = service_converters.chartsDB_2_chartsDTO(chartsDB)
+
         if len(charts) > 0:
             gjson = generate_geojson(charts)
 
@@ -127,7 +129,7 @@ def generate_geojson(charts):
                                  "color": "navy",
                                  "max_scale_category": chart.max_scale_category,
                              }))
-            print('polygon geometry added for ' + chart.number)
+            print('polygon geometry added for ' + chart.number + ', zindex = ' + str(chart.zindex))
         else:
             invalid_charts.append(chart.number)
 

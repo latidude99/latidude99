@@ -34,6 +34,8 @@ def get_charts(nums):
 #delete_catalogue_range(61, 70)
 
 
+
+
 #service_parse.delete_all_charts()
 
 #service_parse.delete_all_catalogues()
@@ -84,9 +86,10 @@ def get_charts(nums):
 
 #---------------------------------------------------------------------------
 
-service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+# service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-#print(service_geojson.generate_geojson_and_save_db(SCALE_RANGE_ALL))
+print(service_geojson.generate_geojson_and_save_db([SCALE_ALL_TEXT]))
+#service_parse.delete_gejson_catalogue_id([65])
 
 # print(service_geojson.generate_geojson_and_save_db_single_charts([]))
 

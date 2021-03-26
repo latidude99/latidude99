@@ -17,13 +17,13 @@ def charts_file(request):
     context = service.get_charts_geojson_file_context(SNC_GEOJSON_FILE)
     return render(request, 'snc/charts.html', context)
 
-
+# loads main charts polygon on to map.Data layers
 def charts(request):
     ctx = {}
     map_context = {}
     context = service.get_info_context()
     if request.method == 'GET':
-        context = service.get_charts_geojson_scale_range_single_db_context(SCALE_ALL_TEXT)
+        context = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
 
     if request.method == 'POST':
         scales = request.POST.getlist('scale')

@@ -40,12 +40,14 @@ def chartsDB_2_chartsDTO(chartsDB):
 
 def chartDB_2_chartDTO(chartDB):
     chartDTO = ChartDTO()
-
-    chartDTO.catalogue_id = chartDB.catalogue_id
+    chartDTO.catalogue_id = chartDB.catalogue.date.strftime('%d %b %Y') # chartDB.catalogue.file_identifier + ', ' +
     chartDTO.number = chartDB.number
     chartDTO.title = chartDB.title
     if chartDB.scale != '':
         chartDTO.scale = int(chartDB.scale)
+        chartDTO.zindex = int(1000000000 / int(chartDB.scale))  # zoom['max']
+        #print(int(100000000 / int(chartDB.scale)))
+        print('chartDTO.zindex ' + str(chartDTO.zindex))
     chartDTO.folio = chartDB.folio
     chartDTO.cat_number = chartDB.cat_number
     chartDTO.int_number = chartDB.int_number
@@ -84,8 +86,6 @@ def chartDB_2_chartDTO(chartDB):
         zoom_const = getZoomMaxMin()
         chartDTO.zoom_min = zoom_const['min']
         chartDTO.zoom_max = zoom_const['max']
-
-        chartDTO.zindex = int(100_000_000 / int(scale)) # zoom['max']
 
     if len(chartDTO.polygons) > 0:
         chartDTO.label_position = calculate_polygon_bottom_left_inside(chartDTO.polygons[0])
@@ -132,7 +132,8 @@ def panelsDB_2_panelsDTO(panelsDB):
         if panelDB.scale != '':
             panelDTO.scale = int(panelDB.scale)
             zoom = calculateZoomMaxMin(int(panelDB.scale.strip()))
-            panelDTO.zindex = int(100_000_000 / panelDTO.scale) # zoom['max']
+            panelDTO.zindex = int(1000000000 / int(panelDB.scale)) # zoom['max']
+            print('panelDTO.zindex ' + str(panelDTO.zindex))
         polygonsDB = panelDB.panelpolygon_set.all()
         panelDTO.polygons = panel_polygonsDB_2_polygonsDTO(polygonsDB)
         if len(panelDTO.polygons) > 0:

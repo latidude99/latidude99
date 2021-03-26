@@ -94,6 +94,41 @@ def get_chart_multi_geojson_db_context(nums):
     return ctx
 
 
+def get_charts_geojson_scale_range_all_split_scales_db_context(scale_range):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    # dict of geojsons for each scale range
+    geojson = repo.find_geojson_scale_range_all_split_scales(catalogueDB)
+
+    # check boxes in charts.html
+    ctx_scale_ranges = {'sc1checked': 'checked',
+                        'sc2checked': 'checked',
+                        'sc3checked': 'checked',
+                        'sc4checked': 'checked',
+                        'sc5checked': 'checked',
+                        'sc6checked': 'checked',
+                        'sc7checked': 'checked'
+                        }
+
+    #print(geojson)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson_scale_1': geojson['scale1'],
+        'charts_geojson_scale_2': geojson['scale2'],
+        'charts_geojson_scale_3': geojson['scale3'],
+        'charts_geojson_scale_4': geojson['scale4'],
+        'charts_geojson_scale_5': geojson['scale5'],
+        'charts_geojson_scale_6': geojson['scale6'],
+        'charts_geojson_scale_7': geojson['scale7'],
+               }
+    ctx = {**get_base_context(), **context, **ctx_scale_ranges}
+    return ctx
+
+
 def get_charts_geojson_scale_range_single_db_context(scale_range):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
@@ -124,6 +159,7 @@ def get_charts_geojson_scale_range_single_db_context(scale_range):
 def get_charts_geojson_scale_range_multiple_db_context(scale_ranges):
     catalogueDB = repo.get_latest_catalogue()
     catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
 
     geojson = repo.find_geojson_scale_range_multiple(catalogueDB, scale_ranges)
 

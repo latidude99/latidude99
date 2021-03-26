@@ -47,6 +47,22 @@ def find_geojson_multiple(nums):
     return json
 
 
+def find_geojson_scale_range_all_split_scales(catalogue):
+    geojson = {}
+    # catalogue = get_latest_catalogue()
+    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+
+    geojson['scale1'] = Geojson.objects.using('snc').filter(scale_range=SCALE_1_TEXT).latest("id").json
+    geojson['scale2'] = Geojson.objects.using('snc').filter(scale_range=SCALE_2_TEXT).latest("id").json
+    geojson['scale3'] = Geojson.objects.using('snc').filter(scale_range=SCALE_3_TEXT).latest("id").json
+    geojson['scale4'] = Geojson.objects.using('snc').filter(scale_range=SCALE_4_TEXT).latest("id").json
+    geojson['scale5'] = Geojson.objects.using('snc').filter(scale_range=SCALE_5_TEXT).latest("id").json
+    geojson['scale6'] = Geojson.objects.using('snc').filter(scale_range=SCALE_6_TEXT).latest("id").json
+    geojson['scale7'] = Geojson.objects.using('snc').filter(scale_range=SCALE_7_TEXT).latest("id").json
+
+    return geojson
+
+
 # takes single scale range as string
 def find_geojson_scale_range_single(catalogue, scale_range):
     # catalogue = get_latest_catalogue()

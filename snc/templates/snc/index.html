@@ -118,7 +118,7 @@
 
             {% for chart in  charts %}
                 <!-- ---------------- chart ---------------- -->
-                console.log('chart ' + {{ chart.number }});
+                {#console.log('chart ' + {{ chart.number }});#}
 
                 {% if chart.polygons|length > 0 %}
                     {% for polygon in  chart.polygons %}

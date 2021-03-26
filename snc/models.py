@@ -109,10 +109,10 @@ class Notice(models.Model):
 class Geojson(models.Model):
     catalogue = models.ForeignKey(Catalogue, on_delete=models.CASCADE, default=1)
     cat_id = models.CharField(max_length=50,default='')
-    scale_range = models.CharField(max_length=50, default='')
+    scale_range = models.CharField(max_length=500, default='')
     chart_range = models.CharField(max_length=50, default='')
     type = models.CharField(max_length=50, default='')
-    json = models.TextField(max_length=1000000, default='no_data')
+    json = models.TextField(max_length=5000000, default='no_data')
     chart_number = models.CharField(max_length=50, default='')
     ready = models.BooleanField(default=False)
 
