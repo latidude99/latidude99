@@ -17,24 +17,20 @@
     </div>
 
     <div id="scale-info-box">
-        <p class="ml-1" style="font-size: 16px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
-        </p>
-        <div class="ml-3 text-left">
-            <div class="row mb-2 text-right">
-                <a href="{% url 'snc:charts' %}" role="button" class="btn btn-primary btn-sm py-0"
-                   style="font-size: 12px;"
-                   onclick="$('#error').hide();
-                                $('#loader2').show().delay(5000).hide(0);
-                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
-                    display all charts
-                </a>
-            </div>
-        </div>
 
-        <p class="ml-1" style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
-            or select scale range:</p>
         <form action="{% url 'snc:charts' %}" method="post" style="text-shadow: 1px 1px #26d0ce;">
             {% csrf_token %}
+
+            <button type="submit" class="btn btn-primary btn-sm py-0 ml-2 mb-2 mt-2"
+               style="font-size: 13px;"
+               onclick="$('#error').hide();
+                                $('#loader2').show().delay(5000).hide(0);
+                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
+                load all charts
+            </button>
+            <p class="ml-1" style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+            then turn layers on/off</p>
+
             <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
             <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
             {#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
@@ -73,12 +69,12 @@
                        value="{{ scale7 }}" {{ sc7checked }}>
                 <label class="custom-control-label pt-1" for="sc7">< 1: 5M</label>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm pb-1 mt-2 ml-2" id="apply_scale"
-                    style="font-size: 12px;"
-                    onclick="$('#error').hide();
-                                $('#loader2').show().delay(5000).hide(0);
-                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">Apply
-            </button>
+{#            <button type="submit" class="btn btn-primary btn-sm pb-1 mt-2 ml-2" id="apply_scale"#}
+{#                    style="font-size: 12px;"#}
+{#                    onclick="$('#error').hide();#}
+{#                                $('#loader2').show().delay(5000).hide(0);#}
+{#                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">Apply#}
+{#            </button>#}
         </form>
     </div>
 
@@ -320,7 +316,7 @@
             infoWindow.open(map);
         }
 
-        google.maps.event.addDomListener(window, 'load', initMap());
+        {#google.maps.event.addDomListener(window, 'load', initMap());#}
 
     </script>
 
@@ -354,10 +350,10 @@
     <div id="search" class="scroll-hidden-outer">
 
     {% if charts|length > 0 %}
-    <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
-    <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
-        Click on the chart/panel to see a quick info window.
-    </p>
+        <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
+            <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
+            Click on the chart/panel to see a quick info window.
+        </p>
     {% endif %}
     {% for chart in  charts %}
         <!-- charts accordion start -->

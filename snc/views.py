@@ -17,13 +17,32 @@ def charts_file(request):
     context = service.get_charts_geojson_file_context(SNC_GEOJSON_FILE)
     return render(request, 'snc/charts.html', context)
 
-# loads main charts polygon on to map.Data layers
+# loads main charts polygon on to multiple map.Data layers
 def charts(request):
     ctx = {}
     map_context = {}
     context = service.get_info_context()
     if request.method == 'GET':
         context = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+
+    if request.method == 'POST':
+        zoom = request.POST['zoom']
+        centre = request.POST['centre']
+        map_context = {'map_zoom': zoom, 'map_centre': centre} #, 'map_bounds': bounds}
+
+        context = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+
+    ctx = {**context, **map_context}
+    return render(request, 'snc/charts.html', ctx)
+
+
+# # loads main charts polygon on to a single map.Data layer
+def charts2(request):
+    ctx = {}
+    map_context = {}
+    context = service.get_info_context()
+    if request.method == 'GET':
+        context = service.get_charts_geojson_scale_range_single_db_context(SCALE_ALL_TEXT)
 
     if request.method == 'POST':
         scales = request.POST.getlist('scale')
@@ -39,6 +58,7 @@ def charts(request):
 
     ctx = {**context, **map_context}
     return render(request, 'snc/charts.html', ctx)
+
 
 
 def chartdetails(request):
