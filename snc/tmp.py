@@ -88,7 +88,7 @@ def get_charts(nums):
 
 # service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-print(service_geojson.generate_geojson_and_save_db([SCALE_ALL_TEXT]))
+print(service_geojson.generate_geojson_and_save_db([SCALE_2_TEXT]))
 #service_parse.delete_gejson_catalogue_id([65])
 
 # print(service_geojson.generate_geojson_and_save_db_single_charts([]))

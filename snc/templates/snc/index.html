@@ -16,7 +16,7 @@
         <span id="loader3" class="loader3" style="width: 100%; display:none;"></span>
     </div>
 
-    <div id="scale-info-box">
+    <div id="scale-info-box-index">
 
         <form action="{% url 'snc:charts' %}" method="post" style="text-shadow: 1px 1px #26d0ce;">
             {% csrf_token %}
@@ -82,7 +82,7 @@
         let map;
         let infoWindow;
 
-        document.getElementById("scale-info-box").style.zIndex = '20000';
+        document.getElementById("scale-info-box-index").style.zIndex = '20000';
         document.getElementById("loader-box").style.zIndex = '20000';
 
         function initMap() {
@@ -280,8 +280,7 @@
                 var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < polygons.length; i++) {
                     var paths = polygons[i].getPaths();
-                    console.log(polygons[i])
-                    console.log(paths)
+
                     paths.forEach(function (path) {
                         var ar = path.getArray();
                         for (var i = 0, l = ar.length; i < l; i++) {

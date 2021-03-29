@@ -161,6 +161,7 @@ def generate_geojson(charts):
                                      "set_zIndex": True,
                                      "zIndex": panel.zindex,
                                      "color": "green",
+                                     "max_scale_category": chart.max_scale_category,
                                  }))
                 print('polygon geometry added for ' + chart.number)
             else:
