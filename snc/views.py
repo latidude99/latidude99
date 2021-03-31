@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 import snc.service as service
+import snc.service_geojson as service_geojson
+import snc.repository as repo
 from snc.const import *
 from snc.chart import *
 from snc.models import *
@@ -16,6 +18,7 @@ def index(request):
 def charts_file(request):
     context = service.get_charts_geojson_file_context(SNC_GEOJSON_FILE)
     return render(request, 'snc/charts.html', context)
+
 
 # loads main charts polygon on to multiple map.Data layers
 def charts(request):
@@ -70,6 +73,28 @@ def chartdetails(request):
         chartJSON = service.chartDTO_2_chartJSON(chartDTO)
 
     data['chart'] = chartJSON
+    return JsonResponse(data, safe=False)
+
+
+def chartgeojson(request):
+    geojson = ''
+    data = {'chart': ''}
+    if request.method == 'GET':
+        chart_number = request.GET.get('chart_number')
+        geojson = service_geojson.generate_geojson_single_chart(chart_number)
+
+    data['chart'] = geojson
+    return JsonResponse(data, safe=False)
+
+
+# not used
+def chartgeojson8XXX(request):
+    geojson = ''
+    data = {'chart': ''}
+    if request.method == 'GET':
+        geojson = repo.find_geojson_scale_range_8XXX()
+
+    data['charts'] = geojson
     return JsonResponse(data, safe=False)
 
 

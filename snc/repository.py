@@ -23,6 +23,14 @@ def get_latest_catalogue():
 
 
 # ------------------------- geojson ---------------------------------
+
+def find_geojson_scale_range_8XXX():
+    geojson = ''
+    # catalogue = get_latest_catalogue()
+    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=PORT_APPROACHES).latest("id")
+    geojson = Geojson.objects.using('snc').filter(scale_range=PORT_APPROACHES).latest("id")
+    return geojson.json
+
 def find_geojson_single(num):
     catalogue = get_latest_catalogue()
     geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
@@ -59,6 +67,9 @@ def find_geojson_scale_range_all_split_scales(catalogue):
     geojson['scale5'] = Geojson.objects.using('snc').filter(scale_range=SCALE_5_TEXT).latest("id").json
     geojson['scale6'] = Geojson.objects.using('snc').filter(scale_range=SCALE_6_TEXT).latest("id").json
     geojson['scale7'] = Geojson.objects.using('snc').filter(scale_range=SCALE_7_TEXT).latest("id").json
+    geojson['8XXX'] = Geojson.objects.using('snc').filter(scale_range=PORT_APPROACHES).latest("id").json
+
+    print(geojson['8XXX'])
 
     return geojson
 

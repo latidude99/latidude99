@@ -133,6 +133,7 @@ def get_charts_geojson_scale_range_all_split_scales_db_context(scale_range):
         'charts_geojson_scale_5': geojson['scale5'],
         'charts_geojson_scale_6': geojson['scale6'],
         'charts_geojson_scale_7': geojson['scale7'],
+        'charts_geojson_scale_8XXX': geojson['8XXX'],
     }
     ctx = {**get_base_context(), **context, **ctx_scale_ranges_check, **ctx_scale_ranges}
     return ctx

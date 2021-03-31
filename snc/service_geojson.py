@@ -1,5 +1,5 @@
-#import django
-#django.setup()
+# import django
+# django.setup()
 
 import snc.service_converters as service_converters
 import snc.repository as repo
@@ -20,7 +20,36 @@ def save_geojson_to_file(geojson, file):
     return 'geojson saved to file'
 
 
-# @range - list of chart numbers
+def generate_geojson_single_chart(num):
+    geojson = ''
+    catalogue = repo.get_latest_catalogue()
+    if Chart.objects.using('snc').filter(catalogue=catalogue, number=num).exists():
+        chartDB = Chart.objects.using('snc').get(catalogue=catalogue, number=num)
+        print(chartDB)
+        chart = service_converters.chartDB_2_chartDTO(chartDB)
+        geojson = generate_geojson([chart])
+    return geojson
+
+
+def generate_geojson_and_save_db_8XXX():
+    catalogue = repo.get_latest_catalogue()
+
+    chartsDB = catalogue.chart_set.all()
+    charts = service_converters.chartsDB_2_chartsDTO_except8XXX(chartsDB)
+
+    if len(charts) > 0:
+        geojson = Geojson()
+        gjson = generate_geojson(charts)
+        geojson.scale_range = PORT_APPROACHES
+        geojson.json = gjson
+        geojson.catalogue = catalogue
+        geojson.cat_id = catalogue.id
+        geojson.ready = True
+        geojson.save(using='snc')
+
+        return 'generated and saved in DB geojson for 8XXX charts'
+
+
 def generate_geojson_and_save_db_single_charts(nums):
     catalogue = repo.get_latest_catalogue()
     processed = []
@@ -45,7 +74,6 @@ def generate_geojson_and_save_db_single_charts(nums):
         for num in nums:
             if Chart.objects.using('snc').filter(catalogue=catalogue, number=num).exists():
                 chartDB = Chart.objects.using('snc').get(catalogue=catalogue, number=num)
-                print(chartDB)
                 chart = service_converters.chartDB_2_chartDTO(chartDB)
                 gjson = generate_geojson([chart])
 
@@ -71,10 +99,10 @@ def generate_geojson_and_save_db(scale_range):
     for scale in scale_range:
         geojson = Geojson()
         if scale == SCALE_ALL_TEXT:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue) #.latest('id')
+            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue)  # .latest('id')
             geojson.scale_range = scale_range
         else:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue, max_scale_category=scale) #.latest('id')
+            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue, max_scale_category=scale)  # .latest('id')
             geojson.scale_range = scale
             print(scale)
 
@@ -118,7 +146,7 @@ def generate_geojson(charts):
                                  "catalogue_id": chart.catalogue_id,
                                  "chart_number": chart.number,
                                  "chart_title": chart.title,
-                                 "chart_scale": chart_scale, # processed
+                                 "chart_scale": chart_scale,  # processed
                                  "edition": chart.new_edition_date.strftime('%d %B %Y'),
                                  "last_nm_number": chart.last_nm_number,
                                  "last_nm_date": chart.last_nm_date,
@@ -132,7 +160,6 @@ def generate_geojson(charts):
             print('polygon geometry added for ' + chart.number + ', zindex = ' + str(chart.zindex))
         else:
             invalid_charts.append(chart.number)
-
 
         for panel in chart.panels:
             if panel.scale != '':
@@ -152,11 +179,11 @@ def generate_geojson(charts):
                                  properties={
                                      "type": "panel",
                                      "catalogue_id": chart.catalogue_id,
-                                     "chart_number": chart.number,
+                                     "chart_number": chart.number + '-' + panel.panel_id,
                                      "chart_title": chart.title,
                                      "panel_number": panel.panel_id,
                                      "panel_name": panel.name,
-                                     "panel_scale": panel_scale, # processed
+                                     "panel_scale": panel_scale,  # processed
                                      "polygons": len(panel.polygons),
                                      "set_zIndex": True,
                                      "zIndex": panel.zindex,
@@ -167,7 +194,6 @@ def generate_geojson(charts):
             else:
                 invalid_panels.append(chart.number + panel.panel_id)
 
-
     print('invalid polygons in charts:')
     print(invalid_charts)
     print('invalid polygons in panels:')
@@ -176,34 +202,6 @@ def generate_geojson(charts):
     feature_collection = FeatureCollection(features)
 
     geo_str = json.dumps(feature_collection)
-    #print(geo_str)
+    # print(geo_str)
 
     return geo_str
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

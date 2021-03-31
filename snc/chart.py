@@ -28,7 +28,7 @@ class ChartDTO:
     label_position: str = ''
     colour: str = ''
     zindex: str = ''
-
+    geojson: str = ''
 
 
 

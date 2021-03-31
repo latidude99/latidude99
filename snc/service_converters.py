@@ -38,6 +38,19 @@ def chartsDB_2_chartsDTO(chartsDB):
     return charts
 
 
+def chartsDB_2_chartsDTO_except8XXX(chartsDB):
+    charts = []
+    print(chartsDB)
+    for chartDB in chartsDB:
+        try:
+            if (int(chartDB.number) > 7999) & (int(chartDB.number) < 9000): # port approaches chart numbers
+                chart = chartDB_2_chartDTO(chartDB)
+                charts.append(chart)
+        except:
+            pass
+    return charts
+
+
 def chartDB_2_chartDTO(chartDB):
     chartDTO = ChartDTO()
     chartDTO.catalogue_id = chartDB.catalogue.date.strftime('%d %b %Y') # chartDB.catalogue.file_identifier + ', ' +

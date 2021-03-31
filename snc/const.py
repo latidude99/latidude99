@@ -31,6 +31,7 @@ MAP_ZOOM = '5'
 MAP_CENTRE = '{lat: 54.15, lng: -2.72}'
 MAP_BOUNDS = ''
 
+PORT_APPROACHES = 'port_approaches'
 
 # SCALE and SCALE_TEXT used in DB - do not change!
 SCALE_0 = 0

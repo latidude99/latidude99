@@ -16,69 +16,72 @@
         <span id="loader3" class="loader3" style="width: 100%; display:none;"></span>
     </div>
 
-    <div id="scale-info-box-index">
+    <div id="scale-info-box-index" style='z-index:2000;'>
 
         <form action="{% url 'snc:charts' %}" method="post" style="text-shadow: 1px 1px #26d0ce;">
             {% csrf_token %}
-
-            <button type="submit" class="btn btn-primary btn-sm py-0 ml-2 mb-2 mt-2"
-               style="font-size: 13px;"
-               onclick="$('#error').hide();
+            <div style="border-left: 3px solid #3333cc;">
+                <div class="ml-1">
+                    <button type="submit" class="btn btn-primary btn-sm py-0 ml-2 mb-2 mt-2"
+                            style="font-size: 13px;"
+                            onclick="$('#error').hide();
                                 $('#loader2').show().delay(5000).hide(0);
                                 $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
-                load all charts
-            </button>
-            <p class="ml-1" style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
-            then turn layers on/off</p>
+                        load all charts
+                    </button>
+                    <p class="ml-1"
+                       style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+                        then turn layers on/off</p>
 
-            <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
-            <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
-            {#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc1" name="scale"
-                       value="{{ scale1 }}" {{ sc1checked }}>
-                <label class="custom-control-label pt-1" for="sc1">> 1:4,000</label>
+                    <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
+                    <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
+                    {#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc1" name="scale"
+                               value="{{ scale1 }}" {{ sc1checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc1">> 1:4,000</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc2" name="scale"
+                               value="{{ scale2 }}" {{ sc2checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc2">1: 4k - 22k</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc3" name="scale"
+                               value="{{ scale3 }}" {{ sc3checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc3">1: 22k - 90k</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc4" name="scale"
+                               value="{{ scale4 }}" {{ sc4checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc4">1: 90k - 1:350k</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc5" name="scale"
+                               value="{{ scale5 }}" {{ sc5checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc5">1: 350k - 1,5M</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc6" name="scale"
+                               value="{{ scale6 }}" {{ sc6checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc6">1: 1,5M - 5M</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sc7" name="scale"
+                               value="{{ scale7 }}" {{ sc7checked }} disabled>
+                        <label class="custom-control-label pt-1" for="sc7">< 1: 5M</label>
+                    </div>
+                </div>
             </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc2" name="scale"
-                       value="{{ scale2 }}" {{ sc2checked }}>
-                <label class="custom-control-label pt-1" for="sc2">1: 4k - 22k</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc3" name="scale"
-                       value="{{ scale3 }}" {{ sc3checked }}>
-                <label class="custom-control-label pt-1" for="sc3">1: 22k - 90k</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc4" name="scale"
-                       value="{{ scale4 }}" {{ sc4checked }}>
-                <label class="custom-control-label pt-1" for="sc4">1: 90k - 1:350k</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc5" name="scale"
-                       value="{{ scale5 }}" {{ sc5checked }}>
-                <label class="custom-control-label pt-1" for="sc5">1: 350k - 1,5M</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc6" name="scale"
-                       value="{{ scale6 }}" {{ sc6checked }}>
-                <label class="custom-control-label pt-1" for="sc6">1: 1,5M - 5M</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="sc7" name="scale"
-                       value="{{ scale7 }}" {{ sc7checked }}>
-                <label class="custom-control-label pt-1" for="sc7">< 1: 5M</label>
-            </div>
-{#            <button type="submit" class="btn btn-primary btn-sm pb-1 mt-2 ml-2" id="apply_scale"#}
-{#                    style="font-size: 12px;"#}
-{#                    onclick="$('#error').hide();#}
-{#                                $('#loader2').show().delay(5000).hide(0);#}
-{#                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">Apply#}
-{#            </button>#}
         </form>
     </div>
 
     <script>
+
+        document.getElementById('scale-info-box-index').onmouseover = function () {
+            document.getElementById('scale-info-box-index').style.opacity = '100';
+        };
+
         let map;
         let infoWindow;
 
@@ -313,7 +316,10 @@
             infoWindow.setPosition(event.latLng);
 
             infoWindow.open(map);
+
+
         }
+
 
         {#google.maps.event.addDomListener(window, 'load', initMap());#}
 
