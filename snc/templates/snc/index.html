@@ -83,24 +83,33 @@
     <!-- left side help modal - load charts -->
     <div class="modal" id="help_load">
         <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:70px;">
-            <div class="modal-content" style="background-color: #e6e6ff">
+            <div class="modal-content" style="background-color: #e6ecff">
                 <div class="modal-body">
                     <div style="font-size:12px;">
-                        <p style="margin-bottom:0px">
-                            Loads all charts from the database.
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Loads all charts from the latest catalogue.
                         </p>
-                        <p style="margin-bottom: 8px">
-                            (takes a sec or two)
+                        <p style="margin-bottom: 8px;text-align: center;">
+                            (may takes a second or two)
                         </p>
                         <hr>
                         <p style="margin-bottom: 5px">
                             After the charts are loaded all the scale ranges are turned on but the last two.
                         </p>
-                            <p style="margin-bottom: 5px">
+                        <ul>
+                            <li>{{ scale1 }}</li>
+                            <li>{{ scale2 }}</li>
+                            <li>{{ scale3 }}</li>
+                            <li>{{ scale4 }}</li>
+                            <li>{{ scale5 }}</li>
+                            <li>{{ scale6 }}</li>
+                            <li>{{ scale7 }}</li>
+                        </ul>
+                        <p style="margin-bottom: 5px">
                             The last two scale ranges are loaded but turned off initially.
                         </p>
                         <p style="margin-bottom: 5px">
-                           This is for clarity - large area charts obscure the view of the smaller ones.
+                            This is for clarity - large area charts obscure the view of the smaller ones.
                         </p>
                         <p style="margin-bottom: 0px">
                             All the scale ranges can be turned on /off independently.
@@ -128,6 +137,8 @@
             let mapOptions = {
                 zoom: {{ map_zoom }},
                 center: {{ map_centre }},
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
