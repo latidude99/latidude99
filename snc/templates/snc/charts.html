@@ -163,16 +163,18 @@
                                 style="font-size: 13px;">
                             find & center
                         </button>
+                        <!-- left side help modal - found charts -->
+                        <i class="far fa-question-circle fa-lg mt-3 mr-1 float-right"
+                           data-toggle="modal" data-target="#help_found"
+                           style="color: #00cc00;cursor:pointer">
+                        </i>
                     </p>
                 </form>
-                <button class="btn btn-success btn-sm py-0 ml-1 mb-1" id="clear_centered_btn" style="font-size: 13px;">
+                <button class="btn btn-success btn-sm py-0 ml-1 mb-1 mr-1" id="clear_centered_btn"
+                        style="font-size: 13px;">
                     clear
                 </button>
-                <!-- left side help modal - found charts -->
-                <i class="far fa-question-circle fa-lg mt-1 mr-1 float-right"
-                   data-toggle="modal" data-target="#help_found"
-                   style="color: #00cc00;cursor:pointer">
-                </i>
+                <span style="font-size:11px;color: #1b7943;" id="found_number"></span>
             </div>
         </div>
         <div class=" mb-1"></div>
@@ -901,6 +903,8 @@
                     }
                     map.fitBounds(bounds);
                 }
+                let info = charts.length > 0 ? 'found the chart' : 'chart not found';
+                document.getElementById('found_number').innerText = info;
             };
 
             // top info found layer charts -- not working
@@ -920,6 +924,8 @@
                 for (let i = 0; i < charts.length; i++) {
                     clearChartCentered(chart)
                 }
+                document.getElementById('found_number').innerText = '';
+                document.getElementById('find_number').value = '';
             }
 
             // clears centered chart style
@@ -927,6 +933,8 @@
                 for (let i = 0; i < found_layer_charts.length; i++) {
                     found_layer.remove(found_layer_charts[i])
                 }
+                document.getElementById('found_number').innerText = '';
+                document.getElementById('find_number').value = '';
             };
 
             function findChartsByNumber(number) {
@@ -934,15 +942,13 @@
                 let charts = [];
                 let ch;
                 // main chart
-                if ((ch = getFeaturesByIdFromScaleLayers(numbers[0])) !== undefined) {
+                if ((ch = getFeaturesByIdFromScaleLayers(numbers[0].toUpperCase())) !== undefined) {
                     charts.push(ch);
-                    console.log(ch);
                 }
                 // panels
                 for (let i = 1; i < 17; i++) {
-                    if ((ch = getFeaturesByIdFromScaleLayers(numbers[0] + '-' + i)) !== undefined) {
+                    if ((ch = getFeaturesByIdFromScaleLayers(numbers[0].toUpperCase() + '-' + i)) !== undefined) {
                         charts.push(ch);
-                        console.log(ch);
                     }
                 }
                 return charts;
