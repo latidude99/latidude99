@@ -39,6 +39,16 @@ The charts coverage is shown on the left side on top of Google Maps
   <br>
 <p align="center">
 <img src="../images/snc_4.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_5.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_6.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_7.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_8.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_9.png" width=100%> </p>
 	
  
 
