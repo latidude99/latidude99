@@ -21,7 +21,7 @@ A service displaying coverage of the UKHO Standard Navigational Charts on Google
 
 ## How it works
 
-The application serves as an online Admiralty Standard Navigational Charts catalogue with charts coverage and basic info displayed on top of Google MAps. The catalogue data are taken from xml files issued by the UKHO weekly and parsed into an SQL database.
+The application serves as an online Admiralty Standard Navigational Charts catalogue with charts coverage and basic info displayed on top of Google Maps. The catalogue data are taken from xml files issued by the UKHO weekly and parsed into an SQL database.
 
 There are two main modes you can use:
 
@@ -33,7 +33,7 @@ There are two main modes you can use:
 	- Hovering over a chart or panel polygon triggers top info bars with basic info such as chart/panel number, title and scale.
 	- Clicking on a chart or panel polygon fetches detailed information and displays it on the right side next to the map window.
 	- Allows to switch on/off selected scale ranges for clarity.
-		- > 1:4,000
+		-  > 1:4,000
 		- 1:4,000 - 1:22,000
 		- 1:22,000 - 1:90,000
 		- 1:90,000 - 1:350,000
