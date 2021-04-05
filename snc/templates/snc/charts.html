@@ -29,7 +29,7 @@
 
     <div id="scale-info-box">
         <div class=" mb-1"></div>
-        <form action="{% url 'snc:charts' %}" method="post" style="text-shadow: 1px 1px #26d0ce;">
+        <form action="{% url 'snc:charts' %}" method="post" style="">
             {% csrf_token %}
             <div style="border-left: 3px solid #3333cc;">
                 <div class="ml-1">
@@ -191,11 +191,11 @@
                             Reloads all charts from the latest catalogue.
                         </p>
                         <p style="margin-bottom: 8px;text-align: center;">
-                            (may takes a second or two)
+                            (may take a second or two)
                         </p>
                         <hr>
                         <p style="margin-bottom: 5px">
-                            After the charts are loaded all the scale ranges are turned on but the last two.
+                            After the charts are loaded all the scale ranges are turned on except the last two.
                         </p>
                         <ul>
                             <li>{{ scale1 }}</li>
@@ -236,20 +236,20 @@
                         </p>
                         <hr>
                         <p style="margin-bottom: 5px">
-                            Port Approaches charts are displayed on top of Standard Charts.
+                            These charts are displayed on top of Standard Charts.
                         </p>
                         <p style="margin-bottom: 5px">
                             Switching the layer on highlights the charts in red so they
                             are easier to notice.
                         </p>
                         <p style="margin-bottom: 5px">
-                            The layer the charts are on can be turned on /off independently
+                            The Port Approaches layer can be turned on /off independently
                             from all the other layers.
                         </p>
                         <p style="margin-bottom: 0px">
-                            Initially loaded charts for all scale ranges include Port Approaches
-                            charts as well. Loading them additionally on top is for
-                            making them stand out on the map.
+                            Charts on scale ranges layers include Port Approaches
+                            charts as well. Loading them additionally on top is to
+                            make them stand out on the map.
                         </p>
                     </div>
                 </div>
@@ -271,18 +271,18 @@
                         </p>
                         <hr>
                         <p style="margin-bottom: 5px">
-                            Chart and panel polygons can be removed from the map
-                            one by one.
+                            Chart and panel polygons can be removed from the map on a
+                            one by one basis by the right mouse click.
                         </p>
                         <p style="margin-bottom: 5px">
-                            This is to get rid of polygons that obscure view of smaller polygons.
+                            This allows to get rid of polygons that obscure view of smaller polygons.
                         </p>
                         <p style="margin-bottom: 5px">
                             The process can be reverted by restoring polygons one by one
                             (in the reversed order they were removed) or all at once.
                         </p>
                         <p style="margin-bottom: 0px">
-                            The restored charts are added to the same layers they were removed from.
+                            The restored charts are added to the same range scale layer they were removed from.
                         </p>
                     </div>
                 </div>
@@ -303,7 +303,7 @@
                         </p>
                         <hr>
                         <p style="margin-bottom: 5px">
-                            Highlights the chart in light green and centres the map on it.
+                            Highlights the chart in light green colour and centres the map on it.
                         </p>
                         <p style="margin-bottom: 5px">
                             The chart is added to the layer on top of all other charts.
@@ -336,7 +336,7 @@
                             Triggered when the mouse pointer is moved over a polygon on the map.
                         </p>
                         <p style="margin-bottom: 5px">
-                            Depending on the type of polygon it shows:
+                            Depending on the type of the polygon it shows:
                         </p>
                         <ul>
                             <li>for main chart polygons</li>
@@ -903,7 +903,7 @@
                     }
                     map.fitBounds(bounds);
                 }
-                let info = charts.length > 0 ? 'found the chart' : 'chart not found';
+                let info = charts.length > 0 ? '1 chart found' : 'chart not found';
                 document.getElementById('found_number').innerText = info;
             };
 

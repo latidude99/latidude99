@@ -1,3 +1,5 @@
+from snc.const import *
+
 LATIDUDE99 = 'latidude99.com'
 
 DATE_LABELS_FMT = '%d %b %Y'
@@ -205,7 +207,6 @@ IMAGE_COVIDUK_2 = 'images/coviduk2.png'
 IMAGE_COVIDUK_3 = 'images/coviduk3.png'
 IMAGE_COVIDUK_4 = 'images/coviduk4.png'
 
-
 # ----------------------- OWID ---------------------------
 OWID_LINK = ''
 OWID_TITLE = 'the world in numbers'
@@ -240,7 +241,6 @@ OWID_IN_DEPTH6 = ''
 OWID_IN_DEPTH7 = ''
 OWID_IN_DEPTH8 = ''
 
-
 IMAGE_OWID_1 = 'images/owid1.png'
 IMAGE_OWID_2 = 'images/owid2.png'
 IMAGE_OWID_3 = 'images/owid3.png'
@@ -260,7 +260,6 @@ IMAGE_OWID_16 = 'images/owid16.png'
 IMAGE_OWID_17 = 'images/owid17.png'
 IMAGE_OWID_18 = 'images/owid18.png'
 IMAGE_OWID_19 = 'images/owid19.png'
-
 
 # ----------------------- PRICECHECK ---------------------------
 PRICECHECK_LINK = ''
@@ -303,7 +302,6 @@ PRICECHECK_IN_DEPTH14 = 'Users are able to see a detailed list of all products t
                         'their email address and the unique user ID (generated when the email address is submitted ' \
                         'for the first time)'
 
-
 IMAGE_PRICECHECK_1 = 'images/pr_1.png'
 IMAGE_PRICECHECK_2 = 'images/pr_2a.png'
 IMAGE_PRICECHECK_3 = 'images/pr_3.png'
@@ -324,7 +322,6 @@ IMAGE_PRICECHECK_17 = 'images/pr_17.png'
 IMAGE_PRICECHECK_18 = 'images/pr_18.png'
 IMAGE_PRICECHECK_19 = 'images/pr_19.png'
 
-
 # ----------------------- SNC ---------------------------
 SNC_LINK = ''
 SNC_TITLE = 'charts coverage index'
@@ -334,28 +331,76 @@ SNC_DATA_SUPPLY = ''
 SNC_APP_BTN_TXT = 'go to the app'
 IMAGE_SNC = 'images/snc_0.png'
 
-SNC_IN_SHORT = 'A slim down web version of the desktop application. Desktop JavaFX application ,' \
-               ' re-written in Python as a web application. Serves detailed information on Standard Admiralty Charts ' \
-                     'and shows their coverage on Google Maps.'
-SNC_TECH = 'Python 3, Django 3, MySQL 5.7, Bootstrap 4, Google Maps Javascript API v.3 '
+SNC_IN_SHORT = 'A web application that serves as an online Admiralty Standard Navigational Charts catalogue ' \
+               'with charts coverage and basic info displayed on top of Google Maps. The catalogue data are ' \
+               'taken from xml files issued by the UKHO weekly and parsed into an SQL database.'
+SNC_TECH = 'Python 3, Django 3, MySQL 5.7, Bootstrap 4, jQuery, Google Maps Javascript API v.3'
 SNC_DATA_SOURCE_TXT = ''
 SNC_DATA_SOURCE_TXT2 = ''
 SNC_DATA_SOURCE_LINK = ''
-SNC_IN_DEPTH1 = 'My fourth Python web project, based on Django framework. '
-SNC_IN_DEPTH2 = 'Every week the United Kingdom Hydrographic Office issues a digital catalogue ' \
-                      'for their Standard Paper Charts in XML format. It\'s not the most pleasant thing ' \
-                      'in the world to use it in its raw form. ' \
-                      'Hence the idea to make searching ' \
-                      'for charts information a bit more user friendly.'
-SNC_IN_DEPTH3 = 'The application makes it possible to search for ' \
-                      'the exact match of a single chart or a range of charts.'
+SNC_IN_DEPTH1 = 'My fourth Python web project, again based on Django framework. '
+SNC_IN_DEPTH2 = 'It has been built on the desktop version I committed about two years back and that served well' \
+                'for an internal use in my workplace being used almost daily.'
 
-SNC_IN_DEPTH4 = 'Detailed information of the found chart is displayed in the right panel. ' \
-                      'That includes basic info such as scale, edition date, last NM number and date as well as ' \
-                'number of panels with their names and scales. Also, lists all the Notices to Mariners for the chart,' \
-                ' starting with the latest one.'
-SNC_IN_DEPTH5 = 'The charts coverage is shown on the left side on top of Google Maps'
+SNC_IN_DEPTH3 = 'The desktop version was written in JavaFX and used with a local NoSQL database based on MongoDB. ' \
+                'However, when re-written as a web application in Python it turned out to be much slower. '
 
+SNC_IN_DEPTH4 = 'This was due to using an SQL remote database and the fact that charts data required converting ' \
+                'into DTO objects before feeding Google Maps API with it. It worked fine for up to a couple of ' \
+                'dozen charts but it was way too slow for thousands. Solved by preprocessing the chart data ' \
+                'and storing them in an extra table as Geojson ready to be directly loaded in Google Maps.'
+
+SNC_IN_DEPTH5 = 'Another problem was with the use of Google Maps Polygon objects. Displaying thousands at the same ' \
+                'seemed to put too much strain on the browser (Chrome/Firefox/Edge all the same). ' \
+                'The solution was to switch to drawing polygons on Google Maps Data layer. It offered less control over a single ' \
+                'polygon (zIndex being the most problematic) but with a changed approach to displaying charts info ' \
+                'it turned out to be sufficient.'
+
+SNC_IN_DEPTH6 = 'Given all the above the application combines both approaches to display charts coverage ' \
+                'along with the charts detailed information.'
+
+SNC_IN_DEPTH7 = 'There are two main modes you can use:'
+
+SNC_IN_DEPTH8 = 'Selected charts detailed info and focus'
+
+SNC_IN_DEPTH9 = 'Allows you to search, isolate and display only single or a few charts. ' \
+                 'It assumes you already know the chart number(s) and want to check their coverage ' \
+                 'and/or information on scale, last edition date and notices to mariners.'
+
+SNC_IN_DEPTH10 = 'All charts coverage display and info.'
+
+SNC_IN_DEPTH11 = 'Meant for those who want to see what charts are available ' \
+                 'in their area of interest.'
+
+SNC_IN_DEPTH12 = 'Allows to switch on/off selected scale ranges for clarity.'
+
+SNC_IN_DEPTH13 = SCALE_1_TEXT
+SNC_IN_DEPTH14 = SCALE_2_TEXT
+SNC_IN_DEPTH15 = SCALE_3_TEXT
+SNC_IN_DEPTH16 = SCALE_4_TEXT
+SNC_IN_DEPTH17 = SCALE_5_TEXT
+SNC_IN_DEPTH18 = SCALE_6_TEXT
+SNC_IN_DEPTH19 = SCALE_7_TEXT
+
+SNC_IN_DEPTH20 = 'Last map position and zoom level are remembered ' \
+                 'when using options available within the service. May not work on page reload using ' \
+                 'browser\'s buttons.'
+
+SNC_IN_DEPTH21 = 'Gives an option to load Port Approaches charts on a separate layer ' \
+                 'and switch that layer on and off independently from all the other layers.'
+
+SNC_IN_DEPTH22 = 'To improve clarity chart and panel polygons can be removed from the map ' \
+                 'on a one by one basis by the right mouse click. This is temporary and can be reverted ' \
+                 'also one by one in the reverse order.'
+
+SNC_IN_DEPTH23 = 'Allows to search for a single chart - if found it highlights the chart in light green colour ' \
+                 'and centres the map on it'
+
+SNC_IN_DEPTH24 = 'Hovering over a chart or panel polygon triggers top info bars with basic info such as ' \
+                 'chart/panel number, title and scale.'
+
+SNC_IN_DEPTH25 = 'Clicking on a chart or panel polygon fetches detailed information and displays it ' \
+                 'on the right side next to the map window.'
 
 IMAGE_SNC_1 = 'images/snc_1.png'
 IMAGE_SNC_2 = 'images/snc_2.png'
@@ -367,9 +412,6 @@ IMAGE_SNC_7 = 'images/snc_7.png'
 IMAGE_SNC_8 = 'images/snc_8.png'
 IMAGE_SNC_9 = 'images/snc_9.png'
 IMAGE_SNC_10 = 'images/snc_10.png'
-
-
-
 
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'
@@ -590,9 +632,9 @@ FOLDERBACKUP_IN_DEPTH3 = 'The content of the result ZIP file includes ' \
                          '.log and .config files ' \
                          'unless excluded explicitly in the FolderBackupUtilFX.config file. '
 FOLDERBACKUP_IN_DEPTH4 = 'By default the ZIP file name is composed of: ' \
-                             'folder name + _backup_ + date and time + .zip ' \
-                             '(eg. FolderBeingBackedUp_backup_2019-07-01 10.51.zip) ' \
-                             'unless configured otherwise in the .config file.'
+                         'folder name + _backup_ + date and time + .zip ' \
+                         '(eg. FolderBeingBackedUp_backup_2019-07-01 10.51.zip) ' \
+                         'unless configured otherwise in the .config file.'
 FOLDERBACKUP_IN_DEPTH5 = 'The .log file with the config options info and a list of all the archived files ' \
                          'is created under the same name as the main archive but with the .log extension.'
 FOLDERBACKUP_IN_DEPTH6 = 'Default location of the created archive is ' \
