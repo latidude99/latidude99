@@ -3,7 +3,8 @@
 
 - 🔭 I’m currently working on **Price Tracking Service**
 
-- 🌱 I’m currently learning **Python, Flask, Django**
+- 🌱 
+- ~~I’m currently learning **Python, Flask, Django**~~ Back to Java, Spring and Docker for a while.
 
 - 👨‍💻 Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)
 
