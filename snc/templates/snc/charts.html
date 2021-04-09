@@ -630,8 +630,22 @@
                 if (scale > 3_500_000) {
                     scale_1_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_1_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_1_layer.overrideStyle(
+                                scale_1_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_1_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_1_layer.overrideStyle(
+                            scale_1_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_1_layer.overrideStyle(event.feature,
-                        {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
+                        {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
                 }
                 topInfo(event);
             });
@@ -642,8 +656,22 @@
                 if (scale > 3_500_000) {
                     scale_2_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_2_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_2_layer.overrideStyle(
+                                scale_2_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_2_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_2_layer.overrideStyle(
+                            scale_2_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_2_layer.overrideStyle(event.feature,
-                        {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
+                        {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
                 }
                 topInfo(event);
             });
@@ -654,6 +682,20 @@
                 if (scale > 3_500_000) {
                     scale_3_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_3_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_3_layer.overrideStyle(
+                                scale_3_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_3_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_3_layer.overrideStyle(
+                            scale_3_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_3_layer.overrideStyle(event.feature,
                         {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
                 }
@@ -666,6 +708,20 @@
                 if (scale > 3_500_000) {
                     scale_4_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_4_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_4_layer.overrideStyle(
+                                scale_4_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_4_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_4_layer.overrideStyle(
+                            scale_4_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_4_layer.overrideStyle(event.feature,
                         {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
                 }
@@ -678,6 +734,20 @@
                 if (scale > 3_500_000) {
                     scale_5_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_5_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_5_layer.overrideStyle(
+                                scale_5_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_5_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_5_layer.overrideStyle(
+                            scale_5_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_5_layer.overrideStyle(event.feature,
                         {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
                 }
@@ -690,6 +760,20 @@
                 if (scale > 3_500_000) {
                     scale_6_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_6_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_6_layer.overrideStyle(
+                                scale_6_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_6_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_6_layer.overrideStyle(
+                            scale_6_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_6_layer.overrideStyle(event.feature,
                         {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
                 }
@@ -702,6 +786,20 @@
                 if (scale > 3_500_000) {
                     scale_7_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
                 } else {
+                    let id = (event.feature.getProperty("chart_number"));
+                    let chart_number = id.split("-");
+                    for (let i = 1; i < 17; i++) {
+                        if (scale_7_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            scale_7_layer.overrideStyle(
+                                scale_7_layer.getFeatureById(chart_number[0] + '-' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                        }
+                    }
+                    if (scale_7_layer.getFeatureById(chart_number[0]) !== undefined) {
+                        scale_7_layer.overrideStyle(
+                            scale_7_layer.getFeatureById(chart_number[0]),
+                            {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                    }
                     scale_7_layer.overrideStyle(event.feature,
                         {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.1});
                 }
