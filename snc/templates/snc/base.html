@@ -278,7 +278,7 @@
             color: #96281b;
         {#line-height: 6px;#} font-size: 15px;
             text-overflow: ellipsis;
-            word-wrap: break-spaces;
+            word-wrap: break-word;
             white-space: nowrap;
             overflow: hidden;
         }
@@ -408,11 +408,17 @@
                             <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
                             catalogue info
                         </a>
+                        <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                           data-target="#cat_down" aria-expanded="true" aria-controls="cat_down"
+                           style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                            <i class="fas fa-anchor" style="font-size:12px;color:#4183d7;margin:7px 0px 0px 25px;"></i>
+                        </a>
                         <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
                            data-target="#help" aria-expanded="true" aria-controls="help"
                            style="text-decoration: none; cursor:pointer;
                                font-size:12px; color:grey;">
-                            <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                            <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;" aria-hidden="true"></i>
                             about
                         </a>
                         <hr>
@@ -483,12 +489,78 @@
                             </div>
                         </div>
 
+                        <div id="cat_down" class="collapse" data-parent="#accordion"
+                             aria-labelledby="cat_down_head" style="color:#96281b;">
+                            <div class="input-group input-group-sm mb-1" style="font-size:11px;">
+                                <input id="u" type="text" class="form-control" style="max-height: 20px;">
+                                <input id="p" type="password" class="form-control" style="max-height: 20px;">
+                                <div class="input-group-append">
+                                    <button id="cat" class="input-group-text btn btn-outline-dark btn-sm"
+                                            style="font-size:11px;max-height:20px;min-width:50px;cursor:pointer;">
+                                        <span id="minutes">00</span>:<span id="seconds">00</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-center" style="font-size:11px; color:blue;">
+                                <span id="cat-num"></span>
+                                <span id="cat-date"></span>
+                                <span id="cat-lines"></span>
+                                <span id="cat-status"></span>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#cat').click(function d_c() {
+                                $('#cat-num').text('');
+                                $('#cat-date').text('');
+                                $('#cat-lines').text('');
+
+                                let u = $('#u').val();
+                                let p = $('#p').val();
+
+                                console.log(u + ', ' + p)
+
+                                let timer;
+                                let sec = 0;
+
+                                function pad(val) {
+                                    return val > 9 ? val : "0" + val;
+                                }
+
+                                timer = setInterval(function () {
+                                    $("#seconds").html(pad(++sec % 60));
+                                    $("#minutes").html(pad(parseInt(sec / 60, 10)));
+                                }, 1000);
+
+                                $('#cat').attr("disabled", true);
+
+                                $.post('{%  url 'snc:download_catalogue_latest'  %}',
+                                    {'u': u, 'p': p},
+                                    function (response) {
+                                        if (response.check === 'ok') {
+                                            let catalogue_number = response.catalogue_number
+                                            let catalogue_date = response.catalogue_date
+                                            let catalogue_lines = response.catalogue_lines
+
+                                            $('#cat-num').text('id: ' + catalogue_number);
+                                            $('#cat-date').text(', date: ' + catalogue_date);
+                                            $('#cat-lines').text(', lines: ' + catalogue_lines);
+                                        }else{
+                                            $('#cat-status').text('\\m/_(>_<)_\\m/');
+                                        }
+                                        clearInterval(timer);
+                                        $('#cat').removeAttr("disabled");
+                                    }
+                                );
+                            });
+                        </script>
+
                         <div id="help" class="collapse" data-parent="#accordion"
                              aria-labelledby="info_main_head" style="color:#96281b;">
 
                             <div style="font-size:12px;">
                                 <p style="margin-bottom: 5px">
-                                    This a free service that allows to search and display Admiralty charts
+                                    This is a free service that allows to search and display Admiralty charts
                                     coverage on top of Google Maps.
                                 </p>
                                 <p style="margin-bottom: 10px">
@@ -548,11 +620,11 @@
                     <form action="{% url 'snc:multisearch' %}" method="post"
                           class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <p class="py-2 mt-0 mb-0 text-center" style="font-size: 12px; color:navy;">
+                        <p class="py-2 mt-0 mb-0 text-center" style="font-size: 13px; color:blueviolet;">
                             Display and focus on selected charts.
-                            <i class="far fa-question-circle fa-lg mt-1 ml-3 fa-1x"
+                            <i class="far fa-question-circle fa-lg mt-1 ml-3 fa-lg"
                                data-toggle="modal" data-target="#help_search"
-                               style="color: navy;cursor:pointer">
+                               style="color: blueviolet;cursor:pointer">
                             </i>
                         </p>
                         <div class="input-group input-group-sm" style="font-size: 14px">
@@ -639,7 +711,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 {% block content_right %}{% endblock %}

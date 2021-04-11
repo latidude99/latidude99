@@ -23,8 +23,8 @@ def save_geojson_to_file(geojson, file):
 def generate_geojson_single_chart(num):
     geojson = ''
     catalogue = repo.get_latest_catalogue()
-    if Chart.objects.using('snc').filter(catalogue=catalogue, number=num).exists():
-        chartDB = Chart.objects.using('snc').get(catalogue=catalogue, number=num)
+    if Chart.objects.using(DB).filter(catalogue=catalogue, number=num).exists():
+        chartDB = Chart.objects.using(DB).get(catalogue=catalogue, number=num)
         print(chartDB)
         chart = service_converters.chartDB_2_chartDTO(chartDB)
         geojson = generate_geojson([chart])
@@ -45,7 +45,7 @@ def generate_geojson_and_save_db_8XXX():
         geojson.catalogue = catalogue
         geojson.cat_id = catalogue.id
         geojson.ready = True
-        geojson.save(using='snc')
+        geojson.save(using=DB)
 
         return 'generated and saved in DB geojson for 8XXX charts'
 
@@ -67,13 +67,13 @@ def generate_geojson_and_save_db_single_charts(nums):
             geojson.catalogue = catalogue
             geojson.cat_id = catalogue.id
             geojson.ready = True
-            geojson.save(using='snc')
+            geojson.save(using=DB)
             processed.append(chartDB.number)
 
     else:
         for num in nums:
-            if Chart.objects.using('snc').filter(catalogue=catalogue, number=num).exists():
-                chartDB = Chart.objects.using('snc').get(catalogue=catalogue, number=num)
+            if Chart.objects.using(DB).filter(catalogue=catalogue, number=num).exists():
+                chartDB = Chart.objects.using(DB).get(catalogue=catalogue, number=num)
                 chart = service_converters.chartDB_2_chartDTO(chartDB)
                 gjson = generate_geojson([chart])
 
@@ -84,7 +84,7 @@ def generate_geojson_and_save_db_single_charts(nums):
                 geojson.catalogue = catalogue
                 geojson.cat_id = catalogue.id
                 geojson.ready = True
-                geojson.save(using='snc')
+                geojson.save(using=DB)
                 processed.append(num)
 
     return 'generated and saved in DB geojson for charts: ' + str(range)
@@ -99,10 +99,10 @@ def generate_geojson_and_save_db(scale_range):
     for scale in scale_range:
         geojson = Geojson()
         if scale == SCALE_ALL_TEXT:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue)  # .latest('id')
+            chartsDB = Chart.objects.using(DB).filter(catalogue=catalogue)  # .latest('id')
             geojson.scale_range = scale_range
         else:
-            chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue, max_scale_category=scale)  # .latest('id')
+            chartsDB = Chart.objects.using(DB).filter(catalogue=catalogue, max_scale_category=scale)  # .latest('id')
             geojson.scale_range = scale
             print(scale)
 
@@ -115,7 +115,7 @@ def generate_geojson_and_save_db(scale_range):
             geojson.catalogue = catalogue
             geojson.cat_id = catalogue.id
             geojson.ready = True
-            geojson.save(using='snc')
+            geojson.save(using=DB)
 
     return 'generated and saved in DB geojson for charts: ' + ', '.join(scale_range)
 

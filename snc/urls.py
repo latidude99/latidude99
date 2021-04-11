@@ -16,5 +16,7 @@ urlpatterns = [
 
     path('multisearch', views.multisearch, name='multisearch'),
 
+    path('download_catalogue_latest', views.download_catalogue_latest, name='download_catalogue_latest'),
+
 ]
 

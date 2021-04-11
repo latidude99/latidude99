@@ -13,7 +13,7 @@ import snc.service_converters as service_converters
 
 def get_latest_catalogue():
     catalogue = ''
-    catalogues = Catalogue.objects.using('snc').all()
+    catalogues = Catalogue.objects.using(DB).all()
     for c in reversed(catalogues):
         print(c.id)
         if c.ready:
@@ -27,13 +27,13 @@ def get_latest_catalogue():
 def find_geojson_scale_range_8XXX():
     geojson = ''
     # catalogue = get_latest_catalogue()
-    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=PORT_APPROACHES).latest("id")
-    geojson = Geojson.objects.using('snc').filter(scale_range=PORT_APPROACHES).latest("id")
+    #geojson = Geojson.objects.using(DB).filter(cat_id=catalogue.id, scale_range=PORT_APPROACHES).latest("id")
+    geojson = Geojson.objects.using(DB).filter(scale_range=PORT_APPROACHES).latest("id")
     return geojson.json
 
 def find_geojson_single(num):
     catalogue = get_latest_catalogue()
-    geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
+    geojson = Geojson.objects.using(DB).filter(cat_id=catalogue.id, chart_number=num).latest("id")
     return geojson
 
 
@@ -46,9 +46,9 @@ def find_geojson_multiple(nums):
 
     json = json_start
     for num in nums:
-        if Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).exists():
-            #geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, chart_number=num).latest("id")
-            geojson_single = Geojson.objects.using('snc').filter(chart_number=num).latest("id")
+        if Geojson.objects.using(DB).filter(cat_id=catalogue.id, chart_number=num).exists():
+            #geojson_single = Geojson.objects.using(DB).filter(cat_id=catalogue.id, chart_number=num).latest("id")
+            geojson_single = Geojson.objects.using(DB).filter(chart_number=num).latest("id")
             json = json + geojson_single.json[43:-2] + comma
         print('added' + str(num))
     json = json[:-1] + json_end  # removing comma after last feature
@@ -58,16 +58,16 @@ def find_geojson_multiple(nums):
 def find_geojson_scale_range_all_split_scales(catalogue):
     geojson = {}
     # catalogue = get_latest_catalogue()
-    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+    #geojson = Geojson.objects.using(DB).filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
 
-    geojson['scale1'] = Geojson.objects.using('snc').filter(scale_range=SCALE_1_TEXT).latest("id").json
-    geojson['scale2'] = Geojson.objects.using('snc').filter(scale_range=SCALE_2_TEXT).latest("id").json
-    geojson['scale3'] = Geojson.objects.using('snc').filter(scale_range=SCALE_3_TEXT).latest("id").json
-    geojson['scale4'] = Geojson.objects.using('snc').filter(scale_range=SCALE_4_TEXT).latest("id").json
-    geojson['scale5'] = Geojson.objects.using('snc').filter(scale_range=SCALE_5_TEXT).latest("id").json
-    geojson['scale6'] = Geojson.objects.using('snc').filter(scale_range=SCALE_6_TEXT).latest("id").json
-    geojson['scale7'] = Geojson.objects.using('snc').filter(scale_range=SCALE_7_TEXT).latest("id").json
-    geojson['8XXX'] = Geojson.objects.using('snc').filter(scale_range=PORT_APPROACHES).latest("id").json
+    geojson['scale1'] = Geojson.objects.using(DB).filter(scale_range=SCALE_1_TEXT).latest("id").json
+    geojson['scale2'] = Geojson.objects.using(DB).filter(scale_range=SCALE_2_TEXT).latest("id").json
+    geojson['scale3'] = Geojson.objects.using(DB).filter(scale_range=SCALE_3_TEXT).latest("id").json
+    geojson['scale4'] = Geojson.objects.using(DB).filter(scale_range=SCALE_4_TEXT).latest("id").json
+    geojson['scale5'] = Geojson.objects.using(DB).filter(scale_range=SCALE_5_TEXT).latest("id").json
+    geojson['scale6'] = Geojson.objects.using(DB).filter(scale_range=SCALE_6_TEXT).latest("id").json
+    geojson['scale7'] = Geojson.objects.using(DB).filter(scale_range=SCALE_7_TEXT).latest("id").json
+    geojson['8XXX'] = Geojson.objects.using(DB).filter(scale_range=PORT_APPROACHES).latest("id").json
 
     print(geojson['8XXX'])
 
@@ -77,8 +77,8 @@ def find_geojson_scale_range_all_split_scales(catalogue):
 # takes single scale range as string
 def find_geojson_scale_range_single(catalogue, scale_range):
     # catalogue = get_latest_catalogue()
-    #geojson = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
-    geojson = Geojson.objects.using('snc').filter(scale_range=scale_range).latest("id")
+    #geojson = Geojson.objects.using(DB).filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+    geojson = Geojson.objects.using(DB).filter(scale_range=scale_range).latest("id")
     return geojson
 
 
@@ -92,9 +92,9 @@ def find_geojson_scale_range_multiple(catalogue, scale_ranges):
 
     json = json_start
     for scale_range in scale_ranges:
-        if Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).exists():
-            # geojson_single = Geojson.objects.using('snc').filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
-            geojson_single = Geojson.objects.using('snc').filter(scale_range=scale_range).latest("id")
+        if Geojson.objects.using(DB).filter(cat_id=catalogue.id, scale_range=scale_range).exists():
+            # geojson_single = Geojson.objects.using(DB).filter(cat_id=catalogue.id, scale_range=scale_range).latest("id")
+            geojson_single = Geojson.objects.using(DB).filter(scale_range=scale_range).latest("id")
             json = json + geojson_single.json[43:-2] + comma
         print('added' + str(scale_range))
     json = json[:-1] + json_end  # removing comma after last feature
@@ -125,49 +125,49 @@ def find_charts(nums):
 
 def find_charts_all():
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id)
     return charts
 
 
 def find_charts_SCALE_1(): # 24 charts
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_1_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_1_TEXT)
     return charts
 
 
 def find_charts_SCALE_2(): # 875 charts
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_2_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_2_TEXT)
     return charts
 
 
 def find_charts_SCALE_3(): # 270 charts
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_3_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_3_TEXT)
     return charts
 
 
 def find_charts_SCALE_4(): # 31 charts
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_4_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_4_TEXT)
     return charts
 
 
 def find_charts_SCALE_5(): # 10 charts
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_5_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_5_TEXT)
     return charts
 
 
 def find_charts_SCALE_6(): #
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_6_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_6_TEXT)
     return charts
 
 
 def find_charts_SCALE_7():
     catalogue = get_latest_catalogue()
-    charts = Chart.objects.using('snc').filter(catalogue=catalogue.id, max_scale_category=SCALE_7_TEXT)
+    charts = Chart.objects.using(DB).filter(catalogue=catalogue.id, max_scale_category=SCALE_7_TEXT)
     return charts
 
 
@@ -177,11 +177,11 @@ def add_scale_category():
     catalogue = get_latest_catalogue()
 
     if catalogue != '':
-        chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue.id)
+        chartsDB = Chart.objects.using(DB).filter(catalogue=catalogue.id)
 
         for ch in chartsDB:
             ch.max_scale_category = get_scale_category(ch)
-            ch.save(using='snc')
+            ch.save(using=DB)
             print('chart ' + ch.number + ', scale category added')
 
 
@@ -222,7 +222,7 @@ def print_chart_detail():
     catalogue = get_latest_catalogue()
 
     if catalogue != '':
-        chartsDB = Chart.objects.using('snc').filter(catalogue=catalogue.id, number='1006')
+        chartsDB = Chart.objects.using(DB).filter(catalogue=catalogue.id, number='1006')
 
         for ch in chartsDB:
             chart = service_converters.chartDB_2_chartDTO(ch)

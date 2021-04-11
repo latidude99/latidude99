@@ -3,6 +3,7 @@ from django.http import JsonResponse
 
 import snc.service as service
 import snc.service_geojson as service_geojson
+import snc.service_download as service_download
 import snc.repository as repo
 from snc.const import *
 from snc.chart import *
@@ -18,6 +19,31 @@ def index(request):
 def charts_file(request):
     context = service.get_charts_geojson_file_context(SNC_GEOJSON_FILE)
     return render(request, 'snc/charts.html', context)
+
+
+def download_catalogue_latest(request):
+    u = ''
+    p = ''
+    check_list = ''
+    data = {}
+    if request.method == 'POST':
+        u = request.POST.get('u')
+        p = request.POST.get('p')
+
+    if u == '' or p == '':
+        check_list = service_download.check_catalogue_file()
+    elif u != '' and p != '':
+        check_list = service_download.download_catalogue_and_check(u,p)
+
+    if len(check_list) == 4:
+        data['check'] = check_list[0]
+        data['catalogue_number'] = check_list[1]
+        data['catalogue_date'] = check_list[2]
+        data['catalogue_lines'] = check_list[3]
+    else:
+        data['check'] = ''
+    return JsonResponse(data, safe=False)
+
 
 
 # loads main charts polygon on to multiple map.Data layers
