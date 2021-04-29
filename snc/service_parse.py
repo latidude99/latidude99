@@ -15,23 +15,23 @@ import pytz
 
 # tools ------------------------------------------------------------------
 def delete_catalogue(num):
-    Catalogue.objects.using(DB).filter(id=num).delete()
+    Catalogue.objects.using(DB_SNC).filter(id=num).delete()
     print('catalogue id: ' + str(num) + ' deleted')
 
 
 def delete_all_catalogues():
-    Catalogue.objects.using(DB).all().delete()
+    Catalogue.objects.using(DB_SNC).all().delete()
     print('all catalogues deleted')
 
 
 def delete_all_charts():
-    Chart.objects.using(DB).all().delete()
+    Chart.objects.using(DB_SNC).all().delete()
     print('all charts deleted')
 
 
 def delete_gejson_catalogue_id(ids):
     for id in ids:
-        Geojson.objects.using(DB).filter(catalogue_id__exact=id).delete()
+        Geojson.objects.using(DB_SNC).filter(catalogue_id__exact=id).delete()
         print('deleted geojsons in catalogue_id ' + str(id))
 
 
@@ -52,7 +52,7 @@ def parse_import_catalogue_with_geojson(catalogue_file):
 def import_catalogue_from_file(catalogue_file):
     obj = get_xml_object(catalogue_file)
     catalogue = ''
-    catalogues = Catalogue.objects.using(DB).all()
+    catalogues = Catalogue.objects.using(DB_SNC).all()
     if catalogues:
         for c in reversed(catalogues):
             print('catalogue id :' + str(c.id))
@@ -97,7 +97,7 @@ def import_catalogue(obj):
 
 def import_charts(obj):
     catalogue = import_catalogue(obj)
-    catalogue.save(using=DB)
+    catalogue.save(using=DB_SNC)
 
     charts = obj.UKHOCatalogueFile.Products.Paper.StandardNavigationChart
     for ch in charts:

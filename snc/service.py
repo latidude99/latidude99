@@ -7,6 +7,7 @@ from snc.text import *
 from snc.const import *
 import snc.repository as repo
 import snc.service_converters as service_converters
+import snc.service_geojson_chs as service_geojson_chs
 from snc.chart import *
 import snc.utils as utils
 import snc.service_geojson as service_geojson
@@ -28,7 +29,9 @@ def get_base_context():
                'scale7': SCALE_7_TEXT,
                'scale0': SCALE_ALL_TEXT,
                'map_zoom': MAP_ZOOM,
+               'map_zoom_chs': MAP_ZOOM_CHS,
                'map_centre': MAP_CENTRE,
+               'map_centre_chs': MAP_CENTRE_CHS,
                'map_bounds': MAP_BOUNDS,
                }
     return context
@@ -57,7 +60,63 @@ def get_info_context():
     return ctx
 
 
-# ------------------------- geojson ---------------------------------
+def get_chs_index_context():
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+    }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
+
+# ------------------------- chs geojson ---------------------------------
+
+# fetches chs geojson from file located in snc/data/
+def get_charts_chs_geojson_file_split_scale_context(file_path):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    # charts_geojson = ''
+    # with open(CHS_GEOJSON_FILE_SCALE_1, 'r') as reader:
+    #     charts_geojson = reader.read()
+
+    context_main = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        # 'charts_geojson': charts_geojson,
+    }
+    context_geojson = service_geojson_chs.create_split_scale_geojson_context(CHS_GEOJSON_FILE)
+    ctx = {**get_base_context(), **context_main, **context_geojson}
+    return ctx
+
+
+# fetches chs geojson from file located in snc/data/
+def get_charts_chs_geojson_file_context(file_path):
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    charts_geojson = ''
+    with open(file_path, 'r') as reader:
+        charts_geojson = reader.read()
+
+    context = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+        'charts_geojson': charts_geojson,
+    }
+    ctx = {**get_base_context(), **context}
+    return ctx
+
+
+# ------------------------- snc geojson ---------------------------------
 
 def get_chart_single_geojson_db_context(num):
     catalogueDB = repo.get_latest_catalogue()
@@ -219,6 +278,7 @@ def get_charts_geojson_file_context(file_name):
     }
     ctx = {**get_base_context(), **context}
     return ctx
+
 
 
 # ------------------------- chartDTO ---------------------------------

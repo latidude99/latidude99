@@ -120,5 +120,20 @@ class Geojson(models.Model):
         return self.cat_id + ', ' + self.scale_range + ', charts number' + self.chart_number
 
 
+class GeojsonCHS(models.Model):
+    import_date = models.DateTimeField(default=None, blank=True)
+    json_scale_1 = models.TextField(max_length=5000000, default='no_data')
+    json_scale_2 = models.TextField(max_length=5000000, default='no_data')
+    json_scale_3 = models.TextField(max_length=5000000, default='no_data')
+    json_scale_4 = models.TextField(max_length=5000000, default='no_data')
+    json_scale_5 = models.TextField(max_length=5000000, default='no_data')
+    json_scale_all = models.TextField(max_length=5000000, default='no_data')
+    type = models.CharField(max_length=50, default='')
+    ready = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.id
+
+
 
 

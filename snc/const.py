@@ -9,7 +9,7 @@ APP_BASE = 'http://pc.latidude99.com/snc'
 DB_LOCAL = 'default'
 DB_REMOTE = 'snc'
 
-DB = DB_REMOTE
+DB_SNC = DB_LOCAL
 
 
 URL_UKHO_BASE = "https://enavigator.ukho.gov.uk/"
@@ -19,6 +19,21 @@ URL_UKHO_DOWNLOAD = "https://enavigator.ukho.gov.uk/Download"
 SNC_DATA = 'data/'
 SNC_CATALOGUE_FILE = SNC_DATA_FOLDER + 'snc_catalogue.xml'
 SNC_GEOJSON_FILE = SNC_DATA_FOLDER + 'charts_all.json'
+
+CHS_GEOJSON_FILE = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits.geojson'
+CHS_GEOJSON_FILE_EDITED = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-edited.geojson'
+
+CHS_GEOJSON_FILE_SCALE_1 = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-scale1.geojson'
+CHS_GEOJSON_FILE_SCALE_2 = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-scale2.geojson'
+CHS_GEOJSON_FILE_SCALE_3 = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-scale3.geojson'
+CHS_GEOJSON_FILE_SCALE_4 = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-scale4.geojson'
+CHS_GEOJSON_FILE_SCALE_5 = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-scale5.geojson'
+
+CHS_SCALE_1 = 20000 # < 20_000
+CHS_SCALE_2 = 50000 # 20_000 - 50_000
+CHS_SCALE_3 = 150000 # 50_000 - 150_000
+CHS_SCALE_4 = 500000 # 150_000 - 500_000
+# CHS_SCALE_5 = 500_000  #  > 500_000
 
 
 
@@ -38,7 +53,9 @@ GOOGLE_API_KEY_PROD = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_PROD
 
 # starts centered on British Isles
 MAP_ZOOM = '5'
+MAP_ZOOM_CHS = '3'
 MAP_CENTRE = '{lat: 54.15, lng: -2.72}'
+MAP_CENTRE_CHS = '{lat: 70., lng: -103}'
 MAP_BOUNDS = ''
 
 PORT_APPROACHES = 'port_approaches'

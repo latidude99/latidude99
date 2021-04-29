@@ -44,9 +44,34 @@ def download_catalogue_latest(request):
         data['check'] = ''
     return JsonResponse(data, safe=False)
 
+# ------------------- CHS -------------------------------------
+
+# loads chs charts polygons on to single map.Data layer
+def chs(request):
+    ctx = {}
+    map_context = {}
+    context = service.get_chs_index_context()
+    if request.method == 'GET':
+        ctx = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+
+    if request.method == 'POST':
+        zoom = request.POST['zoom']
+        centre = request.POST['centre']
+        map_context = {'map_zoom': zoom, 'map_centre': centre} #, 'map_bounds': bounds}
+
+        context = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+        ctx = {**context, **map_context}
+
+    return render(request, 'snc/chs.html', ctx)
 
 
-# loads main charts polygon on to multiple map.Data layers
+def charts_chs_file(request):
+    context = service.get_charts_chs_geojson_file_split_scale_context(CHS_GEOJSON_FILE)
+    return render(request, 'snc/chs.html', context)
+
+# ------------------------------------------------------------
+
+# loads main charts polygons on to multiple map.Data layers
 def charts(request):
     ctx = {}
     map_context = {}

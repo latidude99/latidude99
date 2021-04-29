@@ -5,6 +5,7 @@ import snc.service_parse as service_parse
 import snc.service_converters as service_converters
 import snc.repository as repo
 import snc.service_geojson as service_geojson
+import snc.service_geojson_chs as service_geojson_chs
 from snc.const import *
 
 
@@ -88,7 +89,7 @@ def get_charts(nums):
 
 # service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
-print(service_geojson.generate_geojson_and_save_db_8XXX())
+#print(service_geojson.generate_geojson_and_save_db_8XXX())
 
 #print(service_geojson.generate_geojson_and_save_db([SCALE_7_TEXT]))
 
@@ -96,7 +97,9 @@ print(service_geojson.generate_geojson_and_save_db_8XXX())
 
 # print(service_geojson.generate_geojson_and_save_db_single_charts([]))
 
+#---------------------------------------------------------------------------
 
+service_geojson_chs.parse_edit_import_to_db_geojson_chs(CHS_GEOJSON_FILE)
 
 
 

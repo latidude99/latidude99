@@ -15,7 +15,7 @@ import random
 def get_latest_catalogue():
     catalogue = ''
     while True:
-        catalogue = Catalogue.objects.using(DB).latest('date')
+        catalogue = Catalogue.objects.using(DB_SNC).latest('date')
         if catalogue.ready:
             break
     return catalogue
@@ -26,7 +26,7 @@ def add_scale_category():
     catalogue = get_latest_catalogue()
 
     if catalogue != '':
-        chartsDB = Chart.objects.using(DB).filter(catalogue=catalogue.id)
+        chartsDB = Chart.objects.using(DB_SNC).filter(catalogue=catalogue.id)
 
         for ch in chartsDB:
             ch.max_scale_category = get_scale_category(ch)
