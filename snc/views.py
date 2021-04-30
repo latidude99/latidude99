@@ -52,14 +52,14 @@ def chs(request):
     map_context = {}
     context = service.get_chs_index_context()
     if request.method == 'GET':
-        ctx = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+        ctx = service.get_charts_chs_geojson_db_split_scale_context()
 
     if request.method == 'POST':
         zoom = request.POST['zoom']
         centre = request.POST['centre']
         map_context = {'map_zoom': zoom, 'map_centre': centre} #, 'map_bounds': bounds}
 
-        context = service.get_charts_geojson_scale_range_all_split_scales_db_context(SCALE_ALL_TEXT)
+        context = service.get_charts_chs_geojson_db_split_scale_context()
         ctx = {**context, **map_context}
 
     return render(request, 'snc/chs.html', ctx)

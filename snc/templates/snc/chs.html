@@ -1,0 +1,896 @@
+{% extends "snc/base.html" %}
+{% load static %}
+{% static "snc/" as static_base %}
+{% load humanize %}
+
+
+{#  ----------------------------------- CHARTS --------------------------------------------- #}
+{% block content_left %}
+
+    <div id="zoomLevel"></div>
+    <div id="map-canvas"></div>
+
+    <!-- load geojson charts loader -->
+    <div id="loader-box">
+        <span id="loader2" class="loader2" style="width: 100%; display:none;"></span>
+        <span id="loader3" class="loader3" style="width: 100%; display:none;"></span>
+    </div>
+
+    <div id="chart-info-box">--</div>
+    <div id="panel-info-box">--</div>
+
+    <div id="help-top-info">
+        <!-- left side help modal - top info -->
+        <i class="far fa-question-circle fa-2x mr-2"
+           data-toggle="modal" data-target="#help_top"
+           style="color: blueviolet;cursor:pointer">
+        </i>
+    </div>
+
+    <div id="scale-info-box-chs">
+        <div class=" mb-1"></div>
+        <form action="{% url 'snc:chs' %}" method="post" style="">
+            {% csrf_token %}
+            <div style="border-left: 3px solid #3333cc;">
+                <div class="ml-1">
+                    <button type="submit" class="btn btn-primary btn-sm py-0 ml-2 mb-2 mt-1"
+                            style="font-size: 13px;"
+                            onclick="$('#error').hide();
+                                $('#loader2').show().delay(5000).hide(0);
+                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
+                        reload charts
+                    </button>
+                    <i class="far fa-question-circle fa-lg mt-2 ml-3 mr-1 float-right"
+                       data-toggle="modal" data-target="#help_load"
+                       style="color: blueviolet;cursor:pointer">
+                    </i>
+                    <p class="ml-2"
+                       style="font-size: 13px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+                        turn layers on/off</p>
+
+                    <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
+                    <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
+                    {#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
+                    <div class="ml-1">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sc1" name="scale"
+                                   value="{{ scale1 }}" {{ sc1checked }}>
+                            <label class="custom-control-label pt-1 mr-1" for="sc1">> 1:20,000</label>
+                            <span id="loader6" class="spinner-grow spinner-grow-sm text-primary mt-1"
+                                  style="display:none;"></span>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sc2" name="scale"
+                                   value="{{ scale2 }}" {{ sc2checked }}>
+                            <label class="custom-control-label pt-1" for="sc2">1: 20k - 50k</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sc3" name="scale"
+                                   value="{{ scale3 }}" {{ sc3checked }}>
+                            <label class="custom-control-label pt-1" for="sc3">1: 50k - 150k</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sc4" name="scale"
+                                   value="{{ scale4 }}" {{ sc4checked }}>
+                            <label class="custom-control-label pt-1" for="sc4">1: 150k - 1:500k</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sc5" name="scale"
+                                   value="{{ scale5 }}" {{ sc5checked }}>
+                            <label class="custom-control-label pt-1" for="sc5">< 1: 500k</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div style="border-left: 2px solid slategrey;">
+            <div class="ml-1">
+                <!-- undo removed charts -->
+                <p class="ml-1 mt-2 py-0"
+                   style="font-size: 13px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 0px">
+                    charts removed: <span style="font-size: 14px; color:darkred;" id="removed_charts">0</span></p>
+                <p style="margin-bottom: 8px;">
+                    <button class="btn btn-info btn-sm py-0 ml-1 mt-2" id="restore_charts"
+                            style="font-size: 13px;">
+                        undo single
+                    </button>
+                </p>
+                <button class="btn btn-info btn-sm py-0 ml-1 mb-2" id="restore_charts_all"
+                        style="font-size: 13px;">
+                    undo all
+                </button>
+                <!-- left side help modal - removed charts -->
+                <i class="far fa-question-circle fa-lg mt-2 mr-1 float-right"
+                   data-toggle="modal" data-target="#help_removed"
+                   style="color: #009999;cursor:pointer">
+                </i>
+            </div>
+        </div>
+        <!-- find charts and center -->
+        <div style="border-left: 2px solid #009b3a;">
+            <div class="ml-1">
+                <p class="ml-1 mt-2 py-0"
+                   style="font-size: 13px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+                    center map on chart</p>
+                <form>
+                    <input class="form-control form-control-sm mt-1 ml-1" id="find_number" name="number"
+                           placeholder="chart number"
+                           style="font-size: 12px; max-width: 95px; max-height: 25px !important;background-color:aliceblue;
+               border-width: 0px; border-style: solid; border-color: aliceblue; border-radius: 1px;">
+                    <p style="margin-bottom: 0px;">
+                        <button role="submit" class="btn btn-success btn-sm py-0 ml-1 mb-2 mt-2" id="find_btn"
+                                style="font-size: 13px;">
+                            find & center
+                        </button>
+                        <!-- left side help modal - found charts -->
+                        <i class="far fa-question-circle fa-lg mt-3 mr-1 float-right"
+                           data-toggle="modal" data-target="#help_found"
+                           style="color: #00cc00;cursor:pointer">
+                        </i>
+                    </p>
+                </form>
+                <button class="btn btn-success btn-sm py-0 ml-1 mb-1 mr-1" id="clear_centered_btn"
+                        style="font-size: 13px;">
+                    clear
+                </button>
+                <span style="font-size:11px;color: #1b7943;" id="found_number"></span>
+            </div>
+        </div>
+        <div class=" mb-1"></div>
+
+    </div>
+
+    <!-- left side help modal - load charts -->
+    <div class="modal" id="help_load">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:70px;">
+            <div class="modal-content" style="background-color: #e6ecff">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Reloads all charts from the latest catalogue.
+                        </p>
+                        <p style="margin-bottom: 8px;text-align: center;">
+                            (may take a second or two)
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            After the charts are loaded all the scale ranges are turned on except the last two.
+                        </p>
+                        <ul>
+                            <li>{{ scale1 }}</li>
+                            <li>{{ scale2 }}</li>
+                            <li>{{ scale3 }}</li>
+                            <li>{{ scale4 }}</li>
+                            <li>{{ scale5 }}</li>
+                            <li>{{ scale6 }}</li>
+                            <li>{{ scale7 }}</li>
+                        </ul>
+                        <p style="margin-bottom: 5px">
+                            The last two scale ranges are loaded but turned off initially.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            This is for clarity - large area charts obscure the view of the smaller ones.
+                        </p>
+                        <p style="margin-bottom: 0px">
+                            All the scale ranges can be turned on /off independently.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- left side help modal - 8XXX charts -->
+    <div class="modal" id="help_8XXX">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:250px;">
+            <div class="modal-content" style="background-color: #ffd6cc">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Loads Port Approaches charts on an extra layer.
+                        </p>
+                        <p style="margin-bottom: 8px;text-align: center;">
+                            (charts numbers starting from 8000 up to 8999)
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            These charts are displayed on top of Standard Charts.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            Switching the layer on highlights the charts in red so they
+                            are easier to notice.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            The Port Approaches layer can be turned on /off independently
+                            from all the other layers.
+                        </p>
+                        <p style="margin-bottom: 0px">
+                            Charts on scale ranges layers include Port Approaches
+                            charts as well. Loading them additionally on top is to
+                            make them stand out on the map.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- left side help modal - removed charts -->
+    <div class="modal" id="help_removed">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:350px;">
+            <div class="modal-content" style="background-color: #e6e6e6">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Restores polygons removed from the map.
+                        </p>
+                        <p style="margin-bottom: 8px;text-align: center;">
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            Chart and panel polygons can be removed from the map on a
+                            one by one basis by the right mouse click.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            This allows to get rid of polygons that obscure view of smaller polygons.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            The process can be reverted by restoring polygons one by one
+                            (in the reversed order they were removed) or all at once.
+                        </p>
+                        <p style="margin-bottom: 0px">
+                            The restored charts are added to the same range scale layer they were removed from.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- left side help modal - found charts -->
+    <div class="modal" id="help_found">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:400px;">
+            <div class="modal-content" style="background-color: #ccffcc">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Quick chart search.
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            Highlights the chart in light green colour and centres the map on it.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            The chart is added to the layer on top of all other charts.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            Clearing the search removes the highlight but it does not
+                            move the map back to the previous position.
+                        </p>
+                        <p style="margin-bottom: 0px">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- left side help modal - top info -->
+    <div class="modal" id="help_top">
+        <div class="modal-dialog p-1" style="margin-left:400px;margin-top:40px;">
+            <div class="modal-content" style="background-color: beige">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Quick top info on mouse hover.
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            Triggered when the mouse pointer is moved over a polygon on the map.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            Depending on the type of the polygon it shows:
+                        </p>
+                        <ul>
+                            <li>for main chart polygons</li>
+                            <ul>
+                                <li>
+                                    top bar (blue): chart number, title and scale
+                                </li>
+                                <li>
+                                    bottom bar (red): number of additional panels/insets (faded out)
+                                </li>
+                            </ul>
+                            <li>for panel polygons</li>
+                            <ul>
+                                <li>
+                                    top bar (blue): main chart number and title (faded out)
+                                </li>
+                                <li>
+                                    bottom bar (red): panel id, scale and area name
+                                </li>
+                            </ul>
+                        </ul>
+                        <p style="margin-bottom: 5px">
+                            Moving the mouse outside polygons clears the info bars.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- left side help modal - general info -->
+    <div class="modal" id="help_general">
+        <div class="modal-dialog p-1" style="margin-right:380px;margin-top:150px;">
+            <div class="modal-content" style="background-color: whitesmoke">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Detailed info on mouse click.
+                        </p>
+                        <p style="margin-bottom:8px;text-align: center;">
+                            Appears on the right side when a polygon is clicked.
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 8px">
+                            Highlights the main chart and all its panels in dark blue.
+                        </p>
+                        <p style="margin-bottom: 10px">
+                            Displays detailed information on the chart, including:
+                        <ul style="margin-bottom: 5px">
+                            <li>
+                                chart number, title and scale
+                            </li>
+                            <li>
+                                chart status (edition/cancelled) with the date
+                            </li>
+                            <li>
+                                new edition date (this is actually the latest edition date)
+                            </li>
+                            <li>
+                                latest NM number / date
+                            </li>
+                            <li>
+                                number of panels /insets
+                            </li>
+                            <li>
+                                each panel's number, area name and scale
+                            </li>
+                            <li>
+                                list of all NMs for the current edition (number, week, year and type)
+                            </li>
+
+                        </ul>
+                        <p style="margin-bottom: 8px">
+                            Click the 'clear' button or anywhere on the map outside polygons to
+                            clear the info and the blue highlight.
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 8px">
+                            If you need to isolate and display only a few or a single chart on the map
+                            use the search functionality on the right side.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{#    <script>#}
+{#        $(document).ready(function () {#}
+{#            console.log('before')#}
+{#            $('#chs-tab').trigger('click');#}
+{#            console.log('after')#}
+{#             $('[href="#chs"]').tab('show');#}
+{#        });#}
+{##}
+{#    </script>#}
+
+
+    <script>
+
+        // ===================================================================================================
+        // ========================================== left side info box =====================================
+        // ===================================================================================================
+
+        {#document.getElementById('scale-info-box').onmouseover = function () {#}
+        {#    document.getElementById('scale-info-box').style.opacity = '85';};#}
+
+        // ===================================================================================================
+        // ========================================== setting up the map and loading gejson data =============
+        // ===================================================================================================
+        let map;
+
+        function initMap() {
+
+            document.getElementById("scale-info-box-chs").style.zIndex = '2000';
+            document.getElementById("loader-box").style.zIndex = '20000';
+
+            map = new google.maps.Map(document.getElementById("map-canvas"), {
+                zoom: {{ map_zoom_chs }},
+                center: {{ map_centre_chs }},
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            });
+
+            let map_zoom, map_centre_lat, map_centre_lon, map_centre, map_bounds;
+
+            google.maps.event.addListener(map, 'idle', function () {
+
+                map_centre_lat = map.getCenter().lat();
+                map_centre_lon = map.getCenter().lng();
+                map_centre = '{lat: ' + map_centre_lat + ', lng: ' + map_centre_lon + '}';
+                map_zoom = map.getZoom();
+                document.getElementById("map_zoom").value = map_zoom;
+                document.getElementById("map_centre").value = map_centre;
+            });
+
+            let scale_layer = new google.maps.Data();
+
+            let scale_1_layer = new google.maps.Data();
+            let scale_2_layer = new google.maps.Data();
+            let scale_3_layer = new google.maps.Data();
+            let scale_4_layer = new google.maps.Data();
+            let scale_5_layer = new google.maps.Data();
+
+            scale_1_layer.addGeoJson({{ geojson_scale_1|safe }}, {idPropertyName: "CHART"});
+            scale_2_layer.addGeoJson({{ geojson_scale_2|safe }}, {idPropertyName: "CHART"});
+            scale_3_layer.addGeoJson({{ geojson_scale_3|safe }}, {idPropertyName: "CHART"});
+            scale_4_layer.addGeoJson({{ geojson_scale_4|safe }}, {idPropertyName: "CHART"});
+            scale_5_layer.addGeoJson({{ geojson_scale_5|safe }}, {idPropertyName: "CHART"});
+
+            scale_1_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+            scale_2_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+            scale_3_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+            scale_4_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+            scale_5_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+
+            scale_1_layer.setMap(map);
+            scale_2_layer.setMap(map);
+            scale_3_layer.setMap(map);
+            scale_4_layer.setMap(map);
+            scale_5_layer.setMap(map);
+
+            let features_layer;
+            let charts_centered = []; // for find & center module down below
+
+            let features_1 = [];
+            let features_2 = [];
+            let features_3 = [];
+            let features_4 = [];
+            let features_5 = [];
+
+
+// ========================================== end of setting up the map and loading geojson data ======
+
+
+// ===================================================================================================
+// ========================================== turning on/off chart layers ============================
+// ===================================================================================================
+            // turn on/off chart data layers
+            {#for (let i = 0; i < charts.length; i++) {#}
+            document.getElementById('sc1').onclick = function () {
+                if (document.getElementById('sc1').checked === true) {
+                    scale_1_layer.setMap(map);
+                } else {
+                    scale_1_layer.setMap(null);
+                }
+            };
+             document.getElementById('sc2').onclick = function () {
+                if (document.getElementById('sc2').checked === true) {
+                    scale_2_layer.setMap(map);
+                } else {
+                    scale_2_layer.setMap(null);
+                }
+            };
+            document.getElementById('sc3').onclick = function () {
+                if (document.getElementById('sc3').checked === true) {
+                    scale_3_layer.setMap(map);
+                } else {
+                    scale_3_layer.setMap(null);
+                }
+            };
+            document.getElementById('sc4').onclick = function () {
+                if (document.getElementById('sc4').checked === true) {
+                    scale_4_layer.setMap(map);
+                } else {
+                    scale_4_layer.setMap(null);
+                }
+            };
+            document.getElementById('sc5').onclick = function () {
+                if (document.getElementById('sc5').checked === true) {
+                    scale_5_layer.setMap(map);
+                } else {
+                    scale_5_layer.setMap(null);
+                }
+            };
+// ========================================== end of turning on/off chart layers =====================
+
+
+// ===================================================================================================
+// ========================================== display top info =======================================
+// ===================================================================================================
+
+            // for loop did not work here, not sure why
+            scale_layer.addListener("mouseover", (event) => {
+                scale_layer.overrideStyle(event.feature,
+                    {strokeColor: 'white', strokeWeight: '3', fillColor: "blue", fillOpacity: 0.15});
+                topInfo(event);
+            });
+
+            // for loop did not work here
+            scale_layer.addListener("mouseout", (event) => {
+                scale_layer.revertStyle();
+                clearTopInfo();
+            });
+
+
+            function topInfo(event) {
+                let chart_info = '--', panel_info = '--', chart_number, chart_scale, chart_title, number, panels;
+                if (event.feature.getProperty("CHART") !== undefined) {
+                    chart_number_title = 'chart ' + event.feature.getProperty("CHART");
+                } else {
+                    chart_number = ''
+                }
+                if (event.feature.getProperty("SCALE") !== undefined) {
+                    chart_scale = ' | scale 1 : ' + parseInt(event.feature.getProperty("SCALE")).toLocaleString()
+
+                } else {
+                    chart_scale = ''
+                }
+
+                panel_info = '--'
+
+                chart_info = chart_number_title + chart_scale;
+                document.getElementById("chart-info-box").textContent = chart_info;
+                document.getElementById("panel-info-box").textContent = panel_info;
+            }
+
+            function clearTopInfo() {
+                document.getElementById("chart-info-box").textContent = '--';
+                document.getElementById("panel-info-box").textContent = '--';
+                document.getElementById("chart-info-box").style.opacity = "100%";
+                document.getElementById("panel-info-box").style.opacity = "60%";
+            }
+
+// ========================================== end of display top info ================
+
+
+// ===================================================================================================
+// ========================================== remove and restore single charts =======================
+// ===================================================================================================
+            let removed_1_layer = [], removed_2_layer = [], removed_3_layer = [], removed_4_layer = [],
+                removed_5_layer = [], removed_6_layer = [], removed_7_layer = [];
+            let removed_layers = [removed_1_layer, removed_2_layer, removed_3_layer, removed_4_layer,
+                removed_5_layer, removed_6_layer, removed_7_layer];
+
+            let removed_layer = [];
+            let removed_count = 0;
+
+
+            // for loop did not work here
+            // removes polygon from Feature Collection
+            scale_layer.addListener('rightclick', function (event) {
+                removed_layer.push(event.feature);
+                scale_layer.remove(event.feature);
+                document.getElementById('removed_charts').innerText = removed_layer.length;
+            });
+
+            // restores last removed chart
+            //scale constants defined and used in DB, from scale range 7 to 1 (most likety to be removed to least likely)
+            document.getElementById('restore_charts').onclick = function () {
+                if (removed_layer.length > 0) {
+                    let chart = removed_layer.pop();
+                    restoreRemovedChart(chart);
+                    document.getElementById('removed_charts').innerText = removed_layer.length;
+                }
+            };
+
+            // restores all removed charts
+            document.getElementById('restore_charts_all').onclick = function () {
+                while (removed_layer.length > 0) {
+                    let chart = removed_layer.pop();
+                    restoreRemovedChart(chart);
+                    document.getElementById('removed_charts').innerText = removed_layer.length;
+                }
+            };
+
+            function restoreRemovedChart(chart) {
+                if (chart.getProperty("max_scale_category") === "{{ sc1_const }}") {
+                    scale_1_layer.add(chart);
+                }
+            }
+
+// ========================================== end of remove and restore single charts ================
+
+
+// ===================================================================================================
+// ========================================== find & center on chart =================================
+// ===================================================================================================
+
+            let found_layer_charts = [];
+            let found_layer = new google.maps.Data();
+            found_layer.setStyle({
+                strokeColor: 'greenyellow',
+                fillColor: 'yellow',
+                strokeWeight: '3',
+                fillOpacity: 0.1
+            });
+            found_layer.setMap(map);
+
+            // finds and centers map on a chart
+            document.getElementById('find_btn').onclick = function (e) {
+                e.preventDefault();
+                let charts, number;
+                number = document.getElementById('find_number').value;
+                charts = findChartsByNumber(number);
+                console.log(charts);
+                let bounds = new google.maps.LatLngBounds();
+                for (let i = 0; i < charts.length; i++) {
+                    if (charts[i] !== undefined) {
+                        charts[i].getGeometry().forEachLatLng(function (latlng) {
+                            bounds.extend(latlng);
+                        });
+                        found_layer_charts.push(found_layer.add(charts[i]));
+                    }
+                    map.fitBounds(bounds);
+                }
+                let info = charts.length > 0 ? '1 chart found' : 'chart not found';
+                document.getElementById('found_number').innerText = info;
+            };
+
+            // top info found layer charts
+            found_layer.addListener("mouseover", (event) => {
+                found_layer.revertStyle();
+                found_layer.overrideStyle(event.feature,
+                    {fillColor: 'yellow', strokeColor: 'greenyellow', strokeWeight: '4', fillOpacity: 0.3});
+                topInfo(event);
+            });
+
+            found_layer.addListener("mouseout", (event) => {
+                found_layer.revertStyle();
+                clearTopInfo();
+            });
+
+            function clearChartsCentered(charts) {
+                for (let i = 0; i < charts.length; i++) {
+                    clearChartCentered(chart)
+                }
+                document.getElementById('found_number').innerText = '';
+                document.getElementById('find_number').value = '';
+            }
+
+            // clears centered chart style
+            document.getElementById('clear_centered_btn').onclick = function () {
+                for (let i = 0; i < found_layer_charts.length; i++) {
+                    found_layer.remove(found_layer_charts[i])
+                }
+                document.getElementById('found_number').innerText = '';
+                document.getElementById('find_number').value = '';
+            };
+
+            function findChartsByNumber(number) {
+                let numbers = number.split("-");
+                let charts = [];
+                let ch;
+                // main chart
+                if ((ch = getFeaturesByIdFromScaleLayers(numbers[0].toUpperCase())) !== undefined) {
+                    charts.push(ch);
+                }
+                // panels
+                for (let i = 1; i < 17; i++) {
+                    if ((ch = getFeaturesByIdFromScaleLayers(numbers[0].toUpperCase() + '-' + i)) !== undefined) {
+                        charts.push(ch);
+                    }
+                }
+                return charts;
+            }
+
+            function getFeaturesByIdFromScaleLayers(id) {
+                let feature;
+                if (scale_layer.getFeatureById(id) !== undefined) {
+                    feature = scale_layer.getFeatureById(id);
+                }
+                return feature;
+            }
+
+// ========================================== end of find & center on chart ==========================
+
+
+// ===================================================================================================
+// ========================================== mark and fetch chart clicked info ======================
+// ===================================================================================================
+
+            let info_layer_features = [];
+            let geojson = []; //holds chart and panels polygons added/removed on chart info click event (inside polygon)
+            let info_layer = new google.maps.Data();
+            info_layer.setStyle({
+                fillColor: "#0066ff",
+                fillOpacity: '0.1',
+                strokeColor: '#0066ff',
+                strokeWeight: 3,
+            });
+            info_layer.setMap(map);
+
+            //for loop not working here
+            scale_1_layer.addListener("click", (event) => {
+
+                //clears previous selection
+                for (let i = 0; i < info_layer_features.length; i++) {
+                    info_layer.remove(info_layer_features[i]);
+                }
+                info_layer_features = [];
+
+                // finds and marks current selection
+                let chart_to_mark = undefined, panel_to_mark = undefined;
+                let id = event.feature.getProperty("chart_number");
+                let chart_number = id.split("-");
+                if (scale_1_layer.getFeatureById(chart_number[0]) !== undefined) {
+                    chart_to_mark = scale_1_layer.getFeatureById(chart_number[0]);
+                    info_layer_features.push(info_layer.add(chart_to_mark));
+                }
+                // max num of panels noticed was 12, but maybe there is a chart with another panel row/col
+                if (chart_number.length > 0) {
+                    for (let i = 1; i < 17; i++) {
+                        console.log(chart_number[0] + '-' + i);
+                        if (scale_1_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            panel_to_mark = scale_1_layer.getFeatureById(chart_number[0] + '-' + i);
+                            info_layer_features.push(info_layer.add(panel_to_mark));
+                            console.log('info_layer_features');
+                            console.log(info_layer_features);
+                        }
+                    }
+                }
+
+                // fetches chart info data
+                if (chart_number[0] !== document.getElementById("search1").value) {
+                    $('#loader4').show();
+                    $('#chart-info').hide();
+                    $('#search1').val(chart_number[0]);
+                    getChartDetails(chart_number[0]);
+                }
+            });
+
+
+            // found charts
+            found_layer.addListener("click", (event) => {
+                for (let i = 0; i < info_layer_features.length; i++) {
+                    info_layer.remove(info_layer_features[i]);
+                }
+                info_layer_features = [];
+                let chart_to_mark = undefined, panel_to_mark = undefined;
+                let id = event.feature.getProperty("chart_number");
+                let chart_number = id.split("-");
+                if (found_layer.getFeatureById(chart_number[0]) !== undefined) {
+                    chart_to_mark = found_layer.getFeatureById(chart_number[0]);
+                    info_layer_features.push(info_layer.add(chart_to_mark));
+                }
+                if (chart_number.length > 0) {
+                    for (let i = 1; i < 17; i++) {
+                        console.log(chart_number[0] + '-' + i);
+                        if (found_layer.getFeatureById(chart_number[0] + '-' + i) !== undefined) {
+                            panel_to_mark = found_layer.getFeatureById(chart_number[0] + '-' + i);
+                            info_layer_features.push(info_layer.add(panel_to_mark));
+                            console.log('info_layer_features');
+                            console.log(info_layer_features);
+                        }
+                    }
+                }
+                if (chart_number[0] !== document.getElementById("search1").value) {
+                    $('#loader4').show();
+                    $('#chart-info').hide();
+                    $('#search1').val(chart_number[0]);
+                    getChartDetails(chart_number[0]);
+                }
+            });
+
+
+            // top info info layer charts
+            info_layer.addListener("mouseover", (event) => {
+                info_layer.revertStyle();
+                topInfo(event);
+            });
+
+            info_layer.addListener("mouseout", (event) => {
+                info_layer.revertStyle();
+                clearTopInfo();
+            });
+
+            function getChartDetails(number) {
+                $.get('{%  url 'snc:chartdetails'  %}',
+                    {'chart_number': number},
+                    function (response) {
+                        var chart = response.chart;
+
+                        $('#head-catalogue-id').text(' ' + chart['catalogue_id']);
+                        $('#head-chart-num').text(' ' + chart['number']);
+                        $('#head-panels-num').text(' ' + chart['panels'].length);
+                        $('#head-notices-num').text(' ' + chart['notices'].length);
+                        $('#chart-num').text(' ' + chart['number']);
+                        $('#chart-title').text(' ' + chart['title']);
+                        $('#chart-scale').text(' ' + chart['scale']);
+                        $('#chart-status').text(' ' + chart['status']);
+                        $('#chart-status-date').text(', ' + chart['status_date']);
+                        $('#chart-new-edition-date').text(' ' + chart['new_edition_date']);
+                        $('#chart-last-nm-number').text(' ' + chart['last_nm_number']);
+                        $('#chart-last-nm-date').text(' ' + chart['last_nm_date']);
+
+                        let panel, panel_id, name, scale, panels_len;
+                        panels_len = chart['panels'].length;
+                        $('#panels-content').text('');
+                        if (panels_len > 0) {
+                            $('#panels-num').text(panels_len);
+                            for (var i = 0; i < panels_len; i++) {
+                                panel_id = ' ' + chart['panels'][i]['id'];
+                                name = ' ' + chart['panels'][i]['name'];
+                                scale = ' ' + chart['panels'][i]['scale'];
+                                panel = '<p style="margin-bottom: 0px"> panel id: <span style="color:navy;font-size:12px;">' + panel_id + '</span></p>' +
+                                    ' <p style="margin-bottom: 0px">panel name: <span style="color:navy;font-size:12px;">' + name + '</span></p>' +
+                                    ' <p style="margin-bottom: 6px">panel scale: <span style="color:navy;font-size:12px;">' + scale + '</span></p>';
+                                $('#panels-content').append(panel);
+                            }
+                        } else {
+                            $('#panels-num').text('');
+                            panel = '<p style="color:grey;font-size:12px; margin-left:15px;">none</p>'
+                            $('#panels-content').append(panel);
+                        }
+
+                        let notice, week, year, number, type, notices_len;
+                        notices_len = chart['notices'].length;
+                        $('#notices-content').text('');
+                        if (notices_len > 0) {
+                            $('#notices-num').text(notices_len);
+                            for (var j = 0; j < notices_len; j++) {
+                                number = ' ' + chart['notices'][j]['number'];
+                                week = ' ' + chart['notices'][j]['week'];
+                                year = ' ' + chart['notices'][j]['year'];
+                                type = ' ' + chart['notices'][j]['type'];
+
+                                notice = '<p style="margin-bottom: 2px">number</span><span style="color:navy;font-size:12px;">' + number + '</span><span style="color:grey;font-size:12px;">' + ', week: ' + '<span style="color:navy;font-size:12px;">' + week + '</span><span style="color:grey;font-size:12px;">' + ', year: ' + '</span><span style="color:navy;font-size:12px;">' + year + '</span><span style="color:grey;font-size:12px;">' + ' / ' + type + '</span></p>';
+                                $('#notices-content').append(notice);
+                            }
+                        } else {
+                            $('#notices-num').text('');
+                            notice = '<p style="color:grey;font-size:12px; margin-left:15px;">none</p>';
+                            $('#notices-content').append(notice);
+                        }
+
+                        $('#chart-info').show();
+                        $('#loader4').hide(0);
+                    });
+            }
+
+
+            // ========================================== end of mark and fetch chart clicked info ===============
+
+        }
+
+    </script>
+
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&callback=initMap&libraries=&v=weekly"
+            async
+    ></script>
+
+
+
+{% endblock %}
+
+{#  ----------------------------------- INFO --------------------------------------------- #}
+{% block content_right %}
+
+    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 8px;"></div>
+
+{% endblock %}
+

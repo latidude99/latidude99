@@ -47,13 +47,19 @@ def parse_edit_import_to_db_geojson_chs(file):
 
     geojson_chs = GeojsonCHS()
     geojson_chs.import_date = dt.datetime.now(pytz.timezone('Europe/London'))
+    geojson_chs.save(using=DB_SNC)
     geojson_chs.json_scale_1 = json.dumps(data_scale_1)
-    geojson_chs.json_scale_1 = json.dumps(data_scale_2)
-    geojson_chs.json_scale_1 = json.dumps(data_scale_3)
-    geojson_chs.json_scale_1 = json.dumps(data_scale_4)
-    geojson_chs.json_scale_1 = json.dumps(data_scale_5)
+    geojson_chs.json_scale_2 = json.dumps(data_scale_2)
+    geojson_chs.json_scale_3 = json.dumps(data_scale_3)
+    geojson_chs.json_scale_4 = json.dumps(data_scale_4)
+    geojson_chs.json_scale_5 = json.dumps(data_scale_5)
     # geojson_chs.json_scale_all = json.dumps(data)
     geojson_chs.type = 'scale_range'
+    geojson_chs.total_chart_count = len(data_scale_1['features']) + \
+                                    len(data_scale_2['features']) + \
+                                    len(data_scale_3['features']) + \
+                                    len(data_scale_4['features']) + \
+                                    len(data_scale_5['features'])
     geojson_chs.ready = True
     geojson_chs.save(using=DB_SNC)
 

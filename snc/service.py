@@ -75,6 +75,39 @@ def get_chs_index_context():
 
 # ------------------------- chs geojson ---------------------------------
 
+# fetches chs geojson from db
+def get_charts_chs_geojson_db_split_scale_context():
+    catalogueDB = repo.get_latest_catalogue()
+    catalogueDTO = service_converters.catalogueDB_2_catalogueDTO(catalogueDB)
+
+    context_main = {
+        'catalogue': catalogueDTO,
+        'google_api_key_dev_un': GOOGLE_API_KEY_DEV_UN,
+        'google_api_key_dev': GOOGLE_API_KEY_DEV,
+        'google_api_key_prod': GOOGLE_API_KEY_PROD,
+    }
+
+    geojson = repo.find_geojson_chs_scale_range()
+    context_geojson = {
+        'geojson_scale_1': geojson.json_scale_1,
+        'geojson_scale_2': geojson.json_scale_2,
+        'geojson_scale_3': geojson.json_scale_3,
+        'geojson_scale_4': geojson.json_scale_4,
+        'geojson_scale_5': geojson.json_scale_5,
+        'import_date': geojson.import_date,
+        'total_chart_count': geojson.total_chart_count,
+    }
+    context_scale_ranges_check = {'sc1checked': 'checked',
+                              'sc2checked': 'checked',
+                              'sc3checked': 'checked',
+                              'sc4checked': 'checked',
+                              'sc5checked': 'checked',
+                              }
+
+    ctx = {**get_base_context(), **context_main, **context_geojson, **context_scale_ranges_check}
+    return ctx
+
+
 # fetches chs geojson from file located in snc/data/
 def get_charts_chs_geojson_file_split_scale_context(file_path):
     catalogueDB = repo.get_latest_catalogue()

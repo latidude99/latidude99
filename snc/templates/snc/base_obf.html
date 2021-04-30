@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+{% load static %}
+{% static "snc/" as static_base %}
+
+<html lang="en">
+<head>
+    <title>{{ title_tab }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+
+        }
+
+        #search {
+            height: 500px;
+            overflow-y: scroll;
+        }
+
+        #charts {
+            height: 500px;
+            overflow-y: scroll;
+        }
+
+        #notices {
+            height: 350px;
+            overflow-y: scroll;
+        }
+
+        #panels {
+            height: 300px;
+            overflow-y: scroll;
+        }
+
+        .scroll-hidden-inner::-webkit-scrollbar {
+            width: 5px; /* width of the entire scrollbar */
+        }
+
+        .scroll-hidden-inner::-webkit-scrollbar-track {
+            background: transparent; /* color of the tracking area */
+        }
+
+        .scroll-hidden-inner::-webkit-scrollbar-thumb {
+            background-color: #26d0ce; /* color of the scroll thumb */
+            border-radius: 10px; /* roundness of the scroll thumb */
+            border: 1px solid orange; /* creates padding around scroll thumb */
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scroll-hidden-outer::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scroll-hidden-outer {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        #acc_head:hover {
+            text-decoration: none;
+            color: black !important;
+        {#background-color: #eeeeee !important;#}
+        }
+
+        footer {
+            position: absolute;
+        }
+
+        h5 {
+            color: white;
+            font-family: Arial;
+            font-size: 15px
+        }
+
+        #zoomLevel {
+            background-color: skyblue;
+            color: #333333;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        body .card .card-body .card-text {
+            white-space: pre-wrap;
+        }
+
+        .loader1 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader1::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: #5897fb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 4s linear infinite;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .loader2 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader2::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: blue;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 5s linear infinite;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .loader3 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader3::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: #f5dd5d;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 5s linear infinite;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+
+        .loader4 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader4::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: #3875d7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 2s linear infinite;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .loader6 {
+            width: 100%;
+            height: 2px;
+            display: inline-block;
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .loader6::after {
+            content: '';
+            box-sizing: border-box;
+            width: 0;
+            height: 2px;
+            background: #3875d7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: animFw 1s linear infinite;
+        }
+
+        @keyframes animFw {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+
+        a:hover {
+            text-decoration-line: none;
+        !important;
+        }
+
+
+        hr.list {
+            border: 1px solid black;
+            opacity: 25%;
+        }
+
+        .accordion-toggle:hover {
+            text-decoration: none;
+        }
+
+        [data-toggle="collapse"] .fa:before {
+            content: "\f068";
+            opacity: 50%;
+        }
+
+        [data-toggle="collapse"].collapsed .fa:before {
+            content: "\f067";
+            opacity: 50%;
+        }
+
+        .info_text_ {
+            color: #96281b;
+        {#line-height: 6px;#} font-size: 15px;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #help-general-info {
+            background-color: transparent;
+            opacity: 90%;
+            border: 0px solid whitesmoke;
+            top: 60px;
+            height: 28px;
+            padding: 2px 5px 0px 5px;
+            position: absolute;
+            right: 18px;
+            font-size: 14px;
+        }
+
+        #help-top-info {
+            background-color: transparent;
+            opacity: 40%;
+            border: 0px solid whitesmoke;
+            top: 10px;
+            height: 28px;
+            padding: 2px 5px 0px 5px;
+            position: absolute;
+            left: 230px;
+            font-size: 14px;
+        }
+
+        #chart-info-box {
+            background-color: rgba(0, 51, 102, 0.75);
+            color: white;
+            border: 0px solid whitesmoke;
+            top: 10px;
+            height: 28px;
+            padding: 2px 5px 0px 5px;
+            position: absolute;
+            left: 275px;
+            font-size: 14px;
+        }
+
+        #panel-info-box {
+            background-color: rgba(51, 102, 0, 0.75);
+            opacity: 60%;
+            color: beige;
+            border: 0px solid whitesmoke;
+            top: 45px;
+            height: 25px;
+            padding: 2px 5px 0px 5px;
+            position: absolute;
+            left: 275px;
+            font-size: 13px;
+        }
+
+        #scale-info-box {
+            background-color: #ccccff;
+            opacity: 90%;
+            color: black;
+            border: 0px solid whitesmoke;
+            top: 70px;
+            height: 540px;
+            padding: 2px 8px 2px 8px;
+            position: absolute;
+            left: 20px;
+            font-size: 11px;
+        }
+
+        #scale-info-box-index {
+            background-color: #ccccff;
+            opacity: 70%;
+            color: black;
+            border: 0px solid whitesmoke;
+            top: 70px;
+            height: 250px;
+            padding: 2px 8px 2px 8px;
+            position: absolute;
+            left: 20px;
+            font-size: 11px;
+        }
+
+        #loader-box {
+            background-color: transparent;
+            opacity: 100%;
+            border: 0px solid whitesmoke;
+            top: 15px;
+            height: 20px;
+            width: 70%;
+            padding: 2px 5px 0px 5px;
+            position: absolute;
+            left: 280px;
+            font-size: 10px;
+        }
+
+
+    </style>
+</head>
+
+<body class="">
+
+
+<div class="row h-100">
+
+    <!-- CHARTS -->
+    <div class="col-lg-9 h-100" style="padding-right: 7px">
+        {% block content_left %}{% endblock %}
+    </div>
+
+    <!-- INFO -->
+    <div class="col-lg-3 h-100 scroll-hidden">
+        <div class="container-fluid h-100" style="margin:0px; padding-left: 0px">
+            <a href="{% url 'snc:index' %}" style="color:#333333 !important;">
+                <h4 class="mt-4 text-center">{{ title_main }}</h4>
+            </a>
+            <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+                catalogue
+                <span style="color:navy;font-size:14px;">{{ catalogue.file_identifier }}</span>
+                <span>, released </span>
+                <span style="color:navy;font-size:14px;">{{ catalogue.date }}</span>
+            </p>
+
+            <div id="accordion">
+                <div class="card bg-transparent" style="border:none;">
+                    <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                        <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                           data-target="#info_main" aria-expanded="true" aria-controls="info_main"
+                           style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                            <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                            catalogue info
+                        </a>
+                        <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                           data-target="#cat_down" aria-expanded="true" aria-controls="cat_down"
+                           style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                            <i class="fas fa-anchor" style="font-size:12px;color:#4183d7;margin:7px 0px 0px 25px;"></i>
+                        </a>
+                        <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                           data-target="#help" aria-expanded="true" aria-controls="help"
+                           style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                            <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;" aria-hidden="true"></i>
+                            about
+                        </a>
+                        <hr>
+
+                        <div id="info_main" class="collapse" data-parent="#accordion"
+                             aria-labelledby="info_main_head" style="color:#96281b;">
+                            <div style="font-size:12px;">
+                                <p style="margin-bottom: 0px">
+                                    Catalogue number:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.file_identifier }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Catalogue release date:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.date }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Released by:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.organisation_name }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Email:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.email }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Phone:
+                                    <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.phone }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Fax:
+                                    <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.fax }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Delivery Point:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.delivery_point }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    City:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.city }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Administrative Area:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.administrative_area }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Postal Code:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.postal_code }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Country:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.country }}</span>
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    Total chart count:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.charts_count }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="cat_down" class="collapse" data-parent="#accordion"
+                             aria-labelledby="cat_down_head" style="color:#96281b;">
+                            <div class="input-group input-group-sm mb-1" style="font-size:11px;">
+                                <input id="u" type="text" class="form-control" style="max-height: 20px;">
+                                <input id="p" type="password" class="form-control" style="max-height: 20px;">
+                                <div class="input-group-append">
+                                    <button id="cat" class="input-group-text btn btn-outline-dark btn-sm"
+                                            style="font-size:11px;max-height:20px;min-width:50px;cursor:pointer;">
+                                        <span id="minutes">00</span>:<span id="seconds">00</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-center" style="font-size:11px; color:blue;">
+                                <span id="cat-num"></span>
+                                <span id="cat-date"></span>
+                                <span id="cat-lines"></span>
+                                <span id="cat-status"></span>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#cat').click(function d_c() {
+                                $('#cat-num').text('');
+                                $('#cat-date').text('');
+                                $('#cat-lines').text('');
+
+                                let u = $('#u').val();
+                                let p = $('#p').val();
+
+                                console.log(u + ', ' + p)
+
+                                let timer;
+                                let sec = 0;
+
+                                function pad(val) {
+                                    return val > 9 ? val : "0" + val;
+                                }
+
+                                timer = setInterval(function () {
+                                    $("#seconds").html(pad(++sec % 60));
+                                    $("#minutes").html(pad(parseInt(sec / 60, 10)));
+                                }, 1000);
+
+                                $('#cat').attr("disabled", true);
+
+                                $.post('{%  url 'snc:download_catalogue_latest'  %}',
+                                    {'u': u, 'p': p},
+                                    function (response) {
+                                        if (response.check === 'ok') {
+                                            let catalogue_number = response.catalogue_number
+                                            let catalogue_date = response.catalogue_date
+                                            let catalogue_lines = response.catalogue_lines
+
+                                            $('#cat-num').text('id: ' + catalogue_number);
+                                            $('#cat-date').text(', date: ' + catalogue_date);
+                                            $('#cat-lines').text(', lines: ' + catalogue_lines);
+                                        }else{
+                                            $('#cat-status').text('\\m/_(>_<)_\\m/');
+                                        }
+                                        clearInterval(timer);
+                                        $('#cat').removeAttr("disabled");
+                                    }
+                                );
+                            });
+                        </script>
+
+                        <div id="help" class="collapse" data-parent="#accordion"
+                             aria-labelledby="info_main_head" style="color:#96281b;">
+
+                            <div style="font-size:12px;">
+                                <p style="margin-bottom: 5px">
+                                    This is a free service that allows to search and display Admiralty charts
+                                    coverage on top of Google Maps.
+                                </p>
+                                <p style="margin-bottom: 10px">
+                                    The catalogue is updated on a weekly basis.
+                                </p>
+                                <p style="margin-bottom: 0px">
+                                    There are two main modes you can use:
+                                </p>
+                                <ul style="margin-bottom: 5px">
+                                    <li>
+                                        selected charts detailed info and focus (below)
+                                    </li>
+                                    <li>
+                                        all charts display and info (left)
+                                    </li>
+                                </ul>
+                                <p style="margin-bottom: 10px">
+                                    The first one allows you to isolate and display only single or a few charts.
+                                    It assumes you already know the chart number(s) and want to check their coverage
+                                    and/or information on scale, last edition date and notices to mariners.
+                                    (click
+                                    <i class="far fa-question-circle fa-lg mt-1 fa-1x" style="color: navy;"></i>
+                                    below for help)
+                                </p>
+                                <p style="margin-bottom:5px">
+                                    The second mode is meant for those who want to see what charts are available
+                                    in their area of interest.
+                                </p>
+                                <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                    for clarity as well as individual charts if they obscure the view.
+                                </p>
+                                <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                    when using options available within the service. May not work on page reload using
+                                    browser's buttons.
+                                </p>
+                                <p style="margin-bottom:5px">
+                                    Various charts info is also available. Once the charts are loaded look for
+                                    <i class="far fa-question-circle fa-lg mt-1 fa-1x" style="color: #96281b;"></i>
+                                    sign next to the options to see help.
+                                </p>
+                                <hr>
+                                <p style="margin-bottom: 20px;color:mediumorchid;">
+                                    Hosting a website may come relatively cheap but is not free.
+                                    You can help maintaining this service by buying me a coffee.
+                                    Thanks a bunch!
+                                </p>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- accordion end -->
+
+            <div class="col-lg-12 px-1">
+                <div class="mr-2">
+                    <form action="{% url 'snc:multisearch' %}" method="post"
+                          class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <p class="py-2 mt-0 mb-0 text-center" style="font-size: 13px; color:blueviolet;">
+                            Display and focus on selected charts.
+                            <i class="far fa-question-circle fa-lg mt-1 ml-3 fa-lg"
+                               data-toggle="modal" data-target="#help_search"
+                               style="color: blueviolet;cursor:pointer">
+                            </i>
+                        </p>
+                        <div class="input-group input-group-sm" style="font-size: 14px">
+                            <div class="mr-3 mt-1">
+                                Search charts:
+                            </div>
+
+                            <input class="form-control" id="search1" name="number" required
+                                   placeholder="chart number" style="font-size: 12px">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary btn-sm ml-3" id="search_single"
+                                        style="font-size: 12px"
+                                        onclick="$('#error').hide();$('#loader1').show().delay(10000).hide(0);">
+                                    Submit
+                                </button>
+                            </div>
+                            <div id="error">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Please enter chart number</div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="pt-2 flex-grow-1">
+                        <p id="loader1" class="loader1" style="width: 90%; display:none;"></p>
+                        <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
+                    </div>
+                </div>
+                <!-- right side help modal -->
+                <div class="modal" id="help_search">
+                    <div class="modal-dialog modal-sm p-1" style="margin-right:380px;margin-top:100px;">
+                        <div class="modal-content" style="">
+                            <div class="modal-body">
+                                <div style="font-size:12px;">
+                                    <p style="margin-bottom:8px">
+                                        Search and focus on a single or multiple charts.
+                                    </p>
+                                    <hr>
+                                    <p style="margin-bottom: 8px">
+                                        Multiple search is limited to 15 charts.
+                                        To enter multiple charts separate numbers with commas
+                                        e.g. 34, 2, 232, 354, AUS 520, JP721, DE44).
+                                    </p>
+                                    <p style="margin-bottom: 10px">
+                                        Detailed information on the chart(s) will be displayed below
+                                        the search form including:
+                                    <ul style="margin-bottom: 5px">
+                                        <li>
+                                            chart number, title and scale
+                                        </li>
+                                        <li>
+                                            chart status (edition/cancelled) with the date
+                                        </li>
+                                        <li>
+                                            new edition date (this is actually the latest edition date)
+                                        </li>
+                                        <li>
+                                            latest NM number / date
+                                        </li>
+                                        <li>
+                                            number of panels /insets
+                                        </li>
+                                        <li>
+                                            each panel's number, area name and scale
+                                        </li>
+                                        <li>
+                                            list of all NMs for the current edition (number, week, year and type)
+                                        </li>
+
+                                    </ul>
+                                    <p style="margin-bottom: 8px">
+                                        A quick pop-up info will be shown when charts are clicked on the map.
+                                    </p>
+                                    <hr>
+                                    <p style="margin-bottom: 8px">
+                                        If you need to display more charts at the same time use the
+                                        <span style="font-size:11px;color:white;background-color: #3875d7;
+                                        padding:2px 5px 2px 5px;margin:0 5px 0 5px;display:inline-block;">
+                                            load all charts </span>
+                                        option on the left which will load all the available charts.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {% block content_right %}{% endblock %}
+
+            </div>
+
+            <div class="" style="position:absolute; bottom:10px; right:10px">
+                <div class="row">
+                    <div class="col-lg-0"></div>
+                    <div class="col-lg-12">
+                        <div class="mt-4 float-right" style="cursor:pointer;">
+                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                                    data-name="bmc-button" data-slug="zWn1I6bVf" data-color="#FFDD0000" data-emoji=""
+                                    data-font="Comic"
+                                    data-text="Buy me a coffee" data-outline-color="#669900"
+                                    data-font-color="#mediumorchid"
+                                    data-coffee-color="#ffffff">
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // csrf_token
+    $(function () {
+
+        // This function gets cookie with a given name
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        /*
+        The functions below will create a header with csrftoken
+        */
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        function sameOrigin(url) {
+            // test that a given url is a same-origin URL
+            // url could be relative or scheme relative or absolute
+            var host = document.location.host; // host + port
+            var protocol = document.location.protocol;
+            var sr_origin = '//' + host;
+            var origin = protocol + sr_origin;
+            // Allow absolute or scheme relative URLs to same origin
+            return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                // or any other URL that isn't scheme relative or absolute i.e relative.
+                !(/^(\/\/|http:|https:).*/.test(url));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                    // Send the token to same-origin, relative URLs only.
+                    // Send the token only if the method warrants CSRF protection
+                    // Using the CSRFToken value acquired earlier
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+    });
+</script>
+
+<script>
+    // Disable form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        $('#loader1').hide();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
+</body>
+</html>

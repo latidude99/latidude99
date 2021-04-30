@@ -9,6 +9,7 @@ from snc.models import *
 from snc.const import *
 import snc.service_parse as service_parse
 import snc.service_converters as service_converters
+from icecream import *
 
 
 def get_latest_catalogue():
@@ -27,14 +28,8 @@ def get_latest_catalogue():
 
 def find_geojson_chs_scale_range():
     geojson = ''
-    if GeojsonCHS.objects.using(DB_SNC).filter(type='scale range').exists():
-        geojson = GeojsonCHS.objects.using(DB_SNC).filter(type='scale range').latest
-    return geojson
-
-def find_geojson_chs_all():
-    geojson = ''
-    if GeojsonCHS.objects.using(DB_SNC).filter(type='all').exists():
-        geojson = GeojsonCHS.objects.using(DB_SNC).filter(type='all').latest
+    if GeojsonCHS.objects.using(DB_SNC).filter(type='scale_range').exists():
+        geojson = GeojsonCHS.objects.using(DB_SNC).filter(type='scale_range').latest('id')
     return geojson
 
 # ------------------------- snc geojson -----------------------------
