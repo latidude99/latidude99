@@ -101,7 +101,7 @@ def get_charts_chs_geojson_db_split_scale_context():
                               'sc2checked': 'checked',
                               'sc3checked': 'checked',
                               'sc4checked': 'checked',
-                              'sc5checked': 'checked',
+                              'sc5checked': '',
                               }
 
     ctx = {**get_base_context(), **context_main, **context_geojson, **context_scale_ranges_check}

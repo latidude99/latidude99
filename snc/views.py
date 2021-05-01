@@ -57,7 +57,7 @@ def chs(request):
     if request.method == 'POST':
         zoom = request.POST['zoom']
         centre = request.POST['centre']
-        map_context = {'map_zoom': zoom, 'map_centre': centre} #, 'map_bounds': bounds}
+        map_context = {'map_zoom_chs': zoom, 'map_centre_chs': centre}
 
         context = service.get_charts_chs_geojson_db_split_scale_context()
         ctx = {**context, **map_context}
