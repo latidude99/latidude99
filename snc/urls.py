@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('charts', views.charts, name='charts'),
     path('chs', views.chs, name='chs'),
+    path('multisearch', views.multisearch, name='multisearch'),
 
     path('charts/<int:scale>/', views.charts, name='charts'),
     path('chartdetails', views.chartdetails, name='chartdetails'),

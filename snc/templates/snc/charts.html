@@ -847,7 +847,7 @@
                     chart_number = ''
                 }
                 if (event.feature.getProperty("chart_scale") !== undefined) {
-                    chart_scale = ' scale 1 : ' + event.feature.getProperty("chart_scale")
+                    chart_scale = ' scale 1:' + event.feature.getProperty("chart_scale")
                 } else {
                     chart_scale = ''
                 }
@@ -1005,7 +1005,7 @@
                 document.getElementById('found_number').innerText = info;
             };
 
-            // top info found layer charts -- not working
+            // top info found layer charts
             found_layer.addListener("mouseover", (event) => {
                 found_layer.revertStyle();
                 found_layer.overrideStyle(event.feature,
@@ -1020,7 +1020,7 @@
 
             function clearChartsCentered(charts) {
                 for (let i = 0; i < charts.length; i++) {
-                    clearChartCentered(chart)
+                    clearChartCentered(charts[i])
                 }
                 document.getElementById('found_number').innerText = '';
                 document.getElementById('find_number').value = '';
@@ -1503,83 +1503,558 @@
 {#  ----------------------------------- INFO --------------------------------------------- #}
 {% block content_right %}
 
-    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 0px;"></div>
+    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
+    <div class="row mr-1">
+        <div class="col-lg-6">
+            <button class="btn btn-primary btn-block"
+                    onclick="$('#chs').hide();$('#ukho').show();">
+                Admiralty (UKHO)
+            </button>
+        </div>
+        <div class="col-lg-6">
+            <button class="btn btn-danger btn-block"
+                    onclick="$('#ukho').hide();$('#chs').show();">
+                Canadian (CHS)
+            </button>
+        </div>
+    </div>
+    <div id="ukho" class=" mr-2">
+        <a href="{% url 'snc:charts' %}" style="color:#333333 !important;">
+            <h4 class="mt-4 text-center">{{ title_main }}</h4>
+        </a>
+        <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+            catalogue
+            <span style="color:navy;font-size:14px;">{{ catalogue.file_identifier }}</span>
+            <span>, released </span>
+            <span style="color:navy;font-size:14px;">{{ catalogue.date }}</span>
+        </p>
 
-    <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
-        <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
-        Click on the chart to see detailed information.
-        <!-- left side help modal - general info -->
-        <i class="far fa-question-circle fa-lg ml-1"
-           data-toggle="modal" data-target="#help_general"
-           style="color: #5897fb;cursor:pointer">
-        </i>
-    </p>
+        <div id="accordion">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#info_main" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                        catalogue info
+                    </a>
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#cat_down" aria-expanded="true" aria-controls="cat_down"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fas fa-anchor"
+                           style="font-size:12px;color:#4183d7;margin:7px 0px 0px 25px;"></i>
+                    </a>
+                    <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                       data-target="#help" aria-expanded="true" aria-controls="help"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
+                           aria-hidden="true"></i>
+                        about
+                    </a>
+                    <hr>
 
-    <div id="chart-info" class="scroll-hidden-outer" style="display: none;">
-
-        <div class="card bg-transparent" style="border:none;">
-            <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
-                <div class="card-link panel-heading" id="acc_head" style="text-decoration: none; cursor:pointer;
-                               font-size:14px; color:grey;">
-                    chart <span id="head-chart-num" style="color:navy;"></span>
-                    <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span><span id="head-panels-num"
-                                                                                                  style="color:navy;font-size:12px;"></span>
-                    <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span><span id="head-notices-num"
-                                                                                                   style="color:navy;font-size:12px;"></span>
-                    <button class="btn btn-outline-danger btn-sm float-right"
-                            style="max-height: 23px;font-size:11px; padding: 0px 5px 0px 5px;margin-bottom:0px;"
-                            id="clear_info_btn">clear info
-                    </button>
-                </div>
-                <hr style="margin-bottom: 0px; margin-top: 0px">
-
-                <div style="color:#96281b;">
-                    <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
-                        <p style="margin-bottom: 2px">Chart number: <span id="chart-num"
-                                                                          style="color:navy;font-size:12px;"></span><span
-                                style="color:grey;font-size:10px;margin-left:15px">(catalogue </span>
-                            <span id="head-catalogue-id" style="color:grey;font-size:10px;"></span><span
-                                    style="color:grey;font-size:10px;">)</span></p>
-                        <p style="margin-bottom: 2px">Chart title: <span id="chart-title"
-                                                                         style="color:navy;font-size:12px;"></span></p>
-                        <p style="margin-bottom: 2px">Chart scale: <span id="chart-scale"
-                                                                         style="color:navy;font-size:12px;"></span></p>
-                        <p style="margin-bottom: 2px">Status:<span id="chart-status"
-                                                                   style="color:navy;font-size:12px;"></span><span
-                                id="chart-status-date" style="color:navy;font-size:12px;"></span></p>
-                        <p style="margin-bottom: 2px">New edition date: <span id="chart-new-edition-date"
-                                                                              style="color:navy;font-size:12px; margin-right:15px;"></span>
-                        </p>
-                        <p style="margin-bottom: 2px">Last NM number: <span id="chart-last-nm-number"
-                                                                            style="color:navy;font-size:12px; margin-right:15px;">none</span>
-                        </p>
-                        <p style="margin-bottom: 2px">Last NM date (week-year): <span id="chart-last-nm-date"
-                                                                                      style="color:navy;font-size:12px; margin-right:5px;">none</span>
-                        </p>
-
-                        <!-- panels -->
-                        <div>
-                            <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
-                                panels <span id="panels-num"></span></p>
-                            <hr style="margin-bottom: 3px; margin-top:0px;">
-
-                            <div id="panels-content"></div>
-                            <!-- panels end -->
-
-                            <!-- notices start -->
-                            <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
-                                notices <span id="notices-num"></span></p>
-                            <hr style="margin-bottom: 3px; margin-top:0px;">
-
-                            <div id="notices-content"></div>
-
+                    <div id="info_main" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 0px">
+                                Catalogue number:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.file_identifier }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Catalogue release date:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.date }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Released by:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.organisation_name }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Email:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.email }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Phone:
+                                <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.phone }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Fax:
+                                <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.fax }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Delivery Point:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.delivery_point }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                City:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.city }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Administrative Area:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.administrative_area }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Postal Code:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.postal_code }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Country:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.country }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Total chart count:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.charts_count }}</span>
+                            </p>
                         </div>
-                        <!-- notices accordion end -->
+                    </div>
+
+                    <div id="cat_down" class="collapse" data-parent="#accordion"
+                         aria-labelledby="cat_down_head" style="color:#96281b;">
+                        <div class="input-group input-group-sm mb-1" style="font-size:11px;">
+                            <input id="u" type="text" class="form-control" style="max-height: 20px;">
+                            <input id="p" type="password" class="form-control" style="max-height: 20px;">
+                            <div class="input-group-append">
+                                <button id="cat" class="input-group-text btn btn-outline-dark btn-sm"
+                                        style="font-size:11px;max-height:20px;min-width:50px;cursor:pointer;">
+                                    <span id="minutes">00</span>:<span id="seconds">00</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center" style="font-size:11px; color:blue;">
+                            <span id="cat-num"></span>
+                            <span id="cat-date"></span>
+                            <span id="cat-lines"></span>
+                            <span id="cat-status"></span>
+                        </div>
+                    </div>
+
+                    <script>
+                        $('#cat').click(function d_c() {
+                            $('#cat-num').text('');
+                            $('#cat-date').text('');
+                            $('#cat-lines').text('');
+
+                            let u = $('#u').val();
+                            let p = $('#p').val();
+
+                            console.log(u + ', ' + p)
+
+                            let timer;
+                            let sec = 0;
+
+                            function pad(val) {
+                                return val > 9 ? val : "0" + val;
+                            }
+
+                            timer = setInterval(function () {
+                                $("#seconds").html(pad(++sec % 60));
+                                $("#minutes").html(pad(parseInt(sec / 60, 10)));
+                            }, 1000);
+
+                            $('#cat').attr("disabled", true);
+
+                            $.post('{%  url 'snc:download_catalogue_latest'  %}',
+                                {'u': u, 'p': p},
+                                function (response) {
+                                    if (response.check === 'ok') {
+                                        let catalogue_number = response.catalogue_number
+                                        let catalogue_date = response.catalogue_date
+                                        let catalogue_lines = response.catalogue_lines
+
+                                        $('#cat-num').text('id: ' + catalogue_number);
+                                        $('#cat-date').text(', date: ' + catalogue_date);
+                                        $('#cat-lines').text(', lines: ' + catalogue_lines);
+                                    } else {
+                                        $('#cat-status').text('\\m/_(>_<)_\\m/');
+                                    }
+                                    clearInterval(timer);
+                                    $('#cat').removeAttr("disabled");
+                                }
+                            );
+                        });
+                    </script>
+
+                    <div id="help" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 5px">
+                                This is a free service that allows to search and display Admiralty charts
+                                coverage on top of Google Maps.
+                            </p>
+                            <p style="margin-bottom: 10px">
+                                The catalogue is updated on a weekly basis.
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                There are two main modes you can use:
+                            </p>
+                            <ul style="margin-bottom: 5px">
+                                <li>
+                                    selected charts detailed info and focus (below)
+                                </li>
+                                <li>
+                                    all charts display and info (left)
+                                </li>
+                            </ul>
+                            <p style="margin-bottom: 10px">
+                                The first one allows you to isolate and display only single or a few charts.
+                                It assumes you already know the chart number(s) and want to check their
+                                coverage
+                                and/or information on scale, last edition date and notices to mariners.
+                                (click
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x" style="color: navy;"></i>
+                                below for help)
+                            </p>
+                            <p style="margin-bottom:5px">
+                                The second mode is meant for those who want to see what charts are available
+                                in their area of interest.
+                            </p>
+                            <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                for clarity as well as individual charts if they obscure the view.
+                            </p>
+                            <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                when using options available within the service. May not work on page reload
+                                using
+                                browser's buttons.
+                            </p>
+                            <p style="margin-bottom:5px">
+                                Various charts info is also available. Once the charts are loaded look for
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x"
+                                   style="color: #96281b;"></i>
+                                sign next to the options to see help.
+                            </p>
+                            <hr>
+                            <p style="margin-bottom: 20px;color:mediumorchid;">
+                                Hosting a website may come relatively cheap but is not free.
+                                You can help maintaining this service by buying me a coffee.
+                                Thanks a bunch!
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- accordion end -->
+        <div class="mt-2 mb-2 mr-2">
+            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block">
+                Load all charts on the map
+            </a>
+        </div>
+
+        <div class="col-lg-12 px-1">
+            <div class="mr-2">
+                <form action="{% url 'snc:multisearch' %}" method="post"
+                      class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <p class="py-2 mt-0 mb-1 text-center" style="font-size: 13px; color:blueviolet;">
+                        or display and focus on selected charts.
+                        <i class="far fa-question-circle fa-lg mt-1 ml-3 fa-lg"
+                           data-toggle="modal" data-target="#help_search"
+                           style="color: blueviolet;cursor:pointer">
+                        </i>
+                    </p>
+                    <div class="input-group input-group-sm" style="font-size: 14px">
+                        <div class="mr-3 mt-1">
+                            Search charts:
+                        </div>
+
+                        <input class="form-control" id="search1" name="number" required
+                               placeholder="chart number" style="font-size: 12px">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-sm ml-3" id="search_single"
+                                    style="font-size: 12px"
+                                    onclick="$('#error').hide();$('#loader1').show().delay(10000).hide(0);">
+                                Submit
+                            </button>
+                        </div>
+                        <div id="error">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Please enter chart number</div>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="pt-2 flex-grow-1">
+                    <p id="loader1" class="loader1" style="width: 90%; display:none;"></p>
+                    <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
+                </div>
+            </div>
+            <!-- right side help modal -->
+            <div class="modal" id="help_search">
+                <div class="modal-dialog modal-sm p-1" style="margin-right:380px;margin-top:100px;">
+                    <div class="modal-content" style="">
+                        <div class="modal-body">
+                            <div style="font-size:12px;">
+                                <p style="margin-bottom:8px">
+                                    Search and focus on a single or multiple charts.
+                                </p>
+                                <hr>
+                                <p style="margin-bottom: 8px">
+                                    Multiple search is limited to 15 charts.
+                                    To enter multiple charts separate numbers with commas
+                                    e.g. 34, 2, 232, 354, AUS 520, JP721, DE44).
+                                </p>
+                                <p style="margin-bottom: 10px">
+                                    Detailed information on the chart(s) will be displayed below
+                                    the search form including:
+                                <ul style="margin-bottom: 5px">
+                                    <li>
+                                        chart number, title and scale
+                                    </li>
+                                    <li>
+                                        chart status (edition/cancelled) with the date
+                                    </li>
+                                    <li>
+                                        new edition date (this is actually the latest edition date)
+                                    </li>
+                                    <li>
+                                        latest NM number / date
+                                    </li>
+                                    <li>
+                                        number of panels /insets
+                                    </li>
+                                    <li>
+                                        each panel's number, area name and scale
+                                    </li>
+                                    <li>
+                                        list of all NMs for the current edition (number, week, year and
+                                        type)
+                                    </li>
+
+                                </ul>
+                                <p style="margin-bottom: 8px">
+                                    A quick pop-up info will be shown when charts are clicked on the map.
+                                </p>
+                                <hr>
+                                <p style="margin-bottom: 8px">
+                                    If you need to display more charts at the same time use the
+                                    <span style="font-size:11px;color:white;background-color: #3875d7;
+                                        padding:2px 5px 2px 5px;margin:0 5px 0 5px;display:inline-block;">
+                                            load Admiralty charts </span>
+                                    option on the left which will load all the available charts.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 8px;"></div>
+
+        <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
+            <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
+            Click on the chart to see detailed information.
+            <!-- left side help modal - general info -->
+            <i class="far fa-question-circle fa-lg ml-1"
+               data-toggle="modal" data-target="#help_general"
+               style="color: #5897fb;cursor:pointer">
+            </i>
+        </p>
+
+        <div id="chart-info" class="scroll-hidden-outer" style="display: none;">
+
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
+                    <div class="card-link panel-heading" id="acc_head" style="text-decoration: none; cursor:pointer;
+                               font-size:14px; color:grey;">
+                        chart <span id="head-chart-num" style="color:navy;"></span>
+                        <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span><span
+                            id="head-panels-num"
+                            style="color:navy;font-size:12px;"></span>
+                        <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span><span
+                            id="head-notices-num"
+                            style="color:navy;font-size:12px;"></span>
+                        <button class="btn btn-outline-danger btn-sm float-right"
+                                style="max-height: 23px;font-size:11px; padding: 0px 5px 0px 5px;margin-bottom:0px;"
+                                id="clear_info_btn">clear info
+                        </button>
+                    </div>
+                    <hr style="margin-bottom: 0px; margin-top: 0px">
+
+                    <div style="color:#96281b;">
+                        <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
+                            <p style="margin-bottom: 2px">Chart number: <span id="chart-num"
+                                                                              style="color:navy;font-size:12px;"></span><span
+                                    style="color:grey;font-size:10px;margin-left:15px">(catalogue </span>
+                                <span id="head-catalogue-id" style="color:grey;font-size:10px;"></span><span
+                                        style="color:grey;font-size:10px;">)</span></p>
+                            <p style="margin-bottom: 2px">Chart title: <span id="chart-title"
+                                                                             style="color:navy;font-size:12px;"></span>
+                            </p>
+                            <p style="margin-bottom: 2px">Chart scale: <span id="chart-scale"
+                                                                             style="color:navy;font-size:12px;"></span>
+                            </p>
+                            <p style="margin-bottom: 2px">Status:<span id="chart-status"
+                                                                       style="color:navy;font-size:12px;"></span><span
+                                    id="chart-status-date" style="color:navy;font-size:12px;"></span></p>
+                            <p style="margin-bottom: 2px">New edition date: <span id="chart-new-edition-date"
+                                                                                  style="color:navy;font-size:12px; margin-right:15px;"></span>
+                            </p>
+                            <p style="margin-bottom: 2px">Last NM number: <span id="chart-last-nm-number"
+                                                                                style="color:navy;font-size:12px; margin-right:15px;">none</span>
+                            </p>
+                            <p style="margin-bottom: 2px">Last NM date (week-year): <span id="chart-last-nm-date"
+                                                                                          style="color:navy;font-size:12px; margin-right:5px;">none</span>
+                            </p>
+
+                            <!-- panels -->
+                            <div>
+                                <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                    panels <span id="panels-num"></span></p>
+                                <hr style="margin-bottom: 3px; margin-top:0px;">
+
+                                <div id="panels-content"></div>
+                                <!-- panels end -->
+
+                                <!-- notices start -->
+                                <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                    notices <span id="notices-num"></span></p>
+                                <hr style="margin-bottom: 3px; margin-top:0px;">
+
+                                <div id="notices-content"></div>
+
+                            </div>
+                            <!-- notices accordion end -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
+    <div id="chs" class="mr-2" style="display:none;">
+
+        <a href="{% url 'snc:chs' %}" style="color:#333333 !important;">
+            <h4 class="mt-4 text-center">Canadian Chart Catalogue</h4>
+        </a>
+        <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+            catalogue source:
+            <span style="color:navy;font-size:14px;">CHS</span>
+            <span>, imported April 2021</span>
+            <span style="color:navy;font-size:14px;"></span>
+        </p>
+
+        <div id="accordion-chs">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#info-chs" aria-expanded="true" aria-controls="info-chs"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                        catalogue info
+                    </a>
+                    <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                       data-target="#help-chs" aria-expanded="true" aria-controls="help-chs"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
+                           aria-hidden="true"></i>
+                        about
+                    </a>
+                    <hr>
+
+                    <div id="info-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-head" style="color:#96281b;">
+                        <div style="font-size:12px;">
+
+                            <p style="margin-bottom: 0px">
+                                Catalogue ID:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue_id }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Catalogue import date:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ import_date }}</span>
+                            </p>
+
+                            <p style="margin-bottom: 0px">
+                                Total chart count:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ total_chart_count }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="help-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-help" style="color:#96281b;">
+
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 5px">
+                                This is a free service that allows to search and display CHS charts
+                                coverage on top of Google Maps.
+                            </p>
+                            <p style="margin-bottom: 10px">
+                                The catalogue is updated on a monthly basis.
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Unlike with the Admiralty charts there is only one mode you can use:
+                            </p>
+                            <ul style="margin-bottom: 5px">
+                                <li>
+                                    <del>selected charts detailed info and focus</del>
+                                    >
+                                </li>
+                                <li>
+                                    all charts display and info (left)
+                                </li>
+                            </ul>
+                            <p style="margin-bottom:5px">
+                                The second mode is meant for those who want to see what charts are available
+                                in their area of interest.
+                            </p>
+                            <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                for clarity as well as individual charts if they obscure the view.
+                            </p>
+                            <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                when using options available within the service. May not work on page reload
+                                using
+                                browser's buttons.
+                            </p>
+                            <p style="margin-bottom:5px">
+                                Various charts info is also available. Once the charts are loaded look for
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x"
+                                   style="color: #96281b;"></i>
+                                sign next to the options to see help.
+                            </p>
+                            <hr>
+                            <p style="margin-bottom: 20px;color:mediumorchid;">
+                                Hosting a website may come relatively cheap but is not free.
+                                You can help maintaining this service by buying me a coffee.
+                                Thanks a bunch!
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- accordion end -->
+
+        <div class="mt-2 mb-2 mr-2">
+            <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block">
+                Load all charts on the map
+            </a>
+        </div>
+
+
+    </div>
 {% endblock %}

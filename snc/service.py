@@ -94,14 +94,19 @@ def get_charts_chs_geojson_db_split_scale_context():
         'geojson_scale_3': geojson.json_scale_3,
         'geojson_scale_4': geojson.json_scale_4,
         'geojson_scale_5': geojson.json_scale_5,
+        'catalogue_id': geojson.id,
         'import_date': geojson.import_date,
         'total_chart_count': geojson.total_chart_count,
+        'scale_1': CHS_SCALE_1,
+        'scale_2': CHS_SCALE_2,
+        'scale_3': CHS_SCALE_3,
+        'scale_4': CHS_SCALE_4,
     }
     context_scale_ranges_check = {'sc1checked': 'checked',
                               'sc2checked': 'checked',
                               'sc3checked': 'checked',
                               'sc4checked': 'checked',
-                              'sc5checked': '',
+                              'sc5checked': 'checked',
                               }
 
     ctx = {**get_base_context(), **context_main, **context_geojson, **context_scale_ranges_check}

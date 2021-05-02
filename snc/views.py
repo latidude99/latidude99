@@ -52,7 +52,9 @@ def chs(request):
     map_context = {}
     context = service.get_chs_index_context()
     if request.method == 'GET':
-        ctx = service.get_charts_chs_geojson_db_split_scale_context()
+        map_context = {'map_zoom_chs': MAP_ZOOM_CHS, 'map_centre_chs': MAP_CENTRE_CHS}
+        context = service.get_charts_chs_geojson_db_split_scale_context()
+        ctx = {**context, **map_context}
 
     if request.method == 'POST':
         zoom = request.POST['zoom']
@@ -183,7 +185,7 @@ def multisearch(request):
     else:
         nums.append(data.strip())
     context = service.get_search_multiple_context(nums)
-    return render(request, 'snc/index.html', context)
+    return render(request, 'snc/multisearch.html', context)
 
 
 def charts_all(request):

@@ -1,0 +1,1004 @@
+{% extends "snc/base.html" %}
+{% load static %}
+{% static "snc/" as static_base %}
+{% load humanize %}
+
+
+{#  ----------------------------------- CHARTS --------------------------------------------- #}
+{% block content_left %}
+
+    {#    <div id="zoomLevel"></div>#}
+    <div id="map-canvas" style='z-index:30;'></div>
+
+    <!-- load geojson charts loader -->
+    <div id="loader-box">
+        <span id="loader2" class="loader2" style="width: 100%; display:none;"></span>
+        <span id="loader3" class="loader3" style="width: 100%; display:none;"></span>
+    </div>
+
+    <div id="scale-info-box-multisearch" style='z-index:2000;'>
+
+        <form action="{% url 'snc:charts' %}" method="post" style="">
+            {% csrf_token %}
+            <div style="border-left: 3px solid #3333cc;">
+                <div class="ml-1">
+                    <button type="submit" class="btn btn-primary btn-sm py-0 ml-2 mb-2 mt-2"
+                            style="font-size: 13px;"
+                            onclick="$('#error').hide();
+                                $('#loader2').show().delay(5000).hide(0);
+                                $('#loader3').delay(5000).show(1).delay(5000).hide(0);">
+                        load Admiralty charts
+                    </button>
+                    <i class="far fa-question-circle fa-lg mt-2 ml-1"
+                       data-toggle="modal" data-target="#help_load"
+                       style="color: blueviolet;cursor:pointer">
+                    </i>
+                    <p class="ml-1"
+                       style="font-size: 12px;color:#333333;text-shadow:#333333;text-align: left; margin-bottom: 5px">
+                        then turn layers on/off</p>
+
+                    <input type="hidden" class="form-control" name="zoom" value="{{ map_zoom }}" id="map_zoom">
+                    <input type="hidden" class="form-control" name="centre" value="{{ map_centre }}" id="map_centre">
+                    {#            <input type="hidden" class="form-control" name="bounds" value="{{ map_bounds }}" id="map_bounds">#}
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- left side help modals - load charts -->
+    <div class="modal" id="help_load">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:70px;">
+            <div class="modal-content" style="background-color: #e6ecff">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Loads all charts from the latest catalogue.
+                        </p>
+                        <p style="margin-bottom: 8px;text-align: center;">
+                            (may takes a second or two)
+                        </p>
+                        <hr>
+                        <p style="margin-bottom: 5px">
+                            After the charts are loaded all the scale ranges are turned on but the last two.
+                        </p>
+                        <ul>
+                            <li>{{ scale1 }}</li>
+                            <li>{{ scale2 }}</li>
+                            <li>{{ scale3 }}</li>
+                            <li>{{ scale4 }}</li>
+                            <li>{{ scale5 }}</li>
+                            <li>{{ scale6 }}</li>
+                            <li>{{ scale7 }}</li>
+                        </ul>
+                        <p style="margin-bottom: 5px">
+                            The last two scale ranges are loaded but turned off initially.
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            This is for clarity - large area charts obscure the view of the smaller ones.
+                        </p>
+                        <p style="margin-bottom: 0px">
+                            All the scale ranges can be turned on /off independently.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="help_load_chs">
+        <div class="modal-dialog modal-sm p-1" style="margin-left:200px;margin-top:120px;">
+            <div class="modal-content" style="background-color: #ffeee6">
+                <div class="modal-body">
+                    <div style="font-size:12px;">
+                        <p style="margin-bottom:0px;text-align: center;">
+                            Loads all charts from the latest catalogue.
+                        </p>
+                        <p style="margin-bottom: 8px;text-align: center;">
+                            (may takes a second or two)
+                        </p>
+                        <hr>
+
+                        <ul>
+                            <li> > 1:20,000</li>
+                            <li> 1:20,000 - 1 1:50,000</li>
+                            <li> 1:50,000 - 150,000</li>
+                            <li> 1:150,000 - 1:500,000</li>
+                            <li> < 1:500,000</li>
+                        </ul>
+
+                        <p style="margin-bottom: 0px">
+                            All the scale ranges can be turned on /off independently.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        document.getElementById('scale-info-box-multisearch').onmouseover = function () {
+            document.getElementById('scale-info-box-multisearch').style.opacity = '100';
+        };
+
+        let map;
+        let infoWindow;
+
+        document.getElementById("scale-info-box-multisearch").style.zIndex = '20000';
+        document.getElementById("loader-box").style.zIndex = '20000';
+
+        function initMap() {
+            let mapOptions = {
+                zoom: {{ map_zoom }},
+                center: {{ map_centre }},
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+
+            let map_zoom, map_centre_lat, map_centre_lon, map_centre, map_bounds;
+
+            google.maps.event.addListener(map, 'idle', function () {
+
+                {#map_bounds = map.getBounds();#}
+                map_centre_lat = map.getCenter().lat();
+                map_centre_lon = map.getCenter().lng();
+                map_centre = '{lat: ' + map_centre_lat + ', lng: ' + map_centre_lon + '}';
+                map_zoom = map.getZoom();
+                document.getElementById("map_zoom").value = map_zoom;
+                document.getElementById("map_centre").value = map_centre;
+                {#document.getElementById("map_bounds").value = map_bounds;#}
+            });
+
+
+            infoWindow = new google.maps.InfoWindow();
+            let markers = [];
+
+            {% for chart in  charts %}
+                <!-- ---------------- chart ---------------- -->
+                {#console.log('chart ' + {{ chart.number }});#}
+
+                {% if chart.polygons|length > 0 %}
+                    {% for polygon in  chart.polygons %}
+                        var chart_{{ chart.number }}_poly_{{ forloop.counter0 }} = new google.maps.Polygon({
+                            paths: [
+                                {% for position in  polygon.positions %}
+                                    new google.maps.LatLng({{ position.lat }}, {{ position.lon }}),
+                                {% endfor %}
+                            ],
+                            {% if chart.number|add:"0" >= 4000 and chart.number|add:"0" < 4026  %}
+                                strokeColor: '#003399',
+                                strokeOpacity: '0',
+                                fillOpacity: '0.1',
+                                strokeWeight: '0',
+                                strokeDasharray: '',
+                                fillColor: '#003399',
+                            {% else %}
+                                strokeColor: '{{ colour }}',
+                                strokeOpacity: '0.8',
+                                fillOpacity: '0.1',
+                                strokeWeight: '1',
+                                strokeDasharray: '-',
+                                fillColor: '{{ panel.colour }}',
+                            {% endif %}
+                            clickable: true,
+                            number: '{{ chart.number }}',
+                            type: 'chart',
+                            name: '{{ chart.title }}',
+                            scale: '{{ chart.scale|intcomma }}',
+                            zoomMax: '{{ chart.zoom_max }}',
+                            zoomMin: '{{ chart.zoom_min }}',
+                            map: map,
+                            zIndex: '{{ chart.zindex }}'
+                        });
+
+                        google.maps.event.addListener(chart_{{ chart.number }}_poly_{{ forloop.counter0 }}, 'click', showInfo);
+
+                        var chart_{{ chart.number }}_marker = new google.maps.Marker({
+                            map: map,
+                            position: new google.maps.LatLng(
+                                {{ chart.label_position.lat }}, {{ chart.label_position.lon }}),
+                            icon: " ",
+                            draggable: false,
+                            clickable: true,
+                            visible: true,
+                            zoomMax: '{{ chart.zoom_max }}',
+                            zoomMin: '{{ chart.zoom_min }}',
+                            label: {
+                                text: '{{ chart.number }}',
+                                color: '{{ chart.colour }}',
+                                fontSize: '16px',
+                                fontShadow: "6px",
+                                fontWeight: "regular"
+                            }
+                        });
+                        markers.push(chart_{{ chart.number }}_marker);
+                    {% endfor %}
+                {% else %}
+                    {# no chart polygon #}
+                {% endif %}
+
+                {% if chart.panels|length > 0 %}
+                    {% for panel in  chart.panels %}
+                        <!-- ---------------- panel ---------------- -->
+                        {% for poly in  panel.polygons %}
+                            var panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }}
+                                = new google.maps.Polygon({
+                                paths: [
+                                    {% for pos in  poly.positions %}
+                                        new google.maps.LatLng({{ pos.lat }}, {{ pos.lon }}),
+                                    {% endfor %}
+                                ],
+                                clickable: true,
+                                {% if chart.number >= 4000 and chart.number < 4026  %}
+                                    strokeColor: '#003399',
+                                    strokeOpacity: '0',
+                                    fillOpacity: '0.1',
+                                    strokeWeight: '0',
+                                    strokeDasharray: '',
+                                    fillColor: '#003399',
+                                {% else %}
+                                    strokeColor: '{{ colour }}',
+                                    strokeOpacity: '0.8',
+                                    fillOpacity: '0.1',
+                                    strokeWeight: '1',
+                                    strokeDasharray: '-',
+                                    fillColor: '{{ panel.colour }}',
+                                {% endif %}
+                                number: '{{ chart.number }} ({{ panel.panel_id }})',
+                                type: 'panel',
+                                name: '{{ panel.name }}',
+                                scale: '{{ panel.scale|intcomma }}',
+                                zoomMax: '{{ chart.zoom_max }}',
+                                zoomMin: '{{ chart.zoom_min }}',
+                                map: map,
+                                zIndex: '{{ panel.zindex }}'
+                            });
+
+                            google.maps.event.addListener(
+                                panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_{{ forloop.counter0 }}, 'click', showInfo);
+
+                            var marker_{{ panel.panel_id }}_of_{{ chart.number }}_poly
+                                = new google.maps.Marker({
+                                map: map,
+                                position: new google.maps.LatLng(
+                                    {{ panel.label_position.lat }}, {{ panel.label_position.lon }}),
+                                icon: " ",
+                                draggable: false,
+                                clickable: true,
+                                visible: true,
+                                zoomMax: '{{ chart.zoom_max }}',
+                                zoomMin: '{{ chart.zoom_min }}',
+                                label: {
+                                    text: '{{ chart.number }} panel {{ panel.panel_id }}/{{ chart.panels|length }}',
+                                    color: '{{ panel.colour }}',
+                                    fontSize: '14px',
+                                    fontShadow: "6px",
+                                    fontWeight: "regular"
+                                }
+                            });
+                            markers.push(marker_{{ panel.panel_id }}_of_{{ chart.number }}_poly);
+                        {% endfor %}
+                        <!-- ---------------- panel end ---------------- -->
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            <!-- ---------------- chart end ---------------- -->
+            var polygons = new Array(
+                {% for chart in  charts %}
+                    {% for poly in  chart.polygons %}
+                        chart_{{ chart.number }}_poly_{{ forloop.counter0 }},
+                    {% endfor %}
+                    {% for panel in  chart.panels %}
+                        panel_{{ panel.panel_id }}_of_{{ chart.number }}_poly_0,
+                    {% endfor %}
+                {% endfor %}
+            );
+
+            google.maps.event.addListener(map, 'zoom_changed', function () {
+                var zoom = map.getZoom();
+
+                for (i = 0; i < polygons.length; i++) {
+                    if (zoom < polygons[i].zoomMin)
+                        polygons[i].setMap(null);
+                    else if (zoom > polygons[i].zoomMax)
+                        polygons[i].setMap(null);
+                    else
+                        polygons[i].setMap(map);
+                }
+                for (i = 0; i < markers.length; i++) {
+
+                    if (zoom < markers[i].zoomMin)
+                        markers[i].setMap(null);
+                    else if (zoom > markers[i].zoomMax)
+                        markers[i].setMap(null);
+                    else
+                        markers[i].setMap(map);
+                }
+                {#document.getElementById("zoomLevel").innerHTML = 'Zoom Level: ' + zoom;#}
+            });
+
+            if (polygons.length > 0) {
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < polygons.length; i++) {
+                    var paths = polygons[i].getPaths();
+
+                    paths.forEach(function (path) {
+                        var ar = path.getArray();
+                        for (var i = 0, l = ar.length; i < l; i++) {
+                            bounds.extend(ar[i]);
+                        }
+                    })
+                }
+                map.fitBounds(bounds)
+                map.setCenter(bounds.getCenter());
+            }
+
+
+            map.addListener('click', () => {
+                if (infoWindow) {
+                    infoWindow.close();
+                }
+            });
+        }
+
+        function showInfo(event) {
+            var vertices = this.getPath();
+
+            var chartInfo = '<b>' + this.number + '</b><br>' +
+                '<sup>' + this.type + '</sup><br>' +
+                this.name + '</b><br>' +
+                '1 : ' + this.scale + '</b><br>';
+
+
+            infoWindow.setContent(chartInfo);
+            infoWindow.setPosition(event.latLng);
+
+            infoWindow.open(map);
+
+
+        }
+
+
+        {#google.maps.event.addDomListener(window, 'load', initMap());#}
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key_dev_un }}&callback=initMap&libraries=&v=weekly"></script>
+
+
+{% endblock %}
+
+
+
+{#  ----------------------------------- INFO --------------------------------------------- #}
+{% block content_right %}
+
+    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
+
+    <button class="btn btn-primary px-3"
+            onclick="$('#chs').hide();$('#ukho').show();">
+        Admiralty (UKHO)
+    </button>
+    <button class="btn btn-danger px-4"
+            onclick="$('#ukho').hide();$('#chs').show();">
+        Canadian (CHS)
+    </button>
+
+
+    <div id="ukho" class=" mr-2">
+        <a href="{% url 'snc:charts' %}" style="color:#333333 !important;">
+            <h4 class="mt-4 text-center">{{ title_main }}</h4>
+        </a>
+        <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+            catalogue
+            <span style="color:navy;font-size:14px;">{{ catalogue.file_identifier }}</span>
+            <span>, released </span>
+            <span style="color:navy;font-size:14px;">{{ catalogue.date }}</span>
+        </p>
+
+        <div id="accordion">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#info_main" aria-expanded="true" aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                        catalogue info
+                    </a>
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#cat_down" aria-expanded="true" aria-controls="cat_down"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fas fa-anchor"
+                           style="font-size:12px;color:#4183d7;margin:7px 0px 0px 25px;"></i>
+                    </a>
+                    <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                       data-target="#help" aria-expanded="true" aria-controls="help"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
+                           aria-hidden="true"></i>
+                        about
+                    </a>
+                    <hr>
+
+                    <div id="info_main" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 0px">
+                                Catalogue number:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.file_identifier }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Catalogue release date:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.date }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Released by:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.organisation_name }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Email:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.email }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Phone:
+                                <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.phone }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Fax:
+                                <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ catalogue.fax }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Delivery Point:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.delivery_point }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                City:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.city }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Administrative Area:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.administrative_area }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Postal Code:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.postal_code }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Country:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.country }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Total chart count:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue.charts_count }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="cat_down" class="collapse" data-parent="#accordion"
+                         aria-labelledby="cat_down_head" style="color:#96281b;">
+                        <div class="input-group input-group-sm mb-1" style="font-size:11px;">
+                            <input id="u" type="text" class="form-control" style="max-height: 20px;">
+                            <input id="p" type="password" class="form-control" style="max-height: 20px;">
+                            <div class="input-group-append">
+                                <button id="cat" class="input-group-text btn btn-outline-dark btn-sm"
+                                        style="font-size:11px;max-height:20px;min-width:50px;cursor:pointer;">
+                                    <span id="minutes">00</span>:<span id="seconds">00</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center" style="font-size:11px; color:blue;">
+                            <span id="cat-num"></span>
+                            <span id="cat-date"></span>
+                            <span id="cat-lines"></span>
+                            <span id="cat-status"></span>
+                        </div>
+                    </div>
+
+                    <script>
+                        $('#cat').click(function d_c() {
+                            $('#cat-num').text('');
+                            $('#cat-date').text('');
+                            $('#cat-lines').text('');
+
+                            let u = $('#u').val();
+                            let p = $('#p').val();
+
+                            console.log(u + ', ' + p)
+
+                            let timer;
+                            let sec = 0;
+
+                            function pad(val) {
+                                return val > 9 ? val : "0" + val;
+                            }
+
+                            timer = setInterval(function () {
+                                $("#seconds").html(pad(++sec % 60));
+                                $("#minutes").html(pad(parseInt(sec / 60, 10)));
+                            }, 1000);
+
+                            $('#cat').attr("disabled", true);
+
+                            $.post('{%  url 'snc:download_catalogue_latest'  %}',
+                                {'u': u, 'p': p},
+                                function (response) {
+                                    if (response.check === 'ok') {
+                                        let catalogue_number = response.catalogue_number
+                                        let catalogue_date = response.catalogue_date
+                                        let catalogue_lines = response.catalogue_lines
+
+                                        $('#cat-num').text('id: ' + catalogue_number);
+                                        $('#cat-date').text(', date: ' + catalogue_date);
+                                        $('#cat-lines').text(', lines: ' + catalogue_lines);
+                                    } else {
+                                        $('#cat-status').text('\\m/_(>_<)_\\m/');
+                                    }
+                                    clearInterval(timer);
+                                    $('#cat').removeAttr("disabled");
+                                }
+                            );
+                        });
+                    </script>
+
+                    <div id="help" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 5px">
+                                This is a free service that allows to search and display Admiralty charts
+                                coverage on top of Google Maps.
+                            </p>
+                            <p style="margin-bottom: 10px">
+                                The catalogue is updated on a weekly basis.
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                There are two main modes you can use:
+                            </p>
+                            <ul style="margin-bottom: 5px">
+                                <li>
+                                    selected charts detailed info and focus (below)
+                                </li>
+                                <li>
+                                    all charts display and info (left)
+                                </li>
+                            </ul>
+                            <p style="margin-bottom: 10px">
+                                The first one allows you to isolate and display only single or a few charts.
+                                It assumes you already know the chart number(s) and want to check their
+                                coverage
+                                and/or information on scale, last edition date and notices to mariners.
+                                (click
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x" style="color: navy;"></i>
+                                below for help)
+                            </p>
+                            <p style="margin-bottom:5px">
+                                The second mode is meant for those who want to see what charts are available
+                                in their area of interest.
+                            </p>
+                            <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                for clarity as well as individual charts if they obscure the view.
+                            </p>
+                            <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                when using options available within the service. May not work on page reload
+                                using
+                                browser's buttons.
+                            </p>
+                            <p style="margin-bottom:5px">
+                                Various charts info is also available. Once the charts are loaded look for
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x"
+                                   style="color: #96281b;"></i>
+                                sign next to the options to see help.
+                            </p>
+                            <hr>
+                            <p style="margin-bottom: 20px;color:mediumorchid;">
+                                Hosting a website may come relatively cheap but is not free.
+                                You can help maintaining this service by buying me a coffee.
+                                Thanks a bunch!
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- accordion end -->
+        <div class="mt-2 mb-2 mr-2">
+            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block">
+                Load all charts on the map
+            </a>
+        </div>
+
+        <div class="col-lg-12 px-1">
+            <div class="mr-2">
+                <form action="{% url 'snc:multisearch' %}" method="post"
+                      class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <p class="py-2 mt-0 mb-1 text-center" style="font-size: 13px; color:blueviolet;">
+                        or display and focus on selected charts.
+                        <i class="far fa-question-circle fa-lg mt-1 ml-3 fa-lg"
+                           data-toggle="modal" data-target="#help_search"
+                           style="color: blueviolet;cursor:pointer">
+                        </i>
+                    </p>
+                    <div class="input-group input-group-sm" style="font-size: 14px">
+                        <div class="mr-3 mt-1">
+                            Search charts:
+                        </div>
+
+                        <input class="form-control" id="search1" name="number" required
+                               placeholder="chart number" style="font-size: 12px">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-sm ml-3" id="search_single"
+                                    style="font-size: 12px"
+                                    onclick="$('#error').hide();$('#loader1').show().delay(10000).hide(0);">
+                                Submit
+                            </button>
+                        </div>
+                        <div id="error">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Please enter chart number</div>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="pt-2 flex-grow-1">
+                    <p id="loader1" class="loader1" style="width: 90%; display:none;"></p>
+                    <p id="loader4" class="loader4" style="width: 90%; display:none;"></p>
+                </div>
+            </div>
+            <!-- right side help modal -->
+            <div class="modal" id="help_search">
+                <div class="modal-dialog modal-sm p-1" style="margin-right:380px;margin-top:100px;">
+                    <div class="modal-content" style="">
+                        <div class="modal-body">
+                            <div style="font-size:12px;">
+                                <p style="margin-bottom:8px">
+                                    Search and focus on a single or multiple charts.
+                                </p>
+                                <hr>
+                                <p style="margin-bottom: 8px">
+                                    Multiple search is limited to 15 charts.
+                                    To enter multiple charts separate numbers with commas
+                                    e.g. 34, 2, 232, 354, AUS 520, JP721, DE44).
+                                </p>
+                                <p style="margin-bottom: 10px">
+                                    Detailed information on the chart(s) will be displayed below
+                                    the search form including:
+                                <ul style="margin-bottom: 5px">
+                                    <li>
+                                        chart number, title and scale
+                                    </li>
+                                    <li>
+                                        chart status (edition/cancelled) with the date
+                                    </li>
+                                    <li>
+                                        new edition date (this is actually the latest edition date)
+                                    </li>
+                                    <li>
+                                        latest NM number / date
+                                    </li>
+                                    <li>
+                                        number of panels /insets
+                                    </li>
+                                    <li>
+                                        each panel's number, area name and scale
+                                    </li>
+                                    <li>
+                                        list of all NMs for the current edition (number, week, year and
+                                        type)
+                                    </li>
+
+                                </ul>
+                                <p style="margin-bottom: 8px">
+                                    A quick pop-up info will be shown when charts are clicked on the map.
+                                </p>
+                                <hr>
+                                <p style="margin-bottom: 8px">
+                                    If you need to display more charts at the same time use the
+                                    <span style="font-size:11px;color:white;background-color: #3875d7;
+                                        padding:2px 5px 2px 5px;margin:0 5px 0 5px;display:inline-block;">
+                                            load Admiralty charts </span>
+                                    option on the left which will load all the available charts.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 0px;"></div>
+    <div id="search" class="scroll-hidden-outer">
+
+        {% if charts|length > 0 %}
+            <p class="pb-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
+                <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
+                Click on the chart/panel to see a quick info window.
+            </p>
+        {% endif %}
+        {% for chart in  charts %}
+            <!-- charts accordion start -->
+            <div id="accordion">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
+                       data-target="#info_chart_main{{ chart.number }}" aria-expanded="true"
+                       aria-controls="info_main"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:14px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="false"></i>
+                        chart
+                        <span style="color:navy;">{{ chart.number }}</span>
+                        <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span>
+                        <span style="color:navy;font-size:12px;">{{ chart.panels|length }}</span>
+                        <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span>
+                        <span style="color:navy;font-size:12px;">{{ chart.notices|length }}</span>
+                    </a>
+                    <hr style="margin-bottom: 0px; margin-top: 0px">
+
+                    <div id="info_chart_main{{ chart.number }}" class="collapse" data-parent="#accordion"
+                         aria-labelledby="info_main_head" style="color:#96281b;">
+                        <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
+                            <p style="margin-bottom: 2px">
+                                Chart number:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ chart.number }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Chart title:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ chart.title }}</span>
+                            </p>
+                            {% if chart.scale != '' %}
+                                <p style="margin-bottom: 2px">
+                                    Chart scale:
+                                    <span style="color:navy;font-size:12px;">
+                                        1 : {{ chart.scale|intcomma }}</span>
+                                </p>
+                            {% else %}
+                                <p style="margin-bottom: 2px">
+                                Chart scale:
+                                <span style="color:navy;font-size:12px;">
+                                        no main polygon</span>
+                            {% endif %}
+                            <p style="margin-bottom: 2px">
+                                Status:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ chart.status }}</span>
+                                <span style="color:navy;font-size:12px;">
+                                        , {{ chart.status_date }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                New edition date:
+                                <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.new_edition_date }}</span>
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Last NM number:
+                                {% if chart.last_nm_number == '' %}
+                                    <span style="color:grey;font-size:12px; margin-right:15px;">
+                                         none</span>
+                                {% else %}
+                                    <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.last_nm_number }}</span>
+                                {% endif %}
+                            </p>
+                            <p style="margin-bottom: 2px">
+                                Last NM date (week-year):
+                                {% if chart.last_nm_date == '' %}
+                                    <span style="color:grey;font-size:12px; margin-right:15px;">
+                                         none</span>
+                                {% else %}
+                                    <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.last_nm_date }}</span>
+                                {% endif %}
+                            </p>
+                            <!-- panels accordion start -->
+                            <div>
+                                <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                    panels ({{ chart.panels|length }})
+                                </p>
+                                <hr style="margin-bottom: 3px; margin-top:0px; ">
+                                {% if chart.panels|length > 0 %}
+                                    {% for panel in chart.panels %}
+                                        <p style="margin-bottom: 0px">
+                                            panel id:
+                                            <span style="color:navy;font-size:12px;">
+                                                            {{ panel.panel_id }}</span>
+                                        </p>
+                                        <p style="margin-bottom: 0px">
+                                            panel name:
+                                            <span style="color:navy;font-size:12px;">
+                                                            {{ panel.name }}</span>
+                                        </p>
+                                        <p style="margin-bottom: 6px">
+                                            panel scale:
+                                            <span style="color:navy;font-size:12px;">
+                                                            1 : {{ panel.scale|intcomma }}</span>
+                                        </p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p style="color:grey;font-size:12px; margin-left:15px;">
+                                        none</p>
+                                {% endif %}
+                                <!-- panels accordion end -->
+
+                                <!-- notices accordion start -->
+                                <div>
+                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:2px">
+                                        notices ({{ chart.notices|length }})
+                                    </p>
+                                    <hr style="margin-bottom: 3px; margin-top:0px; ">
+                                    {% if chart.notices|length > 0 %}
+                                        {% for notice in chart.notices %}
+                                            <p style="margin-bottom: 2px">
+
+                                            <span style="color:navy;font-size:12px;">
+                                                            {{ notice.number }}</span>
+                                                , week:
+                                                <span style="color:navy;font-size:12px;">
+                                                            {{ notice.week }}</span>
+                                                <span style="color:grey;font-size:12px;">
+                                                , year:</span>
+                                                <span style="color:navy;font-size:12px;">
+                                                {{ notice.year }}</span>
+                                                <span style="color:grey;font-size:12px;">
+                                                            / {{ notice.type }}</span>
+                                            </p>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p style="color:grey;font-size:12px; margin-left:15px;">
+                                            none</p>
+                                    {% endif %}
+                                </div>
+                                <!-- notices accordion end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+    <div id="chs" class="mr-2" style="display:none;">
+
+        <a href="{% url 'snc:chs' %}" style="color:#333333 !important;">
+            <h4 class="mt-4 text-center">Canadian Chart Catalogue</h4>
+        </a>
+        <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+            catalogue source:
+            <span style="color:navy;font-size:14px;">CHS</span>
+            <span>, imported April 2021</span>
+            <span style="color:navy;font-size:14px;"></span>
+        </p>
+
+        <div id="accordion-chs">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#info-chs" aria-expanded="true" aria-controls="info-chs"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                        catalogue info
+                    </a>
+                    <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                       data-target="#help-chs" aria-expanded="true" aria-controls="help-chs"
+                       style="text-decoration: none; cursor:pointer;
+                               font-size:12px; color:grey;">
+                        <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
+                           aria-hidden="true"></i>
+                        about
+                    </a>
+                    <hr>
+
+                    <div id="info-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-head" style="color:#96281b;">
+                        <div style="font-size:12px;">
+
+                            <p style="margin-bottom: 0px">
+                                Catalogue ID:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ catalogue_id }}</span>
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Catalogue import date:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ import_date }}</span>
+                            </p>
+
+                            <p style="margin-bottom: 0px">
+                                Total chart count:
+                                <span style="color:navy;font-size:12px;">
+                                        {{ total_chart_count }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="help-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-help" style="color:#96281b;">
+
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 5px">
+                                This is a free service that allows to search and display CHS charts
+                                coverage on top of Google Maps.
+                            </p>
+                            <p style="margin-bottom: 10px">
+                                The catalogue is updated on a monthly basis.
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Unlike with the Admiralty charts there is only one mode you can use:
+                            </p>
+                            <ul style="margin-bottom: 5px">
+                                <li>
+                                    <del>selected charts detailed info and focus</del>
+                                    >
+                                </li>
+                                <li>
+                                    all charts display and info (left)
+                                </li>
+                            </ul>
+                            <p style="margin-bottom:5px">
+                                The second mode is meant for those who want to see what charts are available
+                                in their area of interest.
+                            </p>
+                            <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                for clarity as well as individual charts if they obscure the view.
+                            </p>
+                            <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                when using options available within the service. May not work on page reload
+                                using
+                                browser's buttons.
+                            </p>
+                            <p style="margin-bottom:5px">
+                                Various charts info is also available. Once the charts are loaded look for
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x"
+                                   style="color: #96281b;"></i>
+                                sign next to the options to see help.
+                            </p>
+                            <hr>
+                            <p style="margin-bottom: 20px;color:mediumorchid;">
+                                Hosting a website may come relatively cheap but is not free.
+                                You can help maintaining this service by buying me a coffee.
+                                Thanks a bunch!
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- accordion end -->
+
+        <div class="mt-2 mb-2 mr-2">
+            <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block">
+                Load all charts on the map
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+
