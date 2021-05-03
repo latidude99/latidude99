@@ -1504,19 +1504,15 @@
 {% block content_right %}
 
     <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
-    <div class="row mr-1">
-        <div class="col-lg-6">
-            <button class="btn btn-primary btn-block"
-                    onclick="$('#chs').hide();$('#ukho').show();">
-                Admiralty (UKHO)
-            </button>
-        </div>
-        <div class="col-lg-6">
-            <button class="btn btn-danger btn-block"
-                    onclick="$('#ukho').hide();$('#chs').show();">
-                Canadian (CHS)
-            </button>
-        </div>
+    <div class="row justify-content-center">
+        <button class="btn btn-primary mr-2"
+                onclick="$('#chs').hide();$('#ukho').show();">
+            Admiralty (UKHO)
+        </button>
+        <button class="btn btn-danger px-4"
+                onclick="$('#ukho').hide();$('#chs').show();">
+            Canadian (CHS)
+        </button>
     </div>
     <div id="ukho" class=" mr-2">
         <a href="{% url 'snc:charts' %}" style="color:#333333 !important;">

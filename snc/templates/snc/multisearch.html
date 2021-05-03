@@ -379,16 +379,16 @@
 {% block content_right %}
 
     <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
-
-    <button class="btn btn-primary px-3"
-            onclick="$('#chs').hide();$('#ukho').show();">
-        Admiralty (UKHO)
-    </button>
-    <button class="btn btn-danger px-4"
-            onclick="$('#ukho').hide();$('#chs').show();">
-        Canadian (CHS)
-    </button>
-
+    <div class="row justify-content-center">
+        <button class="btn btn-primary mr-2"
+                onclick="$('#chs').hide();$('#ukho').show();">
+            Admiralty (UKHO)
+        </button>
+        <button class="btn btn-danger px-4"
+                onclick="$('#ukho').hide();$('#chs').show();">
+            Canadian (CHS)
+        </button>
+    </div>
 
     <div id="ukho" class=" mr-2">
         <a href="{% url 'snc:charts' %}" style="color:#333333 !important;">
@@ -728,160 +728,159 @@
         </div>
 
 
+        <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 0px;"></div>
+        <div id="search" class="scroll-hidden-outer">
 
-    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 0px;"></div>
-    <div id="search" class="scroll-hidden-outer">
-
-        {% if charts|length > 0 %}
-            <p class="pb-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
-                <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
-                Click on the chart/panel to see a quick info window.
-            </p>
-        {% endif %}
-        {% for chart in  charts %}
-            <!-- charts accordion start -->
-            <div id="accordion">
-            <div class="card bg-transparent" style="border:none;">
-                <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
-                    <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
-                       data-target="#info_chart_main{{ chart.number }}" aria-expanded="true"
-                       aria-controls="info_main"
-                       style="text-decoration: none; cursor:pointer;
+            {% if charts|length > 0 %}
+                <p class="pb-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
+                    <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
+                    Click on the chart/panel to see a quick info window.
+                </p>
+            {% endif %}
+            {% for chart in  charts %}
+                <!-- charts accordion start -->
+                <div id="accordion">
+                <div class="card bg-transparent" style="border:none;">
+                    <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
+                        <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
+                           data-target="#info_chart_main{{ chart.number }}" aria-expanded="true"
+                           aria-controls="info_main"
+                           style="text-decoration: none; cursor:pointer;
                                font-size:14px; color:grey;">
-                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="false"></i>
-                        chart
-                        <span style="color:navy;">{{ chart.number }}</span>
-                        <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span>
-                        <span style="color:navy;font-size:12px;">{{ chart.panels|length }}</span>
-                        <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span>
-                        <span style="color:navy;font-size:12px;">{{ chart.notices|length }}</span>
-                    </a>
-                    <hr style="margin-bottom: 0px; margin-top: 0px">
+                            <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="false"></i>
+                            chart
+                            <span style="color:navy;">{{ chart.number }}</span>
+                            <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span>
+                            <span style="color:navy;font-size:12px;">{{ chart.panels|length }}</span>
+                            <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span>
+                            <span style="color:navy;font-size:12px;">{{ chart.notices|length }}</span>
+                        </a>
+                        <hr style="margin-bottom: 0px; margin-top: 0px">
 
-                    <div id="info_chart_main{{ chart.number }}" class="collapse" data-parent="#accordion"
-                         aria-labelledby="info_main_head" style="color:#96281b;">
-                        <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
-                            <p style="margin-bottom: 2px">
-                                Chart number:
-                                <span style="color:navy;font-size:12px;">
-                                        {{ chart.number }}</span>
-                            </p>
-                            <p style="margin-bottom: 2px">
-                                Chart title:
-                                <span style="color:navy;font-size:12px;">
-                                        {{ chart.title }}</span>
-                            </p>
-                            {% if chart.scale != '' %}
+                        <div id="info_chart_main{{ chart.number }}" class="collapse" data-parent="#accordion"
+                             aria-labelledby="info_main_head" style="color:#96281b;">
+                            <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
                                 <p style="margin-bottom: 2px">
+                                    Chart number:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ chart.number }}</span>
+                                </p>
+                                <p style="margin-bottom: 2px">
+                                    Chart title:
+                                    <span style="color:navy;font-size:12px;">
+                                        {{ chart.title }}</span>
+                                </p>
+                                {% if chart.scale != '' %}
+                                    <p style="margin-bottom: 2px">
+                                        Chart scale:
+                                        <span style="color:navy;font-size:12px;">
+                                        1 : {{ chart.scale|intcomma }}</span>
+                                    </p>
+                                {% else %}
+                                    <p style="margin-bottom: 2px">
                                     Chart scale:
                                     <span style="color:navy;font-size:12px;">
-                                        1 : {{ chart.scale|intcomma }}</span>
-                                </p>
-                            {% else %}
-                                <p style="margin-bottom: 2px">
-                                Chart scale:
-                                <span style="color:navy;font-size:12px;">
                                         no main polygon</span>
-                            {% endif %}
-                            <p style="margin-bottom: 2px">
-                                Status:
-                                <span style="color:navy;font-size:12px;">
+                                {% endif %}
+                                <p style="margin-bottom: 2px">
+                                    Status:
+                                    <span style="color:navy;font-size:12px;">
                                         {{ chart.status }}</span>
-                                <span style="color:navy;font-size:12px;">
+                                    <span style="color:navy;font-size:12px;">
                                         , {{ chart.status_date }}</span>
-                            </p>
-                            <p style="margin-bottom: 2px">
-                                New edition date:
-                                <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.new_edition_date }}</span>
-                            </p>
-                            <p style="margin-bottom: 2px">
-                                Last NM number:
-                                {% if chart.last_nm_number == '' %}
-                                    <span style="color:grey;font-size:12px; margin-right:15px;">
-                                         none</span>
-                                {% else %}
-                                    <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.last_nm_number }}</span>
-                                {% endif %}
-                            </p>
-                            <p style="margin-bottom: 2px">
-                                Last NM date (week-year):
-                                {% if chart.last_nm_date == '' %}
-                                    <span style="color:grey;font-size:12px; margin-right:15px;">
-                                         none</span>
-                                {% else %}
-                                    <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.last_nm_date }}</span>
-                                {% endif %}
-                            </p>
-                            <!-- panels accordion start -->
-                            <div>
-                                <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
-                                    panels ({{ chart.panels|length }})
                                 </p>
-                                <hr style="margin-bottom: 3px; margin-top:0px; ">
-                                {% if chart.panels|length > 0 %}
-                                    {% for panel in chart.panels %}
-                                        <p style="margin-bottom: 0px">
-                                            panel id:
-                                            <span style="color:navy;font-size:12px;">
-                                                            {{ panel.panel_id }}</span>
-                                        </p>
-                                        <p style="margin-bottom: 0px">
-                                            panel name:
-                                            <span style="color:navy;font-size:12px;">
-                                                            {{ panel.name }}</span>
-                                        </p>
-                                        <p style="margin-bottom: 6px">
-                                            panel scale:
-                                            <span style="color:navy;font-size:12px;">
-                                                            1 : {{ panel.scale|intcomma }}</span>
-                                        </p>
-                                    {% endfor %}
-                                {% else %}
-                                    <p style="color:grey;font-size:12px; margin-left:15px;">
-                                        none</p>
-                                {% endif %}
-                                <!-- panels accordion end -->
-
-                                <!-- notices accordion start -->
+                                <p style="margin-bottom: 2px">
+                                    New edition date:
+                                    <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.new_edition_date }}</span>
+                                </p>
+                                <p style="margin-bottom: 2px">
+                                    Last NM number:
+                                    {% if chart.last_nm_number == '' %}
+                                        <span style="color:grey;font-size:12px; margin-right:15px;">
+                                         none</span>
+                                    {% else %}
+                                        <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.last_nm_number }}</span>
+                                    {% endif %}
+                                </p>
+                                <p style="margin-bottom: 2px">
+                                    Last NM date (week-year):
+                                    {% if chart.last_nm_date == '' %}
+                                        <span style="color:grey;font-size:12px; margin-right:15px;">
+                                         none</span>
+                                    {% else %}
+                                        <span style="color:navy;font-size:12px; margin-right:15px;">
+                                        {{ chart.last_nm_date }}</span>
+                                    {% endif %}
+                                </p>
+                                <!-- panels accordion start -->
                                 <div>
-                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:2px">
-                                        notices ({{ chart.notices|length }})
+                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                        panels ({{ chart.panels|length }})
                                     </p>
                                     <hr style="margin-bottom: 3px; margin-top:0px; ">
-                                    {% if chart.notices|length > 0 %}
-                                        {% for notice in chart.notices %}
-                                            <p style="margin-bottom: 2px">
-
-                                            <span style="color:navy;font-size:12px;">
-                                                            {{ notice.number }}</span>
-                                                , week:
+                                    {% if chart.panels|length > 0 %}
+                                        {% for panel in chart.panels %}
+                                            <p style="margin-bottom: 0px">
+                                                panel id:
                                                 <span style="color:navy;font-size:12px;">
-                                                            {{ notice.week }}</span>
-                                                <span style="color:grey;font-size:12px;">
-                                                , year:</span>
+                                                            {{ panel.panel_id }}</span>
+                                            </p>
+                                            <p style="margin-bottom: 0px">
+                                                panel name:
                                                 <span style="color:navy;font-size:12px;">
-                                                {{ notice.year }}</span>
-                                                <span style="color:grey;font-size:12px;">
-                                                            / {{ notice.type }}</span>
+                                                            {{ panel.name }}</span>
+                                            </p>
+                                            <p style="margin-bottom: 6px">
+                                                panel scale:
+                                                <span style="color:navy;font-size:12px;">
+                                                            1 : {{ panel.scale|intcomma }}</span>
                                             </p>
                                         {% endfor %}
                                     {% else %}
                                         <p style="color:grey;font-size:12px; margin-left:15px;">
                                             none</p>
                                     {% endif %}
+                                    <!-- panels accordion end -->
+
+                                    <!-- notices accordion start -->
+                                    <div>
+                                        <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:2px">
+                                            notices ({{ chart.notices|length }})
+                                        </p>
+                                        <hr style="margin-bottom: 3px; margin-top:0px; ">
+                                        {% if chart.notices|length > 0 %}
+                                            {% for notice in chart.notices %}
+                                                <p style="margin-bottom: 2px">
+
+                                            <span style="color:navy;font-size:12px;">
+                                                            {{ notice.number }}</span>
+                                                    , week:
+                                                    <span style="color:navy;font-size:12px;">
+                                                            {{ notice.week }}</span>
+                                                    <span style="color:grey;font-size:12px;">
+                                                , year:</span>
+                                                    <span style="color:navy;font-size:12px;">
+                                                {{ notice.year }}</span>
+                                                    <span style="color:grey;font-size:12px;">
+                                                            / {{ notice.type }}</span>
+                                                </p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p style="color:grey;font-size:12px; margin-left:15px;">
+                                                none</p>
+                                        {% endif %}
+                                    </div>
+                                    <!-- notices accordion end -->
                                 </div>
-                                <!-- notices accordion end -->
                             </div>
                         </div>
                     </div>
                 </div>
+            {% endfor %}
             </div>
-        {% endfor %}
         </div>
-    </div>
     </div>
     <div id="chs" class="mr-2" style="display:none;">
 

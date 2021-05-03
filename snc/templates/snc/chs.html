@@ -502,12 +502,12 @@
                             panel_count = panel_count + 1
                             scale_1_layer.overrideStyle(
                                 scale_1_layer.getFeatureById(chart_number[0] + 'panel' + i),
-                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
                         }
                     }
                 }
                 scale_1_layer.overrideStyle(event.feature,
-                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
             scale_2_layer.addListener("mouseover", (event) => {
@@ -519,12 +519,12 @@
                             panel_count = panel_count + 1
                             scale_2_layer.overrideStyle(
                                 scale_2_layer.getFeatureById(chart_number[0] + 'panel' + i),
-                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
                         }
                     }
                 }
                 scale_2_layer.overrideStyle(event.feature,
-                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
             scale_3_layer.addListener("mouseover", (event) => {
@@ -536,12 +536,12 @@
                             panel_count = panel_count + 1
                             scale_3_layer.overrideStyle(
                                 scale_3_layer.getFeatureById(chart_number[0] + 'panel' + i),
-                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
                         }
                     }
                 }
                 scale_3_layer.overrideStyle(event.feature,
-                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
             scale_4_layer.addListener("mouseover", (event) => {
@@ -553,12 +553,12 @@
                             panel_count = panel_count + 1
                             scale_4_layer.overrideStyle(
                                 scale_4_layer.getFeatureById(chart_number[0] + 'panel' + i),
-                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
                         }
                     }
                 }
                 scale_4_layer.overrideStyle(event.feature,
-                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
             scale_5_layer.addListener("mouseover", (event) => {
@@ -570,12 +570,12 @@
                             panel_count = panel_count + 1
                             scale_5_layer.overrideStyle(
                                 scale_5_layer.getFeatureById(chart_number[0] + 'panel' + i),
-                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillOpacity: 0.1});
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
                         }
                     }
                 }
                 scale_5_layer.overrideStyle(event.feature,
-                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.15});
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
 
@@ -604,35 +604,66 @@
 
 
             function topInfo(event) {
-                let chart_info = '--', panel_info = '--', chart_number, chart_scale, chart_title, number, panels, chart,
-                    title;
+                let chart_info = '--', panel_info = '--',
+                    chart_number, panel_scale, panel_title, panel_number,
+                    number, panels, chart, chart_title, sheets, sheet, sheet_title,
+                    chart_number_arr, panel_title_arr;
+
+                if (event.feature.getProperty("PC_PRODUCT_TITLE") !== undefined) {
+                    chart_title = ' ' + event.feature.getProperty("PC_PRODUCT_TITLE");
+                } else {
+                    chart_title = '';
+                }
                 if (event.feature.getProperty("CHART") !== undefined) {
                     chart = 'chart ' + event.feature.getProperty("CHART");
                     chart_number = chart.split('panel');
+                    panel_number = chart_number[1];
+                    if (chart_number[0].includes('-')) {
+                        chart_number_arr = chart_number[0].split('-');
+                        chart_number = chart_number_arr[0];
+                    } else {
+                        chart_number = chart_number[0];
+                    }
                 } else {
-                    chart_number = ''
+                    chart_number = '';
                 }
                 if (event.feature.getProperty("TITLE") !== undefined) {
-                    title = event.feature.getProperty("TITLE");
-                    chart_title = title.split(':');
+                    panel_title = event.feature.getProperty("TITLE");
+                    panel_title = panel_title.split(':');
+                    if (panel_title[1].includes('- Sheet/Feuille')) {
+                        panel_title_arr = panel_title[1].split('- Sheet/Feuille');
+                        panel_title = panel_title_arr[0];
+                    } else {
+                        panel_title = panel_title[1]
+                    }
                 } else {
-                    chart_number = ''
+                    chart_number = '';
                 }
                 if (event.feature.getProperty("SCALE") !== undefined) {
-                    chart_scale = ' scale 1:' + parseInt(event.feature.getProperty("SCALE")).toLocaleString()
+                    panel_scale = ' scale 1:' + parseInt(event.feature.getProperty("SCALE")).toLocaleString() +', ';
 
                 } else {
-                    chart_scale = ''
+                    panel_scale = '';
                 }
+
+                sheet_title = event.feature.getProperty("TITLE");
+                if (sheet_title.includes('Sheet/Feuille')) {
+                    sheets = sheet_title.split('Sheet/Feuille');
+                    sheet = ' sheet' + sheets[1] +', ';
+                } else {
+                    sheet = '';
+                }
+
 
                 panel_info = '--'
                 if (panel_count === 1) {
-                    panel_info = '1 main chart panel'
+                    chart_info = chart_number + sheet + chart_title + ' (1 panel)';
+                    panel_info = panel_scale + ' ' + panel_title[1];
                 } else if (panel_count > 1) {
-                    panel_info = panel_count + ' chart panels (panel ' + chart_number[1] + ')'
+                    chart_info = chart_number + sheet + chart_title + ' (' + panel_count + ' panels)';
+                    panel_info = 'panel-' + panel_number + ':' + panel_scale + ' ' + panel_title;
                 }
 
-                chart_info = chart_number[0] + chart_scale + ' ' + chart_title[1];
                 document.getElementById("chart-info-box-chs").textContent = chart_info;
                 document.getElementById("panel-info-box-chs").textContent = panel_info;
             }
@@ -641,8 +672,6 @@
                 panel_count = 0
                 document.getElementById("chart-info-box-chs").textContent = '--';
                 document.getElementById("panel-info-box-chs").textContent = '--';
-                document.getElementById("chart-info-box-chs").style.opacity = "100%";
-                document.getElementById("panel-info-box-chs").style.opacity = "60%";
             }
 
 // ========================================== end of display top info ================
@@ -853,7 +882,6 @@
                 for (let i = 0; i < info_layer_features.length; i++) {
                     info_layer.remove(info_layer_features[i]);
                 }
-                console.log('event');
                 info_layer_features = [];
                 // finds and marks current selection
                 let panel_to_mark = undefined;
@@ -865,7 +893,6 @@
                         panel_to_mark = scale_1_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
-                    console.log(panel_to_mark);
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
@@ -876,7 +903,6 @@
                 for (let i = 0; i < info_layer_features.length; i++) {
                     info_layer.remove(info_layer_features[i]);
                 }
-                console.log('event');
                 info_layer_features = [];
                 // finds and marks current selection
                 let panel_to_mark = undefined;
@@ -888,7 +914,6 @@
                         panel_to_mark = scale_2_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
-                    console.log(panel_to_mark);
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
@@ -899,7 +924,6 @@
                 for (let i = 0; i < info_layer_features.length; i++) {
                     info_layer.remove(info_layer_features[i]);
                 }
-                console.log('event');
                 info_layer_features = [];
                 // finds and marks current selection
                 let panel_to_mark = undefined;
@@ -911,7 +935,6 @@
                         panel_to_mark = scale_3_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
-                    console.log(panel_to_mark);
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
@@ -922,7 +945,6 @@
                 for (let i = 0; i < info_layer_features.length; i++) {
                     info_layer.remove(info_layer_features[i]);
                 }
-                console.log('event');
                 info_layer_features = [];
                 // finds and marks current selection
                 let panel_to_mark = undefined;
@@ -934,7 +956,6 @@
                         panel_to_mark = scale_4_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
-                    console.log(panel_to_mark);
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
@@ -945,7 +966,6 @@
                 for (let i = 0; i < info_layer_features.length; i++) {
                     info_layer.remove(info_layer_features[i]);
                 }
-                console.log('event');
                 info_layer_features = [];
                 // finds and marks current selection
                 let panel_to_mark = undefined;
@@ -957,11 +977,10 @@
                         panel_to_mark = scale_5_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
-                    console.log(panel_to_mark);
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(chart_number[0], info_layer_features);
             });
 
 
@@ -1033,67 +1052,24 @@
                 info_layer_features = [];
             };
 
-            function getChartDetails(number) {
-                $.get('{%  url 'snc:chartdetails'  %}',
-                    {'chart_number': number},
-                    function (response) {
-                        var chart = response.chart;
+            function getChartDetails(number, panels) {
 
-                        $('#head-catalogue-id').text(' ' + chart['catalogue_id']);
-                        $('#head-chart-num').text(' ' + chart['number']);
-                        $('#head-panels-num').text(' ' + chart['panels'].length);
-                        $('#head-notices-num').text(' ' + chart['notices'].length);
-                        $('#chart-num').text(' ' + chart['number']);
-                        $('#chart-title').text(' ' + chart['title']);
-                        $('#chart-scale').text(' ' + chart['scale']);
-                        $('#chart-status').text(' ' + chart['status']);
-                        $('#chart-status-date').text(', ' + chart['status_date']);
-                        $('#chart-new-edition-date').text(' ' + chart['new_edition_date']);
-                        $('#chart-last-nm-number').text(' ' + chart['last_nm_number']);
-                        $('#chart-last-nm-date').text(' ' + chart['last_nm_date']);
 
-                        let panel, panel_id, name, scale, panels_len;
-                        panels_len = chart['panels'].length;
-                        $('#panels-content').text('');
-                        if (panels_len > 0) {
-                            $('#panels-num').text(panels_len);
-                            for (var i = 0; i < panels_len; i++) {
-                                panel_id = ' ' + chart['panels'][i]['id'];
-                                name = ' ' + chart['panels'][i]['name'];
-                                scale = ' ' + chart['panels'][i]['scale'];
-                                panel = '<p style="margin-bottom: 0px"> panel id: <span style="color:navy;font-size:12px;">' + panel_id + '</span></p>' +
-                                    ' <p style="margin-bottom: 0px">panel name: <span style="color:navy;font-size:12px;">' + name + '</span></p>' +
-                                    ' <p style="margin-bottom: 6px">panel scale: <span style="color:navy;font-size:12px;">' + scale + '</span></p>';
-                                $('#panels-content').append(panel);
-                            }
-                        } else {
-                            $('#panels-num').text('');
-                            panel = '<p style="color:grey;font-size:12px; margin-left:15px;">none</p>'
-                            $('#panels-content').append(panel);
-                        }
+                $('#head-chart-num').text(' ' + number);
+                $('#head-panels-num').text(' ' + panels.length);
+                {#$('#head-notices-num').text(' ' + chart['notices'].length);#}
+                {#$('#chart-num').text(' ' + chart['number']);#}
+                {#$('#chart-title').text(' ' + chart['title']);#}
+                {#$('#chart-scale').text(' ' + chart['scale']);#}
+                {#$('#chart-status').text(' ' + chart['status']);#}
+                {#$('#chart-status-date').text(', ' + chart['status_date']);#}
+                {#$('#chart-new-edition-date').text(' ' + chart['new_edition_date']);#}
+                {#$('#chart-last-nm-number').text(' ' + chart['last_nm_number']);#}
+                {#$('#chart-last-nm-date').text(' ' + chart['last_nm_date']);#}
 
-                        let notice, week, year, number, type, notices_len;
-                        notices_len = chart['notices'].length;
-                        $('#notices-content').text('');
-                        if (notices_len > 0) {
-                            $('#notices-num').text(notices_len);
-                            for (var j = 0; j < notices_len; j++) {
-                                number = ' ' + chart['notices'][j]['number'];
-                                week = ' ' + chart['notices'][j]['week'];
-                                year = ' ' + chart['notices'][j]['year'];
-                                type = ' ' + chart['notices'][j]['type'];
 
-                                notice = '<p style="margin-bottom: 2px">number</span><span style="color:navy;font-size:12px;">' + number + '</span><span style="color:grey;font-size:12px;">' + ', week: ' + '<span style="color:navy;font-size:12px;">' + week + '</span><span style="color:grey;font-size:12px;">' + ', year: ' + '</span><span style="color:navy;font-size:12px;">' + year + '</span><span style="color:grey;font-size:12px;">' + ' / ' + type + '</span></p>';
-                                $('#notices-content').append(notice);
-                            }
-                        } else {
-                            $('#notices-num').text('');
-                            notice = '<p style="color:grey;font-size:12px; margin-left:15px;">none</p>';
-                            $('#notices-content').append(notice);
-                        }
+                $('#chart-info').show();
 
-                        $('#chart-info').show();
-                    });
             }
 
 
@@ -1119,14 +1095,16 @@
 
     <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
 
-    <button class="btn btn-primary px-3"
-            onclick="$('#chs').hide();$('#ukho').show();">
-        Admiralty (UKHO)
-    </button>
-    <button class="btn btn-danger px-4"
-            onclick="$('#ukho').hide();$('#chs').show();">
-        Canadian (CHS)
-    </button>
+    <div class="row justify-content-center">
+        <button class="btn btn-primary mr-2"
+                onclick="$('#chs').hide();$('#ukho').show();">
+            Admiralty (UKHO)
+        </button>
+        <button class="btn btn-danger px-4 mr-2"
+                onclick="$('#ukho').hide();$('#chs').show();">
+            Canadian (CHS)
+        </button>
+    </div>
 
     <div id="ukho" class=" mr-2" style="display:none;">
         <a href="{% url 'snc:charts' %}" style="color:#333333 !important;">
