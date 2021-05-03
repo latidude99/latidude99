@@ -637,10 +637,10 @@
                         panel_title = panel_title[1]
                     }
                 } else {
-                    chart_number = '';
+                    panel_title = '';
                 }
                 if (event.feature.getProperty("SCALE") !== undefined) {
-                    panel_scale = ' scale 1:' + parseInt(event.feature.getProperty("SCALE")).toLocaleString() +', ';
+                    panel_scale = ' scale 1:' + parseInt(event.feature.getProperty("SCALE")).toLocaleString() + ', ';
 
                 } else {
                     panel_scale = '';
@@ -649,7 +649,7 @@
                 sheet_title = event.feature.getProperty("TITLE");
                 if (sheet_title.includes('Sheet/Feuille')) {
                     sheets = sheet_title.split('Sheet/Feuille');
-                    sheet = ' sheet' + sheets[1] +', ';
+                    sheet = ' sheet' + sheets[1] + ', ';
                 } else {
                     sheet = '';
                 }
@@ -896,7 +896,7 @@
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(info_layer_features);
             });
             scale_2_layer.addListener("click", (event) => {
                 //clears previous selection
@@ -917,7 +917,7 @@
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(info_layer_features);
             });
             scale_3_layer.addListener("click", (event) => {
                 //clears previous selection
@@ -938,7 +938,7 @@
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(info_layer_features);
             });
             scale_4_layer.addListener("click", (event) => {
                 //clears previous selection
@@ -959,7 +959,7 @@
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(info_layer_features);
             });
             scale_5_layer.addListener("click", (event) => {
                 //clears previous selection
@@ -978,9 +978,10 @@
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
                 }
+                console.log(info_layer_features.length)
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0], info_layer_features);
+                getChartDetails(info_layer_features);
             });
 
 
@@ -1006,7 +1007,7 @@
                 }
                 // displays chart info data on the left panel
                 $('#chart-info').hide();
-                getChartDetails(chart_number[0]);
+                getChartDetails(info_layer_features);
             });
 
 
@@ -1052,20 +1053,103 @@
                 info_layer_features = [];
             };
 
-            function getChartDetails(number, panels) {
+            function getChartDetails(features) {
+                let chart_info = '--', panel_info = '--',
+                    chart_number, panel_scale, panel_title, panel_number,
+                    number, panels, chart, chart_title, sheets, sheet, sheet_title,
+                    chart_number_arr, panel_title_arr,
+                    last_edition_date, chart_last_nm_number;
+
+                if (features.length > 0) {
+                    chart = ' ' + features[0].getProperty("CHART");
+                    chart_number = chart.split('panel');
+                    panel_number = chart_number[1];
+                    if (chart_number[0].includes('-')) {
+                        chart_number_arr = chart_number[0].split('-');
+                        chart_number = chart_number_arr[0];
+                    } else {
+                        chart_number = chart_number[0];
+                    }
+                } else {
+                    chart_number = '';
+                }
+
+                sheet_title = features[0].getProperty("TITLE");
+                if (sheet_title.includes('Sheet/Feuille')) {
+                    sheets = sheet_title.split('Sheet/Feuille');
+                    sheet = ' sheet' + sheets[1] + ', ';
+                } else {
+                    sheet = '';
+                }
+
+                if (features[0].getProperty("PC_PRODUCT_TITLE") !== undefined) {
+                    chart_title = ' ' + features[0].getProperty("PC_PRODUCT_TITLE");
+                } else {
+                    chart_title = '';
+                }
+
+                if (features[0].getProperty("PC_LAST_EDITION_DATE") !== undefined) {
+                    var date = features[0].getProperty("PC_LAST_EDITION_DATE");
+                    date = date.split('T');
+                    last_edition_date = date[0];
+                } else {
+                    last_edition_date = '';
+                }
+
+                if (features[0].getProperty("PC_LAST_NOTICE") !== null) {
+                    chart_last_nm_number = ' ' + features[0].getProperty("PC_LAST_NOTICE");
+                } else {
+                    chart_last_nm_number = 'no notices';
+                }
+
+                $('#head-chart-num').text(' ' + chart_number + ' ' + sheet);
+                $('#head-panels-num').text(' ' + features.length);
+                $('#chart-num').text(' ' + chart_number + ' ' + sheet);
+                $('#chart-title').text(' ' + chart_title);
+                $('#chart-last-edition-date').text(' ' + last_edition_date);
+                $('#chart-last-nm-number').text(' ' + chart_last_nm_number);
 
 
-                $('#head-chart-num').text(' ' + number);
-                $('#head-panels-num').text(' ' + panels.length);
-                {#$('#head-notices-num').text(' ' + chart['notices'].length);#}
-                {#$('#chart-num').text(' ' + chart['number']);#}
-                {#$('#chart-title').text(' ' + chart['title']);#}
-                {#$('#chart-scale').text(' ' + chart['scale']);#}
-                {#$('#chart-status').text(' ' + chart['status']);#}
-                {#$('#chart-status-date').text(', ' + chart['status_date']);#}
-                {#$('#chart-new-edition-date').text(' ' + chart['new_edition_date']);#}
-                {#$('#chart-last-nm-number').text(' ' + chart['last_nm_number']);#}
-                {#$('#chart-last-nm-date').text(' ' + chart['last_nm_date']);#}
+                let panel, panel_id, name, scale, panels_len;
+                $('#panels-content').text('');
+                if (features.length > 0) {
+                    $('#panels-num').text(panels_len);
+
+                    for (var i = 0; i < features.length; i++) {
+
+                        if (features[i].getProperty("TITLE") !== undefined) {
+                            panel_title = features[i].getProperty("TITLE");
+                            panel_title = panel_title.split(':');
+                            if (panel_title[1].includes('- Sheet/Feuille')) {
+                                panel_title_arr = panel_title[1].split('- Sheet/Feuille');
+                                panel_title = panel_title_arr[0];
+                            } else {
+                                panel_title = panel_title[1]
+                            }
+                        } else {
+                            panel_title = '';
+                        }
+
+                        if (features[i].getProperty("SCALE") !== undefined) {
+                            panel_scale = ' scale 1:' + parseInt(features[i].getProperty("SCALE")).toLocaleString();
+
+                        } else {
+                            panel_scale = '';
+                        }
+
+                        panel_id = ' ' + (i + 1);
+                        name = ' ' + panel_title;
+                        scale = ' '+ panel_scale;
+                        panel = '<p style="margin-bottom: 0px"> panel: <span style="color:navy;font-size:12px;">' + panel_id + '</span></p>' +
+                            ' <p style="margin-bottom: 0px">panel name: <span style="color:navy;font-size:12px;">' + name + '</span></p>' +
+                            ' <p style="margin-bottom: 6px">panel scale: <span style="color:navy;font-size:12px;">' + scale + '</span></p>';
+                        $('#panels-content').append(panel);
+                    }
+                } else {
+                    $('#panels-num').text('');
+                    panel = '<p style="color:grey;font-size:12px; margin-left:15px;">none</p>'
+                    $('#panels-content').append(panel);
+                }
 
 
                 $('#chart-info').show();
@@ -1735,9 +1819,6 @@
                             <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span><span
                                 id="head-panels-num"
                                 style="color:navy;font-size:12px;"></span>
-                            <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span><span
-                                id="head-notices-num"
-                                style="color:navy;font-size:12px;"></span>
                             <button class="btn btn-outline-danger btn-sm float-right"
                                     style="max-height: 23px;font-size:11px; padding: 0px 5px 0px 5px;margin-bottom:0px;"
                                     id="clear_info_btn">clear info
@@ -1748,29 +1829,24 @@
                         <div style="color:#96281b;">
                             <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
                                 <p style="margin-bottom: 2px">Chart number: <span id="chart-num"
-                                                                                  style="color:navy;font-size:12px;"></span><span
-                                        style="color:grey;font-size:10px;margin-left:15px">(catalogue </span>
-                                    <span id="head-catalogue-id" style="color:grey;font-size:10px;"></span><span
-                                            style="color:grey;font-size:10px;">)</span></p>
+                                                                                  style="color:navy;font-size:12px;"></span>
                                 <p style="margin-bottom: 2px">Chart title: <span id="chart-title"
                                                                                  style="color:navy;font-size:12px;"></span>
                                 </p>
-                                <p style="margin-bottom: 2px">Chart scale: <span id="chart-scale"
-                                                                                 style="color:navy;font-size:12px;"></span>
-                                </p>
-                                <p style="margin-bottom: 2px">Status:<span id="chart-status"
-                                                                           style="color:navy;font-size:12px;"></span><span
-                                        id="chart-status-date" style="color:navy;font-size:12px;"></span></p>
-                                <p style="margin-bottom: 2px">New edition date: <span id="chart-new-edition-date"
-                                                                                      style="color:navy;font-size:12px; margin-right:15px;"></span>
+                                <p style="margin-bottom: 2px">Last edition date: <span id="chart-last-edition-date"
+                                                                                       style="color:navy;font-size:12px; margin-right:15px;"></span>
                                 </p>
                                 <p style="margin-bottom: 2px">Last NM number: <span id="chart-last-nm-number"
                                                                                     style="color:navy;font-size:12px; margin-right:15px;">none</span>
-                                </p>
-                                <p style="margin-bottom: 2px">Last NM date (week-year): <span id="chart-last-nm-date"
-                                                                                              style="color:navy;font-size:12px; margin-right:5px;">none</span>
-                                </p>
 
+                                <div>
+                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                        panels <span id="panels-num"></span></p>
+                                    <hr style="margin-bottom: 3px; margin-top:0px;">
+
+                                    <div id="panels-content"></div>
+                                    <!-- panels end -->
+                                </div>
                             </div>
                         </div>
                     </div>
