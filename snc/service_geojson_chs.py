@@ -20,7 +20,7 @@ import locale
 
 
 def parse_edit_import_to_db_geojson_chs(file):
-    with open(file) as json_file:
+    with open(file, encoding='utf-8') as json_file:
         data = json.load(json_file)
         print(data['type'])
         prev = ''

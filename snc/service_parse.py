@@ -133,7 +133,7 @@ def import_charts(obj):
         chart.status_date = ch.Metadata.Status.ChartStatus['date']
         chart.new_edition_date = ch.Metadata.ChartNewEditionDate.cdata
         chart.import_date = dt.datetime.now(pytz.timezone('Europe/London'))
-        chart.save(using=DB)
+        chart.save(using=DB_SNC)
         print('chart ' + chart.number + ', saved')
 
         if chart.number == '4000':  # skips polygons for chart 4000, they don't display correctly
@@ -153,13 +153,13 @@ def import_charts(obj):
             print('inside single main polygon')
             chart_polygon = ChartPolygon()
             chart_polygon.chart = chart
-            chart_polygon.save(using=DB)
+            chart_polygon.save(using=DB_SNC)
             for pos in positions:
                 chart_position = ChartPosition()
                 chart_position.chart_polygon = chart_polygon
                 chart_position.lat = pos['latitude']
                 chart_position.lon = pos['longitude']
-                chart_position.save(using=DB)
+                chart_position.save(using=DB_SNC)
             print('--------- single main chart polygon, saved')
         except:
             pass
@@ -177,7 +177,7 @@ def import_charts(obj):
             for poly in polygons:
                 chart_polygon = ChartPolygon()
                 chart_polygon.chart = chart
-                chart_polygon.save(using=DB)
+                chart_polygon.save(using=DB_SNC)
 
                 positions = poly.Position
                 for pos in positions:
@@ -185,7 +185,7 @@ def import_charts(obj):
                     chart_position.chart_polygon = chart_polygon
                     chart_position.lat = pos['latitude']
                     chart_position.lon = pos['longitude']
-                    chart_position.save(using=DB)
+                    chart_position.save(using=DB_SNC)
 
             #         if float(pos['latitude'].strip()) > north:
             #             north = float(pos['latitude'].strip())
@@ -202,25 +202,25 @@ def import_charts(obj):
             # northwest.chart_polygon = chart_polygon
             # northwest.lat = str(north)
             # northwest.lon = str(west)
-            # northwest.save(using=DB)
+            # northwest.save(using=DB_SNC)
             #
             # northeast = ChartPosition()
             # northeast.chart_polygon = chart_polygon
             # northeast.lat = str(north)
             # northeast.lon = str(east)
-            # northeast.save(using=DB)
+            # northeast.save(using=DB_SNC)
             #
             # southeast = ChartPosition()
             # southeast.chart_polygon = chart_polygon
             # southeast.lat = str(south)
             # southeast.lon = str(east)
-            # southeast.save(using=DB)
+            # southeast.save(using=DB_SNC)
             #
             # southwest = ChartPosition()
             # southwest.chart_polygon = chart_polygon
             # southwest.lat = str(south)
             # southwest.lon = str(west)
-            # southwest.save(using=DB)
+            # southwest.save(using=DB_SNC)
             print('multiple main polygons simplyfied and saved')
 
         except:
@@ -237,32 +237,32 @@ def import_charts(obj):
 
             chart_polygon_bounding = ChartPolygon()
             chart_polygon_bounding.chart = chart
-            chart_polygon_bounding.save(using=DB)
+            chart_polygon_bounding.save(using=DB_SNC)
 
             # converts bounds to vertices
             northwest = ChartPosition()
             northwest.chart_polygon = chart_polygon_bounding
             northwest.lat = north
             northwest.lon = west
-            northwest.save(using=DB)
+            northwest.save(using=DB_SNC)
 
             northeast = ChartPosition()
             northeast.chart_polygon = chart_polygon_bounding
             northeast.lat = north
             northeast.lon = east
-            northeast.save(using=DB)
+            northeast.save(using=DB_SNC)
 
             southeast = ChartPosition()
             southeast.chart_polygon = chart_polygon_bounding
             southeast.lat = south
             southeast.lon = east
-            southeast.save(using=DB)
+            southeast.save(using=DB_SNC)
 
             southwest = ChartPosition()
             southwest.chart_polygon = chart_polygon_bounding
             southwest.lat = south
             southwest.lon = west
-            southwest.save(using=DB)
+            southwest.save(using=DB_SNC)
 
             print('--------- bounding box polygon saved')
         except:
@@ -281,7 +281,7 @@ def import_charts(obj):
                     panel.area = pan.PanelAreaName.cdata
                     panel.name = pan.PanelName.cdata
                     panel.scale = pan.PanelScale.cdata
-                    panel.save(using=DB)
+                    panel.save(using=DB_SNC)
 
                     if panel.scale != '' and int(panel.scale.strip()) < min:
                         min = int(panel.scale.strip())
@@ -300,7 +300,7 @@ def import_charts(obj):
                         for poly in polygons:
                             panel_polygon = PanelPolygon()
                             panel_polygon.panel = panel
-                            panel_polygon.save(using=DB)
+                            panel_polygon.save(using=DB_SNC)
 
                             positions = poly.Position
                             for pos in positions:
@@ -308,7 +308,7 @@ def import_charts(obj):
                                 panel_position.panel_polygon = panel_polygon
                                 panel_position.lat = pos['latitude']
                                 panel_position.lon = pos['longitude']
-                                panel_position.save(using=DB)
+                                panel_position.save(using=DB_SNC)
 
                         #         if float(pos['latitude'].strip()) > north:
                         #             north = float(pos['latitude'].strip())
@@ -324,25 +324,25 @@ def import_charts(obj):
                         # southwest.panel_polygon = panel_polygon
                         # southwest.lat = str(south)
                         # southwest.lon = str(west)
-                        # southwest.save(using=DB)
+                        # southwest.save(using=DB_SNC)
                         #
                         # southeast = PanelPosition()
                         # southeast.panel_polygon = panel_polygon
                         # southeast.lat = str(south)
                         # southeast.lon = str(east)
-                        # southeast.save(using=DB)
+                        # southeast.save(using=DB_SNC)
                         #
                         # northeast = PanelPosition()
                         # northeast.panel_polygon = panel_polygon
                         # northeast.lat = str(north)
                         # northeast.lon = str(east)
-                        # northeast.save(using=DB)
+                        # northeast.save(using=DB_SNC)
                         #
                         # northwest = PanelPosition()
                         # northwest.panel_polygon = panel_polygon
                         # northwest.lat = str(north)
                         # northwest.lon = str(west)
-                        # northwest.save(using=DB)
+                        # northwest.save(using=DB_SNC)
 
                         print('--------- multi polygon panel, saved')
 
@@ -365,7 +365,7 @@ def import_charts(obj):
                             print('inside single panel polygon')
                             panel_polygon = PanelPolygon()
                             panel_polygon.panel = panel
-                            panel_polygon.save(using=DB)
+                            panel_polygon.save(using=DB_SNC)
 
                             positions = pan.Polygon.Position
                             for p in positions:
@@ -373,7 +373,7 @@ def import_charts(obj):
                                 panel_position.panel_polygon = panel_polygon
                                 panel_position.lat = p['latitude']
                                 panel_position.lon = p['longitude']
-                                panel_position.save(using=DB)
+                                panel_position.save(using=DB_SNC)
                             print('--------- single polygon panel, saved')
                         except:
                             pass
@@ -393,7 +393,7 @@ def import_charts(obj):
                     panel.area = pan.PanelAreaName.cdata
                     panel.name = pan.PanelName.cdata
                     panel.scale = pan.PanelScale.cdata
-                    panel.save(using=DB)
+                    panel.save(using=DB_SNC)
 
                     if panel.scale != '' and int(panel.scale.strip()) < min:
                         min = int(panel.scale.strip())
@@ -422,32 +422,32 @@ def import_charts(obj):
 
                         panel_polygon = PanelPolygon()
                         panel_polygon.chart = chart
-                        panel_polygon.save(using=DB)
+                        panel_polygon.save(using=DB_SNC)
 
                         # converts bounds to vertices
                         northwest = PanelPosition()
                         northwest.panel_polygon = panel_polygon
                         northwest.lat = str(north)
                         northwest.lon = str(west)
-                        northwest.save(using=DB)
+                        northwest.save(using=DB_SNC)
 
                         northeast = PanelPosition()
                         northeast.panel_polygon = panel_polygon
                         northeast.lat = str(north)
                         northeast.lon = str(east)
-                        northeast.save(using=DB)
+                        northeast.save(using=DB_SNC)
 
                         southeast = PanelPosition()
                         southeast.panel_polygon = panel_polygon
                         southeast.lat = str(south)
                         southeast.lon = str(east)
-                        southeast.save(using=DB)
+                        southeast.save(using=DB_SNC)
 
                         southwest = PanelPosition()
                         southwest.panel_polygon = panel_polygon
                         southwest.lat = str(south)
                         southwest.lon = str(west)
-                        southwest.save(using=DB)
+                        southwest.save(using=DB_SNC)
                         print('--------- multi polygon panel, saved')
 
                     except:
@@ -457,7 +457,7 @@ def import_charts(obj):
                             print('inside single panel polygon')
                             panel_polygon = PanelPolygon()
                             panel_polygon.panel = panel
-                            panel_polygon.save(using=DB)
+                            panel_polygon.save(using=DB_SNC)
 
                             positions = pan.Polygon.Position
                             for p in positions:
@@ -465,7 +465,7 @@ def import_charts(obj):
                                 panel_position.panel_polygon = panel_polygon
                                 panel_position.lat = p['latitude']
                                 panel_position.lon = p['longitude']
-                                panel_position.save(using=DB)
+                                panel_position.save(using=DB_SNC)
                             print('--------- single polygon panel, saved')
                         except:
                             pass
@@ -482,7 +482,7 @@ def import_charts(obj):
                 notice.week = n.Week.cdata
                 notice.number = n.Number.cdata
                 notice.type = n.Type.cdata
-                notice.save(using=DB)
+                notice.save(using=DB_SNC)
                 print('--------- notice: ' + notice.number + ', saved')
         except:
             pass
@@ -491,10 +491,10 @@ def import_charts(obj):
             chart.max_scale_category = 'undefined'
         else:
             chart.max_scale_category = utils.calculate_scale_category(min)
-        chart.save(using=DB)
+        chart.save(using=DB_SNC)
         print('chart.max_scale_category: ' + chart.max_scale_category)
 
     # sets import process finished flag to true
     catalogue.ready = True
-    catalogue.save(using=DB)
+    catalogue.save(using=DB_SNC)
     print('catalogue ready set to True')

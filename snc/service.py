@@ -204,7 +204,7 @@ def get_charts_geojson_scale_range_all_split_scales_db_context(scale_range):
                               'sc3checked': 'checked',
                               'sc4checked': 'checked',
                               'sc5checked': 'checked',
-                              'sc6checked': '',
+                              'sc6checked': 'checked',
                               'sc7checked': ''
                               }
 

@@ -87,7 +87,7 @@ def get_charts(nums):
 
 #---------------------------------------------------------------------------
 
-# service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
+service_parse.import_catalogue_from_file(SNC_CATALOGUE_FILE)
 
 #print(service_geojson.generate_geojson_and_save_db_8XXX())
 
@@ -99,7 +99,7 @@ def get_charts(nums):
 
 #---------------------------------------------------------------------------
 
-service_geojson_chs.parse_edit_import_to_db_geojson_chs(CHS_GEOJSON_FILE)
+#service_geojson_chs.parse_edit_import_to_db_geojson_chs(CHS_GEOJSON_FILE)
 
 
 

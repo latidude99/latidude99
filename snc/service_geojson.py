@@ -45,7 +45,7 @@ def generate_geojson_and_save_db_8XXX():
         geojson.catalogue = catalogue
         geojson.cat_id = catalogue.id
         geojson.ready = True
-        geojson.save(using=DB)
+        geojson.save(using=DB_SNC)
 
         return 'generated and saved in DB geojson for 8XXX charts'
 
@@ -67,7 +67,7 @@ def generate_geojson_and_save_db_single_charts(nums):
             geojson.catalogue = catalogue
             geojson.cat_id = catalogue.id
             geojson.ready = True
-            geojson.save(using=DB)
+            geojson.save(using=DB_SNC)
             processed.append(chartDB.number)
 
     else:
@@ -84,7 +84,7 @@ def generate_geojson_and_save_db_single_charts(nums):
                 geojson.catalogue = catalogue
                 geojson.cat_id = catalogue.id
                 geojson.ready = True
-                geojson.save(using=DB)
+                geojson.save(using=DB_SNC)
                 processed.append(num)
 
     return 'generated and saved in DB geojson for charts: ' + str(range)
@@ -115,7 +115,7 @@ def generate_geojson_and_save_db(scale_range):
             geojson.catalogue = catalogue
             geojson.cat_id = catalogue.id
             geojson.ready = True
-            geojson.save(using=DB)
+            geojson.save(using=DB_SNC)
 
     return 'generated and saved in DB geojson for charts: ' + ', '.join(scale_range)
 

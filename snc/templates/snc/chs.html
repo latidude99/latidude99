@@ -40,7 +40,7 @@
         <!-- left side help modal - top info -->
         <i class="far fa-question-circle fa-2x mr-2"
            data-toggle="modal" data-target="#help_top"
-           style="color: blueviolet;cursor:pointer">
+           style="color: red;cursor:pointer">
         </i>
     </div>
 
@@ -95,6 +95,12 @@
                             <input type="checkbox" class="custom-control-input" id="sc5" name="scale"
                                    value="{{ scale5 }}" {{ sc5checked }}>
                             <label class="custom-control-label pt-1" for="sc5">< 1: 500k</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="ch7000" name="chart"
+                                   value="">
+                            <label class="custom-control-label pt-1" for="ch7000"
+                                   style="color:darkred;">chart 7000</label>
                         </div>
                     </div>
                 </div>
@@ -180,13 +186,8 @@
                             <li> 1:50,000 - 150,000</li>
                             <li> 1:150,000 - 1:500,000</li>
                             <li> < 1:500,000</li>
+                            <li> chart 7000 (planning chart)</li>
                         </ul>
-                        <p style="margin-bottom: 5px">
-                            The last scale range is loaded but turned off initially.
-                        </p>
-                        <p style="margin-bottom: 5px">
-                            This is for clarity - large area charts obscure the view of the smaller ones.
-                        </p>
                         <p style="margin-bottom: 0px">
                             All the scale ranges can be turned on /off independently.
                         </p>
@@ -277,18 +278,15 @@
                             Triggered when the mouse pointer is moved over a polygon on the map.
                         </p>
                         <p style="margin-bottom: 5px">
-                            Depending on the type of the polygon it shows:
+                            It shows:
                         </p>
                         <ul>
-                            <li>for main chart polygons</li>
-                            <ul>
-                                <li>
-                                    top bar (red): chart number, title and scale
-                                </li>
-                                <li>
-                                    bottom bar (white): number of panels/insets (current panel number)
-                                </li>
-                            </ul>
+                            <li>
+                                top bar (red): chart number and title (plus number of panels)
+                            </li>
+                            <li>
+                                bottom bar (white): current panel number (if more than 1) with its scale and title
+                            </li>
                         </ul>
                         <p style="margin-bottom: 5px">
                             Moving the mouse outside polygons clears the info bars.
@@ -323,22 +321,16 @@
                                 chart number, title and scale
                             </li>
                             <li>
-                                chart status (edition/cancelled) with the date
+                                number of panels
                             </li>
                             <li>
-                                new edition date (this is actually the latest edition date)
+                                last edition date
                             </li>
                             <li>
-                                latest NM number / date
-                            </li>
-                            <li>
-                                number of panels /insets
+                                latest NM number
                             </li>
                             <li>
                                 each panel's number, area name and scale
-                            </li>
-                            <li>
-                                list of all NMs for the current edition (number, week, year and type)
                             </li>
 
                         </ul>
@@ -347,25 +339,11 @@
                             clear the info and the blue highlight.
                         </p>
                         <hr>
-                        <p style="margin-bottom: 8px">
-                            If you need to isolate and display only a few or a single chart on the map
-                            use the search functionality on the right side.
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {#    <script>#}
-    {#        $(document).ready(function () {#}
-    {#            console.log('before')#}
-    {#            $('#chs-tab').trigger('click');#}
-    {#            console.log('after')#}
-    {#             $('[href="#chs"]').tab('show');#}
-    {#        });#}
-    {##}
-    {#    </script>#}
 
 
     <script>
@@ -413,6 +391,7 @@
             let scale_3_layer = new google.maps.Data();
             let scale_4_layer = new google.maps.Data();
             let scale_5_layer = new google.maps.Data();
+            let chart_7000_layer = new google.maps.Data();
 
             scale_1_layer.addGeoJson({{ geojson_scale_1|safe }}, {idPropertyName: "CHART"});
             scale_2_layer.addGeoJson({{ geojson_scale_2|safe }}, {idPropertyName: "CHART"});
@@ -420,11 +399,26 @@
             scale_4_layer.addGeoJson({{ geojson_scale_4|safe }}, {idPropertyName: "CHART"});
             scale_5_layer.addGeoJson({{ geojson_scale_5|safe }}, {idPropertyName: "CHART"});
 
-            scale_1_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
-            scale_2_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
-            scale_3_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
-            scale_4_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
-            scale_5_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1,});
+            scale_1_layer.setStyle({fillColor: "red", fillOpacity: '0.1', strokeWeight: 1, strokeColor: "darkred",});
+            scale_2_layer.setStyle({fillColor: "red", fillOpacity: '0.15', strokeWeight: 1, strokeColor: "darkred",});
+            scale_3_layer.setStyle({fillColor: "red", fillOpacity: '0.15', strokeWeight: 1, strokeColor: "darkred",});
+            scale_4_layer.setStyle({fillColor: "red", fillOpacity: '0.15', strokeWeight: 1, strokeColor: "darkred",});
+            scale_5_layer.setStyle({
+                fillColor: "orangered",
+                fillOpacity: '0.06',
+                strokeWeight: 1.5,
+                strokeColor: "red",
+            });
+            chart_7000_layer.setStyle({
+                fillColor: "orangered",
+                fillOpacity: '0.15',
+                strokeWeight: 1.5,
+                strokeColor: "red",
+            });
+
+            let chart_7000 = scale_5_layer.getFeatureById('7000panel1');
+            chart_7000_layer.add(chart_7000);
+            scale_5_layer.remove(chart_7000)
 
             scale_1_layer.setMap(map);
             scale_2_layer.setMap(map);
@@ -483,6 +477,13 @@
                     scale_5_layer.setMap(map);
                 } else {
                     scale_5_layer.setMap(null);
+                }
+            };
+            document.getElementById('ch7000').onclick = function () {
+                if (document.getElementById('ch7000').checked === true) {
+                    chart_7000_layer.setMap(map);
+                } else {
+                    chart_7000_layer.setMap(null);
                 }
             };
 // ========================================== end of turning on/off chart layers =====================
@@ -578,6 +579,23 @@
                     {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.2});
                 topInfo(event);
             });
+            chart_7000_layer.addListener("mouseover", (event) => {
+                if (event.feature.getProperty("CHART") !== undefined) {
+                    let id = (event.feature.getProperty("CHART"));
+                    let chart_number = id.split("panel");
+                    for (let i = 1; i < 17; i++) {
+                        if (chart_7000_layer.getFeatureById(chart_number[0] + 'panel' + i) !== undefined) {
+                            panel_count = panel_count + 1
+                            chart_7000_layer.overrideStyle(
+                                chart_7000_layer.getFeatureById(chart_number[0] + 'panel' + i),
+                                {strokeColor: '#f2f2f2', strokeWeight: '2', fillColor: 'red', fillOpacity: 0.2});
+                        }
+                    }
+                }
+                chart_7000_layer.overrideStyle(event.feature,
+                    {strokeColor: 'white', strokeWeight: '3', fillOpacity: 0.3, fillColor: 'red',});
+                topInfo(event);
+            });
 
 
             // for loop did not work here
@@ -599,6 +617,10 @@
             });
             scale_5_layer.addListener("mouseout", (event) => {
                 scale_5_layer.revertStyle();
+                clearTopInfo();
+            });
+            chart_7000_layer.addListener("mouseout", (event) => {
+                chart_7000_layer.revertStyle();
                 clearTopInfo();
             });
 
@@ -658,10 +680,10 @@
                 panel_info = '--'
                 if (panel_count === 1) {
                     chart_info = chart_number + sheet + chart_title + ' (1 panel)';
-                    panel_info = panel_scale + ' ' + panel_title[1];
+                    panel_info = panel_scale + ' ' + panel_title;
                 } else if (panel_count > 1) {
                     chart_info = chart_number + sheet + chart_title + ' (' + panel_count + ' panels)';
-                    panel_info = 'panel-' + panel_number + ':' + panel_scale + ' ' + panel_title;
+                    panel_info = 'panel ' + panel_number + ':' + panel_scale + ' ' + panel_title;
                 }
 
                 document.getElementById("chart-info-box-chs").textContent = chart_info;
@@ -716,6 +738,11 @@
                 scale_5_layer.remove(event.feature);
                 document.getElementById('removed_charts').innerText = removed_layer.length;
             });
+            chart_7000_layer.addListener('rightclick', function (event) {
+                removed_layer.push(event.feature);
+                chart_7000_layer.remove(event.feature);
+                document.getElementById('removed_charts').innerText = removed_layer.length;
+            });
 
             // restores last removed chart
             //scale constants defined and used in DB, from scale range 7 to 1 (most likety to be removed to least likely)
@@ -738,7 +765,9 @@
 
             function restoreRemovedChart(chart) {
                 let scale = chart.getProperty("PC_MIN_SCALE");
-                if (scale <= "{{ scale_1 }}") {
+                if (chart.getProperty("CHART") === '7000panel1') {
+                    chart_7000_layer.add(chart);
+                } else if (scale <= "{{ scale_1 }}") {
                     scale_1_layer.add(chart);
                 } else if (scale > "{{ scale_1 }}" && scale <= "{{ scale_2 }}") {
                     scale_2_layer.add(chart);
@@ -855,6 +884,8 @@
                     feature = scale_4_layer.getFeatureById(id);
                 } else if (scale_5_layer.getFeatureById(id) !== undefined) {
                     feature = scale_5_layer.getFeatureById(id);
+                } else if (chart_7000_layer.getFeatureById(id) !== undefined) {
+                    feature = chart_7000_layer.getFeatureById(id);
                 }
                 return feature;
             }
@@ -975,6 +1006,28 @@
                     if (scale_5_layer.getFeatureById(chart_number[0] + 'panel' + i) !== undefined) {
                         panel_count = panel_count + 1
                         panel_to_mark = scale_5_layer.getFeatureById(chart_number[0] + 'panel' + i);
+                        info_layer_features.push(info_layer.add(panel_to_mark));
+                    }
+                }
+                console.log(info_layer_features.length)
+                // displays chart info data on the left panel
+                $('#chart-info').hide();
+                getChartDetails(info_layer_features);
+            });
+            chart_7000_layer.addListener("click", (event) => {
+                //clears previous selection
+                for (let i = 0; i < info_layer_features.length; i++) {
+                    info_layer.remove(info_layer_features[i]);
+                }
+                info_layer_features = [];
+                // finds and marks current selection
+                let panel_to_mark = undefined;
+                let id = event.feature.getProperty("CHART");
+                let chart_number = id.split("panel");
+                for (let i = 1; i < 17; i++) {
+                    if (chart_7000_layer.getFeatureById(chart_number[0] + 'panel' + i) !== undefined) {
+                        panel_count = panel_count + 1
+                        panel_to_mark = chart_7000_layer.getFeatureById(chart_number[0] + 'panel' + i);
                         info_layer_features.push(info_layer.add(panel_to_mark));
                     }
                 }
@@ -1139,7 +1192,7 @@
 
                         panel_id = ' ' + (i + 1);
                         name = ' ' + panel_title;
-                        scale = ' '+ panel_scale;
+                        scale = ' ' + panel_scale;
                         panel = '<p style="margin-bottom: 0px"> panel: <span style="color:navy;font-size:12px;">' + panel_id + '</span></p>' +
                             ' <p style="margin-bottom: 0px">panel name: <span style="color:navy;font-size:12px;">' + name + '</span></p>' +
                             ' <p style="margin-bottom: 6px">panel scale: <span style="color:navy;font-size:12px;">' + scale + '</span></p>';
@@ -1177,7 +1230,12 @@
 {#  ----------------------------------- INFO --------------------------------------------- #}
 {% block content_right %}
 
-    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
+    <div class="mt-2 mb-3 ml-1 mr-3">
+        <a href="{% url 'snc:index' %}" class="btn btn-outline-dark btn-sm btn-block"
+           style="max-height: 25px; padding:0px 0px 10px 0px;">
+            Home
+        </a>
+    </div>
 
     <div class="row justify-content-center">
         <button class="btn btn-primary mr-2"
@@ -1423,7 +1481,8 @@
         </div>
         <!-- accordion end -->
         <div class="mt-2 mb-2 mr-2">
-            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block">
+            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block"
+               style="max-height: 25px; padding:0px 0px 10px 0px;">
                 Load all charts on the map
             </a>
         </div>
@@ -1528,331 +1587,178 @@
         </div>
 
 
-        <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 0px;"></div>
-        <div id="search" class="scroll-hidden-outer">
+    </div>
+    <div id="chs" class="mr-2">
 
-            {% if charts|length > 0 %}
-                <p class="pb-2 mt-0 mb-0" style="font-size: 12px; color:navy;">
-                    <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
-                    Click on the chart/panel to see a quick info window.
-                </p>
-            {% endif %}
-            {% for chart in  charts %}
-                <!-- charts accordion start -->
-                <div id="accordion">
-                <div class="card bg-transparent" style="border:none;">
-                    <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
-                        <a class="card-link panel-heading collapsed" data-toggle="collapse" id="acc_head"
-                           data-target="#info_chart_main{{ chart.number }}" aria-expanded="true"
-                           aria-controls="info_main"
-                           style="text-decoration: none; cursor:pointer;
-                               font-size:14px; color:grey;">
-                            <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="false"></i>
-                            chart
-                            <span style="color:navy;">{{ chart.number }}</span>
-                            <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span>
-                            <span style="color:navy;font-size:12px;">{{ chart.panels|length }}</span>
-                            <span style="color:grey;font-size:12px;margin-left:15px"> notices:</span>
-                            <span style="color:navy;font-size:12px;">{{ chart.notices|length }}</span>
-                        </a>
-                        <hr style="margin-bottom: 0px; margin-top: 0px">
+        <a href="{% url 'snc:chs' %}" style="color:#333333 !important;">
+            <h4 class="mt-4 text-center">Canadian Chart Catalogue</h4>
+        </a>
+        <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
+            catalogue source:
+            <span style="color:navy;font-size:14px;">CHS</span>
+            <span>, imported April 2021</span>
+            <span style="color:navy;font-size:14px;"></span>
+        </p>
 
-                        <div id="info_chart_main{{ chart.number }}" class="collapse" data-parent="#accordion"
-                             aria-labelledby="info_main_head" style="color:#96281b;">
-                            <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
-                                <p style="margin-bottom: 2px">
-                                    Chart number:
-                                    <span style="color:navy;font-size:12px;">
-                                        {{ chart.number }}</span>
-                                </p>
-                                <p style="margin-bottom: 2px">
-                                    Chart title:
-                                    <span style="color:navy;font-size:12px;">
-                                        {{ chart.title }}</span>
-                                </p>
-                                {% if chart.scale != '' %}
-                                    <p style="margin-bottom: 2px">
-                                        Chart scale:
-                                        <span style="color:navy;font-size:12px;">
-                                        1 : {{ chart.scale|intcomma }}</span>
-                                    </p>
-                                {% else %}
-                                    <p style="margin-bottom: 2px">
-                                    Chart scale:
-                                    <span style="color:navy;font-size:12px;">
-                                        no main polygon</span>
-                                {% endif %}
-                                <p style="margin-bottom: 2px">
-                                    Status:
-                                    <span style="color:navy;font-size:12px;">
-                                        {{ chart.status }}</span>
-                                    <span style="color:navy;font-size:12px;">
-                                        , {{ chart.status_date }}</span>
-                                </p>
-                                <p style="margin-bottom: 2px">
-                                    New edition date:
-                                    <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.new_edition_date }}</span>
-                                </p>
-                                <p style="margin-bottom: 2px">
-                                    Last NM number:
-                                    {% if chart.last_nm_number == '' %}
-                                        <span style="color:grey;font-size:12px; margin-right:15px;">
-                                         none</span>
-                                    {% else %}
-                                        <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.last_nm_number }}</span>
-                                    {% endif %}
-                                </p>
-                                <p style="margin-bottom: 2px">
-                                    Last NM date (week-year):
-                                    {% if chart.last_nm_date == '' %}
-                                        <span style="color:grey;font-size:12px; margin-right:15px;">
-                                         none</span>
-                                    {% else %}
-                                        <span style="color:navy;font-size:12px; margin-right:15px;">
-                                        {{ chart.last_nm_date }}</span>
-                                    {% endif %}
-                                </p>
-                                <!-- panels accordion start -->
-                                <div>
-                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
-                                        panels ({{ chart.panels|length }})
-                                    </p>
-                                    <hr style="margin-bottom: 3px; margin-top:0px; ">
-                                    {% if chart.panels|length > 0 %}
-                                        {% for panel in chart.panels %}
-                                            <p style="margin-bottom: 0px">
-                                                panel id:
-                                                <span style="color:navy;font-size:12px;">
-                                                            {{ panel.panel_id }}</span>
-                                            </p>
-                                            <p style="margin-bottom: 0px">
-                                                panel name:
-                                                <span style="color:navy;font-size:12px;">
-                                                            {{ panel.name }}</span>
-                                            </p>
-                                            <p style="margin-bottom: 6px">
-                                                panel scale:
-                                                <span style="color:navy;font-size:12px;">
-                                                            1 : {{ panel.scale|intcomma }}</span>
-                                            </p>
-                                        {% endfor %}
-                                    {% else %}
-                                        <p style="color:grey;font-size:12px; margin-left:15px;">
-                                            none</p>
-                                    {% endif %}
-                                    <!-- panels accordion end -->
-
-                                    <!-- notices accordion start -->
-                                    <div>
-                                        <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:2px">
-                                            notices ({{ chart.notices|length }})
-                                        </p>
-                                        <hr style="margin-bottom: 3px; margin-top:0px; ">
-                                        {% if chart.notices|length > 0 %}
-                                            {% for notice in chart.notices %}
-                                                <p style="margin-bottom: 2px">
-
-                                            <span style="color:navy;font-size:12px;">
-                                                            {{ notice.number }}</span>
-                                                    , week:
-                                                    <span style="color:navy;font-size:12px;">
-                                                            {{ notice.week }}</span>
-                                                    <span style="color:grey;font-size:12px;">
-                                                , year:</span>
-                                                    <span style="color:navy;font-size:12px;">
-                                                {{ notice.year }}</span>
-                                                    <span style="color:grey;font-size:12px;">
-                                                            / {{ notice.type }}</span>
-                                                </p>
-                                            {% endfor %}
-                                        {% else %}
-                                            <p style="color:grey;font-size:12px; margin-left:15px;">
-                                                none</p>
-                                        {% endif %}
-                                    </div>
-                                    <!-- notices accordion end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            </div>
-        </div>
-
-
-        <div id="chs" class="mr-2">
-
-            <a href="{% url 'snc:chs' %}" style="color:#333333 !important;">
-                <h4 class="mt-4 text-center">Canadian Chart Catalogue</h4>
-            </a>
-            <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
-                catalogue source:
-                <span style="color:navy;font-size:14px;">CHS</span>
-                <span>, imported April 2021</span>
-                <span style="color:navy;font-size:14px;"></span>
-            </p>
-
-            <div id="accordion-chs">
-                <div class="card bg-transparent" style="border:none;">
-                    <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
-                        <a class="card-link panel-heading collapsed" data-toggle="collapse"
-                           data-target="#info-chs" aria-expanded="true" aria-controls="info-chs"
-                           style="text-decoration: none; cursor:pointer;
+        <div id="accordion-chs">
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent mb-0 pb-0" style="border:none;">
+                    <a class="card-link panel-heading collapsed" data-toggle="collapse"
+                       data-target="#info-chs" aria-expanded="true" aria-controls="info-chs"
+                       style="text-decoration: none; cursor:pointer;
                                font-size:12px; color:grey;">
-                            <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
-                            catalogue info
-                        </a>
-                        <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
-                           data-target="#help-chs" aria-expanded="true" aria-controls="help-chs"
-                           style="text-decoration: none; cursor:pointer;
+                        <i class="fa mr-3" style="font-size:12px;color:grey;" aria-hidden="true"></i>
+                        catalogue info
+                    </a>
+                    <a class="card-link panel-heading collapsed float-right mr-2" data-toggle="collapse"
+                       data-target="#help-chs" aria-expanded="true" aria-controls="help-chs"
+                       style="text-decoration: none; cursor:pointer;
                                font-size:12px; color:grey;">
-                            <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
-                               aria-hidden="true"></i>
-                            about
-                        </a>
-                        <hr>
+                        <i class="fa mr-3" style="font-size:12px;color:grey;margin-top:7px;"
+                           aria-hidden="true"></i>
+                        about
+                    </a>
+                    <hr>
 
-                        <div id="info-chs" class="collapse" data-parent="#accordion-chs"
-                             aria-labelledby="info-chs-head" style="color:#96281b;">
-                            <div style="font-size:12px;">
+                    <div id="info-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-head" style="color:#96281b;">
+                        <div style="font-size:12px;">
 
-                                <p style="margin-bottom: 0px">
-                                    Catalogue ID:
-                                    <span style="color:navy;font-size:12px;">
+                            <p style="margin-bottom: 0px">
+                                Catalogue ID:
+                                <span style="color:navy;font-size:12px;">
                                         {{ catalogue_id }}</span>
-                                </p>
-                                <p style="margin-bottom: 0px">
-                                    Catalogue import date:
-                                    <span style="color:navy;font-size:12px;">
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Catalogue import date:
+                                <span style="color:navy;font-size:12px;">
                                         {{ import_date }}</span>
-                                </p>
+                            </p>
 
-                                <p style="margin-bottom: 0px">
-                                    Total chart count:
-                                    <span style="color:navy;font-size:12px;">
+                            <p style="margin-bottom: 0px">
+                                Total chart count:
+                                <span style="color:navy;font-size:12px;">
                                         {{ total_chart_count }}</span>
-                                </p>
-                            </div>
+                            </p>
                         </div>
+                    </div>
 
-                        <div id="help-chs" class="collapse" data-parent="#accordion-chs"
-                             aria-labelledby="info-chs-help" style="color:#96281b;">
+                    <div id="help-chs" class="collapse" data-parent="#accordion-chs"
+                         aria-labelledby="info-chs-help" style="color:#96281b;">
 
-                            <div style="font-size:12px;">
-                                <p style="margin-bottom: 5px">
-                                    This is a free service that allows to search and display CHS charts
-                                    coverage on top of Google Maps.
-                                </p>
-                                <p style="margin-bottom: 10px">
-                                    The catalogue is updated on a monthly basis.
-                                </p>
-                                <p style="margin-bottom: 0px">
-                                    Unlike with the Admiralty charts there is only one mode you can use:
-                                </p>
-                                <ul style="margin-bottom: 5px">
-                                    <li>
-                                        <del>selected charts detailed info and focus</del>
-                                        >
-                                    </li>
-                                    <li>
-                                        all charts display and info (left)
-                                    </li>
-                                </ul>
-                                <p style="margin-bottom:5px">
-                                    The second mode is meant for those who want to see what charts are available
-                                    in their area of interest.
-                                </p>
-                                <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
-                                    for clarity as well as individual charts if they obscure the view.
-                                </p>
-                                <p style="margin-bottom:5px">Last map position and zoom level are remembered
-                                    when using options available within the service. May not work on page reload
-                                    using
-                                    browser's buttons.
-                                </p>
-                                <p style="margin-bottom:5px">
-                                    Various charts info is also available. Once the charts are loaded look for
-                                    <i class="far fa-question-circle fa-lg mt-1 fa-1x"
-                                       style="color: #96281b;"></i>
-                                    sign next to the options to see help.
-                                </p>
-                                <hr>
-                                <p style="margin-bottom: 20px;color:mediumorchid;">
-                                    Hosting a website may come relatively cheap but is not free.
-                                    You can help maintaining this service by buying me a coffee.
-                                    Thanks a bunch!
-                                </p>
-                                <hr>
-                            </div>
+                        <div style="font-size:12px;">
+                            <p style="margin-bottom: 5px">
+                                This is a free service that allows to search and display CHS charts
+                                coverage on top of Google Maps.
+                            </p>
+                            <p style="margin-bottom: 10px">
+                                The catalogue is updated on a monthly basis.
+                            </p>
+                            <p style="margin-bottom: 0px">
+                                Unlike with the Admiralty charts there is only one mode you can use:
+                            </p>
+                            <ul style="margin-bottom: 5px">
+                                <li>
+                                    <del>selected charts detailed info and focus</del>
+                                    >
+                                </li>
+                                <li>
+                                    all charts display and info (left)
+                                </li>
+                            </ul>
+                            <p style="margin-bottom:5px">
+                                The second mode is meant for those who want to see what charts are available
+                                in their area of interest.
+                            </p>
+                            <p style="margin-bottom:5px">It allows to switch on/off selected scale ranges
+                                for clarity as well as individual charts if they obscure the view.
+                            </p>
+                            <p style="margin-bottom:5px">Last map position and zoom level are remembered
+                                when using options available within the service. May not work on page reload
+                                using
+                                browser's buttons.
+                            </p>
+                            <p style="margin-bottom:5px">
+                                Various charts info is also available. Once the charts are loaded look for
+                                <i class="far fa-question-circle fa-lg mt-1 fa-1x"
+                                   style="color: #96281b;"></i>
+                                sign next to the options to see help.
+                            </p>
+                            <hr>
+                            <p style="margin-bottom: 20px;color:mediumorchid;">
+                                Hosting a website may come relatively cheap but is not free.
+                                You can help maintaining this service by buying me a coffee.
+                                Thanks a bunch!
+                            </p>
+                            <hr>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- accordion end -->
+        </div>
+        <!-- accordion end -->
 
-            <div class="mt-2 mb-2 mr-2">
-                <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block">
-                    Load all charts on the map
-                </a>
-            </div>
+        <div class="mt-2 mb-2 mr-2">
+            <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block"
+               style="max-height: 25px; padding:0px 0px 10px 0px;">
+                Load all charts on the map
+            </a>
+        </div>
 
-            <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:red;">
-                <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
-                Click on the chart to see detailed information.
-                <!-- left side help modal - general info -->
-                <i class="far fa-question-circle fa-lg ml-1"
-                   data-toggle="modal" data-target="#help_general"
-                   style="color: red;cursor:pointer">
-                </i>
-            </p>
+        <p class="py-2 mt-0 mb-0" style="font-size: 12px; color:red;">
+            <i class="fas fa-chevron-left" style="color:grey; margin-right:10px;"></i>
+            Click on the chart to see detailed information.
+            <!-- left side help modal - general info -->
+            <i class="far fa-question-circle fa-lg ml-1"
+               data-toggle="modal" data-target="#help_general"
+               style="color: red;cursor:pointer">
+            </i>
+        </p>
 
-            <div id="chart-info" class="scroll-hidden-outer" style="display: none;">
+        <div id="chart-info" class="scroll-hidden-outer" style="display: none;">
 
-                <div class="card bg-transparent" style="border:none;">
-                    <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
-                        <div class="card-link panel-heading" id="acc_head" style="text-decoration: none; cursor:pointer;
+            <div class="card bg-transparent" style="border:none;">
+                <div class="card-header bg-transparent" style="border:none; margin-top: 0px;padding-top:0px;">
+                    <div class="card-link panel-heading" id="acc_head" style="text-decoration: none; cursor:pointer;
                                font-size:14px; color:grey;">
-                            chart <span id="head-chart-num" style="color:navy;"></span>
-                            <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span><span
-                                id="head-panels-num"
-                                style="color:navy;font-size:12px;"></span>
-                            <button class="btn btn-outline-danger btn-sm float-right"
-                                    style="max-height: 23px;font-size:11px; padding: 0px 5px 0px 5px;margin-bottom:0px;"
-                                    id="clear_info_btn">clear info
-                            </button>
-                        </div>
-                        <hr style="margin-bottom: 0px; margin-top: 0px">
+                        chart <span id="head-chart-num" style="color:navy;"></span>
+                        <span style="color:grey;font-size:12px;margin-left:15px"> panels:</span><span
+                            id="head-panels-num"
+                            style="color:navy;font-size:12px;"></span>
+                        <button class="btn btn-outline-danger btn-sm float-right"
+                                style="max-height: 23px;font-size:11px; padding: 0px 5px 0px 5px;margin-bottom:0px;"
+                                id="clear_info_btn">clear info
+                        </button>
+                    </div>
+                    <hr style="margin-bottom: 0px; margin-top: 0px">
 
-                        <div style="color:#96281b;">
-                            <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
-                                <p style="margin-bottom: 2px">Chart number: <span id="chart-num"
-                                                                                  style="color:navy;font-size:12px;"></span>
-                                <p style="margin-bottom: 2px">Chart title: <span id="chart-title"
-                                                                                 style="color:navy;font-size:12px;"></span>
-                                </p>
-                                <p style="margin-bottom: 2px">Last edition date: <span id="chart-last-edition-date"
-                                                                                       style="color:navy;font-size:12px; margin-right:15px;"></span>
-                                </p>
-                                <p style="margin-bottom: 2px">Last NM number: <span id="chart-last-nm-number"
-                                                                                    style="color:navy;font-size:12px; margin-right:15px;">none</span>
+                    <div style="color:#96281b;">
+                        <div id="charts" class="scroll-hidden-inner" style="font-size:12px;margin-top: 4px;">
+                            <p style="margin-bottom: 2px">Chart number: <span id="chart-num"
+                                                                              style="color:navy;font-size:12px;"></span>
+                            <p style="margin-bottom: 2px">Chart title: <span id="chart-title"
+                                                                             style="color:navy;font-size:12px;"></span>
+                            </p>
+                            <p style="margin-bottom: 2px">Last edition date: <span id="chart-last-edition-date"
+                                                                                   style="color:navy;font-size:12px; margin-right:15px;"></span>
+                            </p>
+                            <p style="margin-bottom: 2px">Last NM number: <span id="chart-last-nm-number"
+                                                                                style="color:navy;font-size:12px; margin-right:15px;">none</span>
 
-                                <div>
-                                    <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
-                                        panels <span id="panels-num"></span></p>
-                                    <hr style="margin-bottom: 3px; margin-top:0px;">
+                            <div>
+                                <p style="font-size:13px; color:grey;margin-top:10px;margin-bottom:3px">
+                                    panels <span id="panels-num"></span></p>
+                                <hr style="margin-bottom: 3px; margin-top:0px;">
 
-                                    <div id="panels-content"></div>
-                                    <!-- panels end -->
-                                </div>
+                                <div id="panels-content"></div>
+                                <!-- panels end -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 

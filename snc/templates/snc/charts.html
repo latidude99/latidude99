@@ -207,7 +207,7 @@
                             <li>{{ scale7 }}</li>
                         </ul>
                         <p style="margin-bottom: 5px">
-                            The last two scale ranges are loaded but turned off initially.
+                            The last scale range is loaded but turned off initially.
                         </p>
                         <p style="margin-bottom: 5px">
                             This is for clarity - large area charts obscure the view of the smaller ones.
@@ -486,13 +486,13 @@
             let arrFeatures2 = scale_2_layer.addGeoJson({{ charts_geojson_scale_2|safe }}, {idPropertyName: "chart_number"});
             let arrFeatures1 = scale_1_layer.addGeoJson({{ charts_geojson_scale_1|safe }}, {idPropertyName: "chart_number"});
 
-            scale_1_layer.setStyle({fillColor: "navy", fillOpacity: '0.1', strokeWeight: 1,});
-            scale_2_layer.setStyle({fillColor: "navy", fillOpacity: '0.05', strokeWeight: 1,});
-            scale_3_layer.setStyle({fillColor: "navy", fillOpacity: '0.05', strokeWeight: 1,});
-            scale_4_layer.setStyle({fillColor: "navy", fillOpacity: '0.05', strokeWeight: 1,});
-            scale_5_layer.setStyle({fillColor: "navy", fillOpacity: '0.05', strokeWeight: 1,});
-            scale_6_layer.setStyle({fillColor: "navy", fillOpacity: '0.01', strokeWeight: 1,});
-            scale_7_layer.setStyle({fillColor: "navy", fillOpacity: '0.005', strokeWeight: 1,});
+            scale_1_layer.setStyle({fillColor: "#0000e6", fillOpacity: '0.1', strokeColor: "#0000e6", strokeWeight: 1,});
+            scale_2_layer.setStyle({fillColor: "#0000e6", fillOpacity: '0.05', strokeColor: "#0000e6", strokeWeight: 1,});
+            scale_3_layer.setStyle({fillColor: "#0000e6", fillOpacity: '0.05', strokeColor: "#0000e6", strokeWeight: 1,});
+            scale_4_layer.setStyle({fillColor: "#0000e6", fillOpacity: '0.05', strokeColor: "#0000e6", strokeWeight: 1,});
+            scale_5_layer.setStyle({fillColor: "#0000e6", fillOpacity: '0.05', strokeColor: "#0000e6", strokeWeight: 1,});
+            scale_6_layer.setStyle({fillColor: "#006622", fillOpacity: '0.1', strokeColor: "#006622", strokeWeight: 1,});
+            scale_7_layer.setStyle({fillColor: "#993333", fillOpacity: '0.01', strokeColor: "#993333", strokeWeight: 1,});
 
             scale_8XXX_layer.setStyle({
                 fillColor: "orangered",
@@ -513,7 +513,7 @@
             let charts_centered = []; // for find & center module down below
 
             // not displaying last two layers for the initial view (obscures view)
-            for (let i = 0; i < scale_layers.length - 2; i++) {
+            for (let i = 0; i < scale_layers.length - 1; i++) {
                 scale_layer = scale_layers[i];
                 scale_layer.setMap(map);
             }
@@ -784,7 +784,7 @@
                 if (event.feature.getProperty("chart_scale") !== undefined)
                     scale = parseInt(event.feature.getProperty("chart_scale").replace(/,/g, ''));
                 if (scale > 3_500_000) {
-                    scale_7_layer.overrideStyle(event.feature, {fillColor: "green", fillOpacity: 0.1});
+                    scale_7_layer.overrideStyle(event.feature, {fillColor: "#993333", fillOpacity: 0.2});
                 } else {
                     let id = (event.feature.getProperty("chart_number"));
                     let chart_number = id.split("-");
@@ -1502,8 +1502,13 @@
 
 {#  ----------------------------------- INFO --------------------------------------------- #}
 {% block content_right %}
+    <div class="mt-2 mb-3 ml-1 mr-3">
+        <a href="{% url 'snc:index' %}" class="btn btn-outline-dark btn-sm btn-block"
+           style="max-height: 25px; padding:0px 0px 10px 0px;">
+            Home
+        </a>
+    </div>
 
-    <div class="info_text" style="border-left: darkgrey solid 1px;margin-bottom: 10px;"></div>
     <div class="row justify-content-center">
         <button class="btn btn-primary mr-2"
                 onclick="$('#chs').hide();$('#ukho').show();">
@@ -1747,7 +1752,8 @@
         </div>
         <!-- accordion end -->
         <div class="mt-2 mb-2 mr-2">
-            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block">
+            <a href="{% url 'snc:charts' %}" class="btn btn-primary btn-sm btn-block"
+            style="max-height: 25px; padding:0px 0px 10px 0px;">
                 Load all charts on the map
             </a>
         </div>
@@ -2046,7 +2052,8 @@
         <!-- accordion end -->
 
         <div class="mt-2 mb-2 mr-2">
-            <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block">
+            <a href="{% url 'snc:chs' %}" class="btn btn-danger btn-sm btn-block"
+            style="max-height: 25px; padding:0px 0px 10px 0px;">
                 Load all charts on the map
             </a>
         </div>
