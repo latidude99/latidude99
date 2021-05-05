@@ -11,6 +11,7 @@ import snc.service_geojson_chs as service_geojson_chs
 from snc.chart import *
 import snc.utils as utils
 import snc.service_geojson as service_geojson
+import datetime as dt
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
@@ -75,6 +76,19 @@ def get_chs_index_context():
 
 # ------------------------- chs geojson ---------------------------------
 
+def get_chs_catalogue_info_context():
+    geojson = repo.find_geojson_chs_scale_range()
+    import_date = geojson.import_date
+    import_date_short = import_date.strftime('%B %Y')
+
+    context_chs_catalogue = {
+        'catalogue_id': geojson.id,
+        'import_date': geojson.import_date,
+        'import_date_short': import_date_short,
+        'total_chart_count': geojson.total_chart_count,
+    }
+    return context_chs_catalogue
+
 # fetches chs geojson from db
 def get_charts_chs_geojson_db_split_scale_context():
     catalogueDB = repo.get_latest_catalogue()
@@ -88,6 +102,9 @@ def get_charts_chs_geojson_db_split_scale_context():
     }
 
     geojson = repo.find_geojson_chs_scale_range()
+    import_date = geojson.import_date
+    import_date_short = import_date.strftime('%B %Y')
+
     context_geojson = {
         'geojson_scale_1': geojson.json_scale_1,
         'geojson_scale_2': geojson.json_scale_2,
@@ -96,6 +113,7 @@ def get_charts_chs_geojson_db_split_scale_context():
         'geojson_scale_5': geojson.json_scale_5,
         'catalogue_id': geojson.id,
         'import_date': geojson.import_date,
+        'import_date_short': import_date_short,
         'total_chart_count': geojson.total_chart_count,
         'scale_1': CHS_SCALE_1,
         'scale_2': CHS_SCALE_2,
@@ -231,8 +249,9 @@ def get_charts_geojson_scale_range_all_split_scales_db_context(scale_range):
         'charts_geojson_scale_6': geojson['scale6'],
         'charts_geojson_scale_7': geojson['scale7'],
         'charts_geojson_scale_8XXX': geojson['8XXX'],
+
     }
-    ctx = {**get_base_context(), **context, **ctx_scale_ranges_check, **ctx_scale_ranges}
+    ctx = {**get_base_context(), **context, **ctx_scale_ranges_check, **ctx_scale_ranges, **get_chs_catalogue_info_context()}
     return ctx
 
 
@@ -415,7 +434,7 @@ def get_search_multiple_context(nums):
             'search_multi_ok': '',
             'search_multi_error': 'No charts found for search term: ' + '\'' + nums_str + '\''
         }
-    ctx = {**get_index_context(), **context}
+    ctx = {**get_index_context(), **context, **get_chs_catalogue_info_context()}
     return ctx
 
 

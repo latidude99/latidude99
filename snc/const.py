@@ -52,9 +52,9 @@ GOOGLE_API_KEY_DEV = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_DEV
 GOOGLE_API_KEY_PROD = secrets.GOOGLE_MAPS_JAVASCRIPT_API_KEY_PROD
 
 # starts centered on British Isles
-MAP_ZOOM = '5'
+MAP_ZOOM = '3'
 MAP_ZOOM_CHS = '3'
-MAP_CENTRE = '{lat: 54.15, lng: -2.72}'
+MAP_CENTRE = '{lat: 18, lng: -28}'
 MAP_CENTRE_CHS = '{lat: 70., lng: -103}'
 MAP_BOUNDS = ''
 

@@ -791,10 +791,10 @@
             let found_layer_charts = [];
             let found_layer = new google.maps.Data();
             found_layer.setStyle({
-                strokeColor: 'greenyellow',
-                fillColor: 'yellow',
-                strokeWeight: '3',
-                fillOpacity: 0.1
+                strokeColor: '#006666',
+                fillColor: '#006666',
+                strokeWeight: '2',
+                fillOpacity: 0.25,
             });
             found_layer.setMap(map);
 
@@ -828,7 +828,7 @@
                     if (found_layer.getFeatureById(chart_number[0] + 'panel' + i) !== undefined) {
                         panel_count = panel_count + 1
                         found_layer.overrideStyle(event.feature,
-                            {fillColor: 'yellow', strokeColor: 'greenyellow', strokeWeight: '4', fillOpacity: 0.3});
+                            {fillColor: '#006666', strokeColor: '#006666', strokeWeight: '4', fillOpacity: 0.3});
                     }
                 }
                 topInfo(event);
@@ -1596,7 +1596,7 @@
         <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
             catalogue source:
             <span style="color:navy;font-size:14px;">CHS</span>
-            <span>, imported April 2021</span>
+            <span>, imported {{ import_date_short }}</span>
             <span style="color:navy;font-size:14px;"></span>
         </p>
 

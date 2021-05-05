@@ -862,7 +862,7 @@
                     panel_info = 'panel ' + event.feature.getProperty("panel_number") +
                         ' scale 1 : ' + event.feature.getProperty("panel_scale") +
                         ' area ' + event.feature.getProperty("panel_name");
-                    document.getElementById("chart-info-box").style.opacity = "60%";
+                    document.getElementById("chart-info-box").style.opacity = "80%";
                     document.getElementById("panel-info-box").style.opacity = "100%";
                 }
                 chart_info = chart_number + chart_scale + chart_title;
@@ -874,7 +874,7 @@
                 document.getElementById("chart-info-box").textContent = '--';
                 document.getElementById("panel-info-box").textContent = '--';
                 document.getElementById("chart-info-box").style.opacity = "100%";
-                document.getElementById("panel-info-box").style.opacity = "60%";
+                document.getElementById("panel-info-box").style.opacity = "80%";
             }
 
 // ========================================== end of display top info ================
@@ -1949,7 +1949,7 @@
         <p class="text-center" style="font-size: 14px;margin-bottom: 0px;">
             catalogue source:
             <span style="color:navy;font-size:14px;">CHS</span>
-            <span>, imported April 2021</span>
+            <span>, imported {{ import_date_short }}</span>
             <span style="color:navy;font-size:14px;"></span>
         </p>
 

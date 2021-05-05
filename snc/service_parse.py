@@ -2,7 +2,6 @@
 # django.setup()
 
 import untangle
-# import xmltodict
 
 import snc.catalogue, snc.chart, snc.notice, snc.panel, snc.position
 import snc.service_geojson as service_geojson
