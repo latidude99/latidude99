@@ -45,6 +45,13 @@ There are two main modes you can use:
 	- To improve clarity chart and panel polygons can be removed from the map on a one by one basis by the right mouse click. This is temporary and can be reverted also one by one in the reverse order.
 	- Allows to search for a single chart - if found it highlights the chart in light green colour and centres the map on it
 
+### UPDATE MAY 2021
+
+CHS - Canadian Paper Chart Limits added as a separate option on the start page.
+
+Level of chart information is not as great as with Admiralty charts (e.g. only the latest Notice to Mariners is available).
+
+Different colour theme applied to differentiate it from the UKHO charts and reflect Canadian colours.
 
 ## Screenshots
 
@@ -65,6 +72,18 @@ There are two main modes you can use:
 <img src="../images/snc_7.png" width=100%> </p>
 <p align="center">
 <img src="../images/snc_8.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_9.png" width=100%> </p>
+<img src="../images/snc_9.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_9.png" width=100%> </p>
+<img src="../images/snc_10.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_9.png" width=100%> </p>
+<img src="../images/snc_11.png" width=100%> </p>
+<p align="center">
+<img src="../images/snc_9.png" width=100%> </p>
+<img src="../images/snc_12.png" width=100%> </p>
 <p align="center">
 <img src="../images/snc_9.png" width=100%> </p>
 	
