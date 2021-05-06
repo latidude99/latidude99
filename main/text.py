@@ -325,7 +325,7 @@ IMAGE_PRICECHECK_19 = 'images/pr_19.png'
 # ----------------------- SNC ---------------------------
 SNC_LINK = ''
 SNC_TITLE = 'charts coverage index'
-SNC_SUBTITLE = 'admiralty charts coverage search utility'
+SNC_SUBTITLE = 'ukho and chs charts coverage search utility'
 SNC_SUBTITLE2 = ''
 SNC_DATA_SUPPLY = ''
 SNC_APP_BTN_TXT = 'go to the app'
@@ -402,6 +402,16 @@ SNC_IN_DEPTH24 = 'Hovering over a chart or panel polygon triggers top info bars 
 SNC_IN_DEPTH25 = 'Clicking on a chart or panel polygon fetches detailed information and displays it ' \
                  'on the right side next to the map window.'
 
+SNC_IN_DEPTH26 = 'UPDATE MAY 2021'
+
+SNC_IN_DEPTH27 = 'CHS - Canadian Paper Chart Limits added as a separate option on the start page.'
+
+SNC_IN_DEPTH28 = 'Level of chart information is not as great as with Admiralty charts ' \
+                 '(e.g. only the latest Notice to Mariners is available)'
+
+SNC_IN_DEPTH29 = 'Different colour theme applied to differentiate it from the UKHO charts ' \
+                 'and reflect Canadian colours.'
+
 IMAGE_SNC_1 = 'images/snc_1.png'
 IMAGE_SNC_2 = 'images/snc_2.png'
 IMAGE_SNC_3 = 'images/snc_3.png'
@@ -412,6 +422,8 @@ IMAGE_SNC_7 = 'images/snc_7.png'
 IMAGE_SNC_8 = 'images/snc_8.png'
 IMAGE_SNC_9 = 'images/snc_9.png'
 IMAGE_SNC_10 = 'images/snc_10.png'
+IMAGE_SNC_11 = 'images/snc_11.png'
+IMAGE_SNC_12 = 'images/snc_12.png'
 
 # ----------------------- ENQUIRY ---------------------------
 ENQUIRY_LINK = 'http://enquiry.latidude99.com/'

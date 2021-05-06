@@ -369,6 +369,10 @@ def get_main_snc_ctx():
         'in_depth_txt23': SNC_IN_DEPTH23,
         'in_depth_txt24': SNC_IN_DEPTH24,
         'in_depth_txt25': SNC_IN_DEPTH25,
+        'in_depth_txt26': SNC_IN_DEPTH26,
+        'in_depth_txt27': SNC_IN_DEPTH27,
+        'in_depth_txt28': SNC_IN_DEPTH28,
+        'in_depth_txt29': SNC_IN_DEPTH29,
         'image1': IMAGE_SNC_1,
         'image2': IMAGE_SNC_2,
         'image3': IMAGE_SNC_3,
@@ -379,6 +383,8 @@ def get_main_snc_ctx():
         'image8': IMAGE_SNC_8,
         'image9': IMAGE_SNC_9,
         'image10': IMAGE_SNC_10,
+        'image11': IMAGE_SNC_11,
+        'image12': IMAGE_SNC_12,
     }
     ctx = {**get_main_ctx(), **context}
     return ctx
