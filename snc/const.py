@@ -20,6 +20,10 @@ SNC_DATA = 'data/'
 SNC_CATALOGUE_FILE = SNC_DATA_FOLDER + 'snc_catalogue.xml'
 SNC_GEOJSON_FILE = SNC_DATA_FOLDER + 'charts_all.json'
 
+
+URL_CHS_ARCGIS_HUB = 'https://hub.arcgis.com/datasets/5932ed16cc7a4cdfad78d15830bbeaba_0/data?geometry=17.740%2C40.158%2C168.560%2C83.789'
+URL_CHS_GEOJSON = 'https://opendata.arcgis.com/datasets/5932ed16cc7a4cdfad78d15830bbeaba_0.geojson'
+
 CHS_GEOJSON_FILE = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits.geojson'
 CHS_GEOJSON_FILE_EDITED = SNC_DATA_FOLDER + 'Paper_Nautical_Chart_Limits-edited.geojson'
 
