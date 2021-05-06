@@ -74,18 +74,13 @@ Different colour theme applied to differentiate it from the UKHO charts and refl
 <img src="../images/snc_8.png" width=100%> </p>
 <p align="center">
 <img src="../images/snc_9.png" width=100%> </p>
-<img src="../images/snc_9.png" width=100%> </p>
 <p align="center">
-<img src="../images/snc_9.png" width=100%> </p>
 <img src="../images/snc_10.png" width=100%> </p>
 <p align="center">
-<img src="../images/snc_9.png" width=100%> </p>
 <img src="../images/snc_11.png" width=100%> </p>
 <p align="center">
-<img src="../images/snc_9.png" width=100%> </p>
 <img src="../images/snc_12.png" width=100%> </p>
 <p align="center">
-<img src="../images/snc_9.png" width=100%> </p>
 	
  
 
