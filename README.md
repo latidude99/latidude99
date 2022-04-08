@@ -3,7 +3,7 @@
 
 - 🔭 I’m currently working on **chart-coverage-reader**
 
-- 🌱 ~~I’m currently learning **Python, Flask, Django**~~ Back to Java, Spring and Docker for a while.
+- 🌱 ~~I’m currently learning **Python, Flask, Django**~~ Back to Java, Spring. Also learning gRPC and Google Protocol Buffers. 
 
 - 👨‍💻 Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)
 
