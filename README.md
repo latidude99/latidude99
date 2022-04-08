@@ -1,7 +1,7 @@
 <h1 align="left">Hi 👋, I'm Piotr</h1>
-<h3 align="left">An aspiring, passionate Java and Python developer</h3>
+<h3 align="left">A passionate Java and Python developer</h3>
 
-- 🔭 I’m currently working on **chart-coverage-reader**
+- 🔭 I’m currently looking for new ideas for a side project.
 
 - 🌱 ~~I’m currently learning **Python, Flask, Django**~~ Back to Java, Spring. Also learning gRPC and Google Protocol Buffers. 
 
