@@ -1,11 +1,11 @@
 <h1 align="left">Hi 👋, I'm Piotr</h1>
 <h3 align="left">A passionate Java and and sometimes Python developer</h3>
 
-- 🔭 Currently getting on board with all the AI out there :) .
+- 🔭 Currently getting on board with all the AI out there :) 
 
-- 🌱 ~~I’m currently learning **Python, Flask, Django**~~ 
+- ~~I’m currently learning **Python, Flask, Django**~~ 
 - ~~Back to Java, Spring. Also learning gRPC and Google Protocol Buffers~~
-- - Java all the way!
+- Java all the way!
 
 - 👨‍💻 ~~Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)~~
 
