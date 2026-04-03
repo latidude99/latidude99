@@ -1,11 +1,13 @@
 <h1 align="left">Hi 👋, I'm Piotr</h1>
-<h3 align="left">A passionate Java and Python developer</h3>
+<h3 align="left">A passionate Java and and sometimes Python developer</h3>
 
-- 🔭 I’m currently looking around for new ideas for a side project.
+- 🔭 Currently getting on board with all the AI out there :) .
 
-- 🌱 ~~I’m currently learning **Python, Flask, Django**~~ Back to Java, Spring. Also learning gRPC and Google Protocol Buffers. 
+- 🌱 ~~I’m currently learning **Python, Flask, Django**~~ 
+- ~~Back to Java, Spring. Also learning gRPC and Google Protocol Buffers~~
+- - Java all the way!
 
-- 👨‍💻 Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)
+- 👨‍💻 ~~Most of my projects are available at [pc.latidude99.com](pc.latidude99.com)~~
 
 - 📫 You can reach me **latidude99@gmail.com**
 
